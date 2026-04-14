@@ -1,0 +1,179 @@
+{
+  "ucop-systemwide": [
+    {"id": "ucop-01", "title": "Responsible AI: Recommendations to Guide UC AI Strategy", "url": "https://ai.universityofcalifornia.edu/_files/documents/uc-ai-working-group-final-report.pdf", "type": "pdf", "date": "2021-10", "issuer": "UC Presidential Working Group on AI"},
+    {"id": "ucop-02", "title": "UC Responsible AI Principles", "url": "https://ai.universityofcalifornia.edu/_files/documents/ai-council-uc-responsible-ai-principles.pdf", "type": "pdf", "date": "2021-10-06", "issuer": "UC Presidential Working Group on AI"},
+    {"id": "ucop-03", "title": "UC Board of Regents Discussion Item: Presidential Working Group on AI", "url": "https://regents.universityofcalifornia.edu/regmeet/nov21/b2.pdf", "type": "pdf", "date": "2021-11", "issuer": "UCOP to UC Board of Regents"},
+    {"id": "ucop-04a", "title": "UC AI Council Charter and Governance", "url": "https://www.ucop.edu/ethics-compliance-audit-services/compliance/aicouncil/index.html", "type": "web", "date": "2022-05", "issuer": "UC AI Council"},
+    {"id": "ucop-04b", "title": "UC AI Council Standing Governance", "url": "https://ai.universityofcalifornia.edu/", "type": "web", "date": "2022-05", "issuer": "UC AI Council"},
+    {"id": "ucop-05", "title": "UC AI Council Executive Summary FY 2023-2024", "url": "https://ai.universityofcalifornia.edu/_files/uc-ai-council-executive-summary-fy-23_24-final.pdf", "type": "pdf", "date": "2024", "issuer": "UC AI Council"},
+    {"id": "ucop-06", "title": "UC AI Transparency Report", "url": "https://ai.universityofcalifornia.edu/_files/documents/transparency-subcommittee-report-june-28-2024_accessible-1.pdf", "type": "pdf", "date": "2024-06-28", "issuer": "UC AI Council Subcommittee on Transparency"},
+    {"id": "ucop-07a", "title": "UC AI Risk Assessment Guide v1.1", "url": "https://ai.universityofcalifornia.edu/_files/documents/uc-ai-council-risk-assessment-guide-1.1-1.pdf", "type": "pdf", "date": "2025", "issuer": "UC AI Council Risk Assessment Subcommittee"},
+    {"id": "ucop-07b", "title": "UC AI Risk Assessment Guide v1.1 (shortened)", "url": "https://ai.universityofcalifornia.edu/_files/documents/uc-ai-council-risk-assessment-guide-1.1-initial-assessment-final-1.pdf", "type": "pdf", "date": "2025", "issuer": "UC AI Council Risk Assessment Subcommittee"},
+    {"id": "ucop-08", "title": "UC Legal AI Task Force Practice Areas Expertise Chart", "url": "https://ai.universityofcalifornia.edu/_files/ai-ogc-24-06-28-practice-areas-expertise-chart-for-website-1.pdf", "type": "pdf", "date": "2024-06-28", "issuer": "UC Office of General Counsel / UC Legal AI Task Force"},
+    {"id": "ucop-09", "title": "Legal Alert on Artificial Intelligence Tools", "url": "https://ai.universityofcalifornia.edu/_files/documents/ai-alert.pdf", "type": "pdf", "date": "2023-2024", "issuer": "UC Legal / Office of General Counsel"},
+    {"id": "ucop-10", "title": "Statement of Awareness on AI", "url": "https://ai.universityofcalifornia.edu/_files/documents/statement-of-awareness-on-ai.pdf", "type": "pdf", "date": "undated", "issuer": "UC AI Council"},
+    {"id": "ucop-11", "title": "UC AI Primer: Core Concepts and Fundamentals", "url": "https://rise.articulate.com/share/B8DxWcOO3ALcVHlgqyQosNxIABql7Pn4", "type": "web", "date": "2024", "issuer": "UC AI Council"},
+    {"id": "ucop-12", "title": "UC AI Glossary", "url": "https://ai.universityofcalifornia.edu/_files/documents/ai-council-uc-ai-glossary.pdf", "type": "pdf", "date": "undated", "issuer": "UC AI Council"},
+    {"id": "ucop-13", "title": "Applicable Law and UC Policy (AI Governance)", "url": "https://ai.universityofcalifornia.edu/governance-transparency/applicable-law-and-policy.html", "type": "web", "date": "ongoing", "issuer": "UC AI Council / UCOP"},
+    {"id": "ucop-14", "title": "UC Health Data Governance Task Force Report", "url": "https://ai.universityofcalifornia.edu/uchealth-data-governance-task-force-report_2024_final_06272024.pdf", "type": "pdf", "date": "2024-06-27", "issuer": "UC Health Data Governance Implementation Task Force"},
+    {"id": "ucop-14b", "title": "UC Health Data Governance Regents Presentation", "url": "https://regents.universityofcalifornia.edu/regmeet/june24/h4.pdf", "type": "pdf", "date": "2024-06", "issuer": "UC Health Data Governance Task Force"},
+    {"id": "ucop-15", "title": "What the Future Holds: A UC Congress on AI (Summary)", "url": "https://uctechnews.ucop.edu/2024-uc-academic-congress-on-artificial-intelligence-ai/", "type": "web", "date": "2024-02", "issuer": "UC Provost / UC CIO Van Williams"},
+    {"id": "ucop-16", "title": "UC Regents Public Engagement and Development Committee AI Presentations", "url": "https://regents.universityofcalifornia.edu/meetings/agendas/march24.html", "type": "web", "date": "2024-03", "issuer": "UC Board of Regents"},
+    {"id": "ucop-17", "title": "UCEP Annual Reminder on Academic Integrity (GenAI Provisions)", "url": "https://senate.universityofcalifornia.edu/files/committees/ucep/updated_uceptocouncil_academicintegrity_sept2025.pdf", "type": "pdf", "date": "2024-09", "issuer": "UCEP"},
+    {"id": "ucop-18", "title": "UC AI Council Webinar Series: AI Essentials", "url": "https://ai.universityofcalifornia.edu/tools-and-resources.html", "type": "web", "date": "2025-03", "issuer": "UC AI Council"},
+    {"id": "ucop-19", "title": "UC Health AI Governance Forum", "url": "https://ai.universityofcalifornia.edu/ai-communities/", "type": "web", "date": "ongoing", "issuer": "UC Health / CDI2"},
+    {"id": "ucop-20", "title": "UC Legal AI Task Force", "url": "https://ai.universityofcalifornia.edu/ai-communities/", "type": "web", "date": "ongoing", "issuer": "UC Office of General Counsel"}
+  ],
+  "uc-berkeley": [
+    {"id": "ucb-01", "title": "Provost's Advisory Council on AI (PAC-AI)", "url": "https://evcp.berkeley.edu/initiatives/provosts-advisory-council-artificial-intelligence-pac-ai", "type": "web", "date": "2024", "issuer": "EVCP Benjamin E. Hermalin"},
+    {"id": "ucb-02", "title": "Academic Senate Work Group on Generative AI (DIVCO)", "url": "https://academic-senate.berkeley.edu/committees/divco/wgonai", "type": "web", "date": "2024-25", "issuer": "Berkeley Division of Academic Senate"},
+    {"id": "ucb-03", "title": "GenAI Guidance for Instructors (2025)", "url": "https://academic-senate.berkeley.edu/sites/default/files/genai_guidance_for_instructors_2025.pdf", "type": "pdf", "date": "2025-05", "issuer": "Academic Senate GenAI Working Group / CTL"},
+    {"id": "ucb-04", "title": "New AI Tools for Faculty and Staff - CalMessage", "url": "https://evcp.berkeley.edu/news/new-ai-tools-faculty-and-staff", "type": "web", "date": "2025-06", "issuer": "EVCP Hermalin, CIO Tracy Shinn"},
+    {"id": "ucb-05", "title": "Berkeley AI Hub", "url": "https://technology.berkeley.edu/AI", "type": "web", "date": "ongoing", "issuer": "Berkeley IT / PAC-AI"},
+    {"id": "ucb-06", "title": "Campus AI Sandbox (River) - BETA", "url": "https://technology.berkeley.edu/ai/river", "type": "web", "date": "2025-03", "issuer": "Berkeley IT"},
+    {"id": "ucb-07", "title": "AI Governing and Advisory Bodies Directory", "url": "https://oercs.berkeley.edu/ai-governing-advisory-bodies", "type": "web", "date": "ongoing", "issuer": "Office of Ethics, Risk, and Compliance Services"},
+    {"id": "ucb-08", "title": "Understanding GenAI and Campus Expectations", "url": "https://teaching.berkeley.edu/teaching-strategies/genai-teaching/understanding-genai-and-campus-expectations", "type": "web", "date": "2025", "issuer": "CTL / Committee on Teaching"},
+    {"id": "ucb-09", "title": "Generative AI Appropriate Use Guidelines", "url": "https://oercs.berkeley.edu/", "type": "web", "date": "2024-2025", "issuer": "OERCS"},
+    {"id": "ucb-10", "title": "Graduate Division: GenAI Academic Integrity Resources", "url": "https://grad.berkeley.edu/academics/graduate-academic-integrity/resources-for-faculty-and-staff/", "type": "web", "date": "ongoing", "issuer": "Berkeley Graduate Division"}
+  ],
+  "uc-davis": [
+    {"id": "ucd-01", "title": "UC Davis AI Council", "url": "https://leadership.ucdavis.edu/about/councils-committees-boards/artificial-intelligence", "type": "web", "date": "2024-05", "issuer": "Chancellor Gary May"},
+    {"id": "ucd-02", "title": "UC Davis AI Council Draft Report: Campus-Based Principles and Proposed Governance", "url": "https://leadership.ucdavis.edu/sites/g/files/dgvnsk1166/files/media/documents/AI%20Council_report_2025-02-18_CLEAN%20(1).pdf", "type": "pdf", "date": "2025-02-18", "issuer": "UC Davis AI Council"},
+    {"id": "ucd-03", "title": "IET AI Guidance (Generative AI Initial Guidance)", "url": "https://iet.ucdavis.edu/aggie-ai/ai-guidance", "type": "web", "date": "ongoing", "issuer": "UC Davis IET"},
+    {"id": "ucd-04", "title": "Sensitive Data and AI - Guidance from UC Davis Tech Leaders", "url": "https://iet.ucdavis.edu/news/sensitive-data-and-ai-guidance", "type": "web", "date": "2023", "issuer": "UC Davis IET / Campus IT Leadership"},
+    {"id": "ucd-05", "title": "Aggie AI: Artificial Intelligence at UC Davis", "url": "https://iet.ucdavis.edu/aggie-ai", "type": "web", "date": "2024", "issuer": "UC Davis IET"},
+    {"id": "ucd-06", "title": "UC Davis Health: Guidelines for Using Generative AI", "url": "https://health.ucdavis.edu/compliance/regulatory/guidelines-for-using-ai", "type": "web", "date": "ongoing", "issuer": "UC Davis Health Compliance and Privacy Services"},
+    {"id": "ucd-07", "title": "FOA AI Tools and Data Guidance", "url": "https://adminit.ucdavis.edu/vra/ai-data-guidance", "type": "web", "date": "ongoing", "issuer": "Finance, Operations and Administration"},
+    {"id": "ucd-08", "title": "Student Guide to Generative AI", "url": "https://iet.ucdavis.edu/student-guide-gen-ai", "type": "web", "date": "ongoing", "issuer": "UC Davis IET"},
+    {"id": "ucd-09", "title": "Academic Senate Support for Responsible AI (Divisional Priority)", "url": "https://academicsenate.ucdavis.edu/sites/g/files/dgvnsk3876/files/inline-files/ra-call-2025.10.06.pdf", "type": "pdf", "date": "2024-25", "issuer": "UC Davis Academic Senate"},
+    {"id": "ucd-10", "title": "Library: Generative AI for Teaching, Research and Learning", "url": "https://guides.library.ucdavis.edu/genai/resource", "type": "web", "date": "ongoing", "issuer": "UC Davis Library"}
+  ],
+  "uc-irvine": [
+    {"id": "uci-01", "title": "OVPTL AI Advisory Committee", "url": "https://dtei.uci.edu/generative-ai/", "type": "web", "date": "2025", "issuer": "Office of the Vice Provost for Teaching and Learning"},
+    {"id": "uci-02", "title": "ZotGPT Suite (UCI Customized GenAI Platform)", "url": "https://www.oit.uci.edu/services/ai/zotgpt/", "type": "web", "date": "2024-01", "issuer": "OIT"},
+    {"id": "uci-03", "title": "UCI Office of Research: AI in Research", "url": "https://research.uci.edu/ai-in-research/", "type": "web", "date": "ongoing", "issuer": "UCI Office of Research"},
+    {"id": "uci-04", "title": "AI and Human Subject Research (IRB/HRP Guidance)", "url": "https://research.uci.edu/human-research-protections/assessing-risks-and-benefits/privacy-and-confidentiality/artificial-intelligence-and-human-subject-research/", "type": "web", "date": "2024-05-20", "issuer": "Office of Research / Human Research Protections"},
+    {"id": "uci-05", "title": "UCI Academic Senate Policy on Academic Integrity (AI Provisions)", "url": "https://conduct.uci.edu/academic-integrity/", "type": "web", "date": "current", "issuer": "UCI Academic Senate"},
+    {"id": "uci-06", "title": "UCI Student Affairs: AI Resources and Support", "url": "https://studentaffairs.uci.edu/ai-resources-support/", "type": "web", "date": "ongoing", "issuer": "Division of Student Affairs"},
+    {"id": "uci-07", "title": "Generative AI and Writing Course Policies (Resource Pack)", "url": "https://writing.uci.edu/2025/05/04/generative-ai-and-writing-course-policies/", "type": "web", "date": "2025-05-04", "issuer": "Campus Writing and Communication Coordinator"},
+    {"id": "uci-08", "title": "DTEI Generative AI for Teaching and Learning Hub", "url": "https://dtei.uci.edu/generative-ai/", "type": "web", "date": "ongoing", "issuer": "Division of Teaching Excellence and Innovation"},
+    {"id": "uci-09", "title": "Irvine Initiative in AI, Law, and Society (AI Policy Lab)", "url": "https://ucinoyce.org/AIpolicy.html", "type": "web", "date": "2020", "issuer": "School of Social Sciences, School of Law, Bren School of ICS"},
+    {"id": "uci-10", "title": "School of Bio Sciences: GenAI Resources for Research", "url": "https://research.bio.uci.edu/generative-ai/", "type": "web", "date": "2026", "issuer": "Bio Sci Research Admin and Development"}
+  ],
+  "ucla": [
+    {"id": "ucla-01", "title": "AI Committee (Executive IT Governance Board)", "url": "https://dts.ucla.edu/strategy-roadmap/governance/strategic-committees/ai", "type": "web", "date": "2024-04", "issuer": "UCLA Digital and Technology Solutions (DTS)"},
+    {"id": "ucla-02", "title": "AI Governance Overview", "url": "https://dts.ucla.edu/initiatives/ai/governance", "type": "web", "date": "ongoing", "issuer": "UCLA DTS"},
+    {"id": "ucla-03", "title": "AI Use and Recommendation Guide", "url": "https://dts.ucla.edu/initiatives/ai/ai-use-recommendation-guide", "type": "web", "date": "ongoing", "issuer": "UCLA DTS"},
+    {"id": "ucla-04", "title": "Guiding Principles for Responsible Use", "url": "https://dts.ucla.edu/initiatives/ai/guiding-principles-responsible-use", "type": "web", "date": "current", "issuer": "UCLA DTS"},
+    {"id": "ucla-05", "title": "TLC Advisory Committee on AI in Teaching and Learning", "url": "https://teaching.ucla.edu/about-us/committees/tlc-advisory-committee-on-ai-in-teaching-and-learning/", "type": "web", "date": "2025", "issuer": "Vice Provost for Teaching and Learning"},
+    {"id": "ucla-06", "title": "Teaching Guidance for ChatGPT and Related AI Developments", "url": "https://senate.ucla.edu/news/teaching-guidance-chatgpt-and-related-ai-developments", "type": "web", "date": "2023", "issuer": "UCLA Academic Senate"},
+    {"id": "ucla-07", "title": "AI Innovation Initiative", "url": "https://dts.ucla.edu/initiatives/ai", "type": "web", "date": "2024-04", "issuer": "UCLA DTS; CDAIO Chris Mattmann"},
+    {"id": "ucla-08", "title": "Available AI Tools Matrix", "url": "https://dts.ucla.edu/initiatives/ai/available-tools", "type": "web", "date": "ongoing", "issuer": "UCLA DTS"},
+    {"id": "ucla-09", "title": "Using Generative AI Reflectively and Responsibly in Teaching and Learning", "url": "https://teaching.ucla.edu/resources/teaching-guides/using-generative-ai-reflectively-and-responsibly-in-teaching-and-learning/", "type": "web", "date": "current", "issuer": "UCLA Teaching and Learning Center"},
+    {"id": "ucla-10", "title": "AI Education Hub / BruinLearn AI Courses", "url": "https://dts.ucla.edu/initiatives/ai/ai-education-hub", "type": "web", "date": "2024-2025", "issuer": "UCLA DTS, CDAIO Chris Mattmann"},
+    {"id": "ucla-11", "title": "UCLA to Introduce ChatGPT Enterprise on Campus", "url": "https://newsroom.ucla.edu/releases/ucla-to-introduce-chatgpt-enterprise-on-campus", "type": "web", "date": "2024-09-20", "issuer": "UCLA Newsroom"}
+  ],
+  "uc-merced": [
+    {"id": "ucm-01", "title": "UC Merced AI Advisory Council", "url": "https://ai.ucmerced.edu/advisory-council", "type": "web", "date": "2026-02-11", "issuer": "UC Merced campus leadership"},
+    {"id": "ucm-01b", "title": "UC Merced AI Advisory Council (alt)", "url": "https://ai.ucmerced.edu/news/2026/formation-uc-merced-ai-advisory-council", "type": "web", "date": "2026-02-11", "issuer": "UC Merced"},
+    {"id": "ucm-02", "title": "UC Merced AI Central Hub", "url": "https://ai.ucmerced.edu/", "type": "web", "date": "ongoing", "issuer": "UC Merced Office of Information Technology"},
+    {"id": "ucm-03", "title": "Teaching Commons: Using AI in Instruction", "url": "https://teach.ucmerced.edu/generative-AI-syllabus", "type": "web", "date": "ongoing", "issuer": "UC Merced Teaching Commons / CETL"},
+    {"id": "ucm-04", "title": "Library LibGuide: Using Generative AI", "url": "https://libguides.ucmerced.edu/Generative-AI", "type": "web", "date": "ongoing", "issuer": "UC Merced University Library"},
+    {"id": "ucm-05", "title": "Demystifying AI in Academia Symposium and Ethics Panel", "url": "https://ai.ucmerced.edu/news/2025/does-future-need-us-ethics-ai-education", "type": "web", "date": "2025-03", "issuer": "Center for Engaged Teaching and Learning"},
+    {"id": "ucm-06", "title": "Graduate Division How I AI Series", "url": "https://graduatedivision.ucmerced.edu/AI-tools", "type": "web", "date": "2025-2026", "issuer": "UC Merced Graduate Division"}
+  ],
+  "uc-riverside": [
+    {"id": "ucr-01", "title": "Guidelines for Using Generative AI in Instructional Settings at UCR", "url": "https://provost.ucr.edu/media/2947/download?attachment=", "type": "pdf", "date": "2025-09", "issuer": "Office of the Provost"},
+    {"id": "ucr-01b", "title": "Guidelines for Using Generative AI (web)", "url": "https://provost.ucr.edu/document/generative-ai-guidelines", "type": "web", "date": "2025-09", "issuer": "Office of the Provost"},
+    {"id": "ucr-02", "title": "Generative AI at UCR - ITS Portal", "url": "https://its.ucr.edu/ai", "type": "web", "date": "ongoing", "issuer": "UC Riverside ITS"},
+    {"id": "ucr-03", "title": "AI Guidelines for University Marketing and Communications", "url": "https://documents.ucr.edu/university-relations/AI_Marcomms_Guidelines.pdf", "type": "pdf", "date": "2024-2025", "issuer": "UC Riverside University Communications and Marketing"},
+    {"id": "ucr-04", "title": "Update on AI Use for Students", "url": "https://insideucr.ucr.edu/announcements/2023/11/03/update-artificial-intelligence-use-students", "type": "web", "date": "2023-11-03", "issuer": "UC Riverside (InsideUCR)"},
+    {"id": "ucr-05", "title": "XCITE Center: AI in the Classroom / AI TeachTalk Series", "url": "https://teaching.ucr.edu/ai-classroom", "type": "web", "date": "2024-2026", "issuer": "XCITE Center for Teaching and Learning"},
+    {"id": "ucr-06", "title": "UCR Community Urged to Use Google AI Tools", "url": "https://insideucr.ucr.edu/stories/2026/03/20/ucr-community-urged-use-google-ai-tools", "type": "web", "date": "2026-03-20", "issuer": "UC Riverside ITS / InsideUCR"}
+  ],
+  "uc-san-diego": [
+    {"id": "ucsd-01", "title": "TritonAI - AI Strategy, Governance and Responsible Use", "url": "https://tritonai.ucsd.edu/about/index.html", "type": "web", "date": "ongoing", "issuer": "UC San Diego IT Services / TritonAI"},
+    {"id": "ucsd-02", "title": "TritonGPT Terms of Use", "url": "https://blink.ucsd.edu/technology/ai/tritongpt/terms.html", "type": "web", "date": "current", "issuer": "UC San Diego IT Services"},
+    {"id": "ucsd-03", "title": "TritonGPT Privacy Statement", "url": "https://blink.ucsd.edu/technology/ai/tritongpt/privacy.html", "type": "web", "date": "current", "issuer": "UC San Diego IT Services"},
+    {"id": "ucsd-04", "title": "Using Commercial GenAI Tools in Administration - Staff Guidance", "url": "https://blink.ucsd.edu/technology/ai/acceptable-use.html", "type": "web", "date": "ongoing", "issuer": "Campus Privacy Office / IT Services"},
+    {"id": "ucsd-05", "title": "UC San Diego's Support of AI Services - Overview", "url": "https://blink.ucsd.edu/technology/ai/", "type": "web", "date": "ongoing", "issuer": "UC San Diego IT Services"},
+    {"id": "ucsd-06", "title": "AI Development Workgroup", "url": "https://tritonai.ucsd.edu/about/workgroup.html", "type": "web", "date": "ongoing", "issuer": "TritonAI"},
+    {"id": "ucsd-07", "title": "AI Guidelines for Campus Communicators", "url": "https://univcomms.ucsd.edu/resources/ai-guidance/index.html", "type": "web", "date": "current", "issuer": "UC San Diego University Communications"},
+    {"id": "ucsd-08", "title": "AI and Academic Integrity Hub", "url": "https://academicintegrity.ucsd.edu/choose-integrity/gen-ai/index.html", "type": "web", "date": "ongoing", "issuer": "Academic Integrity Office"},
+    {"id": "ucsd-09", "title": "Reinforcing Academic Integrity in the Age of AI: Guide for Instructors", "url": "https://sites.google.com/ucsd.edu/crafting-a-genai-and-ai-policy", "type": "web", "date": "2024", "issuer": "Academic Integrity Office"},
+    {"id": "ucsd-10", "title": "Critical AI Literacy Canvas Module", "url": "https://canvas.ucsd.edu/enroll/M6NG3T", "type": "web", "date": "2024", "issuer": "Academic Integrity Office and Teaching + Learning Commons"},
+    {"id": "ucsd-11", "title": "Generative AI LibGuide", "url": "https://ucsd.libguides.com/AI", "type": "web", "date": "2023", "issuer": "UC San Diego Library"},
+    {"id": "ucsd-12", "title": "AI at UC San Diego Health - Public-Facing Governance Page", "url": "https://health.ucsd.edu/about-us/ai-at-uc-san-diego-health/", "type": "web", "date": "current", "issuer": "UC San Diego Health"},
+    {"id": "ucsd-13", "title": "Healthcare AI Principles (Our Principles)", "url": "https://healthinnovation.ucsd.edu/our-principles", "type": "web", "date": "2022", "issuer": "Joan and Irwin Jacobs Center for Health Innovation"},
+    {"id": "ucsd-14", "title": "Chief Health AI Officer Appointment (Karandeep Singh, MD)", "url": "https://health.ucsd.edu/news/press-releases/2023-12-12-karandeep-singh-md-named-inaugural-chief-health-ai-officer-at-uc-san-diego-health/", "type": "web", "date": "2023-12-12", "issuer": "UC San Diego Health"},
+    {"id": "ucsd-15", "title": "Chief Innovation Officer Appointment (Alexander Khalessi)", "url": "https://health.ucsd.edu/news/press-releases/2025-12-08-alexander-khalessi-md-mba-appointed-chief-innovation-officer/", "type": "web", "date": "2025-12-08", "issuer": "UC San Diego Health"},
+    {"id": "ucsd-16", "title": "Senate-Administration Partnership Page (AI Workgroup Summary)", "url": "https://evc.ucsd.edu/mission-initiatives/partnering-with-the-academic-senate.html", "type": "web", "date": "ongoing", "issuer": "UC San Diego EVC Office / Academic Affairs"}
+  ],
+  "uc-san-francisco": [
+    {"id": "ucsf-01", "title": "AI@UCSF Governance, Guidance and Policy Portal", "url": "https://ai.ucsf.edu/governance-guidance-and-policy", "type": "web", "date": "ongoing", "issuer": "AI@UCSF"},
+    {"id": "ucsf-02", "title": "UCSF AI Guidance", "url": "https://ai.ucsf.edu/ucsf-ai-guidance", "type": "web", "date": "ongoing", "issuer": "AI@UCSF"},
+    {"id": "ucsf-03", "title": "Data Policies for AI Use at UCSF", "url": "https://ai.ucsf.edu/data-policies", "type": "web", "date": "ongoing", "issuer": "AI@UCSF"},
+    {"id": "ucsf-04", "title": "UCSF Health AI Oversight Committee", "url": "https://ai.ucsf.edu/oversight", "type": "web", "date": "2023-2024", "issuer": "UCSF Health"},
+    {"id": "ucsf-05", "title": "IMPACC - Impact Monitoring Platform for AI in Clinical Care", "url": "https://docit.ucsf.edu/news/first-continuous-ai-monitoring-platform-clinical-care", "type": "web", "date": "2025-11", "issuer": "UCSF Health / DoC-IT"},
+    {"id": "ucsf-06", "title": "Executive Director of AI Monitoring in Clinical Care (Jinoos Yazdany, MD)", "url": "https://www.hcinnovationgroup.com/analytics-ai/artificial-intelligence-machine-learning/news/55275983/ucsf-creates-executive-director-of-ai-monitoring-in-clinical-care-role", "type": "web", "date": "2025", "issuer": "UCSF Health"},
+    {"id": "ucsf-07", "title": "Data Protection and Large Language Models", "url": "https://it.ucsf.edu/standards-and-guidelines/data-protection-and-large-language-models", "type": "web", "date": "2023", "issuer": "UCSF IT"},
+    {"id": "ucsf-08", "title": "ChatGPT/Open AI Usage at UCSF - Chancellor's Announcement", "url": "https://chancellor.ucsf.edu/news/leadership-announcements/chatgtopen-ai-usage-ucsf", "type": "web", "date": "2023", "issuer": "Chancellor Sam Hawgood"},
+    {"id": "ucsf-09", "title": "Versa Generative AI Platform Announcement", "url": "https://chancellor.ucsf.edu/news/now-available-versa-ucsf-generative-ai-platform", "type": "web", "date": "2023-08", "issuer": "CIO Joe R. Bengfort / Office of the Chancellor"},
+    {"id": "ucsf-10", "title": "Bridges Curriculum Generative AI Usage Policy", "url": "https://meded.ucsf.edu/policies-procedures/bridges-curriculum-generative-artificial-intelligence-usage-policy", "type": "web", "date": "2024-12-10", "issuer": "UCSF School of Medicine CCEP"},
+    {"id": "ucsf-11", "title": "School of Pharmacy AI Use Policy", "url": "https://pharm.ucsf.edu/current/policies/ai", "type": "web", "date": "2023-2024", "issuer": "UCSF School of Pharmacy"},
+    {"id": "ucsf-12", "title": "IGHS Policy on Use of AI in Assessments and Deliverables", "url": "https://globalhealthsciences.ucsf.edu/wp-content/uploads/2025/01/IGHS-Policy-on-Use-of-AI_Final.pdf", "type": "pdf", "date": "2025-01", "issuer": "UCSF Institute for Global Health Sciences"},
+    {"id": "ucsf-13", "title": "IRB/HRPP Guidance on ChatGPT/LLM/AI in Research", "url": "https://irb.ucsf.edu/chatgpt-large-language-models-llm-artificial-intelligence-ai", "type": "web", "date": "current", "issuer": "UCSF Human Research Protection Program"},
+    {"id": "ucsf-14", "title": "UCSF Health AI Readiness: Current State (Governance Committee Presentation)", "url": "https://ai.ucsf.edu/sites/ai.ucsf.edu/files/2024-06/Jan%2012%20Panel_AI%20in%20RW%20Clinical%20Settings.pdf", "type": "pdf", "date": "2024-01-12", "issuer": "UCSF Health AI team"},
+    {"id": "ucsf-15", "title": "AI in Medical Education Strategic Plan (8 Pillars)", "url": "https://meded.ucsf.edu/artificial-intelligence-medical-education", "type": "web", "date": "2024", "issuer": "UCSF School of Medicine"},
+    {"id": "ucsf-16", "title": "Chancellor Hawgood State of the University Address - AI Vision", "url": "https://www.ucsf.edu/news/2023/12/426746/chancellor-sees-ucsf-leading-ais-new-era-annual-state-university-address", "type": "web", "date": "2023-12", "issuer": "Chancellor Sam Hawgood"},
+    {"id": "ucsf-17", "title": "Trustworthy AI Guidance", "url": "https://ai.ucsf.edu/trustworthy", "type": "web", "date": "current", "issuer": "AI@UCSF"}
+  ],
+  "uc-santa-barbara": [
+    {"id": "ucsb-01", "title": "Responsible AI Use at UCSB - CIO Portal", "url": "https://cio.ucsb.edu/artificial-intelligence", "type": "web", "date": "ongoing", "issuer": "Office of the CIO"},
+    {"id": "ucsb-02", "title": "Guidelines for AI Use (ITC Subcommittee on AI)", "url": "https://cio.ucsb.edu/artificial-intelligence/ai-use-guidelines", "type": "web", "date": "2024-2025", "issuer": "UCSB ITC Subcommittee on AI"},
+    {"id": "ucsb-03", "title": "Senate-Admin Advisory Committee on Uses of AI in Academic Contexts", "url": "https://evc.ucsb.edu/committees/AI-advisory-uses", "type": "web", "date": "2026-01-05", "issuer": "Office of the EVC and Provost / Academic Senate"},
+    {"id": "ucsb-04", "title": "Guidance Regarding AI-Writing Assistance Technologies (EVC Memo)", "url": "https://evc.ucsb.edu/communications/memos/2023-05-01-behalf-office-teaching-and-learning-guidance-regarding-ai-writing", "type": "web", "date": "2023-05-01", "issuer": "AVC of Teaching and Learning"},
+    {"id": "ucsb-05", "title": "AI in Classes - OTL Guidance", "url": "https://otl.ucsb.edu/resources/assessing-learning/ai-in-classes", "type": "web", "date": "ongoing", "issuer": "Office of Teaching and Learning"},
+    {"id": "ucsb-06", "title": "AI 101 - Campus Edition (OTL Series)", "url": "https://otl.ucsb.edu/tales/ai-101", "type": "web", "date": "2024-2025", "issuer": "Office of Teaching and Learning"},
+    {"id": "ucsb-07", "title": "UCSB Writing Program AI Policy", "url": "https://www.writing.ucsb.edu/resources/faculty/ai-policy", "type": "web", "date": "2023", "issuer": "UCSB Writing Program"},
+    {"id": "ucsb-08", "title": "AI Community of Practice (AI CoP)", "url": "https://otl.ucsb.edu/cop/artificial-intelligence-community-practice", "type": "web", "date": "2024-2026", "issuer": "UCSB (cross-campus, under OTL and CIO)"},
+    {"id": "ucsb-09", "title": "Generative AI and Academic Use - Library Guide", "url": "https://guides.library.ucsb.edu/ai", "type": "web", "date": "ongoing", "issuer": "UCSB Library"}
+  ],
+  "uc-santa-cruz": [
+    {"id": "ucsc-01", "title": "Generative AI at UC Santa Cruz - Campus AI Website", "url": "https://campusai.ucsc.edu/", "type": "web", "date": "2025", "issuer": "UC Santa Cruz AI Council"},
+    {"id": "ucsc-02", "title": "UC Santa Cruz AI Council", "url": "https://campusai.ucsc.edu/", "type": "web", "date": "2025", "issuer": "AI Council"},
+    {"id": "ucsc-03", "title": "Guiding Principles for AI Use", "url": "https://campusai.ucsc.edu/guiding-principles/", "type": "web", "date": "2025", "issuer": "UCSC AI Council"},
+    {"id": "ucsc-04", "title": "FAQ - Generative AI at UC Santa Cruz", "url": "https://campusai.ucsc.edu/faq/", "type": "web", "date": "2026-03-13", "issuer": "UCSC AI Council"},
+    {"id": "ucsc-05", "title": "Information Security Statement on Generative AI", "url": "https://news.ucsc.edu/2024/01/generative-ai-statement/", "type": "web", "date": "2024-01", "issuer": "UCSC ITS / Information Security"},
+    {"id": "ucsc-06", "title": "Vice Provost Guidance on AI in Teaching and Learning", "url": "https://news.ucsc.edu/2023/09/generative-ai-in-teaching-and-learning-link-corrected/", "type": "web", "date": "2023-09", "issuer": "Vice Provost for Undergraduate Education and Graduate Studies"},
+    {"id": "ucsc-07", "title": "Generative AI-Use Policy for Your Course (TLC)", "url": "https://tlc.ucsc.edu/academic-integrity/generative-ai-use-policy/", "type": "web", "date": "ongoing", "issuer": "Teaching and Learning Center"},
+    {"id": "ucsc-08", "title": "AI Tools for Staff (Gemini, NotebookLM, Zoom AI)", "url": "https://campusai.ucsc.edu/tools/", "type": "web", "date": "2026-02", "issuer": "UCSC ITS / AI Council"},
+    {"id": "ucsc-09", "title": "Training and Guides for AI", "url": "https://campusai.ucsc.edu/training-and-guides/", "type": "web", "date": "ongoing", "issuer": "UCSC AI Council"},
+    {"id": "ucsc-10", "title": "UCSC Generative AI Center", "url": "https://genai.ucsc.edu/", "type": "web", "date": "2024", "issuer": "Baskin School of Engineering / Cross-divisional"},
+    {"id": "ucsc-11", "title": "Chancellor Larive: Harnessing the Power of AI", "url": "https://www.santacruzworks.org/news/from-the-chancellor-harnessing-the-power-of-aiwhile-avoiding-its-perils", "type": "web", "date": "2024", "issuer": "Chancellor Cynthia Larive"}
+  ],
+  "ucla-health": [
+    {"id": "uclah-01", "title": "UCLA Health AI Council (HAIC) - Responsible AI Principles and Governance Framework", "url": "https://www.uclahealth.org/health-ai/ucla-health-ai-council-haic", "type": "web", "date": "2023", "issuer": "UCLA Health AI Council"}
+  ],
+  "uc-davis-health": [
+    {"id": "ucdh-01", "title": "S.M.A.R.T. and S.A.F.E. Frameworks for Ethical Health AI", "url": "https://www.himss.org/resources/university-of-california-davis-health-pioneers-framework-for-ethical-health-ai-and-data-governance/", "type": "web", "date": "2023-2024", "issuer": "UC Davis Health Analytics Oversight Committee"},
+    {"id": "ucdh-02", "title": "UC Davis Health Analytics Oversight Committee (AOC)", "url": "https://health.ucdavis.edu/news/headlines/pilot-program-in-emergency-medicine-department-trains-residents-to-use-ai-tool/2026/03", "type": "web", "date": "2023", "issuer": "UC Davis Health; Jason Yeates Adams, MD"}
+  ],
+  "cross-uc-health": [
+    {"id": "cuch-01", "title": "VALID AI Initiative", "url": "https://health.ucdavis.edu/news/headlines/uc-davis-health-and-leading-health-systems-launch-valid-ai/2023/10", "type": "web", "date": "2023-10", "issuer": "UC Davis Health (lead), all 6 UC Health systems, NODE.Health, 30+ partners"},
+    {"id": "cuch-02", "title": "UC Health Grand Rounds: Data and Intelligence Across UC Health", "url": "https://health.universityofcalifornia.edu/news/uc-health-grand-rounds-explores-data-and-ai-asking-whats-real-whats-allowed-and-whats", "type": "web", "date": "2024-12-05", "issuer": "UC Health panelists"}
+  ],
+  "lbnl": [
+    {"id": "lbnl-01", "title": "Advanced Research Directions on AI for Science, Energy, and Security", "url": "https://www.anl.gov/sites/www/files/2023-06/AI4SESReport-2023-v5.pdf", "type": "pdf", "date": "2023-05", "issuer": "DOE National Lab community"},
+    {"id": "lbnl-02", "title": "CBorg AI Portal - Usage Policies", "url": "https://cborg.lbl.gov/about/", "type": "web", "date": "current", "issuer": "LBNL IT Division"}
+  ],
+  "llnl": [
+    {"id": "llnl-01", "title": "Safety in AI: Challenges and Opportunities for US National Labs and Beyond", "url": "https://data-science.llnl.gov/sites/data_science/files/2024-12/SafeAIforDOE%20Digital.pdf", "type": "pdf", "date": "2024-12", "issuer": "LLNL Data Science Institute et al."},
+    {"id": "llnl-02", "title": "AI in Eight Pages: Bridging Technology to Policy through Science", "url": "https://data-science.llnl.gov/sites/data_science/files/2026-01/ai-in-8-final_report_for_web.pdf", "type": "pdf", "date": "2026-01-15", "issuer": "LLNL Data Science Institute"},
+    {"id": "llnl-03", "title": "UC/LLNL Joint Workshop on AI Safety", "url": "https://www.llnl.gov/article/5171/university-californiallnl-joint-workshop-sparks-crucial-dialogue-ai-safety", "type": "web", "date": "2024-04", "issuer": "LLNL DSI and UC"}
+  ],
+  "lanl": [
+    {"id": "lanl-01", "title": "LANL National Security AI Office", "url": "https://insidehpc.com/2025/02/los-alamos-and-openai-partner-on-national-security/", "type": "web", "date": "2024", "issuer": "LANL"},
+    {"id": "lanl-02", "title": "OpenAI-LANL Bioscience Safety Evaluation Partnership", "url": "https://openai.com/index/openai-and-los-alamos-national-laboratory-work-together/", "type": "web", "date": "2024-07", "issuer": "LANL and OpenAI"}
+  ]
+}
