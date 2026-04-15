@@ -2,11 +2,11 @@ import Link from "next/link";
 
 type Props = {
   section: string;
-  cut: string;
+  step: string;
   children: React.ReactNode;
 };
 
-export function ComingSoon({ section, cut, children }: Props) {
+export function ComingSoon({ section, step, children }: Props) {
   return (
     <div className="pt-12">
       <span className="label">UCNFI · {section}</span>
@@ -22,14 +22,14 @@ export function ComingSoon({ section, cut, children }: Props) {
         style={{ borderLeftColor: "var(--color-warn)" }}
       >
         <span className="label" style={{ color: "var(--color-warn-strong)" }}>
-          Arrives in {cut}
+          Arrives in {step}
         </span>
         <p
           className="mt-1 text-sm"
           style={{ color: "var(--color-text-muted)" }}
         >
           This surface is planned in <code>docs/v1-plan.md</code>. It has
-          intentionally not been wired up yet so Cut 1 (baseline explorer)
+          intentionally not been wired up yet so Step 1 (baseline explorer)
           ships first.
         </p>
       </div>

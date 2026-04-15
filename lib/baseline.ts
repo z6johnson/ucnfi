@@ -142,7 +142,7 @@ export function baselineStats(): BaselineStats {
 }
 
 /* ------------------------------------------------------------------ */
-/* Query — used by filters now, and by the Claude tool in Cut 2       */
+/* Query — used by filters now, and by the Claude tool in Step 2      */
 /* ------------------------------------------------------------------ */
 
 export type QueryArgs = {

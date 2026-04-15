@@ -220,24 +220,24 @@ Do **not** create:
 
 ---
 
-## Delivery phasing (to hit "presentable fast")
+## Delivery steps (to hit "presentable fast")
 
-**Cut 1 — Skeleton + Explorer (standalone-usable):**
+**Step 1 — Skeleton + Explorer (standalone-usable):**
 `package.json` + Next app + design tokens + `lib/baseline.ts` + `/`, `/entities`, `/entities/[id]`. No DB, no AI. Shippable as a static read-only artifact on day one.
 
-**Cut 2 — Grounded Chat:**
+**Step 2 — Grounded Chat:**
 Add `lib/claude.ts`, `/api/chat`, `/chat`. System prompt with baseline caching + `query_baseline` tool. Citation rendering. No persistence yet (chats live in URL/localStorage).
 
-**Cut 3 — Persistence + Shares:**
+**Step 3 — Persistence + Shares:**
 Add Vercel Postgres + Drizzle schema, `chats` + `chat_messages` tables, save-chat action, `/share/[slug]` resolver, admin cookie gate.
 
-**Cut 4 — Memos + Comparison:**
+**Step 4 — Memos + Comparison:**
 `memos` table, `MemoEditor`, `/api/memo/generate`, `/compare` matrix, `/oa/[slug]` pages.
 
-**Cut 5 — Polish for committee preview:**
-NFI color palette applied, copy pass, dashboard stats, seed a few published memos covering obvious baseline cuts (campus maturity gradient, governance gap summary, health AI snapshot).
+**Step 5 — Polish for committee preview:**
+NFI color palette applied, copy pass, dashboard stats, seed a few published memos covering obvious baseline slices (campus maturity gradient, governance gap summary, health AI snapshot).
 
-Each cut is independently deployable to Vercel so Zach has something to show at every step.
+Each step is independently deployable to Vercel so there's something to show after every one.
 
 ---
 

@@ -1,7 +1,7 @@
 /**
  * North Star, Opportunity Areas, and research topics for the UC Next
  * Frontier Initiative. This is the single source of truth consumed by
- * the dashboard, the OA pages, and (in Cut 2) the Claude system prompt.
+ * the dashboard, the OA pages, and (in Step 2) the Claude system prompt.
  */
 
 export type PillarId = "scale" | "reshape" | "uplift";
