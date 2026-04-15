@@ -13,10 +13,9 @@ export default function ChatPage() {
           className="prose-body mt-4 max-w-2xl"
           style={{ color: "var(--color-text-muted)" }}
         >
-          A Claude-powered research assistant grounded in the full
-          Phase 0 baseline. Every factual claim is cited back to a
-          specific entity — click any{" "}
-          <code>[entity_id]</code> chip to open that entity in the
+          A Claude-powered research assistant grounded in the full UCNFI
+          baseline. Every factual claim is cited back to a specific
+          entity — click any citation chip to open that entity in the
           baseline explorer.
         </p>
       </header>

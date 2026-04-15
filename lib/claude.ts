@@ -2,7 +2,7 @@
  * Claude integration for the UCNFI research copilot.
  *
  * Assembles the system prompt (mission, pillars, OAs, research
- * topics, principles, response style, and the full Phase 0 baseline),
+ * topics, principles, response style, and the full UCNFI baseline),
  * applies prompt-cache breakpoints so every turn after the first
  * reuses the cached input, and exposes a thin streaming wrapper used
  * by /api/chat.
@@ -78,7 +78,7 @@ function framingBlock(): string {
     .map((t) => `${t.number}. ${t.prompt}`)
     .join("\n");
 
-  cachedFramingBlock = `You are the UCNFI Research Copilot — an AI assistant for the University of California Next Frontier Initiative Steering Committee. Your user is working through Phase 0 baseline analysis and early Phase 1 synthesis, and relies on you for grounded, cite-every-claim answers about AI governance across the UC system.
+  cachedFramingBlock = `You are the UCNFI Research Copilot — an AI assistant for the University of California Next Frontier Initiative Steering Committee. Your user relies on you for grounded, cite-every-claim answers about AI governance across the UC system.
 
 ## North Star
 
@@ -88,7 +88,7 @@ ${pillarsText}
 
 ${oasText}
 
-## Research Topics (Phase 0 → Phase 1)
+## Research Topics
 
 ${researchText}
 
@@ -121,7 +121,7 @@ function baselineBlock(): string {
     join(process.cwd(), "data", "uc_ai_baseline.json"),
     "utf-8",
   );
-  cachedBaselineBlock = `## BASELINE DATASET (UC AI Governance, Phase 0, v0.6.0)
+  cachedBaselineBlock = `## BASELINE DATASET (UC AI Governance, v0.6.0)
 
 The JSON document below is the authoritative source for every factual claim about UC entities. Every entity_id the user cares about appears here. Every dimension, field, value, source_id, source_url, and note lives here.
 

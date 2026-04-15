@@ -4,7 +4,7 @@
     "version": "0.6.0",
     "created": "2026-04-14",
     "source": "UC System AI Governance Document Inventory (Campuses, Health Systems, and National Laboratories)",
-    "purpose": "Baseline data collection for UCNFI Steering Committee Phase 0 — mapping AI governance, strategy, policy, infrastructure, and adoption across the UC system",
+    "purpose": "Baseline data collection for the UCNFI Steering Committee — mapping AI governance, strategy, policy, infrastructure, and adoption across the UC system",
     "schema_version": "1.0",
     "notes": "v0.6.0: Web archive enrichment pass (2026-04-14). Processed all batch2 web archives across 10 campuses, 5 health systems, cross-UC health, and 3 national labs. Equal treatment across all entities. Sources: campus AI portals, governance pages, FAQ, tools pages, training guides, chancellor statements, health AI council pages, HIMSS case study, clinical AI pilots, VALID AI initiative, UC Health Grand Rounds, CBorg portal, OpenAI-LANL partnership. 20 entities, ~219 data points."
   },

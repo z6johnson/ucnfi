@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <main className="pb-24">{children}</main>
           <footer className="hairline mt-16 flex items-center justify-between py-6">
             <span className="label">UC Next Frontier Initiative</span>
-            <span className="label">Phase 0 Baseline · v0.6.0</span>
+            <span className="label">UCNFI Baseline · v0.6.0</span>
           </footer>
         </div>
       </body>

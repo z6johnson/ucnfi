@@ -17,17 +17,15 @@ export default function DashboardPage() {
       <section>
         <span className="label">UCNFI · Overview</span>
         <h1 className="hero mt-2 max-w-3xl">
-          Research, synthesis, and analytics for the UC Next Frontier
-          Initiative Steering Committee.
+          UC Next Frontier Initiative Steering Committee
         </h1>
         <p
           className="prose-body mt-6 max-w-2xl"
           style={{ color: "var(--color-text-muted)" }}
         >
-          A working surface over the Phase 0 AI governance baseline —
-          20 entities, {stats.dataPointCount} data points across ten
-          dimensions — organized around the three pillars of the UCNFI
-          North Star and the eight opportunity areas beneath them.
+          Research, synthesis, and analytics working surface organized
+          around the UCNFI North Star three pillars, eight opportunity
+          areas, and eight initial research topics.
         </p>
       </section>
 
@@ -112,7 +110,7 @@ export default function DashboardPage() {
       <section className="mt-16">
         <div className="hairline flex items-baseline justify-between pb-2">
           <h2 className="display">Research Topics</h2>
-          <span className="label">Phase 0 → Phase 1</span>
+          <span className="label">8 total</span>
         </div>
         <ol className="mt-6 flex flex-col gap-4">
           {researchTopics.map((topic) => (
@@ -140,7 +138,7 @@ export default function DashboardPage() {
         </div>
         <ul className="mt-6 flex flex-wrap gap-6">
           <li>
-            <Link href="/entities" className="label">
+            <Link href="/baseline" className="label">
               → Browse the baseline
             </Link>
           </li>

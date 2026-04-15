@@ -132,14 +132,24 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
     }
   };
 
+  const isEmpty = messages.length === 0;
+
   return (
-    <div className="flex h-[calc(100vh-220px)] min-h-[520px] flex-col">
+    <div
+      className={
+        isEmpty
+          ? "flex flex-col"
+          : "flex h-[calc(100vh-220px)] min-h-[520px] flex-col"
+      }
+    >
       <div
         ref={logRef}
-        className="flex-1 overflow-y-auto pr-2"
+        className={
+          isEmpty ? "" : "flex-1 overflow-y-auto pr-2"
+        }
         aria-live="polite"
       >
-        {messages.length === 0 ? (
+        {isEmpty ? (
           <EmptyState onPick={(text) => void send(text)} />
         ) : (
           <ul className="flex flex-col gap-8">
@@ -249,12 +259,11 @@ function EmptyState({ onPick }: { onPick: (text: string) => void }) {
         className="prose-body max-w-xl"
         style={{ color: "var(--color-text-muted)" }}
       >
-        Ask anything grounded in the Phase 0 baseline. The copilot cites
-        every factual claim back to a specific entity — click any{" "}
-        <code>[entity_id]</code> chip in a response to open that entity
-        in the explorer.
+        Ask anything grounded in the UCNFI baseline. The copilot cites
+        every factual claim back to a specific entity — click any
+        citation chip in a response to open that entity in the explorer.
       </p>
-      <div className="mt-8">
+      <div className="mt-6">
         <div className="label">Start with</div>
         <ul className="mt-3 flex flex-col gap-3">
           {STARTERS.map((s) => (
@@ -301,7 +310,7 @@ function InlineCitations({
       out.push(
         <Link
           key={`cite-${chipIdx++}`}
-          href={`/entities/${id}`}
+          href={`/baseline/${id}`}
           className="citation-chip"
           title={`Open ${id} in the baseline explorer`}
         >

@@ -30,7 +30,7 @@ export default async function EntityDetailPage({
 
   return (
     <div className="pt-12">
-      <Link href="/entities" className="label">
+      <Link href="/baseline" className="label">
         ← All entities
       </Link>
 
