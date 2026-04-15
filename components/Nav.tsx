@@ -6,6 +6,7 @@ const items: { href: string; label: string }[] = [
   { href: "/compare", label: "Compare" },
   { href: "/chat", label: "Chat" },
   { href: "/memos", label: "Memos" },
+  { href: "/about", label: "About" },
 ];
 
 export function Nav() {
