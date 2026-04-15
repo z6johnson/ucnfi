@@ -172,9 +172,11 @@ hr {
   letter-spacing: 0.02em;
   color: var(--color-accent);
   background: var(--color-accent-wash);
+  border: 0;
   border-radius: 2px;
   text-decoration: none;
   vertical-align: baseline;
+  cursor: pointer;
   transition: background 120ms ease;
 }
 .citation-chip:hover {

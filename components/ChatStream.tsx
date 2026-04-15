@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   useCallback,
   useEffect,
@@ -9,6 +8,7 @@ import {
   useState,
   type KeyboardEvent,
 } from "react";
+import { EntityDrawer } from "./EntityDrawer";
 
 type Role = "user" | "assistant";
 type Message = { role: Role; content: string };
@@ -38,6 +38,7 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [usage, setUsage] = useState<Usage | null>(null);
+  const [openEntityId, setOpenEntityId] = useState<string | null>(null);
 
   const knownIds = useMemo(() => new Set(knownEntityIds), [knownEntityIds]);
   const logRef = useRef<HTMLDivElement | null>(null);
@@ -132,123 +133,169 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
     }
   };
 
+  const resetChat = () => {
+    if (streaming) return;
+    setMessages([]);
+    setError(null);
+    setUsage(null);
+    setInput("");
+  };
+
   const isEmpty = messages.length === 0;
 
   return (
-    <div
-      className={
-        isEmpty
-          ? "flex flex-col"
-          : "flex h-[calc(100vh-220px)] min-h-[520px] flex-col"
-      }
-    >
+    <>
       <div
-        ref={logRef}
         className={
-          isEmpty ? "" : "flex-1 overflow-y-auto pr-2"
+          isEmpty
+            ? "flex flex-col"
+            : "flex h-[calc(100vh-220px)] min-h-[520px] flex-col"
         }
-        aria-live="polite"
       >
-        {isEmpty ? (
-          <EmptyState onPick={(text) => void send(text)} />
-        ) : (
-          <ul className="flex flex-col gap-8">
-            {messages.map((msg, i) => (
-              <li key={i}>
-                <div className="label mb-1">
-                  {msg.role === "user" ? "You" : "Research copilot"}
-                </div>
-                <div
-                  className="prose-body whitespace-pre-wrap"
-                  style={{ color: "var(--color-text)" }}
-                >
-                  {msg.content ? (
-                    <InlineCitations text={msg.content} knownIds={knownIds} />
-                  ) : streaming && i === messages.length - 1 ? (
-                    <span
-                      className="label"
-                      style={{ color: "var(--color-text-subtle)" }}
-                    >
-                      Thinking…
-                    </span>
-                  ) : null}
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+        {!isEmpty ? (
+          <div className="mb-3 flex items-center justify-between">
+            <span
+              className="label"
+              style={{ color: "var(--color-text-subtle)" }}
+            >
+              {messages.filter((m) => m.role === "user").length} turn
+              {messages.filter((m) => m.role === "user").length === 1 ? "" : "s"}
+            </span>
+            <button
+              type="button"
+              onClick={resetChat}
+              disabled={streaming}
+              className="label"
+              style={{
+                color: streaming
+                  ? "var(--color-text-subtle)"
+                  : "var(--color-accent)",
+                cursor: streaming ? "not-allowed" : "pointer",
+              }}
+            >
+              New chat
+            </button>
+          </div>
+        ) : null}
+
+        <div
+          ref={logRef}
+          className={isEmpty ? "" : "flex-1 overflow-y-auto pr-2"}
+          aria-live="polite"
+        >
+          {isEmpty ? (
+            <EmptyState onPick={(text) => void send(text)} />
+          ) : (
+            <ul className="flex flex-col gap-8">
+              {messages.map((msg, i) => (
+                <li key={i}>
+                  <div className="label mb-1">
+                    {msg.role === "user" ? "You" : "Research copilot"}
+                  </div>
+                  <div
+                    className="prose-body whitespace-pre-wrap"
+                    style={{ color: "var(--color-text)" }}
+                  >
+                    {msg.content ? (
+                      <InlineCitations
+                        text={msg.content}
+                        knownIds={knownIds}
+                        onOpenEntity={setOpenEntityId}
+                      />
+                    ) : streaming && i === messages.length - 1 ? (
+                      <span
+                        className="label"
+                        style={{ color: "var(--color-text-subtle)" }}
+                      >
+                        Thinking…
+                      </span>
+                    ) : null}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {error ? (
+          <div
+            className="rail-accent mt-4"
+            style={{ borderLeftColor: "var(--color-danger)" }}
+          >
+            <span
+              className="label"
+              style={{ color: "var(--color-danger)" }}
+            >
+              Error
+            </span>
+            <p
+              className="mt-1 text-sm"
+              style={{ color: "var(--color-text-muted)" }}
+            >
+              {error}
+            </p>
+          </div>
+        ) : null}
+
+        <form
+          className="hairline mt-4 flex items-start gap-3 pt-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void send(input);
+          }}
+        >
+          <textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={onKeyDown}
+            disabled={streaming}
+            rows={2}
+            placeholder="Ask a question grounded in the baseline…"
+            className="flex-1 resize-none bg-transparent text-[var(--text-base)] focus:outline-none"
+            style={{
+              borderBottom: "1px solid var(--color-border-hair)",
+              paddingBottom: "var(--space-2)",
+              color: "var(--color-text)",
+            }}
+          />
+          <button
+            type="submit"
+            disabled={streaming || !input.trim()}
+            className="label"
+            style={{
+              color: streaming || !input.trim()
+                ? "var(--color-text-subtle)"
+                : "var(--color-accent)",
+              cursor:
+                streaming || !input.trim() ? "not-allowed" : "pointer",
+            }}
+          >
+            {streaming ? "Streaming…" : "Send ↵"}
+          </button>
+        </form>
+
+        <footer
+          className="mt-3 flex items-center justify-between text-xs"
+          style={{ color: "var(--color-text-subtle)" }}
+        >
+          <span>
+            Shift+Enter inserts a newline. Citations open in a side panel —
+            your chat stays right here.
+          </span>
+          {usage ? (
+            <span>
+              {usage.cache_read_input_tokens.toLocaleString()} cached ·{" "}
+              {usage.output_tokens.toLocaleString()} out
+            </span>
+          ) : null}
+        </footer>
       </div>
 
-      {error ? (
-        <div
-          className="rail-accent mt-4"
-          style={{ borderLeftColor: "var(--color-danger)" }}
-        >
-          <span
-            className="label"
-            style={{ color: "var(--color-danger)" }}
-          >
-            Error
-          </span>
-          <p
-            className="mt-1 text-sm"
-            style={{ color: "var(--color-text-muted)" }}
-          >
-            {error}
-          </p>
-        </div>
-      ) : null}
-
-      <form
-        className="hairline mt-4 flex items-start gap-3 pt-4"
-        onSubmit={(e) => {
-          e.preventDefault();
-          void send(input);
-        }}
-      >
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={onKeyDown}
-          disabled={streaming}
-          rows={2}
-          placeholder="Ask a question grounded in the baseline…"
-          className="flex-1 resize-none bg-transparent text-[var(--text-base)] focus:outline-none"
-          style={{
-            borderBottom: "1px solid var(--color-border-hair)",
-            paddingBottom: "var(--space-2)",
-            color: "var(--color-text)",
-          }}
-        />
-        <button
-          type="submit"
-          disabled={streaming || !input.trim()}
-          className="label"
-          style={{
-            color: streaming || !input.trim()
-              ? "var(--color-text-subtle)"
-              : "var(--color-accent)",
-            cursor:
-              streaming || !input.trim() ? "not-allowed" : "pointer",
-          }}
-        >
-          {streaming ? "Streaming…" : "Send ↵"}
-        </button>
-      </form>
-
-      <footer
-        className="mt-3 flex items-center justify-between text-xs"
-        style={{ color: "var(--color-text-subtle)" }}
-      >
-        <span>Shift+Enter inserts a newline. Chat history is not yet persisted.</span>
-        {usage ? (
-          <span>
-            {usage.cache_read_input_tokens.toLocaleString()} cached ·{" "}
-            {usage.output_tokens.toLocaleString()} out
-          </span>
-        ) : null}
-      </footer>
-    </div>
+      <EntityDrawer
+        entityId={openEntityId}
+        onClose={() => setOpenEntityId(null)}
+      />
+    </>
   );
 }
 
@@ -259,9 +306,9 @@ function EmptyState({ onPick }: { onPick: (text: string) => void }) {
         className="prose-body max-w-xl"
         style={{ color: "var(--color-text-muted)" }}
       >
-        Ask anything grounded in the UCNFI baseline. The copilot cites
-        every factual claim back to a specific entity — click any
-        citation chip in a response to open that entity in the explorer.
+        Ask anything grounded in the UCNFI baseline. The copilot cites every
+        factual claim back to a specific entity — click any citation chip to
+        open that entity in a side panel without leaving the conversation.
       </p>
       <div className="mt-6">
         <div className="label">Start with</div>
@@ -291,9 +338,11 @@ function EmptyState({ onPick }: { onPick: (text: string) => void }) {
 function InlineCitations({
   text,
   knownIds,
+  onOpenEntity,
 }: {
   text: string;
   knownIds: Set<string>;
+  onOpenEntity: (id: string) => void;
 }) {
   const out: React.ReactNode[] = [];
   const pattern = /\[([a-z0-9_]+)\]/g;
@@ -308,14 +357,15 @@ function InlineCitations({
     }
     if (knownIds.has(id)) {
       out.push(
-        <Link
+        <button
+          type="button"
           key={`cite-${chipIdx++}`}
-          href={`/baseline/${id}`}
+          onClick={() => onOpenEntity(id)}
           className="citation-chip"
-          title={`Open ${id} in the baseline explorer`}
+          title={`Open ${id} in a side panel`}
         >
           {id}
-        </Link>,
+        </button>,
       );
     } else {
       out.push(raw);
