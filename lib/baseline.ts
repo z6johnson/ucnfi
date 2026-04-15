@@ -4,9 +4,16 @@
  * Server-only. This module reads the JSON once on first import and
  * exposes typed accessors over it. All pages use this module — no
  * page imports the raw JSON directly.
+ *
+ * We intentionally load via `readFileSync` rather than an ES module
+ * import so TypeScript doesn't try to infer a huge literal type from
+ * the ~99KB JSON file (which can OOM `tsc` on constrained build
+ * machines). All pages using this module are statically generated,
+ * so the read happens at build time, not per request.
  */
 
-import baselineJson from "@/data/uc_ai_baseline.json";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 export type EntityType = "campus" | "health_system" | "national_lab" | "systemwide";
 
@@ -59,7 +66,9 @@ type RawBaseline = {
   entities: Record<string, Entity>;
 };
 
-const raw = baselineJson as unknown as RawBaseline;
+const raw = JSON.parse(
+  readFileSync(join(process.cwd(), "data", "uc_ai_baseline.json"), "utf-8"),
+) as RawBaseline;
 
 /* ------------------------------------------------------------------ */
 /* Accessors                                                           */
