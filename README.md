@@ -9,7 +9,7 @@ A Next.js web app over the Phase 0 AI governance baseline dataset (20 entities, 
 | | Step | What it adds |
 |---|---|---|
 | ✓ | **Step 1 — Baseline Explorer** | Dashboard, entity index, entity detail pages, NFI design tokens. No runtime dependencies. |
-| ☐ | **Step 2 — Grounded Chat** | Streaming Claude chat with baseline prompt caching and `query_baseline` tool use. |
+| ✓ | **Step 2 — Grounded Chat** | Streaming Claude chat with the full baseline in a prompt-cached system prompt, inline `[entity_id]` citations wired to the explorer. |
 | ☐ | **Step 3 — Persistence + Shares** | Postgres + Drizzle, saved chats, admin cookie gate, read-only share links. |
 | ☐ | **Step 4 — Memos + Comparison** | Memo drafting, cross-entity comparison matrix, OA pages. |
 | ☐ | **Step 5 — Polish** | Copy pass, seeded published memos, custom domain, analytics. |
