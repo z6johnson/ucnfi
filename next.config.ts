@@ -12,6 +12,20 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/api/chat": ["./data/uc_ai_baseline.json"],
   },
+  async redirects() {
+    return [
+      {
+        source: "/entities",
+        destination: "/baseline",
+        permanent: true,
+      },
+      {
+        source: "/entities/:id",
+        destination: "/baseline/:id",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

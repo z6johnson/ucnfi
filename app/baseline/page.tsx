@@ -28,8 +28,8 @@ export default function EntitiesPage() {
           className="prose-body mt-4 max-w-2xl"
           style={{ color: "var(--color-text-muted)" }}
         >
-          Every UC system, campus, health system, and national lab captured
-          in the Phase 0 baseline. Each entity links to the full dimension
+          Every UC system, campus, health system, and national lab in the
+          UCNFI baseline. Each entity links to the full dimension
           breakdown — governance, policy, infrastructure, health AI,
           research, training, engagement, and more.
         </p>

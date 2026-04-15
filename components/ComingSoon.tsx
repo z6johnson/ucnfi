@@ -34,7 +34,7 @@ export function ComingSoon({ section, step, children }: Props) {
         </p>
       </div>
       <div className="mt-8">
-        <Link href="/entities" className="label">
+        <Link href="/baseline" className="label">
           → Browse the baseline in the meantime
         </Link>
       </div>

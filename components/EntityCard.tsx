@@ -16,7 +16,7 @@ export function EntityCard({ entity }: { entity: Entity }) {
 
   return (
     <Link
-      href={`/entities/${entity.entity_id}`}
+      href={`/baseline/${entity.entity_id}`}
       className="group block rail-accent no-underline"
       style={{ borderLeftColor: "var(--color-border-hair)" }}
     >
