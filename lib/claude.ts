@@ -22,8 +22,10 @@ import {
   researchTopics,
 } from "@/content/northstar";
 
-export const CLAUDE_MODEL = "claude-sonnet-4-6";
+export const CLAUDE_MODEL = "claude-opus-4-6-v1";
 export const CLAUDE_MAX_TOKENS = 4096;
+export const LITELLM_BASE_URL =
+  process.env.LITELLM_BASE_URL ?? "https://tritonai-api.ucsd.edu";
 
 /* ------------------------------------------------------------------ */
 /* Client                                                              */
@@ -33,13 +35,17 @@ let client: Anthropic | null = null;
 
 export function getAnthropic(): Anthropic {
   if (!client) {
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) {
+    const authToken = process.env.LITELLM_API_KEY;
+    if (!authToken) {
       throw new Error(
-        "ANTHROPIC_API_KEY is not set. Add it to your environment (see README → Deployment → Step 2).",
+        "LITELLM_API_KEY is not set. Add it to your environment (see README → Deployment → Step 2).",
       );
     }
-    client = new Anthropic({ apiKey });
+    client = new Anthropic({
+      authToken,
+      baseURL: LITELLM_BASE_URL,
+      apiKey: null,
+    });
   }
   return client;
 }

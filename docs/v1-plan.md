@@ -44,10 +44,10 @@ What's missing is a place to *work* with that baseline: a tool for Zach to explo
 
 - **Next.js 15** (App Router, React 19, TypeScript) — single project at repo root
 - **Tailwind CSS v4** with tokens derived from `docs/seed-style-guide.md`
-- **Anthropic SDK** (`@anthropic-ai/sdk`) for Claude, using **Claude Sonnet 4.6** (`claude-sonnet-4-6`) as the default model and **prompt caching** for the baseline payload
+- **Anthropic SDK** (`@anthropic-ai/sdk`) pointed at the **UCSD TritonAI LiteLLM proxy** (`https://tritonai-api.ucsd.edu`) for Claude, using **Claude Opus 4.6** (`claude-opus-4-6-v1`) as the default model and **prompt caching** for the baseline payload
 - **Vercel Postgres** (or Neon) via **Drizzle ORM** for the small amount of mutable state (memos, saved chats, share slugs). Keeps deploys simple on Vercel.
 - **Basic gate** for Zach's editing routes: a single `ADMIN_PASSWORD` env var behind a cookie-based auth. Public `/share/[slug]` routes bypass the gate.
-- **Deploy:** Vercel, with `ANTHROPIC_API_KEY`, `DATABASE_URL`, `ADMIN_PASSWORD`, `NFI_BASE_URL` as env vars.
+- **Deploy:** Vercel, with `LITELLM_API_KEY`, `DATABASE_URL`, `ADMIN_PASSWORD`, `NFI_BASE_URL` as env vars.
 
 ### Data model
 

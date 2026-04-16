@@ -84,13 +84,14 @@ Every page is prerendered at build time (28 static pages, including all 20 entit
 
 ### Step 2 — Grounded Chat
 
-Adds the Anthropic Claude SDK (`@anthropic-ai/sdk`) and a streaming `/api/chat` route with prompt caching of the full baseline.
+Adds the Anthropic Claude SDK (`@anthropic-ai/sdk`) pointed at the UCSD TritonAI LiteLLM proxy and a streaming `/api/chat` route with prompt caching of the full baseline.
 
 **Environment variables** (Project Settings → Environment Variables — add to Production, Preview, and Development):
 
 | Name | Value | Sensitive |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | Your Anthropic API key | ✓ |
+| `LITELLM_API_KEY` | TritonAI LiteLLM bearer token | ✓ |
+| `LITELLM_BASE_URL` | Optional; defaults to `https://tritonai-api.ucsd.edu` | — |
 
 **Function duration.** The `/api/chat` route will export `maxDuration = 60` so Vercel allows long-running streams. On Vercel's Hobby plan, Serverless Function duration is capped — upgrade to Pro if streaming responses are getting truncated.
 
@@ -125,7 +126,7 @@ The `db:push` script will be added in Step 3 and wraps `drizzle-kit push`. Previ
 
 ### Step 4 — Memos + Comparison
 
-**No new infrastructure.** Reuses `ANTHROPIC_API_KEY` (for `/api/memo/generate`) and `DATABASE_URL` (for the new `memos` table). Run `npm run db:push` once after the migration lands.
+**No new infrastructure.** Reuses `LITELLM_API_KEY` (for `/api/memo/generate`) and `DATABASE_URL` (for the new `memos` table). Run `npm run db:push` once after the migration lands.
 
 The comparison matrix is a pure read over the baseline JSON — no additional config.
 
@@ -143,7 +144,8 @@ No required config changes. Optional:
 
 | Variable | Step introduced | Purpose |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | Step 2 | Claude API for chat + memo generation |
+| `LITELLM_API_KEY` | Step 2 | TritonAI LiteLLM bearer token for chat + memo generation |
+| `LITELLM_BASE_URL` | Step 2 | Optional LiteLLM proxy URL (defaults to `https://tritonai-api.ucsd.edu`) |
 | `DATABASE_URL` | Step 3 | Neon Postgres connection string |
 | `ADMIN_PASSWORD` | Step 3 | Admin cookie gate for editing routes |
 | `NFI_BASE_URL` | Step 3 | Absolute URL used when generating share links |
