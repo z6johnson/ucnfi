@@ -72,19 +72,37 @@ export async function POST(req: NextRequest) {
             }
           }
 
-          const final = await stream.finalMessage();
-          send({
-            type: "done",
-            provider,
-            usage: {
-              input_tokens: final.usage.input_tokens,
-              output_tokens: final.usage.output_tokens,
-              cache_creation_input_tokens:
-                final.usage.cache_creation_input_tokens ?? 0,
-              cache_read_input_tokens:
-                final.usage.cache_read_input_tokens ?? 0,
-            },
-          });
+          try {
+            const final = await stream.finalMessage();
+            send({
+              type: "done",
+              provider,
+              usage: {
+                input_tokens: final.usage.input_tokens,
+                output_tokens: final.usage.output_tokens,
+                cache_creation_input_tokens:
+                  final.usage.cache_creation_input_tokens ?? 0,
+                cache_read_input_tokens:
+                  final.usage.cache_read_input_tokens ?? 0,
+              },
+            });
+          } catch (finalErr) {
+            const finalMsg =
+              finalErr instanceof Error ? finalErr.message : "Unknown error";
+            console.error(
+              `[chat] ${provider} finalMessage() failed: ${finalMsg}`,
+            );
+            send({
+              type: "done",
+              provider,
+              usage: {
+                input_tokens: 0,
+                output_tokens: 0,
+                cache_creation_input_tokens: 0,
+                cache_read_input_tokens: 0,
+              },
+            });
+          }
           lastError = null;
           break;
         } catch (err) {
