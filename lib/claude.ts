@@ -206,6 +206,9 @@ export function startChatStream(
 ) {
   const client =
     provider === "litellm" ? getLiteLLMClient() : getAnthropicClient();
+  console.info(
+    `[chat] provider=${provider} model=${JSON.stringify(CLAUDE_MODEL)}`,
+  );
   return client.messages.stream({
     model: CLAUDE_MODEL,
     max_tokens: CLAUDE_MAX_TOKENS,
