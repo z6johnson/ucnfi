@@ -41,6 +41,17 @@ const STARTERS = [
   "Draft a one-page memo for OA-1 Trusted AI Standard that identifies three systemwide gaps.",
 ];
 
+function messagesToMarkdown(messages: Message[]): string {
+  const header = `# UCNFI chat export\n\nExported ${new Date().toISOString()}\n`;
+  const body = messages
+    .map((m) => {
+      const label = m.role === "assistant" ? "Research copilot" : "You";
+      return `## ${label}\n\n${m.content.trim()}`;
+    })
+    .join("\n\n");
+  return `${header}\n${body}\n`;
+}
+
 export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -49,6 +60,9 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
   const [usage, setUsage] = useState<Usage | null>(null);
   const [provider, setProvider] = useState<Provider | null>(null);
   const [openEntityId, setOpenEntityId] = useState<string | null>(null);
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "error">(
+    "idle",
+  );
 
   const knownIds = useMemo(() => new Set(knownEntityIds), [knownEntityIds]);
   const logRef = useRef<HTMLDivElement | null>(null);
@@ -152,6 +166,18 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
     setUsage(null);
     setProvider(null);
     setInput("");
+    setCopyState("idle");
+  };
+
+  const copyAsMarkdown = async () => {
+    if (messages.length === 0) return;
+    try {
+      await navigator.clipboard.writeText(messagesToMarkdown(messages));
+      setCopyState("copied");
+    } catch {
+      setCopyState("error");
+    }
+    window.setTimeout(() => setCopyState("idle"), 1800);
   };
 
   const isEmpty = messages.length === 0;
@@ -174,20 +200,43 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
               {messages.filter((m) => m.role === "user").length} turn
               {messages.filter((m) => m.role === "user").length === 1 ? "" : "s"}
             </span>
-            <button
-              type="button"
-              onClick={resetChat}
-              disabled={streaming}
-              className="label"
-              style={{
-                color: streaming
-                  ? "var(--color-text-subtle)"
-                  : "var(--color-accent)",
-                cursor: streaming ? "not-allowed" : "pointer",
-              }}
-            >
-              New chat
-            </button>
+            <div className="flex items-center gap-4">
+              <button
+                type="button"
+                onClick={copyAsMarkdown}
+                disabled={streaming}
+                className="label"
+                style={{
+                  color: streaming
+                    ? "var(--color-text-subtle)"
+                    : copyState === "error"
+                      ? "var(--color-danger)"
+                      : "var(--color-accent)",
+                  cursor: streaming ? "not-allowed" : "pointer",
+                }}
+                title="Copy this conversation as Markdown"
+              >
+                {copyState === "copied"
+                  ? "Copied ✓"
+                  : copyState === "error"
+                    ? "Copy failed"
+                    : "Copy .md"}
+              </button>
+              <button
+                type="button"
+                onClick={resetChat}
+                disabled={streaming}
+                className="label"
+                style={{
+                  color: streaming
+                    ? "var(--color-text-subtle)"
+                    : "var(--color-accent)",
+                  cursor: streaming ? "not-allowed" : "pointer",
+                }}
+              >
+                New chat
+              </button>
+            </div>
           </div>
         ) : null}
 

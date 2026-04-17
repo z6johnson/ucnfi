@@ -126,3 +126,11 @@ export function getMemo(slug: string): Memo | undefined {
 export function memoSlugs(): string[] {
   return listMemos().map((m) => m.slug);
 }
+
+export function invalidateMemoCache(): void {
+  cache = null;
+}
+
+export function memosDir(): string {
+  return MEMOS_DIR;
+}
