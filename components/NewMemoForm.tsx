@@ -1,10 +1,20 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import type { Pillar } from "@/content/northstar";
 
-type Status = "idle" | "submitting" | "error";
+type Status = "idle" | "submitting" | "published" | "error";
+
+type PublishResult = {
+  slug: string;
+  commitSha?: string;
+  commitUrl?: string;
+};
+
+const POLL_INTERVAL_MS = 5000;
+const POLL_MAX_ATTEMPTS = 24; // ~2 minutes
 
 export function NewMemoForm({ pillars }: { pillars: Pillar[] }) {
   const router = useRouter();
@@ -16,6 +26,7 @@ export function NewMemoForm({ pillars }: { pillars: Pillar[] }) {
   const [body, setBody] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [published, setPublished] = useState<PublishResult | null>(null);
 
   const derivedSlug = useMemo(() => {
     return title
@@ -52,13 +63,26 @@ export function NewMemoForm({ pillars }: { pillars: Pillar[] }) {
         throw new Error(data.error || `Request failed (${res.status})`);
       }
 
-      const data = (await res.json()) as { slug: string };
-      router.push(`/memos/${data.slug}`);
-      router.refresh();
+      const data = (await res.json()) as PublishResult;
+      setPublished(data);
+      setStatus("published");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
       setStatus("error");
     }
+  }
+
+  if (status === "published" && published) {
+    return (
+      <PublishedPanel
+        result={published}
+        onDone={() => {
+          router.push(`/memos/${published.slug}`);
+          router.refresh();
+        }}
+        body={body}
+      />
+    );
   }
 
   const disabled = status === "submitting";
@@ -186,10 +210,135 @@ export function NewMemoForm({ pillars }: { pillars: Pillar[] }) {
                 : "pointer",
           }}
         >
-          {disabled ? "Saving…" : "Publish memo ↵"}
+          {disabled ? "Publishing…" : "Publish memo ↵"}
         </button>
       </div>
     </form>
+  );
+}
+
+type PollStatus = "building" | "ready" | "timeout" | "error";
+
+function PublishedPanel({
+  result,
+  onDone,
+  body,
+}: {
+  result: PublishResult;
+  onDone: () => void;
+  body: string;
+}) {
+  const [pollStatus, setPollStatus] = useState<PollStatus>("building");
+  const [attempt, setAttempt] = useState(0);
+  const cancelled = useRef(false);
+
+  useEffect(() => {
+    cancelled.current = false;
+    let currentAttempt = 0;
+
+    const tick = async () => {
+      if (cancelled.current) return;
+      currentAttempt += 1;
+      setAttempt(currentAttempt);
+
+      try {
+        const res = await fetch(`/memos/${result.slug}`, {
+          method: "HEAD",
+          cache: "no-store",
+        });
+        if (cancelled.current) return;
+        if (res.ok) {
+          setPollStatus("ready");
+          return;
+        }
+      } catch {
+        if (cancelled.current) return;
+        setPollStatus("error");
+        return;
+      }
+
+      if (currentAttempt >= POLL_MAX_ATTEMPTS) {
+        setPollStatus("timeout");
+        return;
+      }
+      window.setTimeout(tick, POLL_INTERVAL_MS);
+    };
+
+    const id = window.setTimeout(tick, POLL_INTERVAL_MS);
+    return () => {
+      cancelled.current = true;
+      window.clearTimeout(id);
+    };
+  }, [result.slug]);
+
+  useEffect(() => {
+    if (pollStatus === "ready") {
+      const id = window.setTimeout(onDone, 600);
+      return () => window.clearTimeout(id);
+    }
+  }, [pollStatus, onDone]);
+
+  return (
+    <div className="mt-8 flex max-w-2xl flex-col gap-6">
+      <div
+        className="rail-accent"
+        style={{ borderLeftColor: "var(--color-accent)" }}
+      >
+        <span className="label">Committed to GitHub</span>
+        <p
+          className="mt-1 text-sm"
+          style={{ color: "var(--color-text-muted)" }}
+        >
+          {pollStatus === "ready"
+            ? "Published. Redirecting…"
+            : pollStatus === "timeout"
+              ? "Still building — try the link shortly."
+              : pollStatus === "error"
+                ? "Could not check build status. Try the link manually."
+                : `Vercel is rebuilding the site (~60s). Checking every ${POLL_INTERVAL_MS / 1000}s — attempt ${attempt}/${POLL_MAX_ATTEMPTS}.`}
+        </p>
+        {result.commitUrl ? (
+          <p className="mt-2 text-sm">
+            <a
+              href={result.commitUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="label"
+              style={{ color: "var(--color-accent)" }}
+            >
+              View commit on GitHub →
+            </a>
+          </p>
+        ) : null}
+      </div>
+
+      <div className="flex items-center gap-6">
+        <Link
+          href={`/memos/${result.slug}`}
+          className="label"
+          style={{ color: "var(--color-accent)" }}
+        >
+          Open /memos/{result.slug} →
+        </Link>
+        <Link
+          href="/memos"
+          className="label"
+          style={{ color: "var(--color-text-subtle)" }}
+        >
+          Back to memos
+        </Link>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <span className="label">Submitted body (read-only)</span>
+        <textarea
+          readOnly
+          value={body}
+          rows={10}
+          className="ucnfi-input font-mono text-sm"
+        />
+      </div>
+    </div>
   );
 }
 

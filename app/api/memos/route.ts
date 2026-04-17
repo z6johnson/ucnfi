@@ -1,9 +1,5 @@
-import { existsSync } from "node:fs";
-import { writeFile } from "node:fs/promises";
-import { join } from "node:path";
 import { NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
-import { invalidateMemoCache, memosDir } from "@/lib/memos";
+import { getFileSha, putFile, GitHubApiError } from "@/lib/github";
 import { pillars, type PillarId } from "@/content/northstar";
 
 export const runtime = "nodejs";
@@ -88,14 +84,6 @@ export async function POST(req: Request) {
     pillar = pillarRaw as PillarId;
   }
 
-  const filePath = join(memosDir(), `${slug}.md`);
-  if (existsSync(filePath)) {
-    return NextResponse.json(
-      { error: `A memo with slug "${slug}" already exists.` },
-      { status: 409 },
-    );
-  }
-
   const created = new Date().toISOString().slice(0, 10);
   const fmLines = [
     "---",
@@ -110,18 +98,53 @@ export async function POST(req: Request) {
   fmLines.push("---", "");
 
   const file = `${fmLines.join("\n")}\n${body}\n`;
+  const path = `content/memos/${slug}.md`;
 
   try {
-    await writeFile(filePath, file, { encoding: "utf-8", flag: "wx" });
+    const existingSha = await getFileSha(path);
+    if (existingSha) {
+      return NextResponse.json(
+        { error: `A memo with slug "${slug}" already exists.` },
+        { status: 409 },
+      );
+    }
+
+    const result = await putFile({
+      path,
+      message: `memo: add ${slug}`,
+      content: file,
+      committer: {
+        name: "UCNFI memo bot",
+        email: "memos@ucnfi.invalid",
+      },
+    });
+
+    return NextResponse.json(
+      {
+        slug,
+        commitSha: result.commitSha,
+        commitUrl: result.htmlUrl,
+      },
+      { status: 201 },
+    );
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : "Failed to write memo file.";
-    return NextResponse.json({ error: message }, { status: 500 });
+    if (err instanceof GitHubApiError) {
+      if (err.status === 422) {
+        return NextResponse.json(
+          { error: `A memo with slug "${slug}" already exists.` },
+          { status: 409 },
+        );
+      }
+      console.error("[api/memos] GitHub error:", err.status, err.message);
+      return NextResponse.json(
+        { error: "Could not publish memo. Check server logs." },
+        { status: 500 },
+      );
+    }
+    console.error("[api/memos] Unexpected error:", err);
+    return NextResponse.json(
+      { error: "Unexpected error while publishing memo." },
+      { status: 500 },
+    );
   }
-
-  invalidateMemoCache();
-  revalidatePath("/memos");
-  revalidatePath(`/memos/${slug}`);
-
-  return NextResponse.json({ slug }, { status: 201 });
 }
