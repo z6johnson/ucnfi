@@ -1,13 +1,20 @@
 "use client";
 
 import {
+  Children,
+  cloneElement,
+  isValidElement,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
   type KeyboardEvent,
+  type ReactElement,
+  type ReactNode,
 } from "react";
+import ReactMarkdown, { type Components } from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { EntityDrawer } from "./EntityDrawer";
 
 type Role = "user" | "assistant";
@@ -192,33 +199,44 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
           {isEmpty ? (
             <EmptyState onPick={(text) => void send(text)} />
           ) : (
-            <ul className="flex flex-col gap-8">
-              {messages.map((msg, i) => (
-                <li key={i}>
-                  <div className="label mb-1">
-                    {msg.role === "user" ? "You" : "Research copilot"}
-                  </div>
-                  <div
-                    className="prose-body whitespace-pre-wrap"
-                    style={{ color: "var(--color-text)" }}
-                  >
-                    {msg.content ? (
-                      <InlineCitations
-                        text={msg.content}
-                        knownIds={knownIds}
-                        onOpenEntity={setOpenEntityId}
-                      />
-                    ) : streaming && i === messages.length - 1 ? (
+            <ul className="flex flex-col gap-6">
+              {messages.map((msg, i) => {
+                const isAssistant = msg.role === "assistant";
+                const isLast = i === messages.length - 1;
+                const empty = msg.content.length === 0;
+                return (
+                  <li key={i} className={isAssistant ? "rail-accent" : ""}>
+                    <div className="label mb-2">
+                      {isAssistant ? "Research copilot" : "You"}
+                    </div>
+                    {empty && streaming && isLast ? (
                       <span
                         className="label"
                         style={{ color: "var(--color-text-subtle)" }}
                       >
                         Thinking…
                       </span>
-                    ) : null}
-                  </div>
-                </li>
-              ))}
+                    ) : isAssistant ? (
+                      <AssistantMarkdown
+                        text={msg.content}
+                        knownIds={knownIds}
+                        onOpenEntity={setOpenEntityId}
+                      />
+                    ) : (
+                      <div
+                        className="whitespace-pre-wrap text-[var(--text-base)]"
+                        style={{ color: "var(--color-text-muted)" }}
+                      >
+                        <InlineCitations
+                          text={msg.content}
+                          knownIds={knownIds}
+                          onOpenEntity={setOpenEntityId}
+                        />
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>
@@ -302,7 +320,10 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
                   {" · "}
                 </span>
               ) : null}
-              {usage.cache_read_input_tokens.toLocaleString()} cached ·{" "}
+              {usage.cache_read_input_tokens > 0
+                ? `${usage.cache_read_input_tokens.toLocaleString()} cached`
+                : `${usage.input_tokens.toLocaleString()} in`}
+              {" · "}
               {usage.output_tokens.toLocaleString()} out
             </span>
           ) : null}
@@ -349,6 +370,61 @@ function EmptyState({ onPick }: { onPick: (text: string) => void }) {
           ))}
         </ul>
       </div>
+    </div>
+  );
+}
+
+function AssistantMarkdown({
+  text,
+  knownIds,
+  onOpenEntity,
+}: {
+  text: string;
+  knownIds: Set<string>;
+  onOpenEntity: (id: string) => void;
+}) {
+  const withCitations = (children: ReactNode): ReactNode =>
+    Children.map(children, (child) => {
+      if (typeof child === "string") {
+        return (
+          <InlineCitations
+            text={child}
+            knownIds={knownIds}
+            onOpenEntity={onOpenEntity}
+          />
+        );
+      }
+      if (isValidElement<{ children?: ReactNode }>(child)) {
+        const inner = child.props.children;
+        if (inner == null) return child;
+        return cloneElement(
+          child as ReactElement<{ children?: ReactNode }>,
+          undefined,
+          withCitations(inner),
+        );
+      }
+      return child;
+    });
+
+  const components: Components = {
+    p: ({ children }) => <p>{withCitations(children)}</p>,
+    li: ({ children }) => <li>{withCitations(children)}</li>,
+    td: ({ children }) => <td>{withCitations(children)}</td>,
+    th: ({ children }) => <th>{withCitations(children)}</th>,
+    strong: ({ children }) => <strong>{withCitations(children)}</strong>,
+    em: ({ children }) => <em>{withCitations(children)}</em>,
+    h1: ({ children }) => <h1>{withCitations(children)}</h1>,
+    h2: ({ children }) => <h2>{withCitations(children)}</h2>,
+    h3: ({ children }) => <h3>{withCitations(children)}</h3>,
+    h4: ({ children }) => <h4>{withCitations(children)}</h4>,
+    blockquote: ({ children }) => <blockquote>{withCitations(children)}</blockquote>,
+  };
+
+  return (
+    <div className="chat-prose">
+      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+        {text}
+      </ReactMarkdown>
     </div>
   );
 }
