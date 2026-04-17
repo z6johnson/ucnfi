@@ -20,9 +20,11 @@ type Usage = {
   cache_read_input_tokens: number;
 };
 
+type Provider = "litellm" | "anthropic";
+
 type StreamEvent =
   | { type: "delta"; text: string }
-  | { type: "done"; usage: Usage }
+  | { type: "done"; provider?: Provider; usage: Usage }
   | { type: "error"; error: string };
 
 const STARTERS = [
@@ -38,6 +40,7 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [usage, setUsage] = useState<Usage | null>(null);
+  const [provider, setProvider] = useState<Provider | null>(null);
   const [openEntityId, setOpenEntityId] = useState<string | null>(null);
 
   const knownIds = useMemo(() => new Set(knownEntityIds), [knownEntityIds]);
@@ -109,8 +112,10 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
               try {
                 const event = JSON.parse(line.slice(6)) as StreamEvent;
                 if (event.type === "delta") appendDelta(event.text);
-                else if (event.type === "done") setUsage(event.usage);
-                else if (event.type === "error") setError(event.error);
+                else if (event.type === "done") {
+                  setUsage(event.usage);
+                  if (event.provider) setProvider(event.provider);
+                } else if (event.type === "error") setError(event.error);
               } catch {
                 // ignore malformed line
               }
@@ -138,6 +143,7 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
     setMessages([]);
     setError(null);
     setUsage(null);
+    setProvider(null);
     setInput("");
   };
 
@@ -284,6 +290,18 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
           </span>
           {usage ? (
             <span>
+              {provider ? (
+                <span
+                  title={
+                    provider === "litellm"
+                      ? "Served via UCSD TritonAI LiteLLM proxy"
+                      : "Served via Anthropic API (fallback)"
+                  }
+                >
+                  via {provider}
+                  {" · "}
+                </span>
+              ) : null}
               {usage.cache_read_input_tokens.toLocaleString()} cached ·{" "}
               {usage.output_tokens.toLocaleString()} out
             </span>
