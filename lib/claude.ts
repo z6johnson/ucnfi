@@ -25,8 +25,7 @@ import {
 export const CLAUDE_MAX_TOKENS = 4096;
 export const LITELLM_BASE_URL =
   process.env.LITELLM_BASE_URL ?? "https://tritonai-api.ucsd.edu";
-export const LITELLM_MODEL = "claude-opus-4-6-v1";
-export const ANTHROPIC_MODEL = "claude-sonnet-4-6";
+export const CLAUDE_MODEL = process.env.CLAUDE_MODEL ?? "claude-opus-4-6";
 
 /* ------------------------------------------------------------------ */
 /* Clients                                                             */
@@ -207,9 +206,8 @@ export function startChatStream(
 ) {
   const client =
     provider === "litellm" ? getLiteLLMClient() : getAnthropicClient();
-  const model = provider === "litellm" ? LITELLM_MODEL : ANTHROPIC_MODEL;
   return client.messages.stream({
-    model,
+    model: CLAUDE_MODEL,
     max_tokens: CLAUDE_MAX_TOKENS,
     system: systemPrompt(),
     messages: messages.map((m) => ({ role: m.role, content: m.content })),
