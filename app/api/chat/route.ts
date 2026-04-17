@@ -1,5 +1,10 @@
 import type { NextRequest } from "next/server";
-import { startChatStream, type ChatMessage } from "@/lib/claude";
+import {
+  providerChain,
+  startChatStream,
+  type ChatMessage,
+  type Provider,
+} from "@/lib/claude";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -32,9 +37,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let stream;
+  let chain: Provider[];
   try {
-    stream = startChatStream(messages);
+    chain = providerChain();
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
     return Response.json({ error: message }, { status: 500 });
@@ -50,34 +55,56 @@ export async function POST(req: NextRequest) {
         );
       };
 
-      try {
-        for await (const event of stream) {
-          if (
-            event.type === "content_block_delta" &&
-            event.delta.type === "text_delta"
-          ) {
-            send({ type: "delta", text: event.delta.text });
-          }
-        }
+      let sentAnyDelta = false;
+      let lastError: unknown = null;
 
-        const final = await stream.finalMessage();
-        send({
-          type: "done",
-          usage: {
-            input_tokens: final.usage.input_tokens,
-            output_tokens: final.usage.output_tokens,
-            cache_creation_input_tokens:
-              final.usage.cache_creation_input_tokens ?? 0,
-            cache_read_input_tokens:
-              final.usage.cache_read_input_tokens ?? 0,
-          },
-        });
-      } catch (err) {
-        const message = err instanceof Error ? err.message : "Unknown error";
-        send({ type: "error", error: message });
-      } finally {
-        controller.close();
+      for (const provider of chain) {
+        if (sentAnyDelta) break;
+        try {
+          const stream = startChatStream(messages, provider);
+          for await (const event of stream) {
+            if (
+              event.type === "content_block_delta" &&
+              event.delta.type === "text_delta"
+            ) {
+              sentAnyDelta = true;
+              send({ type: "delta", text: event.delta.text });
+            }
+          }
+
+          const final = await stream.finalMessage();
+          send({
+            type: "done",
+            provider,
+            usage: {
+              input_tokens: final.usage.input_tokens,
+              output_tokens: final.usage.output_tokens,
+              cache_creation_input_tokens:
+                final.usage.cache_creation_input_tokens ?? 0,
+              cache_read_input_tokens:
+                final.usage.cache_read_input_tokens ?? 0,
+            },
+          });
+          lastError = null;
+          break;
+        } catch (err) {
+          lastError = err;
+          const message = err instanceof Error ? err.message : "Unknown error";
+          if (sentAnyDelta) {
+            send({ type: "error", provider, error: message });
+            break;
+          }
+          console.error(`[chat] ${provider} failed: ${message}`);
+        }
       }
+
+      if (!sentAnyDelta && lastError) {
+        const message =
+          lastError instanceof Error ? lastError.message : "Unknown error";
+        send({ type: "error", error: message });
+      }
+
+      controller.close();
     },
   });
 

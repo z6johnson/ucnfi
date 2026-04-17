@@ -22,32 +22,62 @@ import {
   researchTopics,
 } from "@/content/northstar";
 
-export const CLAUDE_MODEL = "claude-opus-4-6-v1";
 export const CLAUDE_MAX_TOKENS = 4096;
 export const LITELLM_BASE_URL =
   process.env.LITELLM_BASE_URL ?? "https://tritonai-api.ucsd.edu";
+export const LITELLM_MODEL = "claude-opus-4-6-v1";
+export const ANTHROPIC_MODEL = "claude-sonnet-4-6";
 
 /* ------------------------------------------------------------------ */
-/* Client                                                              */
+/* Clients                                                             */
 /* ------------------------------------------------------------------ */
 
-let client: Anthropic | null = null;
+export type Provider = "litellm" | "anthropic";
 
-export function getAnthropic(): Anthropic {
-  if (!client) {
+let litellmClient: Anthropic | null = null;
+let anthropicClient: Anthropic | null = null;
+
+function getLiteLLMClient(): Anthropic {
+  if (!litellmClient) {
     const authToken = process.env.LITELLM_API_KEY;
     if (!authToken) {
-      throw new Error(
-        "LITELLM_API_KEY is not set. Add it to your environment (see README → Deployment → Step 2).",
-      );
+      throw new Error("LITELLM_API_KEY is not set.");
     }
-    client = new Anthropic({
+    litellmClient = new Anthropic({
       authToken,
       baseURL: LITELLM_BASE_URL,
       apiKey: null,
     });
   }
-  return client;
+  return litellmClient;
+}
+
+function getAnthropicClient(): Anthropic {
+  if (!anthropicClient) {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      throw new Error("ANTHROPIC_API_KEY is not set.");
+    }
+    anthropicClient = new Anthropic({ apiKey });
+  }
+  return anthropicClient;
+}
+
+/**
+ * Ordered list of providers to try. LiteLLM is preferred; Anthropic is
+ * a fallback if either the LiteLLM credentials are missing or the
+ * LiteLLM stream errors before emitting any tokens.
+ */
+export function providerChain(): Provider[] {
+  const chain: Provider[] = [];
+  if (process.env.LITELLM_API_KEY) chain.push("litellm");
+  if (process.env.ANTHROPIC_API_KEY) chain.push("anthropic");
+  if (chain.length === 0) {
+    throw new Error(
+      "No Claude credentials set. Provide LITELLM_API_KEY (preferred) and/or ANTHROPIC_API_KEY.",
+    );
+  }
+  return chain;
 }
 
 /* ------------------------------------------------------------------ */
@@ -165,14 +195,21 @@ export type ChatMessage = {
 };
 
 /**
- * Start a streaming Claude response for a user turn. The caller is
- * responsible for plumbing the SDK's AsyncIterable of events into
- * whatever transport they're using (SSE from a Route Handler).
+ * Start a streaming Claude response for a user turn against the given
+ * provider. The caller is responsible for plumbing the SDK's
+ * AsyncIterable of events into whatever transport they're using (SSE
+ * from a Route Handler) and for retrying against the next provider in
+ * the chain if this one errors before any tokens are emitted.
  */
-export function startChatStream(messages: ChatMessage[]) {
-  const anthropic = getAnthropic();
-  return anthropic.messages.stream({
-    model: CLAUDE_MODEL,
+export function startChatStream(
+  messages: ChatMessage[],
+  provider: Provider,
+) {
+  const client =
+    provider === "litellm" ? getLiteLLMClient() : getAnthropicClient();
+  const model = provider === "litellm" ? LITELLM_MODEL : ANTHROPIC_MODEL;
+  return client.messages.stream({
+    model,
     max_tokens: CLAUDE_MAX_TOKENS,
     system: systemPrompt(),
     messages: messages.map((m) => ({ role: m.role, content: m.content })),
