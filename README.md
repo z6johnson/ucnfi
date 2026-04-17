@@ -159,6 +159,7 @@ No required config changes. Optional:
 |---|---|---|
 | `LITELLM_API_KEY` | Step 2 | TritonAI LiteLLM bearer token for chat + memo generation |
 | `LITELLM_BASE_URL` | Step 2 | Optional LiteLLM proxy URL (defaults to `https://tritonai-api.ucsd.edu`) |
+| `CLAUDE_MODEL` | Step 2 | Optional. Model ID used by both providers. Defaults to `claude-opus-4-6`. |
 | `DATABASE_URL` | Step 3 | Neon Postgres connection string |
 | `ADMIN_PASSWORD` | Step 3 | Admin cookie gate for editing routes |
 | `NFI_BASE_URL` | Step 3 | Absolute URL used when generating share links |
