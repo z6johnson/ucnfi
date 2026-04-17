@@ -126,7 +126,20 @@ The `db:push` script will be added in Step 3 and wraps `drizzle-kit push`. Previ
 
 ### Step 4 — Memos + Comparison
 
-**No new infrastructure.** Reuses `LITELLM_API_KEY` (for `/api/memo/generate`) and `DATABASE_URL` (for the new `memos` table). Run `npm run db:push` once after the migration lands.
+Memos are markdown files under `content/memos/` and are pre-rendered at build time. New memos can be drafted from `/memos/new` and are committed to the repo via the GitHub Contents API — Vercel's Git integration rebuilds the site and publishes the memo (~60s).
+
+**Environment variables:**
+
+| Name | Value | Sensitive | Notes |
+|---|---|---|---|
+| `ADMIN_PASSWORD` | Strong random string | ✓ | Gates `/memos/new` and `/api/memos` via an HTTP-only cookie (HMAC-signed; rotating invalidates sessions) |
+| `GITHUB_TOKEN` | Fine-grained PAT | ✓ | Scoped to `z6johnson/ucnfi` only, `Contents: Read and write`. Rotate on expiry. |
+| `GITHUB_REPO` | `z6johnson/ucnfi` | — | Target for memo commits |
+| `GITHUB_BRANCH` | `main` | — | Optional, defaults to `main` |
+
+Add these to both Production and Preview environments — a memo submitted on a preview deploy commits to `main` and triggers a production rebuild.
+
+**Branch protection.** Don't enable "Require a pull request before merging" on `main`; the GitHub Contents API writes direct commits. If branch protection becomes a requirement, switch the memo route to a branch-and-PR flow.
 
 The comparison matrix is a pure read over the baseline JSON — no additional config.
 
@@ -149,5 +162,8 @@ No required config changes. Optional:
 | `DATABASE_URL` | Step 3 | Neon Postgres connection string |
 | `ADMIN_PASSWORD` | Step 3 | Admin cookie gate for editing routes |
 | `NFI_BASE_URL` | Step 3 | Absolute URL used when generating share links |
+| `GITHUB_TOKEN` | Step 4 | Fine-grained PAT used by `/api/memos` to commit new memos |
+| `GITHUB_REPO` | Step 4 | `owner/repo` target for memo commits |
+| `GITHUB_BRANCH` | Step 4 | Optional, defaults to `main` |
 
 See [`.env.example`](.env.example) for the local template.

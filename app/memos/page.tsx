@@ -18,8 +18,19 @@ export default function MemosPage() {
   return (
     <div className="pt-12">
       <header>
-        <span className="label">UCNFI · Memos</span>
-        <h1 className="display mt-2">Committee memos</h1>
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <span className="label">UCNFI · Memos</span>
+            <h1 className="display mt-2">Committee memos</h1>
+          </div>
+          <Link
+            href="/memos/new"
+            className="label"
+            style={{ color: "var(--color-accent)" }}
+          >
+            + New memo
+          </Link>
+        </div>
         <p
           className="prose-body mt-4 max-w-2xl"
           style={{ color: "var(--color-text-muted)" }}
@@ -40,8 +51,8 @@ export default function MemosPage() {
             className="mt-1 text-sm"
             style={{ color: "var(--color-text-muted)" }}
           >
-            Drop markdown files into <code>content/memos/</code> to publish
-            them here.
+            Use <Link href="/memos/new" className="label" style={{ color: "var(--color-accent)" }}>+ New memo</Link>{" "}
+            above, or drop markdown files into <code>content/memos/</code>.
           </p>
         </div>
       ) : (

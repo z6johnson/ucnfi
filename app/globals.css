@@ -149,6 +149,25 @@ hr {
   border-top: 1px solid var(--color-border-hair);
 }
 
+.ucnfi-input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-border-hair);
+  padding: var(--space-2) 0;
+  color: var(--color-text);
+  font: inherit;
+  width: 100%;
+  resize: vertical;
+}
+.ucnfi-input:focus {
+  outline: none;
+  border-bottom-color: var(--color-accent);
+}
+.ucnfi-input:disabled {
+  color: var(--color-text-subtle);
+  cursor: not-allowed;
+}
+
 .rail-accent {
   border-left: 3px solid var(--color-accent);
   padding-left: var(--space-4);
