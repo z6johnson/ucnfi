@@ -203,16 +203,20 @@ export type ChatMessage = {
 export function startChatStream(
   messages: ChatMessage[],
   provider: Provider,
+  signal?: AbortSignal,
 ) {
   const client =
     provider === "litellm" ? getLiteLLMClient() : getAnthropicClient();
   console.info(
     `[chat] provider=${provider} model=${JSON.stringify(CLAUDE_MODEL)}`,
   );
-  return client.messages.stream({
-    model: CLAUDE_MODEL,
-    max_tokens: CLAUDE_MAX_TOKENS,
-    system: systemPrompt(),
-    messages: messages.map((m) => ({ role: m.role, content: m.content })),
-  });
+  return client.messages.stream(
+    {
+      model: CLAUDE_MODEL,
+      max_tokens: CLAUDE_MAX_TOKENS,
+      system: systemPrompt(),
+      messages: messages.map((m) => ({ role: m.role, content: m.content })),
+    },
+    signal ? { signal } : undefined,
+  );
 }
