@@ -12,6 +12,10 @@ export const dynamic = "force-dynamic";
 // exceed Vercel's 60s Hobby-plan default. 300s is the Pro-plan ceiling.
 export const maxDuration = 300;
 
+// If a provider hasn't produced a single text delta in this many ms,
+// assume it's hung and fall through to the next provider in the chain.
+const FIRST_TOKEN_STALL_MS = 20_000;
+
 type Body = {
   messages?: ChatMessage[];
 };
@@ -62,17 +66,40 @@ export async function POST(req: NextRequest) {
 
       for (const provider of chain) {
         if (sentAnyDelta) break;
+        const abortController = new AbortController();
+        let stallTimer: ReturnType<typeof setTimeout> | null = setTimeout(
+          () => {
+            abortController.abort(
+              new Error(
+                `No first token from ${provider} within ${FIRST_TOKEN_STALL_MS}ms`,
+              ),
+            );
+          },
+          FIRST_TOKEN_STALL_MS,
+        );
+        const clearStallTimer = () => {
+          if (stallTimer) {
+            clearTimeout(stallTimer);
+            stallTimer = null;
+          }
+        };
         try {
-          const stream = startChatStream(messages, provider);
+          const stream = startChatStream(
+            messages,
+            provider,
+            abortController.signal,
+          );
           for await (const event of stream) {
             if (
               event.type === "content_block_delta" &&
               event.delta.type === "text_delta"
             ) {
+              if (!sentAnyDelta) clearStallTimer();
               sentAnyDelta = true;
               send({ type: "delta", text: event.delta.text });
             }
           }
+          clearStallTimer();
 
           try {
             const final = await stream.finalMessage();
@@ -108,6 +135,7 @@ export async function POST(req: NextRequest) {
           lastError = null;
           break;
         } catch (err) {
+          clearStallTimer();
           lastError = err;
           const message = err instanceof Error ? err.message : "Unknown error";
           if (sentAnyDelta) {
