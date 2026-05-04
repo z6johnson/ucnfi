@@ -1,13 +1,13 @@
 # UC AI Baseline Dataset — Enrichment and Verification Log
 
 Generated: 2026-04-14
-Updated: 2026-04-14 (v0.6.0)
+Updated: 2026-05-04 (v0.7.0)
 
 This log tracks what's been captured, what needs manual download, and where the dataset could be enriched with deeper document review.
 
 ## Status
 
-The baseline JSON (`uc_ai_baseline.json`) v0.6.0 contains 219 data points across 20 entities. Enriched through five passes: web page captures, Chrome markdown archives, priority PDF extraction, full remaining PDF extraction, and comprehensive web archive enrichment.
+The baseline JSON (`uc_ai_baseline.json`) v0.7.0 contains 262 data points across 20 entities. Enriched through six passes: web page captures, Chrome markdown archives, priority PDF extraction, full remaining PDF extraction, comprehensive web archive enrichment, and targeted gap fill on the four thin dimensions.
 
 ### Version History
 
@@ -17,6 +17,15 @@ The baseline JSON (`uc_ai_baseline.json`) v0.6.0 contains 219 data points across
 - **v0.4.0** — Priority PDF extraction: ucop-02 (RAI Principles), ucop-05 (AI Council Executive Summary), ucop-07a (Risk Assessment Guide), ucd-02 (Davis AI Council Draft Report). ~200 data points.
 - **v0.5.0** — Full remaining PDF extraction (2026-04-14). Equal treatment across all entities. 203 data points, 20 entities. Sources: ucop-01 (Working Group conclusions), ucop-03 (Regents Nov 2021), ucop-06 (Transparency Report detail), ucop-07b (Initial Assessment form), ucop-08 (Legal task force mapping), ucop-09/10 (OGC guidance detail), ucop-12 (AI Glossary detail), ucop-14/14b (Health Data Governance detail), ucb-03 (Berkeley GenAI Guidance 2025), ucr-03 (Riverside Marketing AI Guidelines), ucsd-sawg-research (UCSD Research SAWG), ucsd-sawg-education (UCSD Education SAWG), ucsf-14 (Sara Murray panel), llnl-01/02 (AI Safety + Policy Primer detail), lbnl-01 (DOE AI for Science detail).
 - **v0.6.0** — Web archive enrichment pass (2026-04-14). Processed all batch2 web archives across 10 campuses, 5 health systems, cross-UC health, and 3 national labs. 50 set operations, 16 net new fields. 219 data points, 20 entities. Sources include: campus AI portals (TritonAI, OAI, campusai.ucsc.edu, ai.ucmerced.edu), governance pages, comprehensive FAQs (UCSC AI Council), tool pages, training guides, chancellor statements, health AI council pages (UCLA HAIC), HIMSS case study (UC Davis S.M.A.R.T./S.A.F.E.), clinical AI pilots (Abridge scribe), VALID AI initiative, UC Health Grand Rounds, CBorg portal (LBNL), OpenAI-LANL partnership. Pages not fetched: 4 UCSC news pages (404 after site redesign), UCSF pages behind MyAccess auth, LLNL workshop (404), LANL insidehpc.com (SSL error).
+- **v0.7.0** — Targeted gap fill (2026-05-04). 43 set operations, 43 net new fields. 262 data points, 20 entities. Closes the four thin dimensions identified in the v0.6.0 audit:
+  - **security** (9 → 25 fields): IS-3 references, P3/P4 restrictions, BAA requirements, embedded-AI warnings, PHI protection, DOE-aligned classification (LBNL).
+  - **academic_integrity** (14 → 21 fields): AI detection positions (Berkeley equivocal, UCSB explicit non-support), school-specific integrity policies (UCLA, UCSF Bridges Curriculum).
+  - **health_ai** (17 → 27 fields): UCSD Health JCHI + FAVES, UCSF Health IMPACC + Trustworthy AI, UC Davis Health AOC, cross-UC-health VALID AI + governance forum.
+  - **leadership** (15 → 30 fields): UCOP AI Council co-chairs (Bustamante, Bui), Cora Han as Chief Health Data Officer, UCSB Senate-Admin AI committee co-chairs (Sherwood, Parks), UCSC GenAI Center, UCSF Health (Murray, Yazdany titles), UC Davis Health (Atreja, Adams).
+  - All additions strictly derived from facts already cited in v0.6.0 notes or underlying batch2 archives — no invented content.
+  - For UCI Health, LLNL, and LANL, explicit `value: false` fields with `source_id: "inventory-gap"` record absent governance artifacts as committee-actionable signals.
+  - Three PDFs (ucop-17, ucd-09, ucr-01) remain inaccessible; Wayback Machine fallback is unavailable from the current build environment (host_not_allowed). Recovery deferred to a connected environment.
+  - Verification: `python data/scripts/field_count.py` reports per-dimension and per-entity counts. `python data/enrich_v070_gaps.py` is idempotent (defaults to no-overwrite).
 
 ## PDF Download Status
 

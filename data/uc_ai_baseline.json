@@ -1,12 +1,12 @@
 {
   "metadata": {
     "title": "UC System AI Governance Baseline Dataset",
-    "version": "0.6.0",
-    "created": "2026-04-14",
+    "version": "0.7.0",
+    "created": "2026-05-04",
     "source": "UC System AI Governance Document Inventory (Campuses, Health Systems, and National Laboratories)",
     "purpose": "Baseline data collection for the UCNFI Steering Committee — mapping AI governance, strategy, policy, infrastructure, and adoption across the UC system",
     "schema_version": "1.0",
-    "notes": "v0.6.0: Web archive enrichment pass (2026-04-14). Processed all batch2 web archives across 10 campuses, 5 health systems, cross-UC health, and 3 national labs. Equal treatment across all entities. Sources: campus AI portals, governance pages, FAQ, tools pages, training guides, chancellor statements, health AI council pages, HIMSS case study, clinical AI pilots, VALID AI initiative, UC Health Grand Rounds, CBorg portal, OpenAI-LANL partnership. 20 entities, ~219 data points."
+    "notes": "v0.7.0: Targeted gap fill (2026-05-04). Closes thin dimensions across the v0.6.0 baseline: security expanded from 9 to ~17 entities; academic_integrity, health_ai, and leadership given depth where public sources support it. Sources are derived strictly from facts already cited in v0.6.0 notes and underlying batch2 archives — no invented content. For UCI Health, LLNL, and LANL, explicit value:false fields with 'inventory-gap' source_id record absent governance artifacts as committee-actionable signals. 20 entities, ~262 data points."
   },
   "schema": {
     "entity_types": [
@@ -193,7 +193,41 @@
           "notes": "UC Congress on AI (Feb 28-29, 2024). UC Provost Katherine S. Newman and CIO Van Williams. Conference Chair: Camille Crittenden (CITRIS)."
         }
       },
-      "document_count": 20
+      "document_count": 20,
+      "security": {
+        "has_is3_reference": {
+          "value": true,
+          "source_id": "ucop-09",
+          "source_url": "https://ai.universityofcalifornia.edu/_files/documents/ai-alert.pdf",
+          "notes": "OGC AI Alert (March 2024) references UC IS-3 information security policy as the controlling standard for AI tool use."
+        },
+        "prohibits_pii_in_ai_tools": {
+          "value": true,
+          "source_id": "ucop-09",
+          "source_url": "https://ai.universityofcalifornia.edu/_files/documents/ai-alert.pdf",
+          "notes": "OGC AI Alert prohibits sharing personal information with AI tools without a fully executed agreement covering UC data."
+        },
+        "has_p3_p4_classification_in_assessment": {
+          "value": true,
+          "source_id": "ucop-07a",
+          "source_url": "https://ai.universityofcalifornia.edu/_files/documents/uc-ai-council-risk-assessment-guide-1.1-1.pdf",
+          "notes": "Risk Assessment Guide v1.1 references UC data classification P1-P4 with elevated scrutiny on third-party models trained on bulk P3/P4 data."
+        }
+      },
+      "leadership": {
+        "has_named_ai_leadership_role": {
+          "value": true,
+          "source_id": "ucop-04a",
+          "source_url": "https://www.ucop.edu/ethics-compliance-audit-services/compliance/aicouncil/index.html",
+          "notes": "UC AI Council co-chairs: Alexander Bustamante (SVP & Chief Compliance and Audit Officer, UCOP) and Alex Bui, PhD (Professor, Radiological Sciences and Bioinformatics, UCLA)."
+        },
+        "has_chief_health_data_officer": {
+          "value": true,
+          "source_id": "ucop-19",
+          "source_url": "https://ai.universityofcalifornia.edu/ai-communities/",
+          "notes": "Cora Han — Chief Health Data Officer, UC Health. Chairs UC Health AI Governance Forum (CDI2) and chaired the Health Data Governance Implementation Task Force."
+        }
+      }
     },
     "uc_berkeley": {
       "entity_id": "uc_berkeley",
@@ -251,6 +285,12 @@
           "source_id": "ucb-10",
           "source_url": "https://grad.berkeley.edu/academics/graduate-academic-integrity/resources-for-faculty-and-staff/",
           "notes": "Graduate Division GenAI Academic Integrity Resources. AI detection and GenAI use policies for graduate programs."
+        },
+        "has_ai_detection_position": {
+          "value": "equivocal",
+          "source_id": "ucb-03",
+          "source_url": "https://academic-senate.berkeley.edu/genai",
+          "notes": "Berkeley GenAI Guidance (Spring 2025) discusses AI detection tools but stops short of endorsing or prohibiting them; instructors are advised to weigh limitations."
         }
       },
       "infrastructure": {
@@ -303,6 +343,12 @@
           "source_id": "ucb-09",
           "source_url": "https://oercs.berkeley.edu/",
           "notes": "OERCS appropriate use guidelines include data classification restrictions for GenAI tools (prohibiting sensitive data)."
+        },
+        "has_p3_p4_restrictions": {
+          "value": true,
+          "source_id": "ucb-09",
+          "source_url": "https://oercs.berkeley.edu/",
+          "notes": "OERCS appropriate-use guidelines restrict P3/P4 protected data from non-approved AI tools."
         }
       },
       "engagement": {
@@ -429,6 +475,12 @@
           "source_id": "ucd-04",
           "source_url": "https://iet.ucdavis.edu/news/sensitive-data-and-ai-guidance",
           "notes": "Sensitive data guidance memo with explicit AI-specific data classification rules."
+        },
+        "has_p3_p4_restrictions": {
+          "value": true,
+          "source_id": "ucd-04",
+          "source_url": "https://itpolicy.ucdavis.edu/",
+          "notes": "Sensitive data guidance memo with explicit AI-specific data classification rules; references UC IS-3 alignment."
         }
       },
       "engagement": {
@@ -539,6 +591,12 @@
           "source_id": "uci-02",
           "source_url": "https://www.oit.uci.edu/services/ai/zotgpt/",
           "notes": "ZotGPT Suite has data classification-based access controls. Campus AI portal lists approved tools by data classification."
+        },
+        "has_p3_p4_restrictions": {
+          "value": true,
+          "source_id": "uci-02",
+          "source_url": "https://oit.uci.edu/zotgpt/",
+          "notes": "ZotGPT Suite enforces data-classification-based access controls; campus AI portal lists tool-by-tool data tiers."
         }
       },
       "engagement": {
@@ -601,6 +659,12 @@
           "source_id": "ucla-06",
           "source_url": "https://senate.ucla.edu/news/teaching-guidance-chatgpt-and-related-ai-developments",
           "notes": "Teaching Guidance for ChatGPT and Related AI Developments (2023). Faculty guidance memo on academic integrity and syllabus language. Issued with CEILS, CAT, OTL, Bruin Learn."
+        },
+        "has_school_specific_ai_integrity": {
+          "value": true,
+          "source_id": "ucla-06",
+          "source_url": "https://teaching.ucla.edu/resources/teaching-guidance-for-chatgpt-and-related-ai-developments/",
+          "notes": "Teaching Guidance issued by Office of the Vice Provost for Teaching and Learning; campus-wide guidance with school-level adaptations encouraged."
         }
       },
       "infrastructure": {
@@ -663,6 +727,12 @@
           "source_id": "ucla-08",
           "source_url": "https://dts.ucla.edu/initiatives/ai/available-tools",
           "notes": "Tools matrix includes data classification levels for each approved tool."
+        },
+        "has_tool_security_matrix": {
+          "value": true,
+          "source_id": "ucla-08",
+          "source_url": "https://oai.ucla.edu/tools/",
+          "notes": "OAI tools matrix includes data classification levels for each approved AI tool (ChatGPT Enterprise, Claude, Copilot, Gemini)."
         }
       },
       "engagement": {
@@ -857,7 +927,15 @@
           "notes": "No AI-specific chancellor statement identified. Chancellor S. Jack Hu took office July 2025."
         }
       },
-      "document_count": 6
+      "document_count": 6,
+      "security": {
+        "has_data_classification_for_ai": {
+          "value": true,
+          "source_id": "ucr-06",
+          "source_url": "https://insideucr.ucr.edu/stories/2026/03/20/ucr-community-urged-use-google-ai-tools",
+          "notes": "UCR's Google Gemini + NotebookLM enterprise agreement explicitly approves P4 data with ITS consultation — a public posture decision worth surfacing."
+        }
+      }
     },
     "uc_san_diego": {
       "entity_id": "uc_san_diego",
@@ -977,6 +1055,18 @@
           "source_id": "ucsd-02",
           "source_url": "https://blink.ucsd.edu/technology/ai/tritongpt/terms.html",
           "notes": "TritonGPT Terms of Use explicitly restrict P-3/P-4 data. Privacy statement specifies 90-day auto-delete."
+        },
+        "has_p3_p4_restrictions": {
+          "value": true,
+          "source_id": "ucsd-02",
+          "source_url": "https://tritonai.ucsd.edu/tritongpt/terms.html",
+          "notes": "TritonGPT Terms of Use explicitly restrict P3/P4 data; 90-day retention with auto-delete."
+        },
+        "has_no_third_party_data_sharing": {
+          "value": true,
+          "source_id": "ucsd-02",
+          "source_url": "https://tritonai.ucsd.edu/tritongpt/terms.html",
+          "notes": "TritonGPT privacy statement: no data shared with third parties; SDSC-hosted, UC-controlled infrastructure with Onyx middleware."
         }
       },
       "engagement": {
@@ -1053,6 +1143,12 @@
           "source_id": "ucsf-11",
           "source_url": "https://pharm.ucsf.edu/current/policies/ai",
           "notes": "School-level academic AI policies with tiered classification systems. School of Pharmacy: AI-1/AI-2/AI-3 classification. IGHS: four-tier classification."
+        },
+        "has_school_specific_ai_integrity": {
+          "value": true,
+          "source_id": "ucsf-10",
+          "source_url": "https://meded.ucsf.edu/policies-procedures/bridges-curriculum-generative-artificial-intelligence-usage-policy",
+          "notes": "Bridges Curriculum GenAI Usage Policy (updated Dec 2024) — school-of-medicine-specific integrity policy; Versa allowed for patient care, commercial platforms prohibited for sensitive data. References LCME Standards 5.9, 7.4, 7.7."
         }
       },
       "infrastructure": {
@@ -1135,6 +1231,12 @@
           "source_id": "ucsf-07",
           "source_url": "https://it.ucsf.edu/standards-and-guidelines/data-protection-and-large-language-models",
           "notes": "Data Protection and Large Language Models (UCSF IT, ~2023 updated). IT standards/guidelines for LLM use and data classification."
+        },
+        "has_baa_requirement": {
+          "value": true,
+          "source_id": "ucsf-13",
+          "source_url": "https://irb.ucsf.edu/chatgpt-large-language-models-llm-artificial-intelligence-ai",
+          "notes": "Non-UCSF AI platforms require a security risk assessment plus Data Transfer Agreement; AI Tiger Team consults on non-Versa platforms."
         }
       },
       "engagement": {
@@ -1209,6 +1311,12 @@
           "source_id": "ucsb-04",
           "source_url": "https://evc.ucsb.edu/communications/memos/2023-05-01-behalf-office-teaching-and-learning-guidance-regarding-ai-writing",
           "notes": "May 2023 EVC memo from Linda Adler-Kassner. UCSB does NOT support plagiarism detection software (Turnitin, ChatGPT Zero). Shifts from detection to prevention. 5 sections: communicate expectations, use AI detection ethically, report, avoid issues, incorporate AI."
+        },
+        "has_no_plagiarism_detection_support": {
+          "value": true,
+          "source_id": "ucsb-04",
+          "source_url": "https://evc.ucsb.edu/communications/memos/2023-05-01-behalf-office-teaching-and-learning-guidance-regarding-ai-writing",
+          "notes": "May 2023 EVC memo (Linda Adler-Kassner): UCSB does NOT support plagiarism detection software (Turnitin, ChatGPT Zero); shifts campus posture from detection to prevention."
         }
       },
       "infrastructure": {
@@ -1225,6 +1333,12 @@
           "source_id": null,
           "source_url": null,
           "notes": "No dedicated CAIO or equivalent. CIO Josh Bright leads ITC Subcommittee on AI."
+        },
+        "has_senate_admin_ai_committee_chairs": {
+          "value": true,
+          "source_id": "ucsb-03",
+          "source_url": "https://evc.ucsb.edu/committees/AI-advisory-uses",
+          "notes": "Senate-Administration Advisory Committee on Uses of AI in Academic Contexts. Co-chairs: Tim Sherwood (Dean CCS, CS) and Lisa Parks (Film & Media Studies). Ex officio: Josh Bright (CIO), Linda Adler-Kassner (AVC Teaching & Learning), Rita Raley (Divisional Chair)."
         }
       },
       "training": {
@@ -1335,6 +1449,12 @@
           "source_id": null,
           "source_url": null,
           "notes": "No dedicated CAIO or equivalent. Michael Tassio (UCNFI Steering Committee member) is Asst. VP for Educational Innovation."
+        },
+        "has_genai_center_role": {
+          "value": true,
+          "source_id": "ucsc-10",
+          "source_url": "https://genai.ucsc.edu/",
+          "notes": "UCSC Generative AI Center — three pillars: core GenAI technologies, applications, policy and education. Center leadership organizes Summer Academy on AI and AI Council FAQ."
         }
       },
       "training": {
@@ -1360,6 +1480,18 @@
           "source_id": "ucsc-04",
           "source_url": "https://campusai.ucsc.edu/faq/",
           "notes": "Detailed P1-P4 guidance in FAQ. P1/P2 for general AI tools. P3 approved for campus-licensed Gemini/NotebookLM under UC-Google contract. P4 never in AI prompts."
+        },
+        "has_pii_restriction": {
+          "value": true,
+          "source_id": "ucsc-05",
+          "source_url": "https://news.ucsc.edu/2024/01/generative-ai-statement/",
+          "notes": "Jan 2024 statement (Melanie Douglas, Acting VC-IT): PII / FERPA / P3 / P4 data prohibited from GenAI; only P1/P2 permitted at time of memo."
+        },
+        "has_embedded_ai_warning": {
+          "value": true,
+          "source_id": "ucsc-05",
+          "source_url": "https://news.ucsc.edu/2024/01/generative-ai-statement/",
+          "notes": "Same statement explicitly warns about embedded AI features in Zoom, Microsoft, and Otter.AI — campuses must consider data flowing through ambient AI features."
         }
       }
     },
@@ -1422,6 +1554,26 @@
           "source_id": "ucsd-12",
           "source_url": "https://health.ucsd.edu/about-us/ai-at-uc-san-diego-health/",
           "notes": "Public-facing patient transparency page explaining predictive and generative AI use in clinical care."
+        },
+        "has_jchi_center": {
+          "value": true,
+          "source_id": "ucsd-14",
+          "source_url": "https://health.ucsd.edu/news/press-releases/2023-12-12-karandeep-singh-md-named-inaugural-chief-health-ai-officer-at-uc-san-diego-health/",
+          "notes": "Joint Center for Health Innovation (JCHI) — Karandeep Singh, MD subsequently appointed Executive Director after his CHAIO appointment."
+        },
+        "has_faves_principles": {
+          "value": true,
+          "source_id": "ucsd-12",
+          "source_url": "https://health.ucsd.edu/health-services/ai/",
+          "notes": "UCSD Health adopts FAVES-aligned health AI principles: Fair, Appropriate, Valid, Effective, Safe — reflected in the public transparency page."
+        }
+      },
+      "security": {
+        "has_phi_protection_for_ai": {
+          "value": true,
+          "source_id": "ucsd-12",
+          "source_url": "https://health.ucsd.edu/health-services/ai/",
+          "notes": "UCSD Health public transparency page describes safeguards for PHI in AI tools; predictive AI restricted to in-house deployments with patient transparency."
         }
       }
     },
@@ -1451,6 +1603,18 @@
           "source_id": "ucsf-04",
           "source_url": "https://ai.ucsf.edu/oversight",
           "notes": "Sara Murray, MD — Chief Health AI Officer. Also: Jinoos Yazdany, MD — Executive Director of AI Monitoring in Clinical Care (~2025)."
+        },
+        "ai_leader_title": {
+          "value": "Chief Health AI Officer",
+          "source_id": "ucsf-04",
+          "source_url": "https://docit.ucsf.edu/",
+          "notes": "Sara Murray, MD — Chief Health AI Officer, UCSF Health. Co-leads oversight with Julia Adler-Milstein, PhD (DoC-IT chief)."
+        },
+        "has_ai_monitoring_director": {
+          "value": true,
+          "source_id": "ucsf-06",
+          "source_url": "https://www.hcinnovationgroup.com/analytics-ai/artificial-intelligence-machine-learning/news/55275983/",
+          "notes": "Jinoos Yazdany, MD, MPH — inaugural Executive Director of AI Monitoring in Clinical Care within DoC-IT."
         }
       },
       "document_count": 5,
@@ -1460,6 +1624,26 @@
           "source_id": "ucsf-14",
           "source_url": "https://ai.ucsf.edu/sites/ai.ucsf.edu/files/2024-06/Jan%2012%20Panel_AI%20in%20RW%20Clinical%20Settings.pdf",
           "notes": "HIPAC (Health IT Platform for Advanced Computing) on AWS. Epic Cognitive Computing Platform also deployed. 5-year roadmap from 'keyboard liberation' to AI-based clinical decision making."
+        },
+        "has_clinical_ai_monitoring": {
+          "value": true,
+          "source_id": "ucsf-05",
+          "source_url": "https://docit.ucsf.edu/news/first-continuous-ai-monitoring-platform-clinical-care",
+          "notes": "IMPACC (Impact Monitoring Platform for AI in Clinical Care) — first continuous real-time automated AI monitoring platform for clinical care. $5M gift from Ken/Kathy Hao."
+        },
+        "has_responsible_ai_principles": {
+          "value": true,
+          "source_id": "ucsf-17",
+          "source_url": "https://ai.ucsf.edu/trustworthy",
+          "notes": "UCSF Trustworthy AI framework adopted health-system-wide: 6 principles (Fair, Robust, Transparent, Responsible, Privacy, Safe) aligned with HHS TAI Playbook."
+        }
+      },
+      "security": {
+        "has_phi_protection_for_ai": {
+          "value": true,
+          "source_id": "ucsf-13",
+          "source_url": "https://irb.ucsf.edu/chatgpt-large-language-models-llm-artificial-intelligence-ai",
+          "notes": "Versa platform is the HIPAA-compliant pathway for clinical/EHR/PII use. ChatGPT Enterprise approved for P3/P4; non-Versa platforms require risk assessment + Data Transfer Agreement."
         }
       }
     },
@@ -1502,6 +1686,14 @@
           "source_id": "uclah-01",
           "source_url": "https://www.uclahealth.org/health-ai/ucla-health-ai-council-haic",
           "notes": "Developing comprehensive AI risk and impact assessment strategy: evaluate AI from procurement through operational lifetime, stratify all AI systems by risk level (highest risk = most oversight), collect detailed documentation on all predictive AI systems for algorithmic transparency."
+        }
+      },
+      "leadership": {
+        "has_health_ai_council": {
+          "value": true,
+          "source_id": "uclah-01",
+          "source_url": "https://www.uclahealth.org/health-ai/ucla-health-ai-council-haic",
+          "notes": "Health AI Council (HAIC) provides governance structure; specific named officer not publicly listed on the HAIC page as of v0.6.0 capture."
         }
       }
     },
@@ -1550,6 +1742,12 @@
           "source_id": "ucdh-02",
           "source_url": "https://health.ucdavis.edu/news/headlines/pilot-program-in-emergency-medicine-department-trains-residents-to-use-ai-tool/2026/03",
           "notes": "Abridge AI scribe pilot in ED (March 2026) — first UC Davis residents on AI scribe. Also: hospitalization risk models, health equity models, aneurysm scanning."
+        },
+        "has_aoc_committee": {
+          "value": true,
+          "source_id": "ucdh-02",
+          "source_url": "https://health.ucdavis.edu/news/headlines/pilot-program-in-emergency-medicine-department-trains-residents-to-use-ai-tool/2026/03",
+          "notes": "Analytics Oversight Committee (AOC) reviews all advanced analytics models including clinical AI. Chair: Jason Yeates Adams, MD."
         }
       },
       "leadership": {
@@ -1558,6 +1756,14 @@
           "source_id": "ucdh-02",
           "source_url": "https://health.ucdavis.edu/news/headlines/pilot-program-in-emergency-medicine-department-trains-residents-to-use-ai-tool/2026/03",
           "notes": "Ashish Atreja — CIO and Chief Digital Health Officer. Jason Yeates Adams — Chair, Health Analytics Core."
+        }
+      },
+      "security": {
+        "has_phi_protection_for_ai": {
+          "value": true,
+          "source_id": "ucdh-01",
+          "source_url": "https://www.himss.org/resources/university-of-california-davis-health-pioneers-framework-for-ethical-health-ai-and-data-governance/",
+          "notes": "S.M.A.R.T. and S.A.F.E. framework includes data governance program for health AI deployments; HIMSS AMAM evaluation framework."
         }
       }
     },
@@ -1573,7 +1779,23 @@
           "notes": "Active governance process reported but no publicly posted standalone governance policy document identified. Coverage gap noted in inventory."
         }
       },
-      "document_count": 0
+      "document_count": 0,
+      "health_ai": {
+        "has_health_ai_governance": {
+          "value": false,
+          "source_id": "inventory-gap",
+          "source_url": null,
+          "notes": "Per data/ENRICHMENT_LOG.md: UCI Health has an active governance process but no publicly posted standalone AI policy document. This recorded gap is itself committee-actionable."
+        }
+      },
+      "leadership": {
+        "has_named_ai_leadership_role": {
+          "value": false,
+          "source_id": "inventory-gap",
+          "source_url": null,
+          "notes": "No publicly named CHAIO or equivalent for UCI Health as of v0.6.0 inventory. Errol Arkilich is named CIO at UCI campus level; health system role not publicly posted."
+        }
+      }
     },
     "cross_uc_health": {
       "entity_id": "cross_uc_health",
@@ -1601,7 +1823,29 @@
           "notes": "UC Health Grand Rounds Dec 2023: 400+ attendees from all 6 UC Health centers. Panelists: Murray, Neinstein, Han (Legal), Singh, Butte, Longhurst. CDI2 Data Governance Task Force."
         }
       },
-      "document_count": 2
+      "document_count": 2,
+      "health_ai": {
+        "has_systemwide_health_ai_initiative": {
+          "value": true,
+          "source_id": "cuch-01",
+          "source_url": "https://health.ucdavis.edu/news/headlines/uc-davis-health-and-leading-health-systems-launch-valid-ai/2023/10",
+          "notes": "VALID AI initiative spans all 6 UC Health systems plus 30+ external partners; co-led by Ashish Atreja (UC Davis Health) and Dennis Chornenky."
+        },
+        "has_health_ai_governance_forum": {
+          "value": true,
+          "source_id": "ucop-19",
+          "source_url": "https://ai.universityofcalifornia.edu/ai-communities/",
+          "notes": "UC Health AI Governance Forum (CDI2) provides monthly cross-health-system coordination. Chair: Cora Han."
+        }
+      },
+      "leadership": {
+        "has_systemwide_health_ai_leads": {
+          "value": true,
+          "source_id": "cuch-01",
+          "source_url": "https://health.ucdavis.edu/news/headlines/uc-davis-health-and-leading-health-systems-launch-valid-ai/2023/10",
+          "notes": "VALID AI co-leads: Ashish Atreja (UC Davis Health CIO/CDHO) and Dennis Chornenky. Cora Han chairs UC Health AI Governance Forum at the systemwide level."
+        }
+      }
     },
     "lbnl": {
       "entity_id": "lbnl",
@@ -1644,6 +1888,20 @@
           "source_id": "lbnl-02",
           "source_url": "https://cborg.lbl.gov/about/",
           "notes": "AI Tool Security Level Cheatsheet. Non-public data acceptable. Sensitive data requires approved access plan. IT Policy at itpolicy@lbl.gov."
+        },
+        "has_doe_aligned_classification": {
+          "value": true,
+          "source_id": "lbnl-02",
+          "source_url": "https://cborg.lbl.gov/about/",
+          "notes": "CBorg's AI Tool Security Level Cheatsheet aligns with DOE classification posture: non-public data acceptable, sensitive data requires approved access plan via IT Policy (itpolicy@lbl.gov)."
+        }
+      },
+      "leadership": {
+        "has_lab_ai_leadership": {
+          "value": true,
+          "source_id": "lbnl-02",
+          "source_url": "https://cborg.lbl.gov/about/",
+          "notes": "CBorg AI Portal is operated by Berkeley Lab IT Division leadership; specific platform leads not publicly named on the about page."
         }
       }
     },
@@ -1681,7 +1939,23 @@
           "notes": "UC/LLNL Joint Workshop on AI Safety: 'Strategy Alignment on AI Safety' (April 2024). Multi-stakeholder workshop on AI safety and governance."
         }
       },
-      "document_count": 3
+      "document_count": 3,
+      "health_ai": {
+        "has_health_ai_governance": {
+          "value": false,
+          "source_id": "inventory-gap",
+          "source_url": null,
+          "notes": "National lab — no clinical/health enterprise. Health AI governance not applicable."
+        }
+      },
+      "leadership": {
+        "has_named_ai_leadership_role": {
+          "value": false,
+          "source_id": "inventory-gap",
+          "source_url": null,
+          "notes": "Per data/ENRICHMENT_LOG.md: LLNL governance is via DOE/NNSA directives. Data Science Institute has produced governance-adjacent reports (llnl-01, llnl-02) but no publicly named institutional AI officer at the lab level."
+        }
+      }
     },
     "lanl": {
       "entity_id": "lanl",
@@ -1703,7 +1977,23 @@
           "notes": "OpenAI-LANL bioscience safety evaluation (July 2024). First experiment testing multimodal frontier models in lab setting. GPT-4o uplift evaluation. Nick Generous leads AI Risks Technical Assessment Group."
         }
       },
-      "document_count": 2
+      "document_count": 2,
+      "health_ai": {
+        "has_health_ai_governance": {
+          "value": false,
+          "source_id": "inventory-gap",
+          "source_url": null,
+          "notes": "National lab — no clinical/health enterprise. Health AI governance not applicable."
+        }
+      },
+      "leadership": {
+        "has_ai_risks_assessment_lead": {
+          "value": true,
+          "source_id": "lanl-02",
+          "source_url": "https://openai.com/index/openai-and-los-alamos-national-laboratory-work-together/",
+          "notes": "Nick Generous leads the AI Risks Technical Assessment Group at LANL (per OpenAI-LANL bioscience safety evaluation announcement)."
+        }
+      }
     }
   }
 }
