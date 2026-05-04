@@ -1,0 +1,3095 @@
+{
+  "metadata": {
+    "computed_at": "2026-05-04",
+    "baseline_version": "0.7.0",
+    "derived_version": "0.1.0",
+    "notes": "Computed from data/uc_ai_baseline.json by data/compute_derived.py. Three signals: maturity (entity x dimension, 0-4), RAI principle concordance (verbatim|adapted|absent across the 8 UC RAI Principles), and policy adoption timeline (regex extraction over notes text)."
+  },
+  "maturity": [
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "policy",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "academic_integrity",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "infrastructure",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "leadership",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "health_ai",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "research",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "training",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "engagement",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "security",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "dimension": "policy",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "dimension": "academic_integrity",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "dimension": "infrastructure",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "dimension": "leadership",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "dimension": "health_ai",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "dimension": "research",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "dimension": "training",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "dimension": "engagement",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "dimension": "security",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_davis",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_davis",
+      "dimension": "policy",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_davis",
+      "dimension": "academic_integrity",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_davis",
+      "dimension": "infrastructure",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_davis",
+      "dimension": "leadership",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_davis",
+      "dimension": "health_ai",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_davis",
+      "dimension": "research",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_davis",
+      "dimension": "training",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_davis",
+      "dimension": "engagement",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_davis",
+      "dimension": "security",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_irvine",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_irvine",
+      "dimension": "policy",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_irvine",
+      "dimension": "academic_integrity",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_irvine",
+      "dimension": "infrastructure",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_irvine",
+      "dimension": "leadership",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_irvine",
+      "dimension": "health_ai",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_irvine",
+      "dimension": "research",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_irvine",
+      "dimension": "training",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_irvine",
+      "dimension": "engagement",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_irvine",
+      "dimension": "security",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucla",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucla",
+      "dimension": "policy",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucla",
+      "dimension": "academic_integrity",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucla",
+      "dimension": "infrastructure",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucla",
+      "dimension": "leadership",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucla",
+      "dimension": "health_ai",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucla",
+      "dimension": "research",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucla",
+      "dimension": "training",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucla",
+      "dimension": "engagement",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucla",
+      "dimension": "security",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_merced",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_merced",
+      "dimension": "policy",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_merced",
+      "dimension": "academic_integrity",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_merced",
+      "dimension": "infrastructure",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_merced",
+      "dimension": "leadership",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_merced",
+      "dimension": "health_ai",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_merced",
+      "dimension": "research",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_merced",
+      "dimension": "training",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_merced",
+      "dimension": "engagement",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_merced",
+      "dimension": "security",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_riverside",
+      "dimension": "governance",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_riverside",
+      "dimension": "policy",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_riverside",
+      "dimension": "academic_integrity",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_riverside",
+      "dimension": "infrastructure",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_riverside",
+      "dimension": "leadership",
+      "score": 1,
+      "basis": [
+        "dimension_populated"
+      ]
+    },
+    {
+      "entity_id": "uc_riverside",
+      "dimension": "health_ai",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_riverside",
+      "dimension": "research",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_riverside",
+      "dimension": "training",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source"
+      ]
+    },
+    {
+      "entity_id": "uc_riverside",
+      "dimension": "engagement",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_riverside",
+      "dimension": "security",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "dimension": "governance",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "dimension": "policy",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "dimension": "academic_integrity",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "dimension": "infrastructure",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "dimension": "leadership",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "dimension": "health_ai",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "dimension": "research",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "dimension": "training",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "dimension": "engagement",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "dimension": "security",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "dimension": "policy",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "dimension": "academic_integrity",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "dimension": "infrastructure",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "dimension": "leadership",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "dimension": "health_ai",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "dimension": "research",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "dimension": "training",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "dimension": "engagement",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "dimension": "security",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "dimension": "policy",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "dimension": "academic_integrity",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "dimension": "infrastructure",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "dimension": "leadership",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "dimension": "health_ai",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "dimension": "research",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "dimension": "training",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "dimension": "engagement",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "dimension": "security",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "dimension": "policy",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "dimension": "academic_integrity",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "dimension": "infrastructure",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "dimension": "leadership",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "dimension": "health_ai",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "dimension": "research",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "dimension": "training",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "dimension": "engagement",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "dimension": "security",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucsd_health",
+      "dimension": "governance",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucsd_health",
+      "dimension": "policy",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucsd_health",
+      "dimension": "academic_integrity",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucsd_health",
+      "dimension": "infrastructure",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucsd_health",
+      "dimension": "leadership",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucsd_health",
+      "dimension": "health_ai",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucsd_health",
+      "dimension": "research",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucsd_health",
+      "dimension": "training",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucsd_health",
+      "dimension": "engagement",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucsd_health",
+      "dimension": "security",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucsf_health",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucsf_health",
+      "dimension": "policy",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucsf_health",
+      "dimension": "academic_integrity",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucsf_health",
+      "dimension": "infrastructure",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucsf_health",
+      "dimension": "leadership",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucsf_health",
+      "dimension": "health_ai",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucsf_health",
+      "dimension": "research",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucsf_health",
+      "dimension": "training",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucsf_health",
+      "dimension": "engagement",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucsf_health",
+      "dimension": "security",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucla_health",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "ucla_health",
+      "dimension": "policy",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucla_health",
+      "dimension": "academic_integrity",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucla_health",
+      "dimension": "infrastructure",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucla_health",
+      "dimension": "leadership",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucla_health",
+      "dimension": "health_ai",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "ucla_health",
+      "dimension": "research",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucla_health",
+      "dimension": "training",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucla_health",
+      "dimension": "engagement",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "ucla_health",
+      "dimension": "security",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "dimension": "policy",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "dimension": "academic_integrity",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "dimension": "infrastructure",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "dimension": "leadership",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "dimension": "health_ai",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "dimension": "research",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "dimension": "training",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "dimension": "engagement",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "dimension": "security",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "uci_health",
+      "dimension": "governance",
+      "score": 1,
+      "basis": [
+        "dimension_populated"
+      ]
+    },
+    {
+      "entity_id": "uci_health",
+      "dimension": "policy",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uci_health",
+      "dimension": "academic_integrity",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uci_health",
+      "dimension": "infrastructure",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uci_health",
+      "dimension": "leadership",
+      "score": 1,
+      "basis": [
+        "dimension_populated"
+      ]
+    },
+    {
+      "entity_id": "uci_health",
+      "dimension": "health_ai",
+      "score": 1,
+      "basis": [
+        "dimension_populated"
+      ]
+    },
+    {
+      "entity_id": "uci_health",
+      "dimension": "research",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uci_health",
+      "dimension": "training",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uci_health",
+      "dimension": "engagement",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "uci_health",
+      "dimension": "security",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "dimension": "governance",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "dimension": "policy",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "dimension": "academic_integrity",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "dimension": "infrastructure",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "dimension": "leadership",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "dimension": "health_ai",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "dimension": "research",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "dimension": "training",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "dimension": "engagement",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "dimension": "security",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "lbnl",
+      "dimension": "governance",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "lbnl",
+      "dimension": "policy",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "lbnl",
+      "dimension": "academic_integrity",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "lbnl",
+      "dimension": "infrastructure",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "lbnl",
+      "dimension": "leadership",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "lbnl",
+      "dimension": "health_ai",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "lbnl",
+      "dimension": "research",
+      "score": 4,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "lbnl",
+      "dimension": "training",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "lbnl",
+      "dimension": "engagement",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "lbnl",
+      "dimension": "security",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "named_leader_or_council"
+      ]
+    },
+    {
+      "entity_id": "llnl",
+      "dimension": "governance",
+      "score": 1,
+      "basis": [
+        "dimension_populated"
+      ]
+    },
+    {
+      "entity_id": "llnl",
+      "dimension": "policy",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "llnl",
+      "dimension": "academic_integrity",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "llnl",
+      "dimension": "infrastructure",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "llnl",
+      "dimension": "leadership",
+      "score": 1,
+      "basis": [
+        "dimension_populated"
+      ]
+    },
+    {
+      "entity_id": "llnl",
+      "dimension": "health_ai",
+      "score": 1,
+      "basis": [
+        "dimension_populated"
+      ]
+    },
+    {
+      "entity_id": "llnl",
+      "dimension": "research",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "llnl",
+      "dimension": "training",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "llnl",
+      "dimension": "engagement",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "llnl",
+      "dimension": "security",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "lanl",
+      "dimension": "governance",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "lanl",
+      "dimension": "policy",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "lanl",
+      "dimension": "academic_integrity",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "lanl",
+      "dimension": "infrastructure",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "lanl",
+      "dimension": "leadership",
+      "score": 2,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source"
+      ]
+    },
+    {
+      "entity_id": "lanl",
+      "dimension": "health_ai",
+      "score": 1,
+      "basis": [
+        "dimension_populated"
+      ]
+    },
+    {
+      "entity_id": "lanl",
+      "dimension": "research",
+      "score": 3,
+      "basis": [
+        "dimension_populated",
+        "evidenced_true_with_source",
+        "dated_artifact"
+      ]
+    },
+    {
+      "entity_id": "lanl",
+      "dimension": "training",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "lanl",
+      "dimension": "engagement",
+      "score": 0,
+      "basis": []
+    },
+    {
+      "entity_id": "lanl",
+      "dimension": "security",
+      "score": 0,
+      "basis": []
+    }
+  ],
+  "rai_concordance": [
+    {
+      "entity_id": "ucop_systemwide",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "verbatim",
+      "evidence": "Appropriateness"
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "verbatim",
+      "evidence": "Transparency"
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "verbatim",
+      "evidence": "Accuracy, Reliability, Safety"
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "verbatim",
+      "evidence": "Fairness and Non-Discrimination"
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "verbatim",
+      "evidence": "Privacy and Security"
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "verbatim",
+      "evidence": "Human Values"
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "verbatim",
+      "evidence": "Shared Benefit and Prosperity"
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "verbatim",
+      "evidence": "Accountability"
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "adapted",
+      "evidence": "appropriate, benefit"
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "adapted",
+      "evidence": "appropriate, benefit"
+    },
+    {
+      "entity_id": "uc_davis",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_irvine",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_irvine",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_irvine",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_irvine",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_irvine",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_irvine",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_irvine",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_irvine",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucla",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucla",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucla",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucla",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucla",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucla",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucla",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucla",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_merced",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_merced",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_merced",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_merced",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_merced",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_merced",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_merced",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_merced",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_riverside",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_riverside",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "verbatim",
+      "evidence": "Transparency"
+    },
+    {
+      "entity_id": "uc_riverside",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_riverside",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_riverside",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "adapted",
+      "evidence": "privacy, security"
+    },
+    {
+      "entity_id": "uc_riverside",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_riverside",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_riverside",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "verbatim",
+      "evidence": "Accountability"
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_diego",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "adapted",
+      "evidence": "fairness, bias"
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "adapted",
+      "evidence": "privacy, security"
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "verbatim",
+      "evidence": "Appropriateness"
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "verbatim",
+      "evidence": "Transparency"
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "adapted",
+      "evidence": "accuracy, reliable, safety"
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "adapted",
+      "evidence": "fairness, bias"
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "adapted",
+      "evidence": "privacy, security"
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "verbatim",
+      "evidence": "Human Values"
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "adapted",
+      "evidence": "shared benefit, inclusive"
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "verbatim",
+      "evidence": "Accountability"
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_santa_cruz",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsd_health",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "verbatim",
+      "evidence": "Appropriateness"
+    },
+    {
+      "entity_id": "ucsd_health",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "verbatim",
+      "evidence": "Transparency"
+    },
+    {
+      "entity_id": "ucsd_health",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "verbatim",
+      "evidence": "Accuracy, Reliability, Safety"
+    },
+    {
+      "entity_id": "ucsd_health",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsd_health",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsd_health",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsd_health",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsd_health",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsf_health",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsf_health",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsf_health",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsf_health",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsf_health",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsf_health",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsf_health",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucsf_health",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucla_health",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "verbatim",
+      "evidence": "Appropriateness"
+    },
+    {
+      "entity_id": "ucla_health",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "verbatim",
+      "evidence": "Transparency"
+    },
+    {
+      "entity_id": "ucla_health",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "adapted",
+      "evidence": "accuracy, reliable, safety"
+    },
+    {
+      "entity_id": "ucla_health",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "adapted",
+      "evidence": "fairness, bias"
+    },
+    {
+      "entity_id": "ucla_health",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "adapted",
+      "evidence": "privacy, security"
+    },
+    {
+      "entity_id": "ucla_health",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "verbatim",
+      "evidence": "Human Values"
+    },
+    {
+      "entity_id": "ucla_health",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "ucla_health",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "verbatim",
+      "evidence": "Accountability"
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uci_health",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uci_health",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uci_health",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uci_health",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uci_health",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uci_health",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uci_health",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "uci_health",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "cross_uc_health",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lbnl",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lbnl",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lbnl",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lbnl",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lbnl",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lbnl",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lbnl",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lbnl",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "llnl",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "llnl",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "verbatim",
+      "evidence": "Transparency"
+    },
+    {
+      "entity_id": "llnl",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "llnl",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "llnl",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "llnl",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "llnl",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "llnl",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "verbatim",
+      "evidence": "Accountability"
+    },
+    {
+      "entity_id": "lanl",
+      "principle_id": "appropriateness",
+      "principle_name": "Appropriateness",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lanl",
+      "principle_id": "transparency",
+      "principle_name": "Transparency",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lanl",
+      "principle_id": "accuracy_reliability_safety",
+      "principle_name": "Accuracy, Reliability, Safety",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lanl",
+      "principle_id": "fairness_nondiscrimination",
+      "principle_name": "Fairness and Non-Discrimination",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lanl",
+      "principle_id": "privacy_security",
+      "principle_name": "Privacy and Security",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lanl",
+      "principle_id": "human_values",
+      "principle_name": "Human Values",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lanl",
+      "principle_id": "shared_benefit",
+      "principle_name": "Shared Benefit and Prosperity",
+      "status": "absent",
+      "evidence": null
+    },
+    {
+      "entity_id": "lanl",
+      "principle_id": "accountability",
+      "principle_name": "Accountability",
+      "status": "absent",
+      "evidence": null
+    }
+  ],
+  "timeline": [
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "governance",
+      "field": "has_presidential_working_group",
+      "verb": "launched",
+      "date": "2020-08",
+      "source_id": "ucop-01",
+      "snippet": "Working Group on AI launched Aug 2020. 32 faculty/staff from all 10 campuses. Final report delive"
+    },
+    {
+      "entity_id": "ucla_health",
+      "dimension": "governance",
+      "field": "has_health_ai_oversight",
+      "verb": "adopted",
+      "date": "2021-01",
+      "source_id": "uclah-01",
+      "snippet": "UCLA Health system. Adopted UC RAI Principles from 2021 Presidential Working Group."
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "governance",
+      "field": "has_presidential_working_group",
+      "verb": "delivered",
+      "date": "2021-01",
+      "source_id": "ucop-01",
+      "snippet": "puses. Final report delivered 2021 with 4 overarching recommendations: (1) institutionalize RA"
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "policy",
+      "field": "has_regents_presentation",
+      "verb": "adopted",
+      "date": "2021-01",
+      "source_id": "ucop-03",
+      "snippet": "rms President Drake adopted RAI Principles Oct 6, 2021. Formal Board-level presentation of Working Group report."
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "policy",
+      "field": "has_responsible_ai_principles",
+      "verb": "adopted",
+      "date": "2021-01",
+      "source_id": "ucop-02",
+      "snippet": "8 principles adopted October 6, 2021 by President Drake. Exact text: 1) Appropriateness: benefit"
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "health_ai",
+      "field": "has_health_data_governance_report",
+      "verb": "launched",
+      "date": "2021-10",
+      "source_id": "ucop-14",
+      "snippet": "e Report June 2024. Launched Oct 2021 by Presidents Drake and Napolitano. Steering Committee: Cor"
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "governance",
+      "field": "has_ai_council",
+      "verb": "established",
+      "date": "2022-05",
+      "source_id": "ucop-04a",
+      "snippet": "UC AI Council established May 2022. Co-chairs: Alexander Bustamante (SVP & Chief Compliance &"
+    },
+    {
+      "entity_id": "uc_davis_health",
+      "dimension": "governance",
+      "field": "has_health_ai_oversight",
+      "verb": "established",
+      "date": "2023-01",
+      "source_id": "ucdh-02",
+      "snippet": "n Yeates Adams, MD. Established ~2023. Multidisciplinary governance committee for AI/analytics ov"
+    },
+    {
+      "entity_id": "uc_san_francisco",
+      "dimension": "governance",
+      "field": "has_ai_council",
+      "verb": "established",
+      "date": "2023-01",
+      "source_id": "ucsf-04",
+      "snippet": "versight Committee. Established ~2023-2024. Clinical AI governance committee evaluating trustwort"
+    },
+    {
+      "entity_id": "ucsd_health",
+      "dimension": "leadership",
+      "field": "has_chief_health_ai_officer",
+      "verb": "appointed",
+      "date": "2023-01",
+      "source_id": "ucsd-14",
+      "snippet": "Karandeep Singh, MD appointed inaugural Chief Health AI Officer, December 12, 2023."
+    },
+    {
+      "entity_id": "ucsf_health",
+      "dimension": "governance",
+      "field": "has_health_ai_oversight",
+      "verb": "established",
+      "date": "2023-01",
+      "source_id": "ucsf-04",
+      "snippet": "e of any UC campus. Established ~2023-2024."
+    },
+    {
+      "entity_id": "lanl",
+      "dimension": "governance",
+      "field": "has_ai_governance_framework",
+      "verb": "established",
+      "date": "2024-01",
+      "source_id": "lanl-01",
+      "snippet": "Security AI Office established ~2024. Director: Jason Pruet. Institutional AI governance/strateg"
+    },
+    {
+      "entity_id": "uc_irvine",
+      "dimension": "infrastructure",
+      "field": "has_enterprise_ai_platform",
+      "verb": "launched",
+      "date": "2024-01",
+      "source_id": "uci-02",
+      "snippet": "k, VC Tom Andriola. Launched January 2024."
+    },
+    {
+      "entity_id": "ucla",
+      "dimension": "governance",
+      "field": "has_ai_council",
+      "verb": "launched",
+      "date": "2024-04",
+      "source_id": "ucla-01",
+      "snippet": "Governance Board). Launched April 2024 by Digital and Technology Solutions (DTS). IT governance co"
+    },
+    {
+      "entity_id": "uc_davis",
+      "dimension": "governance",
+      "field": "has_ai_council",
+      "verb": "convened",
+      "date": "2024-05",
+      "source_id": "ucd-01",
+      "snippet": "C Davis AI Council. Convened May 2024 by Chancellor Gary May. Charge: 'develop campus-based princ"
+    },
+    {
+      "entity_id": "ucop_systemwide",
+      "dimension": "governance",
+      "field": "has_legal_ai_task_force",
+      "verb": "published",
+      "date": "2024-06",
+      "source_id": "ucop-20",
+      "snippet": "eas expertise chart published June 2024."
+    },
+    {
+      "entity_id": "uc_davis",
+      "dimension": "governance",
+      "field": "has_ai_council",
+      "verb": "delivered",
+      "date": "2025-01",
+      "source_id": "ucd-01",
+      "snippet": "Principles. Report delivered Winter 2025. Covers both Davis campus and Davis Health."
+    },
+    {
+      "entity_id": "uc_berkeley",
+      "dimension": "infrastructure",
+      "field": "has_enterprise_ai_platform",
+      "verb": "launched",
+      "date": "2025-03",
+      "source_id": "ucb-06",
+      "snippet": "iver) — BETA. Pilot launched March 2025, P3-approved October 2025. Secure multi-model AI platform f"
+    },
+    {
+      "entity_id": "llnl",
+      "dimension": "research",
+      "field": "has_ai_policy_primer",
+      "verb": "effective",
+      "date": "2026-01",
+      "source_id": "llnl-02",
+      "snippet": "data transparency, effective 2026), SB 53 (safety/accountability)."
+    },
+    {
+      "entity_id": "uc_merced",
+      "dimension": "governance",
+      "field": "has_ai_council",
+      "verb": "formed",
+      "date": "2026-01",
+      "source_id": "ucm-01",
+      "snippet": "AI Advisory Council formed Feb 11, 2026. Chair: Avi Badwal (AVC Enterprise Tech). Exec sponsors: Du"
+    },
+    {
+      "entity_id": "uc_santa_barbara",
+      "dimension": "governance",
+      "field": "has_ai_council",
+      "verb": "established",
+      "date": "2026-01",
+      "source_id": "ucsb-03",
+      "snippet": "ood and Lisa Parks. Established January 5, 2026. Joint Senate-administrative committee."
+    }
+  ]
+}
