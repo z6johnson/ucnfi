@@ -368,11 +368,6 @@ export default function AboutPage() {
               → Ask the research copilot
             </Link>
           </li>
-          <li>
-            <Link href="/memos" className="label">
-              → Read committee memos
-            </Link>
-          </li>
         </ul>
       </section>
     </div>

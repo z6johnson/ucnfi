@@ -13,31 +13,20 @@ export default function HomePage() {
     .map((e) => e.entity_id);
 
   return (
-    <div className="pt-12">
-      <header>
-        <span className="label">UCNFI · Shared picture</span>
-        <h1 className="display mt-2">
-          What the UC system has built around AI
-        </h1>
-        <p
-          className="prose-body mt-4 max-w-2xl"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          Every campus, health system, and lab is already doing AI work
-          on its own. This is a way to see all of it together — what&rsquo;s
-          in place across the system, where practices line up, and where the
-          quiet gaps are. Pick a topic and the entities you want to look at,
-          and read the same question answered for each one. It&rsquo;s a
-          shared resource for the Steering Committee, not a leaderboard.
-        </p>
-        <div className="mt-4">
-          <Link href="/about" className="label">
-            → About the dimensions and method
-          </Link>
+    <div className="pt-8">
+      <header className="flex flex-wrap items-baseline justify-between gap-4">
+        <div>
+          <span className="label">UCNFI · Shared picture</span>
+          <h1 className="display mt-2">
+            What the UC system has built around AI
+          </h1>
         </div>
+        <Link href="/about" className="label">
+          → Dimensions and method
+        </Link>
       </header>
 
-      <div className="mt-12">
+      <div className="mt-8">
         <CompareMatrix
           entities={entities}
           defaultEntityIds={defaultEntityIds}

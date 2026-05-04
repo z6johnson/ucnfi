@@ -2,17 +2,30 @@
 
 **UC Next Frontier Initiative — research, synthesis, and analytics platform.**
 
-A Next.js web app over the Phase 0 AI governance baseline dataset (20 entities, 219 data points, 10 dimensions) with a grounded Claude copilot for cross-cutting analysis and committee memo drafting. Organized around the three pillars and eight Opportunity Areas of the UCNFI North Star.
+A Next.js web app over the AI governance baseline dataset (20 entities, 262 data points, 10 dimensions, v0.7.0) and the UCNFI Steering Committee directory (23 members), with a grounded Claude copilot that cites every claim back to a specific entity or member. Organized around the three pillars and eight Opportunity Areas of the UCNFI North Star.
+
+## Surfaces
+
+| Route | Purpose |
+|---|---|
+| `/` | Compare matrix — pick a dimension and a set of entities, read the same question answered for each. |
+| `/expertise` | Committee directory with filters for expertise, opportunity area, sector, and AI relationship. List and matrix views. |
+| `/chat` | Claude-powered research copilot grounded in the baseline + committee directory. Inline `[entity_id]` and `[member-id]` citations open a side drawer. |
+| `/baseline`, `/baseline/[id]` | Per-entity detail pages over the baseline JSON. |
+| `/about` | Strategy, the ten dimensions, method, and known gaps. |
+
+Memo drafting and comparison are scaffolded but hidden from the global nav while content is finalized. The underlying routes (`/memos`, `/memos/new`, `/api/memos`) and admin gate are unchanged.
 
 ## Status
 
 | | Step | What it adds |
 |---|---|---|
-| ✓ | **Step 1 — Baseline Explorer** | Dashboard, entity index, entity detail pages, NFI design tokens. No runtime dependencies. |
-| ✓ | **Step 2 — Grounded Chat** | Streaming Claude chat with the full baseline in a prompt-cached system prompt, inline `[entity_id]` citations wired to the explorer. |
+| ✓ | **Step 1 — Baseline Explorer** | Compare matrix on `/`, entity detail pages, NFI design tokens. No runtime dependencies. |
+| ✓ | **Step 2 — Grounded Chat** | Streaming Claude chat with the baseline + committee directory in a prompt-cached system prompt, inline citation chips wired to side drawers. |
+| ✓ | **Expertise directory** | `/expertise` with searchable, filterable committee directory and a member × OA matrix view. |
 | ☐ | **Step 3 — Persistence + Shares** | Postgres + Drizzle, saved chats, admin cookie gate, read-only share links. |
-| ☐ | **Step 4 — Memos + Comparison** | Memo drafting, cross-entity comparison matrix, OA pages. |
-| ☐ | **Step 5 — Polish** | Copy pass, seeded published memos, custom domain, analytics. |
+| ☐ | **Step 4 — Memos + Comparison** | Memo drafting (scaffolded; nav entry hidden for now), seeded published memos. |
+| ☐ | **Step 5 — Polish** | Copy pass, custom domain, analytics. |
 
 Full plan: [`docs/v1-plan.md`](docs/v1-plan.md).
 
@@ -39,16 +52,18 @@ app/          Next.js App Router pages and API routes
 components/   React components aligned to docs/seed-style-guide.md
 content/      Single source of truth for pillars, OAs, research topics
 lib/          Typed loader and query layer over the baseline JSON
-data/         Phase 0 baseline dataset (v0.6.0) and enrichment tooling
+data/         Baseline dataset (v0.7.0), committee directory, and enrichment tooling
 docs/         Plan, principles, style guide
 ```
 
 Key files:
 
-- [`data/uc_ai_baseline.json`](data/uc_ai_baseline.json) — the Phase 0 dataset (source of truth)
+- [`data/uc_ai_baseline.json`](data/uc_ai_baseline.json) — entity dataset (source of truth, v0.7.0)
+- [`data/ucnfi-committee/`](data/ucnfi-committee/) — committee directory records, schema, and enrichment strategy
 - [`data/ENRICHMENT_LOG.md`](data/ENRICHMENT_LOG.md) — dataset version history and gaps
 - [`content/northstar.ts`](content/northstar.ts) — pillars, Opportunity Areas, research topics
 - [`lib/baseline.ts`](lib/baseline.ts) — typed accessors (`listEntities`, `getEntity`, `queryBaseline`, `baselineStats`)
+- [`lib/committee.ts`](lib/committee.ts) — committee directory loader and facets
 - [`docs/v1-plan.md`](docs/v1-plan.md) — approved v1 implementation plan
 - [`docs/responsible-ai-seed-principles.md`](docs/responsible-ai-seed-principles.md)
 - [`docs/seed-style-guide.md`](docs/seed-style-guide.md)
