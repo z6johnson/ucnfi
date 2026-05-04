@@ -354,13 +354,13 @@ export default function AboutPage() {
         </div>
         <ul className="mt-6 flex flex-wrap gap-6">
           <li>
-            <Link href="/baseline" className="label">
-              → Browse the baseline
+            <Link href="/" className="label">
+              → See the system at a glance
             </Link>
           </li>
           <li>
-            <Link href="/compare" className="label">
-              → Compare entities side-by-side
+            <Link href="/baseline" className="label">
+              → Browse the baseline by entity
             </Link>
           </li>
           <li>
