@@ -714,7 +714,10 @@ function MemberCard({
         {synopsisShort}
       </p>
 
-      <div className="mt-auto pt-2">
+      <div
+        className="mt-auto flex items-center justify-between gap-3 pt-2"
+        style={{ flexWrap: "wrap" }}
+      >
         <button
           type="button"
           onClick={onOpen}
@@ -729,8 +732,60 @@ function MemberCard({
         >
           Open profile →
         </button>
+        <FreshnessBadge member={member} />
       </div>
     </article>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Freshness badge                                                     */
+/* ------------------------------------------------------------------ */
+
+const STALE_DAYS = 90;
+
+function daysSince(isoDate: string): number | null {
+  const ts = Date.parse(isoDate);
+  if (Number.isNaN(ts)) return null;
+  return Math.floor((Date.now() - ts) / (1000 * 60 * 60 * 24));
+}
+
+function FreshnessBadge({ member }: { member: CommitteeMember }) {
+  const last = member.record_meta.last_verified;
+  const flags = member.record_meta.needs_attention?.length ?? 0;
+  const days = daysSince(last);
+  const stale = days !== null && days >= STALE_DAYS;
+
+  return (
+    <div
+      className="flex items-center gap-3 text-xs"
+      style={{ color: "var(--color-text-subtle)" }}
+    >
+      {flags > 0 ? (
+        <span
+          className="label"
+          title={`${flags} item${flags === 1 ? "" : "s"} flagged in needs_attention`}
+          style={{
+            color: "var(--color-warn-strong)",
+            padding: "0.1rem 0.35rem",
+            border: "1px solid var(--color-warn-strong)",
+          }}
+        >
+          {flags} flag{flags === 1 ? "" : "s"}
+        </span>
+      ) : null}
+      <span
+        title={`Last verified ${last}${
+          days !== null ? ` · ${days} day${days === 1 ? "" : "s"} ago` : ""
+        }`}
+        style={{
+          color: stale ? "var(--color-warn-strong)" : "var(--color-text-subtle)",
+        }}
+      >
+        {stale ? "Stale · " : "Verified "}
+        {last}
+      </span>
+    </div>
   );
 }
 
