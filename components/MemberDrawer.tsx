@@ -6,37 +6,12 @@ import type {
   CommitteeMember,
   Confidence,
   GovernanceOrientation,
-  OpportunityAreaId,
-  Sector,
 } from "@/lib/committee";
 
 /* ------------------------------------------------------------------ */
 /* Display labels — duplicated from `lib/committee` to keep that       */
 /* server-only module out of the client bundle.                         */
 /* ------------------------------------------------------------------ */
-
-const OPPORTUNITY_AREA_LABEL: Record<OpportunityAreaId, string> = {
-  "OA-1": "Trusted AI Standard",
-  "OA-2": "Strategic Expansion / Partnerships",
-  "OA-3": "National AI Literacy",
-  "OA-4": "AI Infrastructure",
-  "OA-5": "Operational Streamlining",
-  "OA-6": "21st Century Public University",
-  "OA-7": "Grand Challenges",
-  "OA-8": "360° Health Intelligence",
-};
-
-const SECTOR_LABEL: Record<Sector, string> = {
-  uc_campus: "UC campus",
-  ucop: "UCOP",
-  uc_health: "UC Health",
-  national_lab: "National lab",
-  industry: "Industry",
-  state_government: "State government",
-  nonprofit_or_network: "Nonprofit / network",
-  venture_capital: "Venture capital",
-  other: "Other",
-};
 
 const AI_RELATIONSHIP_LABEL: Record<AiRelationship, string> = {
   builder_or_researcher: "Builder / researcher",
@@ -223,13 +198,11 @@ export function MemberDrawer({ memberId, members, onClose }: Props) {
     COMMITTEE_ROLE_LABEL[member.committee_role.role] ??
     member.committee_role.role;
   const facets = member.enrichment.role_facets;
-  const oas = member.enrichment.opportunity_areas ?? [];
   const tags = member.enrichment.expertise_tags ?? [];
   const sources = member.enrichment.sources ?? [];
   const secondary = member.secondary_affiliations ?? [];
   const represents = member.committee_role.represents ?? [];
   const selfReportSubmitted = member.self_report?.submitted === true;
-  const needsAttention = member.record_meta.needs_attention ?? [];
 
   return (
     <div
@@ -297,67 +270,6 @@ export function MemberDrawer({ memberId, members, onClose }: Props) {
           </p>
         </section>
 
-        {/* ---------- Opportunity areas ---------- */}
-        {oas.length > 0 ? (
-          <section className="mt-8">
-            <header className="hairline flex items-baseline justify-between pb-2">
-              <span className="label">Opportunity areas</span>
-              <span className="label">{oas.length}</span>
-            </header>
-            <ul className="mt-3 flex flex-col gap-3">
-              {oas.map((o) => (
-                <li
-                  key={o.oa}
-                  className="flex flex-col gap-1"
-                >
-                  <div className="flex items-baseline gap-2">
-                    <span
-                      className="label"
-                      style={{
-                        padding: "0.15rem 0.4rem",
-                        color:
-                          o.relevance === "primary"
-                            ? "var(--color-accent)"
-                            : "var(--color-text-subtle)",
-                        background:
-                          o.relevance === "primary"
-                            ? "var(--color-accent-wash)"
-                            : "transparent",
-                        border:
-                          o.relevance === "primary"
-                            ? "1px solid var(--color-accent)"
-                            : "1px solid var(--color-border-hair)",
-                      }}
-                    >
-                      {o.oa}
-                    </span>
-                    <span
-                      className="text-sm font-semibold"
-                      style={{ color: "var(--color-ink)" }}
-                    >
-                      {OPPORTUNITY_AREA_LABEL[o.oa]}
-                    </span>
-                    <span
-                      className="label"
-                      style={{ color: "var(--color-text-subtle)" }}
-                    >
-                      {o.relevance}
-                    </span>
-                  </div>
-                  {o.rationale ? (
-                    <p
-                      className="text-sm"
-                      style={{ color: "var(--color-text-muted)" }}
-                    >
-                      {o.rationale}
-                    </p>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
-
         {/* ---------- Expertise tags ---------- */}
         {tags.length > 0 ? (
           <section className="mt-8">
@@ -411,8 +323,7 @@ export function MemberDrawer({ memberId, members, onClose }: Props) {
 
         {/* ---------- Role facets ---------- */}
         {facets &&
-        (facets.sector ||
-          (facets.ai_relationship && facets.ai_relationship.length > 0) ||
+        ((facets.ai_relationship && facets.ai_relationship.length > 0) ||
           (facets.governance_orientation &&
             facets.governance_orientation.length > 0)) ? (
           <section className="mt-8">
@@ -420,12 +331,6 @@ export function MemberDrawer({ memberId, members, onClose }: Props) {
               <span className="label">Role facets</span>
             </header>
             <dl className="mt-3 flex flex-col gap-3 text-sm">
-              {facets.sector ? (
-                <FacetRow
-                  label="Sector"
-                  value={SECTOR_LABEL[facets.sector]}
-                />
-              ) : null}
               {facets.ai_relationship && facets.ai_relationship.length > 0 ? (
                 <FacetRow
                   label="AI relationship"
@@ -582,21 +487,6 @@ export function MemberDrawer({ memberId, members, onClose }: Props) {
                 {selfReportSubmitted ? "submitted" : "not yet submitted"}
               </span>
             </div>
-            {needsAttention.length > 0 ? (
-              <div className="mt-3">
-                <span className="label">Needs attention</span>
-                <ul className="mt-1 flex flex-col gap-1">
-                  {needsAttention.map((n, i) => (
-                    <li
-                      key={i}
-                      style={{ color: "var(--color-text-muted)" }}
-                    >
-                      {n}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
           </div>
         </section>
       </aside>

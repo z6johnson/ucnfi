@@ -7,12 +7,11 @@ import type {
   Confidence,
   Facet,
   OpportunityAreaId,
-  Sector,
 } from "@/lib/committee";
 import { MemberDrawer } from "@/components/MemberDrawer";
 
 type ViewMode = "list" | "matrix";
-type FacetKey = "oa" | "sector" | "rel" | "tag";
+type FacetKey = "rel" | "tag";
 
 const OPPORTUNITY_AREA_IDS: OpportunityAreaId[] = [
   "OA-1",
@@ -52,22 +51,16 @@ const CONFIDENCE_TONE: Record<Confidence, string> = {
 type Props = {
   members: CommitteeMember[];
   expertiseTagFacets: Facet<string>[];
-  opportunityAreaFacets: Facet<OpportunityAreaId>[];
-  sectorFacets: Facet<Sector>[];
   aiRelationshipFacets: Facet<AiRelationship>[];
 };
 
 export function ExpertiseMatrix({
   members,
   expertiseTagFacets,
-  opportunityAreaFacets,
-  sectorFacets,
   aiRelationshipFacets,
 }: Props) {
   const [query, setQuery] = useState("");
   const [tags, setTags] = useState<Set<string>>(new Set());
-  const [oas, setOas] = useState<Set<OpportunityAreaId>>(new Set());
-  const [sectors, setSectors] = useState<Set<Sector>>(new Set());
   const [rels, setRels] = useState<Set<AiRelationship>>(new Set());
   const [view, setView] = useState<ViewMode>("list");
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -119,36 +112,20 @@ export function ExpertiseMatrix({
         const has = m.enrichment.expertise_tags.some((t) => tags.has(t.tag));
         if (!has) return false;
       }
-      if (oas.size > 0) {
-        const has = (m.enrichment.opportunity_areas ?? []).some((o) =>
-          oas.has(o.oa),
-        );
-        if (!has) return false;
-      }
-      if (sectors.size > 0) {
-        const s = m.enrichment.role_facets?.sector;
-        if (!s || !sectors.has(s)) return false;
-      }
       if (rels.size > 0) {
         const list = m.enrichment.role_facets?.ai_relationship ?? [];
         if (!list.some((r) => rels.has(r))) return false;
       }
       return true;
     });
-  }, [members, query, tags, oas, sectors, rels]);
+  }, [members, query, tags, rels]);
 
   const anyFilter =
-    query.length > 0 ||
-    tags.size > 0 ||
-    oas.size > 0 ||
-    sectors.size > 0 ||
-    rels.size > 0;
+    query.length > 0 || tags.size > 0 || rels.size > 0;
 
   const clearAll = () => {
     setQuery("");
     setTags(new Set());
-    setOas(new Set());
-    setSectors(new Set());
     setRels(new Set());
   };
 
@@ -191,24 +168,6 @@ export function ExpertiseMatrix({
         </div>
         <div className="mt-3 flex flex-col gap-3 md:flex-row">
           <FilterTrigger
-            label="Opportunity area"
-            sublabel={`${opportunityAreaFacets.length} OAs`}
-            selectedCount={oas.size}
-            open={openFacet === "oa"}
-            onClick={() =>
-              setOpenFacet((cur) => (cur === "oa" ? null : "oa"))
-            }
-          />
-          <FilterTrigger
-            label="Sector"
-            sublabel={`${sectorFacets.length} sectors`}
-            selectedCount={sectors.size}
-            open={openFacet === "sector"}
-            onClick={() =>
-              setOpenFacet((cur) => (cur === "sector" ? null : "sector"))
-            }
-          />
-          <FilterTrigger
             label="AI relationship"
             sublabel={`${aiRelationshipFacets.length} types`}
             selectedCount={rels.size}
@@ -227,23 +186,7 @@ export function ExpertiseMatrix({
             }
           />
         </div>
-        {openFacet === "oa" ? (
-          <FilterPanel
-            label="Opportunity area"
-            items={opportunityAreaFacets}
-            selected={oas}
-            onToggle={(id) => toggle(setOas, id)}
-            onClose={() => setOpenFacet(null)}
-          />
-        ) : openFacet === "sector" ? (
-          <FilterPanel
-            label="Sector"
-            items={sectorFacets}
-            selected={sectors}
-            onToggle={(id) => toggle(setSectors, id)}
-            onClose={() => setOpenFacet(null)}
-          />
-        ) : openFacet === "rel" ? (
+        {openFacet === "rel" ? (
           <FilterPanel
             label="AI relationship"
             items={aiRelationshipFacets}
@@ -773,7 +716,6 @@ function MemberCard({
   onOpen: () => void;
 }) {
   const displayName = member.name.preferred ?? member.name.full;
-  const oas = member.enrichment.opportunity_areas ?? [];
   const tags = member.enrichment.expertise_tags ?? [];
   const synopsis = member.enrichment.synopsis;
   const synopsisShort =
@@ -783,10 +725,21 @@ function MemberCard({
 
   return (
     <article
+      role="button"
+      tabIndex={0}
+      onClick={onOpen}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpen();
+        }
+      }}
+      aria-label={`Open profile for ${displayName}`}
       className="flex h-full flex-col gap-3 p-5"
       style={{
         border: "1px solid var(--color-border-hair)",
         background: "var(--color-bg)",
+        cursor: "pointer",
       }}
     >
       <header className="flex items-start justify-between gap-3">
@@ -798,21 +751,7 @@ function MemberCard({
               lineHeight: 1.15,
             }}
           >
-            <button
-              type="button"
-              onClick={onOpen}
-              style={{
-                background: "transparent",
-                border: 0,
-                padding: 0,
-                font: "inherit",
-                color: "inherit",
-                cursor: "pointer",
-                textAlign: "left",
-              }}
-            >
-              {displayName}
-            </button>
+            {displayName}
           </h3>
           <p
             className="mt-1 text-sm"
@@ -839,35 +778,6 @@ function MemberCard({
           </span>
         ) : null}
       </header>
-
-      {oas.length > 0 ? (
-        <div className="flex flex-wrap gap-1.5">
-          {oas.map((o) => (
-            <span
-              key={o.oa}
-              title={`${o.oa} · ${OPPORTUNITY_AREA_LABEL[o.oa]} (${o.relevance})`}
-              className="label"
-              style={{
-                padding: "0.15rem 0.4rem",
-                color:
-                  o.relevance === "primary"
-                    ? "var(--color-accent)"
-                    : "var(--color-text-subtle)",
-                background:
-                  o.relevance === "primary"
-                    ? "var(--color-accent-wash)"
-                    : "transparent",
-                border:
-                  o.relevance === "primary"
-                    ? "1px solid var(--color-accent)"
-                    : "1px solid var(--color-border-hair)",
-              }}
-            >
-              {o.oa}
-            </span>
-          ))}
-        </div>
-      ) : null}
 
       {tags.length > 0 ? (
         <ul className="flex flex-col gap-1">
@@ -904,20 +814,13 @@ function MemberCard({
         className="mt-auto flex items-center justify-between gap-3 pt-2"
         style={{ flexWrap: "wrap" }}
       >
-        <button
-          type="button"
-          onClick={onOpen}
+        <span
           className="label"
-          style={{
-            background: "transparent",
-            border: 0,
-            padding: 0,
-            color: "var(--color-accent)",
-            cursor: "pointer",
-          }}
+          style={{ color: "var(--color-accent)" }}
+          aria-hidden
         >
           Open profile →
-        </button>
+        </span>
         <FreshnessBadge member={member} />
       </div>
     </article>
@@ -938,7 +841,6 @@ function daysSince(isoDate: string): number | null {
 
 function FreshnessBadge({ member }: { member: CommitteeMember }) {
   const last = member.record_meta.last_verified;
-  const flags = member.record_meta.needs_attention?.length ?? 0;
   const days = daysSince(last);
   const stale = days !== null && days >= STALE_DAYS;
 
@@ -947,19 +849,6 @@ function FreshnessBadge({ member }: { member: CommitteeMember }) {
       className="flex items-center gap-3 text-xs"
       style={{ color: "var(--color-text-subtle)" }}
     >
-      {flags > 0 ? (
-        <span
-          className="label"
-          title={`${flags} item${flags === 1 ? "" : "s"} flagged in needs_attention`}
-          style={{
-            color: "var(--color-warn-strong)",
-            padding: "0.1rem 0.35rem",
-            border: "1px solid var(--color-warn-strong)",
-          }}
-        >
-          {flags} flag{flags === 1 ? "" : "s"}
-        </span>
-      ) : null}
       <span
         title={`Last verified ${last}${
           days !== null ? ` · ${days} day${days === 1 ? "" : "s"} ago` : ""

@@ -4,21 +4,17 @@ import {
   listAiRelationshipFacets,
   listExpertiseTagFacets,
   listMembers,
-  listOpportunityAreaFacets,
-  listSectorFacets,
 } from "@/lib/committee";
 
 export const metadata = {
   title: "Expertise — UCNFI",
   description:
-    "Search and filter the UCNFI Steering Committee by expertise, opportunity area, sector, and AI relationship.",
+    "Search and filter the UCNFI Steering Committee by expertise and AI relationship.",
 };
 
 export default function ExpertisePage() {
   const members = listMembers();
   const expertiseTagFacets = listExpertiseTagFacets();
-  const opportunityAreaFacets = listOpportunityAreaFacets();
-  const sectorFacets = listSectorFacets();
   const aiRelationshipFacets = listAiRelationshipFacets();
 
   return (
@@ -39,8 +35,6 @@ export default function ExpertisePage() {
         <ExpertiseMatrix
           members={members}
           expertiseTagFacets={expertiseTagFacets}
-          opportunityAreaFacets={opportunityAreaFacets}
-          sectorFacets={sectorFacets}
           aiRelationshipFacets={aiRelationshipFacets}
         />
       </div>
