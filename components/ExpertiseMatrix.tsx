@@ -150,56 +150,53 @@ export function ExpertiseMatrix({
         />
       </section>
 
-      {/* ---------- Opportunity area picker ---------- */}
-      <FacetGroup
-        label="Opportunity area"
-        sublabel={`${opportunityAreaFacets.length} total`}
-        items={opportunityAreaFacets}
-        selected={oas}
-        onToggle={(id) => toggle(setOas, id)}
-      />
-
-      {/* ---------- Sector picker ---------- */}
-      <FacetGroup
-        label="Sector"
-        items={sectorFacets}
-        selected={sectors}
-        onToggle={(id) => toggle(setSectors, id)}
-      />
-
-      {/* ---------- AI relationship picker ---------- */}
-      <FacetGroup
-        label="AI relationship"
-        items={aiRelationshipFacets}
-        selected={rels}
-        onToggle={(id) => toggle(setRels, id)}
-      />
-
-      {/* ---------- Expertise tag picker ---------- */}
-      <FacetGroup
-        label="Expertise"
-        sublabel={`${expertiseTagFacets.length} tags`}
-        items={expertiseTagFacets}
-        selected={tags}
-        onToggle={(id) => toggle(setTags, id)}
-      />
-
-      {/* ---------- Active-filter row ---------- */}
-      {anyFilter ? (
-        <div className="mt-6 flex justify-end">
-          <button
-            type="button"
-            onClick={clearAll}
-            className="label"
-            style={{ color: "var(--color-accent)", cursor: "pointer" }}
-          >
-            Clear all filters
-          </button>
+      {/* ---------- Filters (collapsed disclosures) ---------- */}
+      <section className="mt-6">
+        <div className="hairline flex items-baseline justify-between pb-2">
+          <span className="label">Filters</span>
+          {anyFilter ? (
+            <button
+              type="button"
+              onClick={clearAll}
+              className="label"
+              style={{ color: "var(--color-accent)", cursor: "pointer" }}
+            >
+              Clear all
+            </button>
+          ) : (
+            <span className="label">none active</span>
+          )}
         </div>
-      ) : null}
+        <CollapsibleFacet
+          label="Opportunity area"
+          sublabel={`${opportunityAreaFacets.length} OAs`}
+          items={opportunityAreaFacets}
+          selected={oas}
+          onToggle={(id) => toggle(setOas, id)}
+        />
+        <CollapsibleFacet
+          label="Sector"
+          items={sectorFacets}
+          selected={sectors}
+          onToggle={(id) => toggle(setSectors, id)}
+        />
+        <CollapsibleFacet
+          label="AI relationship"
+          items={aiRelationshipFacets}
+          selected={rels}
+          onToggle={(id) => toggle(setRels, id)}
+        />
+        <CollapsibleFacet
+          label="Expertise"
+          sublabel={`${expertiseTagFacets.length} tags`}
+          items={expertiseTagFacets}
+          selected={tags}
+          onToggle={(id) => toggle(setTags, id)}
+        />
+      </section>
 
       {/* ---------- Results ---------- */}
-      <section className="mt-12">
+      <section className="mt-8">
         <div className="hairline flex flex-wrap items-baseline justify-between gap-4 pb-2">
           <h2 className="display" style={{ fontSize: "var(--text-lg)" }}>
             Members
@@ -494,10 +491,10 @@ function CoverageMatrix({
 }
 
 /* ------------------------------------------------------------------ */
-/* Facet group — reusable filter pill row                              */
+/* Collapsible facet — one-line disclosure that expands to chip row    */
 /* ------------------------------------------------------------------ */
 
-type FacetGroupProps<T extends string> = {
+type CollapsibleFacetProps<T extends string> = {
   label: string;
   sublabel?: string;
   items: Facet<T>[];
@@ -505,62 +502,110 @@ type FacetGroupProps<T extends string> = {
   onToggle: (id: T) => void;
 };
 
-function FacetGroup<T extends string>({
+function CollapsibleFacet<T extends string>({
   label,
   sublabel,
   items,
   selected,
   onToggle,
-}: FacetGroupProps<T>) {
+}: CollapsibleFacetProps<T>) {
+  const [open, setOpen] = useState(false);
   if (items.length === 0) return null;
+  const selectedCount = selected.size;
+  const summary =
+    selectedCount > 0
+      ? `${selectedCount} selected`
+      : sublabel ?? `${items.length}`;
+
   return (
-    <section className="mt-10">
-      <div className="hairline flex items-baseline justify-between pb-2">
-        <span className="label">{label}</span>
-        {sublabel ? <span className="label">{sublabel}</span> : null}
-      </div>
-      <div className="mt-4 flex flex-wrap gap-2">
-        {items.map((it) => {
-          const active = selected.has(it.id);
-          return (
-            <button
-              key={it.id}
-              type="button"
-              onClick={() => onToggle(it.id)}
-              className="label"
-              style={{
-                padding: "0.4rem 0.65rem",
-                border: `1px solid ${
-                  active
-                    ? "var(--color-accent)"
-                    : "var(--color-border-hair)"
-                }`,
-                background: active
-                  ? "var(--color-accent-wash)"
-                  : "transparent",
-                color: active
-                  ? "var(--color-accent)"
-                  : "var(--color-text-subtle)",
-                cursor: "pointer",
-                textAlign: "left",
-              }}
-              aria-pressed={active}
-            >
-              {it.label}
-              <span
+    <div
+      style={{ borderBottom: "1px solid var(--color-border-hair)" }}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between"
+        style={{
+          padding: "var(--space-3) 0",
+          background: "transparent",
+          border: 0,
+          cursor: "pointer",
+          textAlign: "left",
+        }}
+      >
+        <span className="flex items-baseline gap-2">
+          <span
+            aria-hidden
+            style={{
+              display: "inline-block",
+              width: "0.75rem",
+              color: "var(--color-text-subtle)",
+              fontSize: "0.7rem",
+            }}
+          >
+            {open ? "▾" : "▸"}
+          </span>
+          <span className="label" style={{ color: "var(--color-text)" }}>
+            {label}
+          </span>
+        </span>
+        <span
+          className="label"
+          style={{
+            color:
+              selectedCount > 0
+                ? "var(--color-accent)"
+                : "var(--color-text-subtle)",
+          }}
+        >
+          {summary}
+        </span>
+      </button>
+      {open ? (
+        <div className="flex flex-wrap gap-2 pb-3">
+          {items.map((it) => {
+            const active = selected.has(it.id);
+            return (
+              <button
+                key={it.id}
+                type="button"
+                onClick={() => onToggle(it.id)}
+                className="label"
                 style={{
-                  marginLeft: "0.5rem",
-                  opacity: 0.7,
-                  fontWeight: 500,
+                  padding: "0.4rem 0.65rem",
+                  border: `1px solid ${
+                    active
+                      ? "var(--color-accent)"
+                      : "var(--color-border-hair)"
+                  }`,
+                  background: active
+                    ? "var(--color-accent-wash)"
+                    : "transparent",
+                  color: active
+                    ? "var(--color-accent)"
+                    : "var(--color-text-subtle)",
+                  cursor: "pointer",
+                  textAlign: "left",
                 }}
+                aria-pressed={active}
               >
-                {it.count}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-    </section>
+                {it.label}
+                <span
+                  style={{
+                    marginLeft: "0.5rem",
+                    opacity: 0.7,
+                    fontWeight: 500,
+                  }}
+                >
+                  {it.count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
   );
 }
 
