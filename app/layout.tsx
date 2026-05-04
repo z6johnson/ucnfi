@@ -26,7 +26,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               >
                 Baseline
               </Link>
-              <span className="label">UCNFI Baseline · v0.6.0</span>
+              <span className="label">
+                Baseline v0.7.0 · 20 entities · 262 data points
+              </span>
             </div>
           </footer>
         </div>

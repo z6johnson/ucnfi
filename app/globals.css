@@ -298,6 +298,35 @@ hr {
 }
 
 /* ============================================================
+   Starter chips — clickable prompts in the chat empty state
+   ============================================================ */
+
+.starter-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.65rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid var(--color-border-hair);
+  border-radius: 2px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+.starter-chip:hover {
+  background: var(--color-accent-wash);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+.starter-chip:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ============================================================
    Citation chips — inline [entity_id] markers in chat responses
    ============================================================ */
 

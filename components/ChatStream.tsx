@@ -35,12 +35,58 @@ type StreamEvent =
   | { type: "done"; provider?: Provider; usage: Usage }
   | { type: "error"; error: string };
 
-const STARTERS = [
-  "Which UC campuses have a formal AI council, and which don't?",
-  "Summarize differences between UCSD TritonAI and UCLA's OAI.",
-  "Where are the biggest gaps in health AI governance across the UC health systems?",
-  "Which committee members bring infrastructure expertise, and which OAs do they cover?",
-  "Draft a one-page memo for OA-1 Trusted AI Standard that identifies three systemwide gaps.",
+type StarterGroup = "Baseline" | "Committee";
+type Starter = { label: string; prompt: string; group: StarterGroup };
+
+const STARTERS: Starter[] = [
+  {
+    group: "Baseline",
+    label: "Campuses with a formal AI council",
+    prompt:
+      "Which UC campuses have a formal AI council, and which don't?",
+  },
+  {
+    group: "Baseline",
+    label: "TritonAI vs UCLA OAI",
+    prompt:
+      "Summarize the differences between UCSD TritonAI and UCLA's OAI.",
+  },
+  {
+    group: "Baseline",
+    label: "Health AI governance gaps",
+    prompt:
+      "Where are the biggest gaps in health AI governance across the UC health systems?",
+  },
+  {
+    group: "Baseline",
+    label: "Approved AI tools by campus",
+    prompt:
+      "List the approved AI tools currently in use at each campus and where they overlap.",
+  },
+  {
+    group: "Committee",
+    label: "Members with infrastructure expertise",
+    prompt:
+      "Which committee members bring infrastructure expertise, and which Opportunity Areas do they cover?",
+  },
+  {
+    group: "Committee",
+    label: "Who covers OA-1 (Trusted AI Standard)",
+    prompt:
+      "Which committee members signal coverage of OA-1 Trusted AI Standard, and what do they bring to it?",
+  },
+  {
+    group: "Committee",
+    label: "Health AI experts on the committee",
+    prompt:
+      "Which committee members are best positioned to advise on health AI governance and clinical deployment?",
+  },
+  {
+    group: "Committee",
+    label: "Members from the national labs",
+    prompt:
+      "Which committee members come from the national labs, and what's their AI relationship?",
+  },
 ];
 
 function messagesToMarkdown(messages: Message[]): string {
@@ -413,36 +459,38 @@ export function ChatStream({
 }
 
 function EmptyState({ onPick }: { onPick: (text: string) => void }) {
+  const groups: StarterGroup[] = ["Baseline", "Committee"];
   return (
     <div>
       <p
-        className="prose-body max-w-xl"
+        className="text-sm max-w-xl"
         style={{ color: "var(--color-text-muted)" }}
       >
-        Ask anything grounded in the UCNFI baseline. The copilot cites every
-        factual claim back to a specific entity — click any citation chip to
-        open that entity in a side panel without leaving the conversation.
+        Grounded in the baseline and committee directory. Every claim
+        cites a specific entity or member — click any chip to open it.
       </p>
-      <div className="mt-6">
-        <div className="label">Start with</div>
-        <ul className="mt-3 flex flex-col gap-3">
-          {STARTERS.map((s) => (
-            <li key={s}>
-              <button
-                type="button"
-                onClick={() => onPick(s)}
-                className="rail-accent text-left"
-                style={{
-                  borderLeftColor: "var(--color-border-hair)",
-                  color: "var(--color-text)",
-                  cursor: "pointer",
-                }}
-              >
-                <span className="text-sm">{s}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
+      <div className="mt-8 flex flex-col gap-6">
+        {groups.map((group) => {
+          const items = STARTERS.filter((s) => s.group === group);
+          return (
+            <div key={group}>
+              <div className="label">Start with · {group}</div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {items.map((s) => (
+                  <button
+                    key={s.label}
+                    type="button"
+                    onClick={() => onPick(s.prompt)}
+                    className="starter-chip"
+                    title={s.prompt}
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
