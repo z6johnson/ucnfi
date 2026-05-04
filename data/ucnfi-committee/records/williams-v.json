@@ -1,0 +1,119 @@
+{
+  "member_id": "williams-v",
+  "name": {
+    "full": "Van Williams",
+    "first": "Van",
+    "last": "Williams"
+  },
+  "primary_affiliation": {
+    "organization": "University of California Office of the President",
+    "title": "Vice President, Digital Innovation and Technology and Chief Information Officer",
+    "campus_or_unit": "Digital Innovation and Technology (DigIT)"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UC IT Leadership Council",
+      "role": "Convening leader",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "UC Tech Community",
+      "role": "Leader of community of 10,000+ UC technology employees",
+      "type": "other",
+      "active": true
+    }
+  ],
+  "committee_role": {
+    "role": "co_chair",
+    "represents": [
+      "UC system-wide IT and digital infrastructure",
+      "operational and administrative implementation",
+      "cybersecurity and enterprise risk"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Higher education strategy and innovation",
+        "confidence": "high",
+        "evidence": "Vice President of Digital Innovation and Technology for UC system-wide ($45B+ enterprise, 10 campuses, 6 health systems, 3 national labs). Recently led the strategic transition from ITS to DigIT framing UC's 'digital impact engine.' Co-led the 2024 UC Academic Congress on AI with Provost Newman."
+      },
+      {
+        "tag": "Public-sector AI policy and procurement",
+        "confidence": "high",
+        "evidence": "Operational responsibility for UC-wide IT strategy including AI adoption, vendor procurement, cybersecurity, and data analytics infrastructure. The 2026 Digital Impact Engine report explicitly names UC's systemwide AI strategy as a current priority. Convenes the UC Academic Congress on AI."
+      },
+      {
+        "tag": "Network and connectivity infrastructure",
+        "confidence": "medium",
+        "evidence": "Cyber Risk Executive at UCSC; system-wide responsibility for IT consolidation and information security. Adjacent to but not the same as research network leadership."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-4",
+        "relevance": "primary",
+        "rationale": "Direct executive responsibility for AI infrastructure development at the UC system level."
+      },
+      {
+        "oa": "OA-5",
+        "relevance": "primary",
+        "rationale": "Operational streamlining and IT consolidation are explicit priorities of his portfolio."
+      },
+      {
+        "oa": "OA-1",
+        "relevance": "secondary",
+        "rationale": "Co-chair role plus convening leadership on UC's AI strategy positions him on the Trusted AI Standard work."
+      }
+    ],
+    "role_facets": {
+      "sector": "ucop",
+      "ai_relationship": ["governor_or_policy", "deployer_or_operator"],
+      "governance_orientation": ["system_administration", "industry_standards"]
+    },
+    "synopsis": "Van Williams is Vice President of Digital Innovation and Technology and Chief Information Officer for the University of California, overseeing IT strategy across the $45B-plus enterprise that spans 10 campuses, 6 health systems, and 3 national labs. He came to UCOP in 2021 from UC Santa Cruz, where he was Vice Chancellor for IT and Strategic Initiatives, and previously spent more than 15 years at NYU including as CIO of the Stern School of Business. His current portfolio includes the systemwide AI strategy, cybersecurity, IT consolidation, data analytics infrastructure, and accessibility. He brings the operational and administrative lens — budget, procurement, compliance, and execution — that translates committee recommendations into system-wide action.",
+    "sources": [
+      {
+        "url": "https://www.ucop.edu/information-technology-services/it-community/bio-van-williams.html",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative UCOP biography."
+      },
+      {
+        "url": "https://uctechnews.ucop.edu/2026-digital-impact-engine-report/",
+        "type": "committee_record",
+        "accessed": "2026-05-01",
+        "note": "Recent (Feb 2026) confirmation of unit name change from ITS to DigIT and current AI strategy priorities."
+      },
+      {
+        "url": "https://uctechnews.ucop.edu/meet-the-new-uc-cio-van-williams/",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "First-person perspective on his arrival and approach."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Confirm whether unit name on committee documents should reflect 'Digital Innovation and Technology' (current) rather than 'Information Technology Services' (legacy)."
+    ]
+  }
+}

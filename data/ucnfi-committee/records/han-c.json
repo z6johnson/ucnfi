@@ -1,0 +1,125 @@
+{
+  "member_id": "han-c",
+  "name": {
+    "full": "Cora Han",
+    "first": "Cora",
+    "last": "Han"
+  },
+  "primary_affiliation": {
+    "organization": "University of California Health (UC Health)",
+    "title": "Chief Health Data Officer; Executive Director, Center for Data-driven Insights and Innovation (CDI2)",
+    "campus_or_unit": "UCOP / UC Health"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "George Mason University School of Law (Antonin Scalia Law School)",
+      "role": "Adjunct Professor",
+      "type": "courtesy_appointment",
+      "active": true
+    },
+    {
+      "organization": "Coalition for Health AI (CHAI)",
+      "role": "Past contributor",
+      "type": "advisory_board",
+      "active": false
+    },
+    {
+      "organization": "Federal Trade Commission, Division of Privacy and Identity Protection",
+      "role": "Former Senior Attorney",
+      "type": "other",
+      "active": false
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "UC Health system-wide data governance",
+      "privacy law and regulatory perspective",
+      "the data foundation underneath any clinical AI"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Health data governance and stewardship",
+        "confidence": "high",
+        "evidence": "Chief Health Data Officer for UC Health and Executive Director of CDI2. Oversees the UC Health Data Warehouse (375M+ encounters, 9M+ patients since 2012). Leads UC Health's data governance task force; co-author of UC's health data governance reports. Public framing emphasizes 'justice-based model of health data use,' bias mitigation, and transparency."
+      },
+      {
+        "tag": "AI ethics and algorithmic accountability",
+        "confidence": "high",
+        "evidence": "JD with explicit privacy law and regulatory background; former FTC Senior Attorney in the Division of Privacy and Identity Protection. Past contributor to the Coalition for Health AI (CHAI). Active speaker on AI ethics panels and on health data governance at industry events."
+      },
+      {
+        "tag": "Public-sector AI policy and procurement",
+        "confidence": "medium",
+        "evidence": "FTC background plus current role developing UC-wide policy on AI training data, research enclaves, and patient consent frameworks. Adjunct law professor teaching the next generation in privacy and data law."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-8",
+        "relevance": "primary",
+        "rationale": "Owns the data foundation underneath any 360° Health Intelligence work at UC; the data warehouse and governance practices she leads are prerequisites for the OA-8 vision."
+      },
+      {
+        "oa": "OA-1",
+        "relevance": "primary",
+        "rationale": "Privacy, justice-based data use, and governance frameworks are core to what trustworthy AI means in practice."
+      },
+      {
+        "oa": "OA-4",
+        "relevance": "secondary",
+        "rationale": "Data infrastructure is a foundational layer of AI infrastructure development."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_health",
+      "ai_relationship": ["governor_or_policy"],
+      "governance_orientation": ["health_system", "system_administration"]
+    },
+    "synopsis": "Cora Han is Chief Health Data Officer for University of California Health and Executive Director of the Center for Data-driven Insights and Innovation (CDI2). She oversees the governance, stewardship, and strategic use of health data across the UC Health system, including the UC Health Data Warehouse (over 375 million encounters from more than 9 million patients since 2012). She is a JD with deep privacy and regulatory background; before UC she was a Senior Attorney at the Federal Trade Commission's Division of Privacy and Identity Protection and contributed to the Coalition for Health AI (CHAI). She is an adjunct law professor at George Mason. Her work emphasizes a 'justice-based model of health data use,' bias mitigation, and transparency, and produces the data governance reports that shape how UC clinical data can be used for AI training and research.",
+    "sources": [
+      {
+        "url": "https://health.universityofcalifornia.edu/news/big-data-bigger-impact-cdi2-tackles-health-care-transformation",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "First-person framing of her approach, including the justice-based data use language and data warehouse statistics."
+      },
+      {
+        "url": "https://www.ucop.edu/uc-health/staff/center-for-data-driven-insights-and-innovations/index.html",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative for current role and CDI2 organizational position."
+      },
+      {
+        "url": "https://www.ucop.edu/ethics-compliance-audit-services/compliance/presidential-working-group-on-artificial-intelligence.html",
+        "type": "committee_record",
+        "accessed": "2026-05-01",
+        "note": "Confirms her FTC background and CHAI involvement; she served on the previous UC AI Council."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Confirm whether CDI2 Executive Director title should be listed alongside Chief Health Data Officer in committee materials; both are her current roles."
+    ]
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "member_id": "tassio-m",
+  "name": {
+    "full": "Michael Tassio",
+    "first": "Michael",
+    "last": "Tassio",
+    "pronouns": "he/him/his"
+  },
+  "primary_affiliation": {
+    "organization": "UC Santa Cruz",
+    "title": "Assistant Vice Provost for Educational Innovation",
+    "campus_or_unit": "Division of Academic Affairs",
+    "department": "Academic Affairs"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UC Santa Cruz",
+      "role": "Co-Chair, Artificial Intelligence Council",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "UC Santa Cruz",
+      "role": "Co-Chair, Technology-Enhanced Teaching and Learning Advisory Committee",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "University of California system",
+      "role": "Co-Chair, UC Centers for Teaching and Learning Working Group on Artificial Intelligence",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "UC Santa Cruz Teaching and Learning Center",
+      "role": "Leadership team",
+      "type": "center_directorship",
+      "active": true
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "campus operations and educational innovation",
+      "smaller-campus perspective",
+      "applied AI governance in teaching and learning"
+    ]
+  },
+  "contact": {
+    "email": "mtassio@ucsc.edu",
+    "office_phone": "831-459-1346"
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Educational technology and online learning",
+        "confidence": "high",
+        "evidence": "Former Director of Online Education at UCSC; current Teaching and Learning Center leadership; Online Learning Consortium Excellence in Faculty Development for Online Teaching award (2021); published work on online instruction and academic continuity."
+      },
+      {
+        "tag": "AI ethics and algorithmic accountability",
+        "confidence": "medium",
+        "evidence": "UCSC directory entry explicitly names ethical integration of AI in teaching as part of role; co-chairs UCSC AI Council and UC system-wide AI working group. Applied governance work rather than ethics scholarship."
+      },
+      {
+        "tag": "Higher education strategy and innovation",
+        "confidence": "medium",
+        "evidence": "Role title and scope explicitly include educational innovation and strategic development of programs."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-6",
+        "relevance": "primary",
+        "rationale": "21st Century Public University maps directly to his educational innovation portfolio and online learning leadership."
+      },
+      {
+        "oa": "OA-1",
+        "relevance": "secondary",
+        "rationale": "Co-chairs two AI governance bodies focused on the ethical integration of AI in teaching, which is operational ground for the Trusted AI Standard."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["governor_or_policy", "deployer_or_operator"],
+      "governance_orientation": ["campus_administration", "academic_senate"]
+    },
+    "synopsis": "Michael Tassio is Assistant Vice Provost for Educational Innovation at UC Santa Cruz, where he supports the strategic development of courses and programs and the ethical integration of AI in teaching and learning. He co-chairs UCSC's Artificial Intelligence Council and the UC system-wide Centers for Teaching and Learning Working Group on Artificial Intelligence, giving him a direct view of how AI governance operates at both campus and system levels. He was previously Director of Online Education at UCSC and brings deep grounding in online teaching, instructional design, and academic continuity. His perspective is operational rather than scholarly: he works on the applied questions of how AI integrates into teaching practice, faculty development, and campus governance.",
+    "sources": [
+      {
+        "url": "https://campusdirectory.ucsc.edu/cd_detail?uid=mtassio",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative for current title, governance roles, publications, and scope of role. Substantially richer than the committee profiles document."
+      },
+      {
+        "url": "https://tlc.ucsc.edu/",
+        "type": "lab_or_center_page",
+        "accessed": "2026-05-01",
+        "note": "Teaching and Learning Center context."
+      },
+      {
+        "url": "https://its.ucsc.edu/about/it-governance/artificial-intelligence/",
+        "type": "committee_record",
+        "accessed": "2026-05-01",
+        "note": "UCSC AI Council, which Tassio co-chairs."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": {
+    "submitted": false
+  },
+  "reconciliation": {
+    "status": "not_yet_reconciled"
+  },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Confirm OA-6 as primary vs OA-1 with co-chairs at first reconciliation review.",
+      "Verify whether 'Joint Senate-Administration Committee on Climate Teaching' (mentioned in UCSC bio) is current and worth listing as secondary affiliation."
+    ]
+  }
+}

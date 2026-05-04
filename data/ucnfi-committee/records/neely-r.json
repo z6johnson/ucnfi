@@ -1,0 +1,126 @@
+{
+  "member_id": "neely-r",
+  "name": {
+    "full": "J. Robert Neely",
+    "first": "Rob",
+    "last": "Neely",
+    "preferred": "Rob Neely"
+  },
+  "primary_affiliation": {
+    "organization": "Lawrence Livermore National Laboratory",
+    "title": "Associate Director for Weapon Simulation and Computing (WSC), Strategic Deterrence Principal Directorate; Director of the Advanced Simulation and Computing (ASC) Program",
+    "campus_or_unit": "Strategic Deterrence Principal Directorate"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "NNSA Advanced Simulation and Computing (ASC) Program",
+      "role": "Director at LLNL",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "El Capitan Supercomputer Program",
+      "role": "Senior leadership of deployment (currently world's most powerful supercomputer at 2.79 exaflops)",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "ALE3D project (LLNL HPC application)",
+      "role": "Past application developer (started career)",
+      "type": "other",
+      "active": false
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "Lawrence Livermore National Laboratory",
+      "high-performance computing and AI infrastructure perspective",
+      "national security computing community"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "AI/ML research and development",
+        "confidence": "medium",
+        "evidence": "Operational responsibility for LLNL's HPC and AI computing infrastructure including El Capitan, the world's most powerful supercomputer (2.79 exaflops). Public framing of AI agents and digital twins as 'exciting new frontier' for modeling and simulation. Not himself an AI researcher but oversees deployment of AI workloads on national-lab-scale infrastructure."
+      },
+      {
+        "tag": "Embedded systems and computing infrastructure (technical)",
+        "confidence": "high",
+        "evidence": "30 years in HPC and scientific software development at LLNL. Direct oversight of HPC platform procurement, siting, and management. Director of NNSA's ASC Program at LLNL. Closely involved with Sierra (predecessor to El Capitan) and partnerships with IBM and Nvidia for heterogeneous computing transitions."
+      },
+      {
+        "tag": "Network and connectivity infrastructure",
+        "confidence": "medium",
+        "evidence": "Computing and infrastructure leadership at one of three NNSA Tri-Labs; coordinates with Tri-Lab community and PSAAP academic alliance. Adjacent to but not the same as research network leadership."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-4",
+        "relevance": "primary",
+        "rationale": "Direct oversight of national-lab-scale AI computing infrastructure. Brings the perspective on what large-scale AI infrastructure actually requires."
+      },
+      {
+        "oa": "OA-2",
+        "relevance": "secondary",
+        "rationale": "Sustained partnerships with industry (IBM, Nvidia, AMD, HPE) and the Tri-Lab community give him a network for strategic partnerships at scale."
+      },
+      {
+        "oa": "OA-7",
+        "relevance": "secondary",
+        "rationale": "Beyond stockpile stewardship, El Capitan supports work in energy security, climate modeling, seismic modeling, and computational biology — grand-challenge domains."
+      }
+    ],
+    "role_facets": {
+      "sector": "national_lab",
+      "ai_relationship": ["deployer_or_operator", "governor_or_policy"],
+      "governance_orientation": ["research_integrity"]
+    },
+    "synopsis": "Rob Neely is Associate Director for Weapon Simulation and Computing in the Strategic Deterrence Principal Directorate at Lawrence Livermore National Laboratory, and Director of the NNSA Advanced Simulation and Computing (ASC) Program at LLNL. He oversaw the deployment of El Capitan, currently the world's most powerful supercomputer at 2.79 exaflops, which serves both LLNL's stockpile stewardship mission and a broader portfolio including AI training and inference, climate modeling, and computational biology. He has supported the LLNL mission for 27 of his 30 years of experience in high-performance computing and scientific software development. His perspective is shaped by the operational reality of running national-lab-scale computing infrastructure; he has publicly framed AI agents and digital twins as a new frontier for modeling and simulation work. Master's degree in computer science from Illinois Urbana-Champaign.",
+    "sources": [
+      {
+        "url": "https://people.llnl.gov/neely4",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative LLNL biography."
+      },
+      {
+        "url": "https://sd.llnl.gov/about-us/organizations/sd-management-team",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "LLNL Strategic Deterrence directorate management team page with detailed background."
+      },
+      {
+        "url": "https://www.llnl.gov/article/54056/nnsa-administrator-williams-visits-llnl-discuss-stockpile-modernization-ai-future-deterrence",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Recent (Feb 2026) NNSA visit coverage with direct quote on AI agents and digital twins."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Hagberg (LANL) and Neely (LLNL) bring overlapping but distinct national-lab perspectives; consider whether to coordinate their working group placements."
+    ]
+  }
+}

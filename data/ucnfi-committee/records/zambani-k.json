@@ -1,0 +1,79 @@
+{
+  "member_id": "zambani-k",
+  "name": {
+    "full": "Karina Zambani",
+    "first": "Karina",
+    "last": "Zambani"
+  },
+  "primary_affiliation": {
+    "organization": "UC San Diego",
+    "title": "Undergraduate Student, Data Science and Philosophy",
+    "campus_or_unit": "Halıcıoğlu Data Science Institute (Data Science major); Department of Philosophy"
+  },
+  "secondary_affiliations": [],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "UC undergraduate student perspective",
+      "interdisciplinary data-science and philosophy student perspective on AI ethics",
+      "K-12 to university transition perspective on AI"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "AI ethics and algorithmic accountability",
+        "confidence": "low",
+        "evidence": "Roster lists committee expertise as 'AI safety, equity, and data governance; K–12 impacts; ethical judgment on responsible/beneficial AI applications.' Self-described expertise from deck appendix; no published work or public footprint surfaced. Combination of Data Science and Philosophy majors at UCSD suggests training in both technical and ethical dimensions of AI."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-3",
+        "relevance": "primary",
+        "rationale": "Roster expertise explicitly includes K-12 impacts and undergraduate student perspective, both directly relevant to National AI Literacy work."
+      },
+      {
+        "oa": "OA-1",
+        "relevance": "secondary",
+        "rationale": "Stated interest in AI safety, equity, data governance, and ethical judgment on responsible AI applications aligns with Trusted AI Standard work. Student perspective on what 'trustworthy' means from the user side is valuable input."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["user_representative"],
+      "governance_orientation": ["student_affairs"]
+    },
+    "synopsis": "Karina Zambani is an undergraduate student at UC San Diego majoring in Data Science and Philosophy. The deck appendix lists her areas of committee expertise as AI safety, equity, and data governance; K-12 impacts of AI; and ethical judgment on responsible and beneficial AI applications. The combination of her majors places her in a relatively rare position to engage AI from both the technical-foundations side (through HDSI's data science curriculum) and the philosophical-ethics side. As an undergraduate she has limited public footprint, and self-report will be the primary way to refine this record.",
+    "sources": [
+      {
+        "url": "deck-appendix",
+        "type": "internal_document",
+        "accessed": "2026-05-01",
+        "note": "UCNFI Steering Committee deck appendix (April 17, 2026) with stated areas of expertise as committee member. No additional public sources surfaced for an undergraduate student."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Thinnest record on the committee by design: undergraduate with no public publication record. Self-report will carry most of the weight here.",
+      "Both student representatives (Martin at UCM, Zambani at UCSD) sit lightly on the deck-appendix expertise framing; their lived experience and current academic work are likely the more useful inputs than tagged expertise areas. Consider designing the survey instrument to capture this richness for student members."
+    ]
+  }
+}

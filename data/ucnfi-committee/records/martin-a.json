@@ -1,0 +1,99 @@
+{
+  "member_id": "martin-a",
+  "name": {
+    "full": "Andrew Martin",
+    "first": "Andrew",
+    "last": "Martin"
+  },
+  "primary_affiliation": {
+    "organization": "UC Merced",
+    "title": "PhD Student, Sociology",
+    "campus_or_unit": "School of Social Sciences, Humanities and Arts",
+    "department": "Sociology"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UC Riverside",
+      "role": "BA in Philosophy (2023); BA in Education (2023)",
+      "type": "other",
+      "active": false
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "UC graduate student perspective",
+      "first-generation and community-college transfer student experience",
+      "sociological research on higher education access and equity"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Higher education strategy and innovation",
+        "confidence": "medium",
+        "evidence": "Doctoral research focuses on sociology of higher education, institutional agency, and economic structures affecting first-generation and historically neglected student populations. Active research projects on California Community College financing, College Promise programs, and predatory debt collection practices by California colleges seeking to reclaim Title IV funds."
+      },
+      {
+        "tag": "Public-sector AI policy and procurement",
+        "confidence": "low",
+        "evidence": "Roster lists expertise in 'applications of technology within UC operations, digital sovereignty, and impact of private vs. public partnerships' (deck appendix self-description). No published work on AI surfaced in public sources; expertise is primarily in adjacent higher-education policy areas."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-3",
+        "relevance": "primary",
+        "rationale": "Sociology-of-education research on first-generation and historically underserved students directly relates to who National AI Literacy work needs to reach. Lived experience as a former community college student adds perspective often missing from national AI literacy framings."
+      },
+      {
+        "oa": "OA-6",
+        "relevance": "secondary",
+        "rationale": "Research on California Community Colleges and College Promise programs touches the question of what role public universities play in expanding access. Adjacent to the 21st Century Public University framing."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["user_representative"],
+      "governance_orientation": ["student_affairs"]
+    },
+    "synopsis": "Andrew Martin is a PhD student in Sociology at UC Merced. He holds dual BAs in Philosophy and Education from UC Riverside (2023). His doctoral research focuses on the sociology of higher education, with a particular interest in institutional agency and economic structures that affect first-generation and historically underserved student populations. Active projects include California Community Colleges financing, College Promise program outcomes, and predatory debt collection practices by California colleges. He is a former community college student and a long-time California Central Valley resident, perspectives that inform his research orientation. The deck appendix lists his areas of expertise as 'applications of technology within UC operations, digital sovereignty, and impact of private vs. public partnerships,' which is the framing under which he was selected for the committee.",
+    "sources": [
+      {
+        "url": "https://sociology.ucmerced.edu/content/andrew-martin",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "UC Merced Sociology Department graduate student page with research focus."
+      },
+      {
+        "url": "deck-appendix",
+        "type": "internal_document",
+        "accessed": "2026-05-01",
+        "note": "UCNFI Steering Committee deck appendix (April 17, 2026) with stated areas of expertise as committee member."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Thin record by design: doctoral student with limited public footprint. Self-report will be especially valuable for refining tags and opportunity area assignments.",
+      "Roster lists fields as 'Education, Philosophy, Sociology' which combines BA fields (Philosophy + Education at UCR) with current PhD field (Sociology at UCM). Confirmed accurate."
+    ]
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "member_id": "crittenden-c",
+  "name": {
+    "full": "Camille Crittenden",
+    "first": "Camille",
+    "last": "Crittenden"
+  },
+  "primary_affiliation": {
+    "organization": "CITRIS and the Banatao Institute, University of California",
+    "title": "Executive Director",
+    "campus_or_unit": "Headquartered at UC Berkeley; multi-campus institute spanning UC Berkeley, UC Davis, UC Merced, and UC Santa Cruz"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "CITRIS Tech Policy initiative (formerly CITRIS Policy Lab)",
+      "role": "Co-founder",
+      "type": "center_directorship",
+      "active": true
+    },
+    {
+      "organization": "EDGE in Tech (Expanding Diversity and Gender Equity in Tech) at UC",
+      "role": "Co-founder and co-leader",
+      "type": "center_directorship",
+      "active": true
+    },
+    {
+      "organization": "Goldman School of Public Policy / CITRIS Tech Policy Initiative, UC Berkeley",
+      "role": "Affiliated leader",
+      "type": "lab_affiliation",
+      "active": true
+    },
+    {
+      "organization": "Previous UC AI Council (Presidential Working Group on AI)",
+      "role": "Past Co-Chair, Student Experience subcommittee",
+      "type": "governance_role",
+      "active": false
+    },
+    {
+      "organization": "California Blockchain Working Group",
+      "role": "Past Chair (2019-2020)",
+      "type": "governance_role",
+      "active": false
+    },
+    {
+      "organization": "Berkeley Law Human Rights Center",
+      "role": "Past Executive Director (until 2012)",
+      "type": "other",
+      "active": false
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "CITRIS multi-campus research community",
+      "tech policy and responsible technology governance",
+      "civil society and human rights perspective on technology"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "AI ethics and algorithmic accountability",
+        "confidence": "high",
+        "evidence": "Co-founded the CITRIS Policy Lab focused on responsible AI and tech governance. Past Co-Chair of the Student Experience subcommittee on UC's previous AI Council. Continued to serve on the previous UC AI Council. Sustained public voice on AI policy at California state level (East Bay Leadership Series with Assemblymember Bauer-Kahan on California AI policy)."
+      },
+      {
+        "tag": "Higher education strategy and innovation",
+        "confidence": "high",
+        "evidence": "Executive Director of CITRIS and the Banatao Institute since 2012, leading a multi-campus institute spanning UC Berkeley, UC Davis, UC Merced, and UC Santa Cruz. Background in academic leadership, fundraising, and university administration including time at UC Berkeley International and Area Studies, UC Press, and Berkeley Law's Human Rights Center."
+      },
+      {
+        "tag": "Public-sector AI policy and procurement",
+        "confidence": "high",
+        "evidence": "Past Chair of the California Blockchain Working Group (2019-2020), advising state legislature on technology in government operations. Co-leads CITRIS Policy Lab work with public-sector stakeholders. Affiliated with Goldman School of Public Policy / CITRIS Tech Policy Initiative."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-1",
+        "relevance": "primary",
+        "rationale": "Career focus on technology governance and responsible innovation; CITRIS Policy Lab exists for exactly this kind of work; prior co-chair of the Student Experience subcommittee on UC's previous AI Council."
+      },
+      {
+        "oa": "OA-2",
+        "relevance": "secondary",
+        "rationale": "CITRIS connects UC research to industry, government, and civil society partners across California; strong network for strategic expansion work."
+      },
+      {
+        "oa": "OA-7",
+        "relevance": "secondary",
+        "rationale": "CITRIS's 'in the interest of society' framing aligns directly with the grand-challenges orientation."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["governor_or_policy", "critic_or_scholar"],
+      "governance_orientation": ["system_administration", "state_policy", "research_integrity"]
+    },
+    "synopsis": "Camille Crittenden is Executive Director of CITRIS and the Banatao Institute, the multi-campus research institute spanning UC Berkeley, UC Davis, UC Merced, and UC Santa Cruz. She co-founded the CITRIS Tech Policy initiative (formerly CITRIS Policy Lab) and EDGE in Tech, UC's diversity and gender equity initiative. She chaired the California Blockchain Working Group from 2019 to 2020, advising the state legislature on technology in government operations, and co-chaired the Student Experience subcommittee on UC's previous AI Council. She holds a PhD from Duke and previously led Berkeley Law's Human Rights Center. Her perspective bridges fundamental research, applied policy work, and civil society engagement, with a sustained public voice on AI governance, privacy, and equity in technology.",
+    "sources": [
+      {
+        "url": "https://citris-uc.org/people/person/camille-crittenden/",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative CITRIS biography."
+      },
+      {
+        "url": "https://www.ucop.edu/ethics-compliance-audit-services/compliance/presidential-working-group-on-artificial-intelligence.html",
+        "type": "committee_record",
+        "accessed": "2026-05-01",
+        "note": "Confirms past Student Experience subcommittee co-chair role and ongoing UC AI Council service."
+      },
+      {
+        "url": "https://gspp.berkeley.edu/research-and-impact/policy-initiatives/tech-policy-initiative",
+        "type": "lab_or_center_page",
+        "accessed": "2026-05-01",
+        "note": "Goldman School Tech Policy Initiative page confirming her co-founding and ongoing affiliation."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": []
+  }
+}

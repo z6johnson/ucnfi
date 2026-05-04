@@ -1,0 +1,132 @@
+{
+  "member_id": "palazoglu-a",
+  "name": {
+    "full": "Ahmet Palazoglu",
+    "first": "Ahmet",
+    "last": "Palazoglu"
+  },
+  "primary_affiliation": {
+    "organization": "UC Davis",
+    "title": "Distinguished Professor of Chemical Engineering",
+    "campus_or_unit": "College of Engineering",
+    "department": "Chemical Engineering"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "Systemwide Academic Senate, University of California",
+      "role": "Chair (2025-26)",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "UC Davis Division of the Academic Senate",
+      "role": "Past Vice-Chair and Chair (2020-2024)",
+      "type": "governance_role",
+      "active": false
+    },
+    {
+      "organization": "Systemwide Senate University Committee on Academic Personnel",
+      "role": "Past Chair",
+      "type": "governance_role",
+      "active": false
+    },
+    {
+      "organization": "American Institute of Chemical Engineers",
+      "role": "Fellow",
+      "type": "other",
+      "active": true
+    }
+  ],
+  "committee_role": {
+    "role": "co_chair",
+    "represents": [
+      "UC Academic Senate and shared governance",
+      "faculty across all ten campuses",
+      "engineering research community"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Academic shared governance",
+        "confidence": "high",
+        "evidence": "Current Chair of the systemwide UC Academic Senate (2025-26). Previously chaired the UC Davis Division of the Academic Senate (2022-2024) and the systemwide University Committee on Academic Personnel. Member of the systemwide University Committee on Planning and Budget. Decades of accumulated governance experience."
+      },
+      {
+        "tag": "AI/ML research and development",
+        "confidence": "medium",
+        "evidence": "Research program in process systems engineering explicitly includes 'modeling, optimization, and the use of artificial intelligence (AI) and machine learning (ML) tools to address practical problems in a broad range of systems' (per his Senate Chair biography). Applied AI/ML rather than foundational research; the work spans air pollution modeling, protein folding dynamics, and process optimization."
+      },
+      {
+        "tag": "Embedded systems and computing infrastructure (technical)",
+        "confidence": "medium",
+        "evidence": "Process systems engineering, fault detection and diagnosis in industrial process operations, and process control are technical infrastructure domains. 200+ publications and two books, including textbook 'Introduction to Process Control' (3rd ed. 2020)."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-6",
+        "relevance": "primary",
+        "rationale": "As Senate Chair, he is the institutional voice for shared governance in any UC-wide vision of the 21st Century Public University."
+      },
+      {
+        "oa": "OA-1",
+        "relevance": "secondary",
+        "rationale": "His applied AI/ML research and his governance role both bear on what trustworthy AI means in practice within UC."
+      },
+      {
+        "oa": "OA-5",
+        "relevance": "secondary",
+        "rationale": "Process optimization and operational systems work is directly relevant to the Operational Streamlining and Capital Reallocation opportunity."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["builder_or_researcher", "governor_or_policy"],
+      "governance_orientation": ["academic_senate", "system_administration"]
+    },
+    "synopsis": "Ahmet Palazoglu is a Distinguished Professor of Chemical Engineering at UC Davis, on the faculty since 1984, and currently serves as Chair of the systemwide UC Academic Senate for 2025-26. He has chaired the Davis Division of the Senate, the systemwide Committee on Academic Personnel, and his department; his governance footprint across UC is unusually broad. His research program in process systems engineering uses AI and machine learning tools applied to problems ranging from air pollution modeling to industrial process optimization. As co-chair he brings the Senate's institutional voice and long-running shared-governance experience to the committee's work.",
+    "sources": [
+      {
+        "url": "https://senate.universityofcalifornia.edu/about/chair-bio.html",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative biography from his current Senate Chair role; explicitly names his AI/ML research."
+      },
+      {
+        "url": "https://ucnet.universityofcalifornia.edu/employee-news/introducing-2025-26-academic-senate-chair-ahmet-palazoglu/",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Confirms current Senate Chair term and governance history."
+      },
+      {
+        "url": "https://faculty.engineering.ucdavis.edu/palazoglu/",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "UC Davis Chemical Engineering directory entry."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Senate Chair term ends August 2026; re-verify role at that point."
+    ]
+  }
+}

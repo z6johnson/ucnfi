@@ -1,0 +1,144 @@
+{
+  "member_id": "hu-s",
+  "name": {
+    "full": "Shixin Jack Hu",
+    "first": "Jack",
+    "last": "Hu",
+    "preferred": "S. Jack Hu"
+  },
+  "primary_affiliation": {
+    "organization": "UC Riverside",
+    "title": "Chancellor; Distinguished Professor of Mechanical Engineering",
+    "campus_or_unit": "Office of the Chancellor; Marlan and Rosemary Bourns College of Engineering"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "National Academy of Engineering",
+      "role": "Elected Member (2015)",
+      "type": "other",
+      "active": true
+    },
+    {
+      "organization": "Transportation Research Board, National Academies",
+      "role": "Executive Committee Member",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "American Society of Mechanical Engineers; Society of Manufacturing Engineers; National Academy of Inventors; International Academy for Production Engineering (CIRP); Chinese Academy of Engineering",
+      "role": "Fellow / Foreign Member",
+      "type": "other",
+      "active": true
+    },
+    {
+      "organization": "University of Georgia",
+      "role": "Past Senior Vice President for Academic Affairs and Provost (2019-2025)",
+      "type": "other",
+      "active": false
+    },
+    {
+      "organization": "University of Michigan",
+      "role": "Past Vice President for Research (2015-2019); past Director of GM Collaborative Research Lab (21 years)",
+      "type": "other",
+      "active": false
+    },
+    {
+      "organization": "Obama Administration Advanced Manufacturing Partnership",
+      "role": "Past Member (2011)",
+      "type": "advisory_board",
+      "active": false
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "UC Riverside campus leadership",
+      "research-administration perspective on AI",
+      "smart manufacturing and engineering research community"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Higher education strategy and innovation",
+        "confidence": "high",
+        "evidence": "Tenth Chancellor of UC Riverside since July 2025. Former senior VP and Provost at University of Georgia (2019-2025) overseeing 19 schools and colleges; former VP for Research at University of Michigan ($1.5B research enterprise across three campuses). At UGA, partnered with deans on faculty hiring initiatives in precision agriculture, Parkinson's research, data science, and artificial intelligence. Pioneered cross-disciplinary 'MCubed' / pre-seed grant programs to seed interdisciplinary collaboration."
+      },
+      {
+        "tag": "AI/ML research and development",
+        "confidence": "medium",
+        "evidence": "While at Michigan, oversaw the launch of MCity (public-private partnership for connected and automated vehicle testing) and led GM Collaborative Research Lab for 21 years including battery manufacturing technology. As UGA Provost led faculty hiring initiatives in data science and AI. Mechanical engineering background with strong interest in interdisciplinary AI applications, but not himself an AI researcher."
+      },
+      {
+        "tag": "Embedded systems and computing infrastructure (technical)",
+        "confidence": "medium",
+        "evidence": "Research record in manufacturing systems, assembly modeling, statistical quality control, and statistical process control. Nearly 200 peer-reviewed papers, 10 US patents. Named one of the 20 most influential academics in smart manufacturing by SME (2021)."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-6",
+        "relevance": "primary",
+        "rationale": "Sitting chancellor of a UC campus with strong social mobility identity; new in role and shaping campus AI direction. Embodies the 21st Century Public University vision from a campus-leadership lens."
+      },
+      {
+        "oa": "OA-7",
+        "relevance": "secondary",
+        "rationale": "Track record of MCubed and pre-seed cross-disciplinary funding programs gives him operational experience seeding the kind of grand-challenge work envisioned in OA-7."
+      },
+      {
+        "oa": "OA-2",
+        "relevance": "secondary",
+        "rationale": "Long industry partnership history (GM, Obama AMP) plus track record of public-private R&D ventures (MCity)."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["governor_or_policy"],
+      "governance_orientation": ["campus_administration", "research_integrity"]
+    },
+    "synopsis": "Jack Hu is the tenth Chancellor of UC Riverside, having begun in the role on July 15, 2025. He is a mechanical engineer by training, elected to the National Academy of Engineering in 2015 for contributions to manufacturing systems, and was named one of the 20 most influential academics in smart manufacturing by SME in 2021. Before UCR he was Senior Vice President for Academic Affairs and Provost at the University of Georgia, and previously served as Vice President for Research at the University of Michigan, where he oversaw a $1.5 billion research enterprise and the launch of MCity, a public-private testbed for connected and automated vehicles. He served on President Obama's Advanced Manufacturing Partnership. As Chancellor he brings the executive perspective of a campus building toward AAU membership, a track record of seeding interdisciplinary research through programs like MCubed, and a sustained commitment to social mobility as central to UCR's mission.",
+    "sources": [
+      {
+        "url": "https://chancellor.ucr.edu/about-the-chancellor",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative UCR biography."
+      },
+      {
+        "url": "https://news.ucr.edu/articles/2025/05/28/university-georgia-provost-uc-riversides-new-chancellor",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Appointment announcement with detailed background."
+      },
+      {
+        "url": "https://news.ucr.edu/ucr-magazine/fall-2025/pivot-to-potential",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Fall 2025 UCR Magazine feature including MCubed and pre-seed initiative details."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "New in role (started July 2025); his UCR-specific AI priorities are still emerging. Re-verify in 6 months."
+    ]
+  }
+}

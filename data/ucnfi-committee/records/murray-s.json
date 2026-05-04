@@ -1,0 +1,138 @@
+{
+  "member_id": "murray-s",
+  "name": {
+    "full": "Sara G. Murray",
+    "first": "Sara",
+    "last": "Murray"
+  },
+  "primary_affiliation": {
+    "organization": "UCSF Health",
+    "title": "Vice President and Chief Health AI Officer",
+    "campus_or_unit": "UCSF Health",
+    "department": "Division of Clinical Informatics and Digital Transformation"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UCSF School of Medicine",
+      "role": "Associate Professor of Clinical Medicine",
+      "type": "courtesy_appointment",
+      "active": true
+    },
+    {
+      "organization": "UCSF Health",
+      "role": "Associate Chief Medical Information Officer for Inpatient Care",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "UCSF Division of Clinical Informatics and Digital Transformation (DoC-IT)",
+      "role": "Associate Chief for Health System Partnerships",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "UCSF Health",
+      "role": "Director, Data Science and Innovation team",
+      "type": "center_directorship",
+      "active": true
+    },
+    {
+      "organization": "UCSF Bakar Computational Health Sciences Institute",
+      "role": "Affiliated faculty",
+      "type": "lab_affiliation",
+      "active": true
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "UC Health system",
+      "clinical AI deployment and operational practice",
+      "physician-leader perspective on AI in care delivery"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Health AI and clinical deployment",
+        "confidence": "high",
+        "evidence": "Inaugural Vice President and Chief Health AI Officer at UCSF Health (promoted September 2023). Direct executive responsibility for AI strategy, governance, and implementation across UCSF Health. Active publishing on LLMs in pathology, NLP for clinical reasoning, and clinical informatics implementation."
+      },
+      {
+        "tag": "AI ethics and algorithmic accountability",
+        "confidence": "high",
+        "evidence": "Co-author of the HEAAL framework (Health Equity Across the AI Lifecycle), a major peer-reviewed framework for healthcare delivery organizations to mitigate AI-driven health inequities (PLOS Digital Health, 2024). Public-facing commitment to 'meaningful and ethical AI' at UCSF. Built infrastructure for evaluating commercial AI tools for trustworthiness prior to clinical implementation."
+      },
+      {
+        "tag": "Health data governance and stewardship",
+        "confidence": "medium",
+        "evidence": "Published work on protecting reproductive health information in the post-Roe era and on EHR-based data governance. Position requires close partnership with UC Health data governance functions; complementary to Han's UC-system-wide role."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-8",
+        "relevance": "primary",
+        "rationale": "Direct leadership of clinical AI at one of the world's leading academic medical centers; the operational anchor for 360° Health Intelligence."
+      },
+      {
+        "oa": "OA-1",
+        "relevance": "primary",
+        "rationale": "HEAAL framework and her UCSF AI evaluation infrastructure are concrete examples of trustworthy AI standards in practice; directly informs OA-1 work."
+      },
+      {
+        "oa": "OA-7",
+        "relevance": "secondary",
+        "rationale": "Clinical AI is one of the highest-impact grand-challenge domains; her work shows what 'AI for humanity' looks like operationally in healthcare."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_health",
+      "ai_relationship": ["deployer_or_operator", "governor_or_policy", "builder_or_researcher"],
+      "governance_orientation": ["health_system", "research_integrity"]
+    },
+    "synopsis": "Sara Murray is Vice President and Chief Health AI Officer for UCSF Health, the inaugural holder of that role since September 2023. She drives the AI strategy and governance for UCSF's care delivery, including evaluation of commercial AI tools for trustworthiness, deployment of internally developed machine learning models, and oversight of ethical implementation. She is also Associate Chief Medical Information Officer for Inpatient Care, Associate Chief for Health System Partnerships in the Division of Clinical Informatics and Digital Transformation, and Associate Professor of Clinical Medicine. She co-authored the HEAAL framework, a peer-reviewed approach to identifying and mitigating health inequities introduced by AI systems. Her perspective is grounded in active clinical deployment, the failure modes that show up in practice, and the operational standards needed to make AI safe in care.",
+    "sources": [
+      {
+        "url": "https://medicine.ucsf.edu/people/sara-murray",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative UCSF Department of Medicine bio; full publication list."
+      },
+      {
+        "url": "https://www.ucsf.edu/news/2023/10/426386/state-university-sneak-peek-meet-chancellors-exciting-ai-panel",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Confirms September 2023 promotion to inaugural Chief Health AI Officer role and direct quotes on her approach."
+      },
+      {
+        "url": "https://profiles.ucsf.edu/sara.murray",
+        "type": "publication",
+        "accessed": "2026-05-01",
+        "note": "UCSF Profiles with full publication record including HEAAL framework citation."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Title in source roster lists 'Chief Health AI Officer' but UCSF promoted her to VP and Chief Health AI Officer in 2023; consider whether to use full VP title in committee materials."
+    ]
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "member_id": "moe-r",
+  "name": {
+    "full": "Rolin Moe",
+    "first": "Rolin",
+    "last": "Moe"
+  },
+  "primary_affiliation": {
+    "organization": "University of California Office of the President",
+    "title": "Associate Vice Provost for UC Online",
+    "campus_or_unit": "Office of Graduate, Undergraduate and Equity Affairs (GUEA), Academic Affairs"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "Previous UC AI Council",
+      "role": "Past Co-Chair, Risk and Transparency subcommittee",
+      "type": "governance_role",
+      "active": false
+    },
+    {
+      "organization": "LinkedIn Learning",
+      "role": "Course author (accessibility, generative AI in education)",
+      "type": "other",
+      "active": true
+    },
+    {
+      "organization": "California Community Colleges system",
+      "role": "Past district-wide distance education leadership",
+      "type": "other",
+      "active": false
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "UC Online and online learners across the system",
+      "accessibility and inclusive design in education",
+      "applied AI in teaching and learning"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Educational technology and online learning",
+        "confidence": "high",
+        "evidence": "Associate Vice Provost for UC Online; oversees the cross-campus enrollment system and digital learning portfolio across the UC system. EdD in Learning Technologies from Pepperdine. 15+ years at the intersection of education, technology, and social impact. Prior leadership in the California Community Colleges system on distance education."
+      },
+      {
+        "tag": "AI ethics and algorithmic accountability",
+        "confidence": "high",
+        "evidence": "Past Co-Chair of the Risk and Transparency subcommittee of the previous UC AI Council. Active publishing voice on AI in higher education, including a published Inside Higher Ed Q&A and ongoing public writing on AI's role in assessment and learning design."
+      },
+      {
+        "tag": "Higher education strategy and innovation",
+        "confidence": "medium",
+        "evidence": "Drives systemwide digital learning strategy at UCOP. Led co-creation of the 2023 roadmap for the future of online education at UC. Convened the Higher Education Innovation Convening ahead of ASU+GSV Summit."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-3",
+        "relevance": "primary",
+        "rationale": "Direct ownership of UC's online learning infrastructure and explicit work on AI literacy, accessible AI education, and reskilling. National AI Literacy is in his operational lane."
+      },
+      {
+        "oa": "OA-6",
+        "relevance": "primary",
+        "rationale": "Online and digital education are central to what the 21st Century Public University looks like; his portfolio is the operational lever."
+      },
+      {
+        "oa": "OA-1",
+        "relevance": "secondary",
+        "rationale": "Past co-chair of the Risk and Transparency subcommittee on the previous AI Council; sustained engagement with the governance side of trustworthy AI in education."
+      }
+    ],
+    "role_facets": {
+      "sector": "ucop",
+      "ai_relationship": ["deployer_or_operator", "governor_or_policy", "user_representative"],
+      "governance_orientation": ["system_administration", "student_affairs"]
+    },
+    "synopsis": "Rolin Moe is Associate Vice Provost for UC Online, sitting within the Office of Graduate, Undergraduate and Equity Affairs at UCOP. He oversees UC's systemwide online learning infrastructure, including one of the nation's first cross-campus enrollment systems. He holds an EdD in Learning Technologies from Pepperdine and previously led district-wide distance education work in the California Community Colleges. He served as Co-Chair of the Risk and Transparency subcommittee on UC's previous AI Council, authors LinkedIn Learning courses on accessibility and generative AI, and writes publicly on AI's effects on teaching and assessment. His work has a strong accessibility lens grounded in personal experience with neurodiversity. He brings the operational view of how AI lands in courses, advising, and student-facing services across the UC system.",
+    "sources": [
+      {
+        "url": "https://uctechnews.ucop.edu/building-accessible-futures-rolin-moe/",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Recent (Feb 2026) UCOP feature interview with detailed first-person framing of his role and approach."
+      },
+      {
+        "url": "https://ai.universityofcalifornia.edu/ai-communities/roster.html",
+        "type": "committee_record",
+        "accessed": "2026-05-01",
+        "note": "Confirms past Risk and Transparency subcommittee co-chair role on the previous AI Council."
+      },
+      {
+        "url": "https://www.insidehighered.com/opinion/columns/learning-innovation/2024/10/03/three-questions-uc-onlines-rolin-moe",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Inside Higher Ed Q&A with first-person framing of UC Online's mission."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Title transitioned from 'Executive Director, UC Online' to 'Associate Vice Provost for UC Online' — confirm latest version is what he uses for committee materials."
+    ]
+  }
+}

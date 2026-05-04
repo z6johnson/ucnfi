@@ -1,0 +1,149 @@
+{
+  "member_id": "goldberg-k",
+  "name": {
+    "full": "Kenneth Yigael Goldberg",
+    "first": "Ken",
+    "last": "Goldberg",
+    "preferred": "Ken Goldberg"
+  },
+  "primary_affiliation": {
+    "organization": "UC Berkeley",
+    "title": "Professor and Chair, Industrial Engineering and Operations Research; William S. Floyd Jr. Distinguished Chair in Engineering",
+    "campus_or_unit": "College of Engineering",
+    "department": "Industrial Engineering and Operations Research"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UC Berkeley",
+      "role": "Secondary appointments in Electrical Engineering and Computer Sciences (EECS), Art Practice, and the School of Information",
+      "type": "courtesy_appointment",
+      "active": true
+    },
+    {
+      "organization": "UCSF Medical School",
+      "role": "Appointment in Radiation Oncology",
+      "type": "courtesy_appointment",
+      "active": true
+    },
+    {
+      "organization": "CITRIS People and Robots Initiative",
+      "role": "Director (75 faculty across 4 UC campuses)",
+      "type": "center_directorship",
+      "active": true
+    },
+    {
+      "organization": "UC Berkeley AUTOLAB",
+      "role": "Founder and Director",
+      "type": "lab_affiliation",
+      "active": true
+    },
+    {
+      "organization": "Ambidextrous Robotics (Ambi Robotics)",
+      "role": "Co-Founder and Chief Scientist",
+      "type": "advisory_board",
+      "active": true
+    },
+    {
+      "organization": "Berkeley Center for New Media",
+      "role": "Co-Founder",
+      "type": "center_directorship",
+      "active": false
+    },
+    {
+      "organization": "IEEE",
+      "role": "Fellow (2005)",
+      "type": "other",
+      "active": true
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "robotics and AI research community",
+      "interdisciplinary AI scholarship spanning engineering, art, and the humanities",
+      "CITRIS multi-campus research network"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "AI/ML research and development",
+        "confidence": "high",
+        "evidence": "Director of UC Berkeley AUTOLAB, conducting research in machine learning for robotics and automation in surgery, manufacturing, and operating rooms. Director of CITRIS People and Robots Initiative spanning 75 faculty across four UC campuses. Over 300 peer-reviewed papers and 10 US patents. NSF PECASE recipient (1995); Joseph Engelberger Award (2000); IEEE Fellow (2005). Co-Founder and Chief Scientist of Ambi Robotics. Active public voice on AI and creativity (recent op-eds on whether robots can make art)."
+      },
+      {
+        "tag": "Embedded systems and computing infrastructure (technical)",
+        "confidence": "medium",
+        "evidence": "Robotics research is grounded in embedded computing, sensor systems, and real-time control. Co-founded and was Editor-in-Chief of IEEE Transactions on Automation Science and Engineering."
+      },
+      {
+        "tag": "Digital humanities and critical technology studies",
+        "confidence": "medium",
+        "evidence": "Working artist with secondary appointment in Art Practice; work has appeared in 70 exhibits including the Whitney Biennial. Founding Director of UC Berkeley's Art, Technology, and Culture Lecture Series. Co-Founder of Berkeley Center for New Media. Films he has co-written have been selected for Sundance and nominated for an Emmy. Eigentaste collaborative filtering research and the Opinion Space data visualization (used by the U.S. Department of State) bridge technical and humanistic concerns."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-7",
+        "relevance": "primary",
+        "rationale": "Robotics and automation in healthcare, manufacturing, and operating rooms is a direct grand-challenge domain. CITRIS People and Robots Initiative is built for exactly this kind of cross-cutting impact."
+      },
+      {
+        "oa": "OA-1",
+        "relevance": "secondary",
+        "rationale": "Sustained public engagement on AI's social and creative implications, including questions about agency and authorship that are core to the Trusted AI Standard work."
+      },
+      {
+        "oa": "OA-8",
+        "relevance": "secondary",
+        "rationale": "UCSF Radiation Oncology appointment plus AUTOLAB work on robotics in surgery and operating rooms places him at the AI-in-medicine frontier."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["builder_or_researcher", "critic_or_scholar"],
+      "governance_orientation": ["research_integrity"]
+    },
+    "synopsis": "Ken Goldberg is Professor and Chair of Industrial Engineering and Operations Research at UC Berkeley, holds the William S. Floyd Jr. Distinguished Chair in Engineering, and directs the UC Berkeley AUTOLAB and the CITRIS People and Robots Initiative (75 faculty across four UC campuses). His research focuses on machine learning for robotics and automation, including applications in surgery, warehouses, homes, and operating rooms. He is also a working artist with appointments in Art Practice and the School of Information; his artwork has appeared at the Whitney Biennial and other venues, and his films have been at Sundance. He co-founded Ambi Robotics, where he serves as Chief Scientist. He brings a rare combination of technical depth in robotics and AI, sustained interdisciplinary practice spanning art and engineering, and a public voice on questions of creativity and human-AI collaboration.",
+    "sources": [
+      {
+        "url": "https://ieor.berkeley.edu/people/ken-goldberg/",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative UC Berkeley IEOR biography with role details and recognition history."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ken_Goldberg",
+        "type": "other",
+        "accessed": "2026-05-01",
+        "note": "Wikipedia entry with comprehensive overview of research, art practice, and recognition."
+      },
+      {
+        "url": "https://goldberg.berkeley.edu/",
+        "type": "personal_website",
+        "accessed": "2026-05-01",
+        "note": "Personal homepage with links to artwork, courses, and ongoing research."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": []
+  }
+}

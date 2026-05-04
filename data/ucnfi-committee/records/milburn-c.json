@@ -1,0 +1,132 @@
+{
+  "member_id": "milburn-c",
+  "name": {
+    "full": "Colin Milburn",
+    "first": "Colin",
+    "last": "Milburn"
+  },
+  "primary_affiliation": {
+    "organization": "UC Davis",
+    "title": "Gary Snyder Chair in Science and the Humanities; Professor of English, Science and Technology Studies, and Cinema and Digital Media; Chair, Department of Science and Technology Studies",
+    "campus_or_unit": "College of Letters and Science",
+    "department": "Science and Technology Studies (chair); English; Cinema and Digital Media"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UC Davis Center for Artificial Intelligence and Experimental Futures (CAIEF)",
+      "role": "Director (NEH-funded national Humanities Research Center on AI; 26 affiliated faculty)",
+      "type": "center_directorship",
+      "active": true
+    },
+    {
+      "organization": "UC Davis ModLab",
+      "role": "Director (since 2008)",
+      "type": "lab_affiliation",
+      "active": true
+    },
+    {
+      "organization": "Cultural Studies, Performance Studies, Critical Theory programs (UC Davis)",
+      "role": "Affiliated faculty",
+      "type": "courtesy_appointment",
+      "active": true
+    },
+    {
+      "organization": "Mellon Foundation",
+      "role": "New Directions Fellowship recipient (2015-2017)",
+      "type": "other",
+      "active": false
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "humanities-led AI research and governance scholarship",
+      "UC Davis humanities and STS perspective on AI",
+      "national NEH-funded humanities AI center leadership"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Digital humanities and critical technology studies",
+        "confidence": "high",
+        "evidence": "Gary Snyder Chair in Science and the Humanities. Director of UC Davis ModLab since 2008. Author of three books: Nanovision: Engineering the Future (Duke, 2008); Mondo Nano: Fun and Games in the World of Digital Matter (Duke, 2015, Science Fiction and Technoculture Studies Book Prize); Respawn: Gamers, Hackers, and Technogenic Life (Duke, 2018). Mellon New Directions Fellowship (2015-2017). PhD/PhD in History of Science and English from Harvard."
+      },
+      {
+        "tag": "AI ethics and algorithmic accountability",
+        "confidence": "high",
+        "evidence": "Director of CAIEF, the UC Davis Center for Artificial Intelligence and Experimental Futures, which is an NEH-funded national Humanities Research Center on AI. CAIEF explicitly aims to promote 'democratic governance of AI systems' and works on 'experimental humanities' approaches to AI policy. Center spans 26 faculty across Letters and Science, Engineering, and the School of Law."
+      },
+      {
+        "tag": "Academic shared governance",
+        "confidence": "medium",
+        "evidence": "Department Chair of Science and Technology Studies at UC Davis. Sustained leadership of multi-department interdisciplinary centers (ModLab since 2008, CAIEF). Track record of large collaborative projects funded by Mellon, NSF, and SSHRC."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-1",
+        "relevance": "primary",
+        "rationale": "Director of an NEH-funded national center explicitly focused on democratic governance of AI. CAIEF brings UC into national humanities-led conversations about AI policy and accountability."
+      },
+      {
+        "oa": "OA-7",
+        "relevance": "primary",
+        "rationale": "CAIEF's interdisciplinary architecture (Letters and Science + Engineering + Law, 26 faculty) is a working model for grand-challenge work on AI. NEH Humanities Perspectives on AI initiative aligns with grand-challenge framing."
+      },
+      {
+        "oa": "OA-6",
+        "relevance": "secondary",
+        "rationale": "Sustained scholarship on the role of universities in technology development; chair of an STS department that directly examines this question."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["critic_or_scholar"],
+      "governance_orientation": ["research_integrity", "state_policy"]
+    },
+    "synopsis": "Colin Milburn holds the Gary Snyder Chair in Science and the Humanities at UC Davis and is Chair of the Department of Science and Technology Studies, with appointments in English and Cinema and Digital Media. He directs the UC Davis Center for Artificial Intelligence and Experimental Futures (CAIEF), an NEH-funded national Humanities Research Center on AI involving 26 faculty across Letters and Science, Engineering, and the School of Law. CAIEF explicitly works to promote democratic governance of AI systems through what it calls an experimental humanities approach. He has directed the UC Davis ModLab since 2008. He is the author of three books (Nanovision, Mondo Nano, Respawn) on the history and culture of emerging technologies, and was a Mellon New Directions Fellow (2015-2017). His perspective combines deep training in the history of science with sustained leadership of interdisciplinary AI-focused research centers.",
+    "sources": [
+      {
+        "url": "https://sts.ucdavis.edu/people/colin-milburn",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative UC Davis STS biography with current titles and recognition."
+      },
+      {
+        "url": "https://sts.ucdavis.edu/news/center-artificial-intelligence-and-experimental-futures",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "CAIEF mission and scope, including NEH funding source and 26-faculty span."
+      },
+      {
+        "url": "https://lettersandsciencemag.ucdavis.edu/community/uc-davis-launch-artificial-intelligence-center",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Launch announcement with framing of CAIEF mission."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "CAIEF is the strongest existing UC humanities-AI institutional asset. Worth considering as a model or partner for OA-1 work."
+    ]
+  }
+}

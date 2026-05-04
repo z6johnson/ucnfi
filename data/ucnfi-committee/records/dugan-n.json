@@ -1,0 +1,129 @@
+{
+  "member_id": "dugan-n",
+  "name": {
+    "full": "Nick Dugan",
+    "first": "Nick",
+    "last": "Dugan"
+  },
+  "primary_affiliation": {
+    "organization": "UC Merced",
+    "title": "Vice Chancellor and Chief Information Officer",
+    "campus_or_unit": "Office of Information Technology"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UC Merced Chancellor's Cabinet",
+      "role": "Member (first CIO at UC Merced to hold a Vice Chancellor title)",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "UC IT Leadership Committee / UC CIO Council",
+      "role": "Member (one of ten UC campus CIOs)",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "UC Digital Inclusion Guidance Framework Working Group",
+      "role": "Co-author / participant (UC systemwide effort)",
+      "type": "governance_role",
+      "active": false
+    },
+    {
+      "organization": "EDUCAUSE",
+      "role": "Member",
+      "type": "advisory_board",
+      "active": true
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "UC Merced campus IT and information security perspective",
+      "UC systemwide CIO community",
+      "rural/underserved campus perspective on digital inclusion"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Embedded systems and computing infrastructure (technical)",
+        "confidence": "high",
+        "evidence": "Vice Chancellor and CIO at UC Merced since January 2023, after serving as interim CIO since March 2022. Previously UC Merced's first Chief Information Security Officer (CISO), then Deputy CIO with responsibility for enterprise information systems and the Merced 2020 Project network expansion. Twenty-plus years of UC IT experience across UC Santa Cruz, UC Davis, and UC Merced. BA in Computer Science from UC Santa Cruz; MS in Information Management from Arizona State."
+      },
+      {
+        "tag": "Public-sector AI policy and procurement",
+        "confidence": "medium",
+        "evidence": "Sits on UC Merced Chancellor's Cabinet. Co-author of the UC Digital Inclusion Guidance Framework. Sustained engagement with UC systemwide IT governance. Public framing strongly emphasizes equity in technology deployment for first-generation, underserved, and rural student populations (UC Merced is 75% first-generation, ranked #4 nationally for social mobility)."
+      },
+      {
+        "tag": "Network and connectivity infrastructure",
+        "confidence": "medium",
+        "evidence": "Led the Merced 2020 Project network expansion as Deputy CIO. Previously supported research computing in the UCSC Baskin School of Engineering. Career trajectory in systems administration, information security, and project leadership across three UC campuses."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-4",
+        "relevance": "primary",
+        "rationale": "Campus CIO for the smallest and most resource-constrained UC campus. Brings the perspective of what AI infrastructure looks like outside the well-resourced flagships. Complement to Williams's systemwide view and the major-research-campus voices."
+      },
+      {
+        "oa": "OA-3",
+        "relevance": "secondary",
+        "rationale": "Sustained public commitment to digital inclusion and equity. Co-authored UC Digital Inclusion Guidance Framework. UC Merced's student population (75% first-gen, San Joaquin Valley) is exactly the population OA-3 needs to reach."
+      },
+      {
+        "oa": "OA-6",
+        "relevance": "secondary",
+        "rationale": "UC Merced's growth path (Carnegie R1 status, 15,000 students by 2030) means he is operationally engaged in what the next-generation public university looks like under resource constraints."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["deployer_or_operator", "governor_or_policy"],
+      "governance_orientation": ["campus_administration", "system_administration"]
+    },
+    "synopsis": "Nick Dugan is Vice Chancellor and Chief Information Officer at UC Merced, where he is the first CIO to hold a Vice Chancellor title and sit on the Chancellor's Cabinet. He has spent more than twenty years in UC IT, beginning as a student worker at UC Santa Cruz while completing his BA in Computer Science there. He was UC Merced's first Chief Information Security Officer before becoming Deputy CIO and then interim CIO. He led the Merced 2020 Project network expansion. His MS is in Information Management from Arizona State. UC Merced serves a 75% first-generation student body and ranks fourth nationally for social mobility, and Dugan has been a sustained public voice for digital inclusion across UC, including as a co-author of the UC Digital Inclusion Guidance Framework. As a long-time San Joaquin Valley resident he brings a Central Valley perspective to UC system technology decisions.",
+    "sources": [
+      {
+        "url": "https://uctechnews.ucop.edu/introducing-nick-dugan-uc-merceds-new-vice-chancellor-and-chief-information-officer/",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "UC Tech News appointment announcement with detailed career background."
+      },
+      {
+        "url": "https://www.ucmerced.edu/executive-leadership",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "UC Merced Executive Leadership page confirming current title."
+      },
+      {
+        "url": "https://uctechnews.ucop.edu/diversity-statement-nick-dugans-commitment/",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Diversity statement with first-person framing of his approach to digital inclusion."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": []
+  }
+}

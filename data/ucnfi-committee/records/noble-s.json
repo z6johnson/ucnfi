@@ -1,0 +1,152 @@
+{
+  "member_id": "noble-s",
+  "name": {
+    "full": "Safiya Umoja Noble",
+    "first": "Safiya",
+    "last": "Noble"
+  },
+  "primary_affiliation": {
+    "organization": "UC Los Angeles",
+    "title": "David O. Sears Presidential Endowed Chair of Social Sciences; Professor of Gender Studies, African American Studies, and Information Studies",
+    "campus_or_unit": "Division of Social Sciences",
+    "department": "Gender Studies; African American Studies; Information Studies (joint)"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UCLA Center on Resilience & Digital Justice",
+      "role": "Director",
+      "type": "center_directorship",
+      "active": true
+    },
+    {
+      "organization": "UCLA Minderoo Initiative on Tech & Power, Center for Critical Internet Inquiry (C2i2)",
+      "role": "Co-Director",
+      "type": "center_directorship",
+      "active": true
+    },
+    {
+      "organization": "UCLA DataX Initiative",
+      "role": "Director (critical data studies portfolio)",
+      "type": "center_directorship",
+      "active": true
+    },
+    {
+      "organization": "Cyber Civil Rights Initiative",
+      "role": "Board Member",
+      "type": "advisory_board",
+      "active": true
+    },
+    {
+      "organization": "The Equity Engine (non-profit)",
+      "role": "Founder (2021)",
+      "type": "advisory_board",
+      "active": true
+    },
+    {
+      "organization": "MacArthur Foundation",
+      "role": "Fellow (2021)",
+      "type": "other",
+      "active": true
+    },
+    {
+      "organization": "Real Facebook Oversight Board",
+      "role": "Founding member (2020)",
+      "type": "advisory_board",
+      "active": true
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "critical AI scholarship and algorithmic accountability research",
+      "civil rights and digital justice perspectives on AI",
+      "the public-facing humanities voice on technology"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "AI ethics and algorithmic accountability",
+        "confidence": "high",
+        "evidence": "Author of Algorithms of Oppression: How Search Engines Reinforce Racism (NYU Press, 2018), the foundational text on algorithmic discrimination in commercial search. MacArthur Fellow (2021) recognized specifically for ground-breaking work on algorithmic discrimination. Director of UCLA Center on Resilience & Digital Justice. Co-Director of Minderoo Initiative on Tech & Power. Inaugural NAACP-Archewell Digital Civil Rights Award recipient (2022). Board member of the Cyber Civil Rights Initiative. Routinely sought for expertise on algorithmic discrimination by The New York Times, BBC, CNN, Wired, Time, and others."
+      },
+      {
+        "tag": "Digital humanities and critical technology studies",
+        "confidence": "high",
+        "evidence": "Sociological and interdisciplinary research on how digital media intersects with race, gender, culture, and power. Co-editor of three edited volumes including The Intersectional Internet. PhD and MS in Library & Information Science from Illinois Urbana-Champaign. Director of UCLA DataX Initiative leading work in critical data studies."
+      },
+      {
+        "tag": "Public-sector AI policy and procurement",
+        "confidence": "medium",
+        "evidence": "Sustained advisory role with civil and human rights organizations. Board member of Cyber Civil Rights Initiative. Founder of Equity Engine non-profit (2021). Public commentary on the loss of public goods to Big Tech (Noema). Provides expertise to a range of policy bodies on platform governance and accountability."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-1",
+        "relevance": "primary",
+        "rationale": "Foundational scholar of algorithmic harm and accountability. The Trusted AI Standard work needs her perspective if it's going to be credible beyond UC. Also positions UC to draw on the most recognized public scholar in this area."
+      },
+      {
+        "oa": "OA-3",
+        "relevance": "primary",
+        "rationale": "National AI Literacy that does not address algorithmic bias and digital justice will be hollow. Noble's public reach gives this work scale beyond UC audiences."
+      },
+      {
+        "oa": "OA-6",
+        "relevance": "secondary",
+        "rationale": "Critical perspective on the role of public universities in technology development; her scholarship has examined the loss of public goods to commercial platforms."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["critic_or_scholar"],
+      "governance_orientation": ["state_policy", "research_integrity"]
+    },
+    "synopsis": "Safiya Umoja Noble is the David O. Sears Presidential Endowed Chair of Social Sciences at UCLA and Professor of Gender Studies, African American Studies, and Information Studies. She is the author of Algorithms of Oppression: How Search Engines Reinforce Racism (NYU Press, 2018), the field-defining book on algorithmic discrimination in commercial search engines, and a 2021 MacArthur Fellow recognized for that work. She directs the UCLA Center on Resilience & Digital Justice, co-directs the Minderoo Initiative on Tech & Power at C2i2, and serves as Director of the UCLA DataX Initiative. She founded the Equity Engine non-profit in 2021 and serves on the board of the Cyber Civil Rights Initiative. She is one of the most widely recognized public scholars on algorithmic accountability and digital civil rights, with sustained presence in The New York Times, BBC, CNN, Wired, and Time. Her scholarly voice combines technical literacy about how recommendation and ranking systems work with a sociologist's account of how those systems reproduce structural inequality.",
+    "sources": [
+      {
+        "url": "https://safiyaunoble.com/bio-cv/",
+        "type": "personal_website",
+        "accessed": "2026-05-01",
+        "note": "Authoritative personal biography (most current center name: Resilience & Digital Justice)."
+      },
+      {
+        "url": "https://seis.ucla.edu/faculty/safiya-umoja-noble/",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "UCLA School of Education & Information Studies page (uses earlier 'Race & Digital Justice' center name)."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Safiya_Noble",
+        "type": "other",
+        "accessed": "2026-05-01",
+        "note": "Comprehensive biography with award and recognition history."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Center name in transition: 'Center on Race & Digital Justice' (UCLA SEIS, gender.ucla.edu, afam.ucla.edu) vs 'Center on Resilience & Digital Justice' (her personal site, Pande Lectures). Personal site likely most current; flag for verification.",
+      "Public stature suggests strong potential lead role for OA-1 work; ensure she is invited to shape rather than only review.",
+      "Taxonomy gap: schema's governance_orientation enum lacks a value for civil-society / public-interest advocacy. Used 'state_policy' as nearest fit for her civil rights and digital justice advocacy work. Consider adding 'public_interest_advocacy' to the controlled vocabulary in a schema revision."
+    ]
+  }
+}

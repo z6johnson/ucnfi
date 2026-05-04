@@ -1,0 +1,142 @@
+{
+  "member_id": "kirschner-a",
+  "name": {
+    "full": "Ann Kirschner",
+    "first": "Ann",
+    "last": "Kirschner"
+  },
+  "primary_affiliation": {
+    "organization": "Meyer Family Philanthropies",
+    "title": "Acting Executive Director"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "University of California Office of the President",
+      "role": "Special Advisor to President Milliken",
+      "type": "advisory_board",
+      "active": true
+    },
+    {
+      "organization": "Arizona State University",
+      "role": "Special Advisor to the President; member, EdPlus / Learning Enterprise Management Committee",
+      "type": "advisory_board",
+      "active": true
+    },
+    {
+      "organization": "Strategic Cyber Ventures",
+      "role": "Independent Director",
+      "type": "advisory_board",
+      "active": true
+    },
+    {
+      "organization": "Movado Group (NYSE: MOV)",
+      "role": "Independent Director",
+      "type": "advisory_board",
+      "active": true
+    },
+    {
+      "organization": "NYC FIRST",
+      "role": "Trustee",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "Paul and Daisy Soros Fellowships for New Americans",
+      "role": "Trustee",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "City University of New York",
+      "role": "Past Interim President of Hunter College; past Dean of Macaulay Honors College",
+      "type": "other",
+      "active": false
+    }
+  ],
+  "committee_role": {
+    "role": "special_advisor",
+    "represents": [
+      "office of the UC President",
+      "cross-system higher education leadership perspective",
+      "philanthropic and private-sector innovation networks"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Higher education strategy and innovation",
+        "confidence": "high",
+        "evidence": "Special Advisor to two university presidents (UC and ASU) concurrently. Former Interim President, Hunter College; former Dean, Macaulay Honors College, CUNY. Long career bridging higher education, technology, and media. Member of ASU's EdPlus / Learning Enterprise management committee since 2018."
+      },
+      {
+        "tag": "Educational technology and online learning",
+        "confidence": "high",
+        "evidence": "Founded FATHOM, an early online learning consortium with Columbia and other partners; led digital services at Barnes and Noble; sustained engagement with Coursera and the post-2020 reshaping of online higher ed. Public writing in Forbes on the future of education explicitly addresses digital transformation."
+      },
+      {
+        "tag": "Industry and market perspective on AI",
+        "confidence": "medium",
+        "evidence": "Independent director at Strategic Cyber Ventures and Movado Group; executive roles across five ventures including NFL.COM. Brings investor/board lens distinct from academic perspective. AI is implicit rather than her named focus."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-6",
+        "relevance": "primary",
+        "rationale": "Decades of work on what public higher education should become; former president of a major urban university. Directly aligned with the 21st Century Public University vision."
+      },
+      {
+        "oa": "OA-3",
+        "relevance": "secondary",
+        "rationale": "EdTech and online learning expertise positions her to advise on AI literacy at scale."
+      },
+      {
+        "oa": "OA-2",
+        "relevance": "secondary",
+        "rationale": "Cross-sector network across philanthropy, industry, and education positions her to advise on strategic partnerships."
+      }
+    ],
+    "role_facets": {
+      "sector": "nonprofit_or_network",
+      "ai_relationship": ["governor_or_policy"],
+      "governance_orientation": ["system_administration"]
+    },
+    "synopsis": "Ann Kirschner serves as Special Advisor to UC President James B. Milliken and concurrently as Special Advisor to the President of Arizona State University. Her primary role is Acting Executive Director of Meyer Family Philanthropies, where she directs strategic initiatives across education, public health, humanitarian aid, and the Jewish community. Earlier she was Interim President of Hunter College and Dean of Macaulay Honors College at CUNY, and founded FATHOM, an early online learning consortium. She holds a Princeton PhD and brings decades of experience at the intersection of higher education, technology, philanthropy, and media. Her advisory role provides direct line-of-sight to the UC President's office and a long view on institutional transformation in public higher education.",
+    "sources": [
+      {
+        "url": "https://oceanroadadvisors.com/our-team/ann-kirschner/",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Detailed biography listing dual special-advisor role and current Meyer Family Philanthropies position."
+      },
+      {
+        "url": "https://kirschner.org/",
+        "type": "personal_website",
+        "accessed": "2026-05-01",
+        "note": "Personal site confirms ASU advisory role and ongoing public writing on higher education."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Confirm whether her primary affiliation should be listed as Meyer Family Philanthropies (her paid role) or as Special Advisor to the UC President (her committee-relevant role). Current draft uses Meyer; consider switching for committee-facing materials."
+    ]
+  }
+}

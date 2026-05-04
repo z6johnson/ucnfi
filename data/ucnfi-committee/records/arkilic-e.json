@@ -1,0 +1,137 @@
+{
+  "member_id": "arkilic-e",
+  "name": {
+    "full": "Errol Arkilic",
+    "first": "Errol",
+    "last": "Arkilic"
+  },
+  "primary_affiliation": {
+    "organization": "UC Irvine",
+    "title": "Chief Innovation Officer; Executive Director, UCI Beall Applied Innovation",
+    "campus_or_unit": "UCI Beall Applied Innovation"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UCI Beall Applied Innovation",
+      "role": "Executive Director (since October 2021)",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "M34 Capital, Inc.",
+      "role": "Co-Founder and CEO (seed-stage investment firm focused on academic spin-outs)",
+      "type": "advisory_board",
+      "active": true
+    },
+    {
+      "organization": "Real Industry (non-profit)",
+      "role": "Founder (2015)",
+      "type": "advisory_board",
+      "active": true
+    },
+    {
+      "organization": "UC Berkeley NSF I-Corps node",
+      "role": "Senior advisor (since 2015); past instructor at Haas School of Business and College of Engineering (since 2017)",
+      "type": "courtesy_appointment",
+      "active": true
+    },
+    {
+      "organization": "National Science Foundation",
+      "role": "Founding and lead Program Director, NSF Innovation Corps (I-Corps), 2011-2013; Lead Program Director, SBIR/STTR software and services, 2003-2011",
+      "type": "other",
+      "active": false
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "UC commercialization, technology transfer, and innovation ecosystem",
+      "industry partnership and entrepreneurship perspective on AI",
+      "national NSF I-Corps program legacy"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Industry and market perspective on AI",
+        "confidence": "high",
+        "evidence": "Chief Innovation Officer at UCI and Executive Director of Beall Applied Innovation, where AI for storytelling is one of four primary industry focus areas. Co-Founder and CEO of M34 Capital, a seed-stage investment firm focused on academic spin-outs. Founder/CEO of StrataGent Lifesciences (acquired by Corium International). Founding Program Director of NSF I-Corps (2011-2013), the national customer-discovery program. Recent public engagement on AI in media and storytelling (RhetAI Coalition AlphaPersuade Summit; UCI AI/Media event with Bernstein Private Wealth Management)."
+      },
+      {
+        "tag": "Public-sector AI policy and procurement",
+        "confidence": "medium",
+        "evidence": "Eight years at NSF in program leadership roles (SBIR/STTR and I-Corps), giving sustained federal-policy and government-procurement perspective. PhD in aeronautical/astronautical engineering from MIT."
+      },
+      {
+        "tag": "Higher education strategy and innovation",
+        "confidence": "medium",
+        "evidence": "UCI Chief Innovation Officer position is explicitly about translating research into market impact, with substantial recent results ($34.1B in investments and returns for UCI startups; $6.4B contribution to local economy as of 2025). Sustained focus on first-generation students; UCI is one of the most first-gen-heavy campuses in UC."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-2",
+        "relevance": "primary",
+        "rationale": "Direct experience leading academic-industry tech transfer at scale. Founded national I-Corps program. Active investor through M34 Capital. Brings the commercialization and partnership perspective that OA-2 (Strategic Expansion and Economic Partnerships) needs."
+      },
+      {
+        "oa": "OA-7",
+        "relevance": "secondary",
+        "rationale": "BAI's translational mission of moving research into products that address societal challenges aligns with grand-challenge framing. Recent BAI focus on AI for storytelling and Elder Wisdom (preserving family memoirs through AI avatars) shows engagement with social-impact applications."
+      },
+      {
+        "oa": "OA-3",
+        "relevance": "secondary",
+        "rationale": "Founded Real Industry (non-profit) to help university students find work; sustained public framing about supporting first-generation students. Workforce/literacy-adjacent perspective."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["deployer_or_operator"],
+      "governance_orientation": ["campus_administration", "industry_standards"]
+    },
+    "synopsis": "Errol Arkilic is Chief Innovation Officer at UC Irvine and Executive Director of UCI Beall Applied Innovation (BAI), positions he has held since October 2021. BAI has identified AI for storytelling as one of its four primary industry focus areas, alongside therapeutics, medical devices, and sustainability. His most lasting public-sector contribution is founding the NSF Innovation Corps (I-Corps) program in 2011, the national customer-discovery program that has since trained tens of thousands of academic researchers in commercialization. He is co-founder and CEO of M34 Capital, a seed-stage investment firm focused on spin-outs from academic labs. He founded the non-profit Real Industry in 2015 to help university students find work. He holds a PhD in aeronautical/astronautical engineering from MIT and previously worked at the NSF for eight years on the SBIR/STTR program. His perspective is that of an academic-to-market translator with both federal-program and venture-capital experience.",
+    "sources": [
+      {
+        "url": "https://news.uci.edu/2021/08/26/uci-names-new-chief-innovation-officer-beall-applied-innovation-executive-director/",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "UCI official appointment announcement with detailed biographical background."
+      },
+      {
+        "url": "https://innovation.uci.edu/news/errol-arkilic-wants-to-make-the-modern-american-dream-a-reality/",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "BAI feature with first-person framing of his approach to tech transfer and innovation."
+      },
+      {
+        "url": "https://news.uci.edu/2025/10/23/a-hub-of-invention/",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Recent (October 2025) coverage with current BAI focus areas including AI for storytelling and impact figures."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Roster lists name as 'Errol Arkilich'; correct spelling per all UCI sources is 'Arkilic' (no h)."
+    ]
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "member_id": "raley-r",
+  "name": {
+    "full": "Rita Raley",
+    "first": "Rita",
+    "last": "Raley"
+  },
+  "primary_affiliation": {
+    "organization": "UC Santa Barbara",
+    "title": "Professor of English",
+    "campus_or_unit": "College of Letters and Science",
+    "department": "English"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UCSB Transcriptions Center",
+      "role": "Director",
+      "type": "center_directorship",
+      "active": true
+    },
+    {
+      "organization": "UCSB Mind and Machine Intelligence initiative",
+      "role": "Affiliated faculty",
+      "type": "lab_affiliation",
+      "active": true
+    },
+    {
+      "organization": "UCSB Departments of Film and Media Studies, Comparative Literature, Global Studies",
+      "role": "Courtesy appointments",
+      "type": "courtesy_appointment",
+      "active": true
+    },
+    {
+      "organization": "UCSB Academic Senate",
+      "role": "Past Vice-Chair (2020-2021)",
+      "type": "governance_role",
+      "active": false
+    },
+    {
+      "organization": "UC Humanities Research Institute",
+      "role": "Past Advisory Committee member (2015-2018)",
+      "type": "advisory_board",
+      "active": false
+    },
+    {
+      "organization": "National Humanities Center",
+      "role": "Past Fellow (Mellon Digital Humanities project)",
+      "type": "other",
+      "active": false
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "Critical AI scholarship in literary and humanities studies",
+      "UCSB humanities perspective on AI and the university",
+      "academic senate experience and shared governance"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Digital humanities and critical technology studies",
+        "confidence": "high",
+        "evidence": "Author of Tactical Media (University of Minnesota, 2009). Co-editor of the Electronic Literature Collection, Volume 2. Career-long focus on digital media and humanist inquiry. Director of the Transcriptions Center at UCSB. Past fellowship appointments at the National Humanities Center and UCLA as part of the Mellon-funded Digital Humanities project."
+      },
+      {
+        "tag": "AI ethics and algorithmic accountability",
+        "confidence": "high",
+        "evidence": "Co-author of 'Critical AI: A Field in Formation' (American Literature 95.2, 2023, with Jennifer Rhee), an agenda-setting essay for the Critical AI field. 'AI and the University as a Service' (PMLA 139.3, 2024, with Matthew Kirschenbaum). 'Borges and AI' (Poetics Today 45.2, 2024). 'How to Do Things with Deep Learning Code' (Digital Humanities Quarterly, 2023, with Minh Hua). Currently working on a project on GPT-2."
+      },
+      {
+        "tag": "Academic shared governance",
+        "confidence": "medium",
+        "evidence": "Past Vice-Chair, UCSB Academic Senate (2020-2021). Past Chair, UCSB Graduate Council. Past UC Coordinating Committee on Graduate Affairs. Past UC Humanities Research Institute Advisory Committee. Sustained engagement with UC governance structures over more than a decade."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-1",
+        "relevance": "primary",
+        "rationale": "Co-author of 'Critical AI: A Field in Formation' positions her squarely at the scholarly center of AI accountability work. PMLA piece on 'AI and the University as a Service' is directly responsive to the questions OA-1 will need to address."
+      },
+      {
+        "oa": "OA-6",
+        "relevance": "primary",
+        "rationale": "PMLA article 'AI and the University as a Service' explicitly engages the question of what AI does to public higher education as an institution; directly relevant to the 21st Century Public University work."
+      },
+      {
+        "oa": "OA-3",
+        "relevance": "secondary",
+        "rationale": "Sustained writing on critical AI literacy and humanities pedagogy. Co-directs the UCSB Literature and Culture of Information specialization."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["critic_or_scholar"],
+      "governance_orientation": ["academic_senate", "research_integrity"]
+    },
+    "synopsis": "Rita Raley is Professor of English at UC Santa Barbara with courtesy appointments in Film and Media Studies, Comparative Literature, and Global Studies. She directs the Transcriptions Center and is affiliated with UCSB's Mind and Machine Intelligence initiative. She is one of the founding figures of the Critical AI field; her co-authored essay 'Critical AI: A Field in Formation' (American Literature, 2023, with Jennifer Rhee) helped name and define the field. Her PMLA article 'AI and the University as a Service' (2024, with Matthew Kirschenbaum) is directly relevant to questions of AI's effects on public higher education. She is the author of Tactical Media (Minnesota, 2009), and her recent AI-engaged work appears in PMLA, Digital Humanities Quarterly, American Literature, and Poetics Today. She brings substantial UC shared-governance experience as a past Vice-Chair of the UCSB Academic Senate.",
+    "sources": [
+      {
+        "url": "https://www.english.ucsb.edu/people/faculty/raley-rita/",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative UCSB English department page with full publication list."
+      },
+      {
+        "url": "https://mind-machine.ucsb.edu/people/faculty/rita-raley",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "UCSB Mind and Machine Intelligence initiative page with focus on AI-engaged work."
+      },
+      {
+        "url": "https://complit.ucsb.edu/people/rita-raley",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Comparative Literature page with administrative service history."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Title discrepancy: some older sources say 'Associate Professor'; recent UCSB English department, Mind and Machine Intelligence, and Comparative Literature pages list as 'Professor.' Used current title."
+    ]
+  }
+}

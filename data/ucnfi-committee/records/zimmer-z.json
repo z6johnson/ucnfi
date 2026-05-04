@@ -1,0 +1,120 @@
+{
+  "member_id": "zimmer-z",
+  "name": {
+    "full": "Zac Zimmer",
+    "first": "Zac",
+    "last": "Zimmer"
+  },
+  "primary_affiliation": {
+    "organization": "UC Santa Cruz",
+    "title": "Associate Professor of Literature",
+    "campus_or_unit": "Humanities Division",
+    "department": "Literature"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UCSC Astrobiology Initiative",
+      "role": "Co-facilitator, Ethics & Astrobiology reading group",
+      "type": "lab_affiliation",
+      "active": true
+    },
+    {
+      "organization": "National Humanities Center (NHC)",
+      "role": "Recipient of Responsible AI Curriculum Design Project (Google-funded program for course development on AI's impact on society)",
+      "type": "other",
+      "active": true
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "humanities scholarship on infrastructure and technosystems",
+      "Latin American and hemispheric perspectives on AI and technology",
+      "responsible AI curriculum design for higher education"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Digital humanities and critical technology studies",
+        "confidence": "high",
+        "evidence": "Author of First Contact: Speculative Visions of the Conquest of the Americas (Northwestern UP, 2025). Interdisciplinary scholar of literature, culture, and technology in the hemispheric Americas. Current research on the cultural infrastructure of technosystems. Recipient of NHC Responsible AI Curriculum Design Project award (2022). Reviewed Fei-Fei Li's The Worlds I See for Critical AI (2025). Public commentary on LLMs and the Turing Test on KSQD (UCSC public radio)."
+      },
+      {
+        "tag": "AI ethics and algorithmic accountability",
+        "confidence": "medium",
+        "evidence": "Selected for inaugural NHC Responsible AI Curriculum Design Project (Google-funded, 14 colleagues nationally) for undergraduate course development on AI's societal impact. Public framing focuses on the cultural risks of LLM systems built on the model of fooling humans (Turing Test critique) and what is needed to develop technology in the interest of improving humanity. Recent work includes a published response to commercial AI in Advanced Learning Content."
+      },
+      {
+        "tag": "Higher education strategy and innovation",
+        "confidence": "low",
+        "evidence": "Curriculum development work at the NHC indicates engagement with national humanities-AI pedagogy questions. Smaller institutional footprint than other humanities scholars on the committee; primary impact is in scholarship and teaching rather than administrative leadership."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-3",
+        "relevance": "primary",
+        "rationale": "Direct experience designing responsible AI curricula at the undergraduate level through the NHC project. Focus on humanistic literacy about AI is directly aligned with national AI literacy work."
+      },
+      {
+        "oa": "OA-1",
+        "relevance": "secondary",
+        "rationale": "Critical perspective on cultural and ethical risks of generative AI systems. Has published reviews and commentary in Critical AI."
+      },
+      {
+        "oa": "OA-6",
+        "relevance": "secondary",
+        "rationale": "Research on infrastructure of technosystems and the poetics of California infrastructure offers a humanities lens on the public university's relationship to technology."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["critic_or_scholar"],
+      "governance_orientation": ["research_integrity"]
+    },
+    "synopsis": "Zac Zimmer is Associate Professor of Literature at UC Santa Cruz, where he works as an interdisciplinary scholar of literature, culture, and technology in the hemispheric Americas. His book First Contact: Speculative Visions of the Conquest of the Americas was published by Northwestern University Press in 2025. His current research focuses on the cultural infrastructure of technosystems, and he co-facilitates an Ethics & Astrobiology reading group as part of UCSC's Astrobiology Initiative. He was selected for the inaugural Responsible Artificial Intelligence Curriculum Design Project at the National Humanities Center (Google-funded program for AI course development), one of 15 faculty nationwide. He teaches courses on Latin American literature, science fiction, ethics and technology, and the poetics of California infrastructure. His public commentary on LLMs critiques their grounding in the Turing Test framework as a barrier to genuine human learning.",
+    "sources": [
+      {
+        "url": "https://literature.ucsc.edu/faculty/index.php?uid=zaazimme",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative UCSC Literature Department biography."
+      },
+      {
+        "url": "https://news.ucsc.edu/2022/06/responsible-ai/",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Coverage of selection for NHC Responsible AI Curriculum Design Project with first-person framing of his approach."
+      },
+      {
+        "url": "https://ucsc.academia.edu/ZacZimmer",
+        "type": "personal_website",
+        "accessed": "2026-05-01",
+        "note": "Recent publication list including critical AI commentary and book review."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Smallest institutional footprint of the four humanities scholars in this batch; his contribution is more curricular and scholarly than administrative. May fit better as a contributor to working groups led by Noble, Raley, or Milburn."
+    ]
+  }
+}

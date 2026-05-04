@@ -1,0 +1,317 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ucnfi.uc.edu/schemas/committee-member.v1.json",
+  "title": "UCNFI Committee Member Record",
+  "description": "Schema for a single committee member record in the UCNFI committee directory. Holds verified identifiers, enrichment-derived expertise tags, opportunity area mapping, role facets, member-facing self-report, and reconciliation. Pass 3 fields (positions, sensitivities) reserved but not required in v1.",
+  "type": "object",
+  "version": "1.0.0",
+  "required": [
+    "member_id",
+    "name",
+    "primary_affiliation",
+    "committee_role",
+    "enrichment",
+    "record_meta"
+  ],
+  "properties": {
+    "member_id": {
+      "type": "string",
+      "description": "Stable identifier, slug form. Convention: lowercase-hyphenated last name plus first initial (e.g., 'khosla-p', 'noble-s'). Do not change once assigned.",
+      "pattern": "^[a-z]+(-[a-z]+)*-[a-z]$"
+    },
+    "name": {
+      "type": "object",
+      "required": ["full"],
+      "properties": {
+        "full": { "type": "string", "description": "Full name as the member uses it publicly." },
+        "first": { "type": "string" },
+        "last": { "type": "string" },
+        "preferred": { "type": "string", "description": "Preferred form of address if different from full name." },
+        "pronouns": { "type": "string", "description": "Pronouns if known and shared publicly." }
+      }
+    },
+    "primary_affiliation": {
+      "type": "object",
+      "required": ["organization", "title"],
+      "properties": {
+        "organization": { "type": "string", "description": "Primary employing organization (e.g., 'UC San Diego', 'Lawrence Livermore National Laboratory')." },
+        "title": { "type": "string", "description": "Full primary title." },
+        "campus_or_unit": { "type": "string", "description": "Specific campus, school, division, or unit if relevant." },
+        "department": { "type": "string" }
+      }
+    },
+    "secondary_affiliations": {
+      "type": "array",
+      "description": "Additional appointments, courtesy appointments, lab affiliations, center directorships, governance roles outside primary employment.",
+      "items": {
+        "type": "object",
+        "required": ["organization", "role"],
+        "properties": {
+          "organization": { "type": "string" },
+          "role": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["courtesy_appointment", "lab_affiliation", "center_directorship", "governance_role", "advisory_board", "other"]
+          },
+          "active": { "type": "boolean", "default": true }
+        }
+      }
+    },
+    "committee_role": {
+      "type": "object",
+      "required": ["role"],
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["co_chair", "special_advisor", "member", "advisory_board", "support_team", "student_member"]
+        },
+        "represents": {
+          "type": "array",
+          "description": "Constituency or perspective this member is understood to bring to the committee. Free-text array (e.g., 'undergraduate students', 'shared governance', 'state government', 'national lab community'). Used where domain expertise tags don't capture the reason someone is on the committee.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "description": "Contact information. Treated as sensitive; populate from authoritative source only.",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "office_phone": { "type": "string" },
+        "preferred_channel": { "type": "string", "enum": ["email", "phone", "assistant"] },
+        "assistant_contact": { "type": "string", "description": "Name and email of executive assistant or scheduler if relevant." }
+      }
+    },
+    "enrichment": {
+      "type": "object",
+      "description": "Enrichment-derived assessments. This is the team's view of the member based on public sources and prior committee documents. Member's own self-report lives in the self_report field below.",
+      "required": ["expertise_tags", "synopsis", "sources"],
+      "properties": {
+        "expertise_tags": {
+          "type": "array",
+          "description": "Domain expertise tags from the controlled vocabulary. Cap of 3 unless the public record genuinely supports more. Each tag has its own confidence rating and supporting evidence.",
+          "minItems": 0,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["tag", "confidence"],
+            "properties": {
+              "tag": {
+                "type": "string",
+                "description": "Tag from the controlled vocabulary. See expertise-taxonomy.json for current valid values."
+              },
+              "confidence": {
+                "type": "string",
+                "enum": ["high", "medium", "low"],
+                "description": "How well the public record supports this tag. High = explicitly named. Medium = implied or adjacent. Low = inferred from background, flag for verification."
+              },
+              "evidence": {
+                "type": "string",
+                "description": "Brief note on why this tag was assigned. References specific sources where useful."
+              }
+            }
+          }
+        },
+        "opportunity_areas": {
+          "type": "array",
+          "description": "Mapping to UCNFI Opportunity Areas (OA-1 through OA-8). Cap of 3, with one designated primary.",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": ["oa", "relevance"],
+            "properties": {
+              "oa": {
+                "type": "string",
+                "enum": ["OA-1", "OA-2", "OA-3", "OA-4", "OA-5", "OA-6", "OA-7", "OA-8"]
+              },
+              "relevance": {
+                "type": "string",
+                "enum": ["primary", "secondary"]
+              },
+              "rationale": {
+                "type": "string",
+                "description": "One-sentence explanation of why this OA fits."
+              }
+            }
+          }
+        },
+        "role_facets": {
+          "type": "object",
+          "description": "Facets that aren't expertise but shape how the member contributes and how the RAG should present them.",
+          "properties": {
+            "sector": {
+              "type": "string",
+              "enum": ["uc_campus", "ucop", "uc_health", "national_lab", "industry", "state_government", "nonprofit_or_network", "venture_capital", "other"]
+            },
+            "ai_relationship": {
+              "type": "array",
+              "description": "How this member relates to AI as a domain. Multi-select.",
+              "items": {
+                "type": "string",
+                "enum": ["builder_or_researcher", "deployer_or_operator", "governor_or_policy", "critic_or_scholar", "investor_or_market", "user_representative"]
+              }
+            },
+            "governance_orientation": {
+              "type": "array",
+              "description": "Domains of governance this member is positioned to speak to.",
+              "items": {
+                "type": "string",
+                "enum": ["academic_senate", "campus_administration", "system_administration", "health_system", "state_policy", "industry_standards", "research_integrity", "student_affairs"]
+              }
+            }
+          }
+        },
+        "synopsis": {
+          "type": "string",
+          "description": "3-5 sentence summary suitable for retrieval. Plain language, present tense. What this member does, what they bring to the committee, what perspective they hold. No marketing language.",
+          "minLength": 200,
+          "maxLength": 1200
+        },
+        "sources": {
+          "type": "array",
+          "description": "Source URLs and references supporting the enrichment. Each claim in the synopsis or tag list should trace to at least one source here.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["url", "type", "accessed"],
+            "properties": {
+              "url": { "type": "string", "format": "uri" },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "institutional_bio",
+                  "lab_or_center_page",
+                  "google_scholar",
+                  "personal_website",
+                  "linkedin",
+                  "press_or_interview",
+                  "internal_document",
+                  "publication",
+                  "podcast_or_video",
+                  "committee_record",
+                  "other"
+                ]
+              },
+              "accessed": { "type": "string", "format": "date", "description": "ISO date of access (YYYY-MM-DD)." },
+              "note": { "type": "string", "description": "What this source contributes that others don't." }
+            }
+          }
+        },
+        "pass_3_reserved": {
+          "type": "object",
+          "description": "Reserved for Pass 3 enrichment (positions, sensitivities, recent public statements). Not populated in v1; structure will be defined when Pass 3 begins.",
+          "properties": {}
+        }
+      }
+    },
+    "self_report": {
+      "type": "object",
+      "description": "Member's own self-reported expertise and interests, captured via the inaugural-meeting survey. Distinct from enrichment. Disagreements between the two are signal, not error.",
+      "properties": {
+        "submitted": { "type": "boolean", "default": false },
+        "submitted_date": { "type": "string", "format": "date" },
+        "expertise_tags_claimed": {
+          "type": "array",
+          "description": "Tags the member selected from the member-facing taxonomy. The member-facing taxonomy may be a refined version of the enrichment taxonomy; mapping is documented in taxonomy-version-history.md.",
+          "items": { "type": "string" }
+        },
+        "opportunity_areas_interest": {
+          "type": "array",
+          "description": "OAs the member indicated interest in engaging with. May differ from enrichment-assigned OAs.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "oa": { "type": "string", "enum": ["OA-1", "OA-2", "OA-3", "OA-4", "OA-5", "OA-6", "OA-7", "OA-8"] },
+              "interest_level": { "type": "string", "enum": ["lead", "contribute", "advise", "observe"] }
+            }
+          }
+        },
+        "self_description": {
+          "type": "string",
+          "description": "Free-text response to a survey prompt asking the member to describe what they bring to the committee in their own words."
+        },
+        "categories_missing": {
+          "type": "string",
+          "description": "Free-text response to a survey prompt asking what the offered categories failed to capture about the member's expertise or perspective."
+        },
+        "leadership_willingness": {
+          "type": "object",
+          "description": "Member's stated willingness to take on visible roles for the committee.",
+          "properties": {
+            "lead_workgroup": { "type": "boolean" },
+            "speak_publicly": { "type": "boolean" },
+            "write_publicly": { "type": "boolean" },
+            "notes": { "type": "string" }
+          }
+        }
+      }
+    },
+    "reconciliation": {
+      "type": "object",
+      "description": "Derived view comparing enrichment to self-report. Populated after self-report is submitted. Discrepancies are tracked here; this is the working artifact for working group composition decisions.",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["not_yet_reconciled", "reconciled_no_changes", "reconciled_with_additions", "reconciled_with_corrections", "flagged_for_discussion"]
+        },
+        "reconciliation_date": { "type": "string", "format": "date" },
+        "reconciler": { "type": "string", "description": "Who performed the reconciliation." },
+        "tags_added_by_enrichment": {
+          "type": "array",
+          "description": "Tags the public record supports but the member did not claim. Reconciler's judgment whether to keep or drop.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag": { "type": "string" },
+              "decision": { "type": "string", "enum": ["keep", "drop", "discuss_with_member"] },
+              "rationale": { "type": "string" }
+            }
+          }
+        },
+        "tags_claimed_not_supported": {
+          "type": "array",
+          "description": "Tags the member claimed but the public record does not clearly support. Often legitimate (private work, recent transitions). Flag for discussion rather than reject.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag": { "type": "string" },
+              "decision": { "type": "string", "enum": ["accept_at_member_word", "request_evidence", "discuss_with_member"] },
+              "rationale": { "type": "string" }
+            }
+          }
+        },
+        "final_tags": {
+          "type": "array",
+          "description": "The reconciled tag set used for working group composition and downstream decisions. After reconciliation, this is the operational answer.",
+          "items": { "type": "string" }
+        },
+        "notes": { "type": "string", "description": "Reconciler's notes on judgment calls, open questions, or items to revisit." }
+      }
+    },
+    "record_meta": {
+      "type": "object",
+      "description": "Provenance and maintenance metadata for the record itself.",
+      "required": ["created", "last_verified", "schema_version"],
+      "properties": {
+        "created": { "type": "string", "format": "date" },
+        "last_verified": { "type": "string", "format": "date", "description": "Date the enrichment fields were last checked against current sources." },
+        "fields_updated_this_pass": {
+          "type": "array",
+          "description": "Which top-level fields were checked or updated in the most recent verification pass. Audit trail without per-field timestamping.",
+          "items": { "type": "string" }
+        },
+        "schema_version": { "type": "string", "description": "Version of this schema the record conforms to. Increment when schema changes." },
+        "enrichment_pass": {
+          "type": "string",
+          "enum": ["pass_1_structural", "pass_2_synopsis", "pass_3_positions"],
+          "description": "Highest enrichment pass completed for this record."
+        },
+        "needs_attention": {
+          "type": "array",
+          "description": "Open items flagged for follow-up. Cleared when resolved.",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

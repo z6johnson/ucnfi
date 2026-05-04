@@ -1,0 +1,139 @@
+{
+  "member_id": "vigna-g",
+  "name": {
+    "full": "Giovanni Vigna",
+    "first": "Giovanni",
+    "last": "Vigna",
+    "pronouns": "he/him/his"
+  },
+  "primary_affiliation": {
+    "organization": "UC Santa Barbara",
+    "title": "Distinguished Professor of Computer Science; Director, NSF AI Institute for Agent-Based Cyber Threat Intelligence and Operation (ACTION)",
+    "campus_or_unit": "College of Engineering",
+    "department": "Computer Science"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "NSF AI Institute for Agent-Based Cyber Threat Intelligence and Operation (ACTION)",
+      "role": "Director (Headquartered at UCSB; 11 academic institutions)",
+      "type": "center_directorship",
+      "active": true
+    },
+    {
+      "organization": "UCSB Security Lab / iSeclab group",
+      "role": "Co-Director",
+      "type": "lab_affiliation",
+      "active": true
+    },
+    {
+      "organization": "Broadcom (formerly VMware)",
+      "role": "Senior Director, Threat Analysis Unit, ANS Business Unit",
+      "type": "advisory_board",
+      "active": true
+    },
+    {
+      "organization": "Lastline, Inc.",
+      "role": "Co-Founder and former CTO (acquired by VMware 2020; VMware acquired by Broadcom 2023)",
+      "type": "other",
+      "active": false
+    },
+    {
+      "organization": "Shellphish DEF CON CTF team",
+      "role": "Founder",
+      "type": "other",
+      "active": true
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "AI-cybersecurity research and practice",
+      "NSF AI Institute leadership",
+      "industry-academic interface in security"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "AI/ML research and development",
+        "confidence": "high",
+        "evidence": "Director of $20M NSF AI Institute (ACTION), 2023-present. Research focus on applications of machine learning and AI to security problems, including agent-based AI for cybersecurity. Active research on Cyber Reasoning Systems, including involvement with DARPA Cyber Grand Challenge and DARPA AI Cyber Challenge (AIxCC, 2025). 2025 ACM CCS keynote on AI-assisted vulnerability analysis and patching."
+      },
+      {
+        "tag": "Embedded systems and computing infrastructure (technical)",
+        "confidence": "high",
+        "evidence": "Distinguished Professor of Computer Science at UCSB. Career-long focus on vulnerability assessment, malware analysis, web security, blockchain security, voting integrity, and misinformation detection. Past Program Chair of RAID and NDSS, two of the top security conferences."
+      },
+      {
+        "tag": "Industry and market perspective on AI",
+        "confidence": "medium",
+        "evidence": "Co-founded and was CTO of Lastline (acquired by VMware in 2020 for $200M+; then Broadcom in 2023). Currently Senior Director of Threat Analysis Unit at Broadcom. Brings frontline industry perspective on enterprise AI/security deployment."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-1",
+        "relevance": "primary",
+        "rationale": "AI safety and security in operational systems is core to what trustworthy AI means. Directorship of an NSF AI Institute focused on this directly supports OA-1 work."
+      },
+      {
+        "oa": "OA-4",
+        "relevance": "primary",
+        "rationale": "Cybersecurity is a foundational layer of any AI infrastructure. ACTION Institute's mission is securing the systems that AI runs on."
+      },
+      {
+        "oa": "OA-3",
+        "relevance": "secondary",
+        "rationale": "ACTION includes K-12 outreach and workforce development with emphasis on underrepresented communities. Vigna has emphasized public framing about workforce needs in AI security."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["builder_or_researcher", "deployer_or_operator"],
+      "governance_orientation": ["research_integrity", "industry_standards"]
+    },
+    "synopsis": "Giovanni Vigna is Distinguished Professor of Computer Science at UC Santa Barbara and the founding Director of the NSF AI Institute for Agent-Based Cyber Threat Intelligence and Operation (ACTION), a $20M five-year project headquartered at UCSB and spanning 11 academic institutions. His research applies AI to cybersecurity problems including malware analysis, vulnerability assessment, voting integrity, and misinformation detection. He co-founded Lastline (acquired by VMware in 2020, then Broadcom in 2023), where he is now Senior Director of the Threat Analysis Unit, giving him sustained industry exposure alongside his academic role. He founded Shellphish, the DEF CON CTF team that has competed in more DEF CON contests than any other group. He works at the operational frontier of AI and cybersecurity, including DARPA's recent AI Cyber Challenge.",
+    "sources": [
+      {
+        "url": "https://sites.cs.ucsb.edu/~vigna/bio.html",
+        "type": "personal_website",
+        "accessed": "2026-05-01",
+        "note": "Authoritative biography from Vigna's own UCSB site."
+      },
+      {
+        "url": "https://action.ucsb.edu/people/giovanni-vigna",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "ACTION Institute biography."
+      },
+      {
+        "url": "https://news.ucsb.edu/2023/021013/ucsb-lead-nsf-funded-research-institute-next-level-ai-powered-cybersecurity",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "ACTION announcement with detailed first-person framing of mission and approach."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Concurrent industry role at Broadcom may have conflict-of-interest implications for some committee work; flag for transparency."
+    ]
+  }
+}

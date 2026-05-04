@@ -1,0 +1,131 @@
+{
+  "member_id": "hagberg-a",
+  "name": {
+    "full": "Aric Hagberg",
+    "first": "Aric",
+    "last": "Hagberg"
+  },
+  "primary_affiliation": {
+    "organization": "Los Alamos National Laboratory",
+    "title": "Division Leader, Computer, Computational, and Statistical Sciences Division",
+    "campus_or_unit": "Los Alamos National Laboratory"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "LANL Center for Nonlinear Studies",
+      "role": "Past Deputy Director; current affiliate",
+      "type": "lab_affiliation",
+      "active": true
+    },
+    {
+      "organization": "Society for Industrial and Applied Mathematics (SIAM)",
+      "role": "Fellow (2023)",
+      "type": "other",
+      "active": true
+    },
+    {
+      "organization": "NetworkX (Python network analysis library)",
+      "role": "Co-author / co-creator",
+      "type": "other",
+      "active": true
+    },
+    {
+      "organization": "Department of Energy Computational Science Graduate Fellowship",
+      "role": "Past recipient (1992-1994)",
+      "type": "other",
+      "active": false
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "Los Alamos National Laboratory and the national-lab AI/computing community",
+      "applied mathematics and network science",
+      "AI for science applied to national security and public-good problems"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "AI/ML research and development",
+        "confidence": "high",
+        "evidence": "Division Leader of LANL's Computer, Computational, and Statistical Sciences Division, overseeing AI and machine learning research at scale. Public-facing framing emphasizes AI as 'reasoning partner' in scientific inquiry. Active speaker at Council on Competitiveness and similar venues on the future of AI in research."
+      },
+      {
+        "tag": "Mathematics and formal methods",
+        "confidence": "high",
+        "evidence": "PhD in Applied Mathematics, University of Arizona (1994). Research record in network science, nonlinear dynamics, pattern formation, and complex systems. SIAM Fellow (2023). Co-author of NetworkX, a widely used Python library for network analysis. Affiliated with LANL Center for Nonlinear Studies."
+      },
+      {
+        "tag": "Network and connectivity infrastructure",
+        "confidence": "medium",
+        "evidence": "Network science research record extends to cybersecurity applications (LANL User-Computer Authentication Associations dataset; Directional Laplacian Centrality for cyber situational awareness). Work spans infrastructure resilience and information security, both in the framing of network/graph mathematics."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-7",
+        "relevance": "primary",
+        "rationale": "Public framing emphasizes AI for grand-challenge problems including infrastructure resilience, epidemiological modeling, and rural community innovation. National-lab-scale resources can anchor UC's grand-challenge ambitions."
+      },
+      {
+        "oa": "OA-4",
+        "relevance": "primary",
+        "rationale": "Division leadership over LANL's HPC and AI infrastructure positions him to advise on what UC-scale AI infrastructure should look like."
+      },
+      {
+        "oa": "OA-3",
+        "relevance": "secondary",
+        "rationale": "Public framing has explicitly prioritized AI access for rural communities, tribal nations, and small-town entrepreneurs. Aligned with the National AI Literacy framing of OA-3."
+      }
+    ],
+    "role_facets": {
+      "sector": "national_lab",
+      "ai_relationship": ["builder_or_researcher", "deployer_or_operator"],
+      "governance_orientation": ["research_integrity"]
+    },
+    "synopsis": "Aric Hagberg is Division Leader of the Computer, Computational, and Statistical Sciences Division at Los Alamos National Laboratory, where he oversees research that applies advanced computing to national security and public-good problems including infrastructure resilience, epidemiological modeling, and information security. He is an applied mathematician with a PhD from the University of Arizona, and a co-author of NetworkX, the widely used Python library for network analysis. He was elected a SIAM Fellow in 2023 for contributions to network science and dynamical systems. His public framing emphasizes AI's transition from accelerating tasks to acting as a reasoning partner in scientific work, and he has been a prominent voice for ensuring AI tools reach rural and underserved communities, including small-town farmers and tribal nations.",
+    "sources": [
+      {
+        "url": "https://compete.org/aric-hagberg/",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Council on Competitiveness biography."
+      },
+      {
+        "url": "https://aric.hagberg.org/",
+        "type": "personal_website",
+        "accessed": "2026-05-01",
+        "note": "Personal homepage with research focus and links to publications."
+      },
+      {
+        "url": "https://compete.org/the-future-is-ai-exploring-the-possibilities-and-pitfalls/",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Public framing of his approach to AI's role in science and rural community impact."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Title discrepancy: roster lists 'Computing and Artificial Intelligence Division Lead' but public LANL records and SIAM citation use 'Computer, Computational, and Statistical Sciences Division Leader.' Confirm which is current."
+    ]
+  }
+}

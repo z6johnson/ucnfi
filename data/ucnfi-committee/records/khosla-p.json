@@ -1,0 +1,126 @@
+{
+  "member_id": "khosla-p",
+  "name": {
+    "full": "Pradeep K. Khosla",
+    "first": "Pradeep",
+    "last": "Khosla"
+  },
+  "primary_affiliation": {
+    "organization": "UC San Diego",
+    "title": "Chancellor",
+    "campus_or_unit": "Office of the Chancellor",
+    "department": "Distinguished Professor in Electrical and Computer Engineering, Computer Science and Engineering, and the Halıcıoğlu Data Science Institute"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UC San Diego Foundation",
+      "role": "Board of Trustees member",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "Joan and Irwin Jacobs Chancellor's Endowed Chair",
+      "role": "Chair holder",
+      "type": "other",
+      "active": true
+    },
+    {
+      "organization": "Carnegie Mellon University",
+      "role": "Adjunct Professor of Electrical and Computer Engineering",
+      "type": "courtesy_appointment",
+      "active": true
+    }
+  ],
+  "committee_role": {
+    "role": "co_chair",
+    "represents": [
+      "UC San Diego campus leadership",
+      "research university executive leadership",
+      "engineering and computing research community"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "AI/ML research and development",
+        "confidence": "high",
+        "evidence": "Distinguished Professor with appointments in ECE, CS&E, and the Halıcıoğlu Data Science Institute. Self-described research interests are robotics, AI, and cybersecurity. Founded CMU's CyLab. Fellow of the American Association of Artificial Intelligence (now AAAI). Former DARPA program manager in the Software and Intelligent Systems Technology Office. Three books and 350+ publications."
+      },
+      {
+        "tag": "Higher education strategy and innovation",
+        "confidence": "high",
+        "evidence": "Chancellor of UC San Diego since 2012. Initiated and led UCSD's first-ever Strategic Plan and the $2B Campaign for UC San Diego (which raised $3.05B). Initiated $12B+ in capital improvements. Led transition of UCSD Athletics to Division I."
+      },
+      {
+        "tag": "Embedded systems and computing infrastructure (technical)",
+        "confidence": "medium",
+        "evidence": "ECE background with research history in robotics and intelligent systems. CMU College of Engineering dean (2004-2012). Adjacent to but not the central focus of his current public profile."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-6",
+        "relevance": "primary",
+        "rationale": "Sitting chancellor of a top-20 research university; embodies the strategic and executive lens for the 21st Century Public University vision."
+      },
+      {
+        "oa": "OA-1",
+        "relevance": "secondary",
+        "rationale": "Technical background in AI and cybersecurity gives him direct standing on questions of trustworthy AI; co-chair role positions him to set the standard."
+      },
+      {
+        "oa": "OA-7",
+        "relevance": "secondary",
+        "rationale": "Track record of initiating interdisciplinary research initiatives at UCSD; positioned to convene grand-challenge work."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["builder_or_researcher", "governor_or_policy"],
+      "governance_orientation": ["campus_administration", "system_administration"]
+    },
+    "synopsis": "Pradeep Khosla is the eighth Chancellor of UC San Diego, a position he has held since 2012. He is an internationally recognized electrical and computer engineer with research interests in robotics, AI, and cybersecurity, and holds Distinguished Professor appointments in ECE, Computer Science and Engineering, and the Halıcıoğlu Data Science Institute. Before UCSD he was Dean of the College of Engineering at Carnegie Mellon, where he founded CyLab; earlier in his career he served as a DARPA program manager. As co-chair he brings executive authority over a major research campus, deep technical fluency in AI as a domain, and a track record of executing large-scale strategic initiatives.",
+    "sources": [
+      {
+        "url": "https://chancellor.ucsd.edu/about/about-the-chancellor/",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative for current title, appointments, governance roles, and accomplishments."
+      },
+      {
+        "url": "https://chancellor.ucsd.edu/chancellor-khosla",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Detailed biographical bio with explicit research interests in robotics, AI, and cybersecurity; named appointments at HDSI, CSE, ECE."
+      },
+      {
+        "url": "https://www.ece.cmu.edu/directory/bios/khosla-pradeep.html",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "CMU ECE bio confirms DARPA program manager history and CyLab founding."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Confirm OA-7 (Grand Challenges) as secondary; could be stronger if interdisciplinary research initiatives at UCSD are documented."
+    ]
+  }
+}

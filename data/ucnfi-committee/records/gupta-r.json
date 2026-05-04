@@ -1,0 +1,150 @@
+{
+  "member_id": "gupta-r",
+  "name": {
+    "full": "Rajesh K. Gupta",
+    "first": "Rajesh",
+    "last": "Gupta"
+  },
+  "primary_affiliation": {
+    "organization": "UC San Diego",
+    "title": "Founding Dean, School of Computing, Information and Data Sciences (SCIDS); Distinguished Professor of Computer Science and Engineering; Qualcomm Endowed Chair in Embedded Microsystems",
+    "campus_or_unit": "School of Computing, Information and Data Sciences",
+    "department": "Computer Science and Engineering"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "Halıcıoğlu Data Science Institute (HDSI), UC San Diego",
+      "role": "Founding Director (since 2018)",
+      "type": "center_directorship",
+      "active": true
+    },
+    {
+      "organization": "San Diego Supercomputer Center (SDSC)",
+      "role": "Oversight as SCIDS Dean (SDSC is a foundational pillar of SCIDS)",
+      "type": "governance_role",
+      "active": true
+    },
+    {
+      "organization": "Qualcomm Institute (Calit2), UC San Diego",
+      "role": "Associate Director",
+      "type": "center_directorship",
+      "active": true
+    },
+    {
+      "organization": "DARPA/SRC Center on Evolvable Computing (ACE)",
+      "role": "Co-Principal Investigator",
+      "type": "lab_affiliation",
+      "active": true
+    },
+    {
+      "organization": "INRIA (French National Institute for Research in Digital Science and Technology), Rennes",
+      "role": "International Chair",
+      "type": "courtesy_appointment",
+      "active": true
+    },
+    {
+      "organization": "IIT Kanpur",
+      "role": "Distinguished Visiting Professor",
+      "type": "courtesy_appointment",
+      "active": true
+    },
+    {
+      "organization": "IEEE; ACM; AAAS",
+      "role": "Fellow",
+      "type": "other",
+      "active": true
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "UC San Diego AI and computing research enterprise",
+      "computing and data science deans across UC",
+      "embedded systems and cyber-physical systems community"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "AI/ML research and development",
+        "confidence": "high",
+        "evidence": "Founding Dean of UCSD's School of Computing, Information and Data Sciences (established 2024 with explicit AI emphasis). Founding Director of HDSI since 2018, growing it to 200+ affiliates with joint appointments across 15 departments. Recipient of IEEE W. Wallace McDowell Award. Frequent public statements about UCSD's AI research enterprise and the 'age of pervasive intelligence.'"
+      },
+      {
+        "tag": "Embedded systems and computing infrastructure (technical)",
+        "confidence": "high",
+        "evidence": "Qualcomm Endowed Chair in Embedded Microsystems. Research in embedded and cyber-physical systems with focus on sensor data, optimization, and analytics. Past contributions include SystemC modeling and SPARK parallelizing high-level synthesis (both in industrial use). Founding Editor-in-Chief of IEEE Embedded Systems Letters. Past leader of NSF Expeditions on Variability and DARPA Data Intensive Systems and Power Aware Computing programs. Currently leads NSF MetroInsight project on city-scale sensing data."
+      },
+      {
+        "tag": "Higher education strategy and innovation",
+        "confidence": "high",
+        "evidence": "Founding Dean of a brand-new UC school designed around computing, data science, and AI. Past Chair of UCSD CSE department (until 2016) during a period of extraordinary growth in computer science. Public framing emphasizes the role of universities in the era of 'pervasive intelligence.'"
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-4",
+        "relevance": "primary",
+        "rationale": "Direct oversight of SDSC and the broader AI/computing infrastructure at UCSD; foundational to UC's AI infrastructure development."
+      },
+      {
+        "oa": "OA-6",
+        "relevance": "primary",
+        "rationale": "Founding Dean of a new school explicitly designed for the AI-driven future of public higher education."
+      },
+      {
+        "oa": "OA-7",
+        "relevance": "secondary",
+        "rationale": "MetroInsight and DARPA Evolvable Computing work both target large-scale societal-impact problems. HDSI's interdisciplinary architecture is a working model for grand-challenge research."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_campus",
+      "ai_relationship": ["builder_or_researcher"],
+      "governance_orientation": ["campus_administration", "research_integrity"]
+    },
+    "synopsis": "Rajesh Gupta is the founding Dean of UC San Diego's School of Computing, Information and Data Sciences (SCIDS), established in 2024 with an explicit emphasis on AI, computing, and data science. He is also the founding Director of the Halıcıoğlu Data Science Institute (HDSI), which he has led since 2018 and grown to 200+ affiliates across 15 departments. His research is in embedded and cyber-physical systems, with seminal contributions including SystemC modeling and SPARK parallelizing high-level synthesis, both in industrial practice. He holds the Qualcomm Endowed Chair in Embedded Microsystems, and is a Fellow of IEEE, ACM, and AAAS. He is a co-PI on the DARPA/SRC Center on Evolvable Computing and leads the NSF MetroInsight project on city-scale sensing. His perspective is that of the dean of a major AI-focused academic enterprise; he frames university work as preparation for 'the age of pervasive intelligence.'",
+    "sources": [
+      {
+        "url": "https://datascience.ucsd.edu/people/rajesh-gupta/",
+        "type": "institutional_bio",
+        "accessed": "2026-05-01",
+        "note": "Authoritative HDSI biography."
+      },
+      {
+        "url": "https://today.ucsd.edu/story/rajesh-gupta-appointed-dean-of-school-of-computing-information-and-data-sciences",
+        "type": "press_or_interview",
+        "accessed": "2026-05-01",
+        "note": "Announcement of Dean appointment with detailed first-person framing of his vision."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Rajesh_K._Gupta",
+        "type": "other",
+        "accessed": "2026-05-01",
+        "note": "Comprehensive overview including award and recognition history."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-01",
+    "last_verified": "2026-05-01",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "Gupta and Khosla are both at UCSD; consider how their perspectives complement vs duplicate in working group composition."
+    ]
+  }
+}
