@@ -1,5 +1,6 @@
 import { ChatStream } from "@/components/ChatStream";
 import { entityIds } from "@/lib/baseline";
+import { memberIds } from "@/lib/committee";
 
 export const dynamic = "force-dynamic";
 
@@ -14,13 +15,16 @@ export default function ChatPage() {
           style={{ color: "var(--color-text-muted)" }}
         >
           A Claude-powered research assistant grounded in the full UCNFI
-          baseline. Every factual claim is cited back to a specific
-          entity — click any citation chip to open that entity in the
-          baseline explorer.
+          baseline and the Steering Committee directory. Factual claims
+          are cited back to a specific entity or committee member —
+          click any citation chip to open it in a side panel.
         </p>
       </header>
       <div className="mt-10">
-        <ChatStream knownEntityIds={entityIds()} />
+        <ChatStream
+          knownEntityIds={entityIds()}
+          knownMemberIds={memberIds()}
+        />
       </div>
     </div>
   );

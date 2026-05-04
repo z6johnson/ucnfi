@@ -16,6 +16,7 @@ import {
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { EntityDrawer } from "./EntityDrawer";
+import { MemberDrawer } from "./MemberDrawer";
 
 type Role = "user" | "assistant";
 type Message = { role: Role; content: string };
@@ -38,6 +39,7 @@ const STARTERS = [
   "Which UC campuses have a formal AI council, and which don't?",
   "Summarize differences between UCSD TritonAI and UCLA's OAI.",
   "Where are the biggest gaps in health AI governance across the UC health systems?",
+  "Which committee members bring infrastructure expertise, and which OAs do they cover?",
   "Draft a one-page memo for OA-1 Trusted AI Standard that identifies three systemwide gaps.",
 ];
 
@@ -52,7 +54,13 @@ function messagesToMarkdown(messages: Message[]): string {
   return `${header}\n${body}\n`;
 }
 
-export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
+export function ChatStream({
+  knownEntityIds,
+  knownMemberIds,
+}: {
+  knownEntityIds: string[];
+  knownMemberIds: string[];
+}) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
@@ -60,11 +68,19 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
   const [usage, setUsage] = useState<Usage | null>(null);
   const [provider, setProvider] = useState<Provider | null>(null);
   const [openEntityId, setOpenEntityId] = useState<string | null>(null);
+  const [openMemberId, setOpenMemberId] = useState<string | null>(null);
   const [copyState, setCopyState] = useState<"idle" | "copied" | "error">(
     "idle",
   );
 
-  const knownIds = useMemo(() => new Set(knownEntityIds), [knownEntityIds]);
+  const entityIdSet = useMemo(
+    () => new Set(knownEntityIds),
+    [knownEntityIds],
+  );
+  const memberIdSet = useMemo(
+    () => new Set(knownMemberIds),
+    [knownMemberIds],
+  );
   const logRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -268,8 +284,10 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
                     ) : isAssistant ? (
                       <AssistantMarkdown
                         text={msg.content}
-                        knownIds={knownIds}
+                        entityIds={entityIdSet}
+                        memberIds={memberIdSet}
                         onOpenEntity={setOpenEntityId}
+                        onOpenMember={setOpenMemberId}
                       />
                     ) : (
                       <div
@@ -278,8 +296,10 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
                       >
                         <InlineCitations
                           text={msg.content}
-                          knownIds={knownIds}
+                          entityIds={entityIdSet}
+                          memberIds={memberIdSet}
                           onOpenEntity={setOpenEntityId}
+                          onOpenMember={setOpenMemberId}
                         />
                       </div>
                     )}
@@ -383,6 +403,11 @@ export function ChatStream({ knownEntityIds }: { knownEntityIds: string[] }) {
         entityId={openEntityId}
         onClose={() => setOpenEntityId(null)}
       />
+
+      <MemberDrawer
+        memberId={openMemberId}
+        onClose={() => setOpenMemberId(null)}
+      />
     </>
   );
 }
@@ -425,12 +450,16 @@ function EmptyState({ onPick }: { onPick: (text: string) => void }) {
 
 function AssistantMarkdown({
   text,
-  knownIds,
+  entityIds,
+  memberIds,
   onOpenEntity,
+  onOpenMember,
 }: {
   text: string;
-  knownIds: Set<string>;
+  entityIds: Set<string>;
+  memberIds: Set<string>;
   onOpenEntity: (id: string) => void;
+  onOpenMember: (id: string) => void;
 }) {
   const withCitations = (children: ReactNode): ReactNode =>
     Children.map(children, (child) => {
@@ -438,8 +467,10 @@ function AssistantMarkdown({
         return (
           <InlineCitations
             text={child}
-            knownIds={knownIds}
+            entityIds={entityIds}
+            memberIds={memberIds}
             onOpenEntity={onOpenEntity}
+            onOpenMember={onOpenMember}
           />
         );
       }
@@ -480,15 +511,21 @@ function AssistantMarkdown({
 
 function InlineCitations({
   text,
-  knownIds,
+  entityIds,
+  memberIds,
   onOpenEntity,
+  onOpenMember,
 }: {
   text: string;
-  knownIds: Set<string>;
+  entityIds: Set<string>;
+  memberIds: Set<string>;
   onOpenEntity: (id: string) => void;
+  onOpenMember: (id: string) => void;
 }) {
   const out: React.ReactNode[] = [];
-  const pattern = /\[([a-z0-9_]+)\]/g;
+  // Member ids contain hyphens (e.g. neely-r); entity ids do not.
+  // Allowing both keeps a single pass.
+  const pattern = /\[([a-z0-9_-]+)\]/g;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
   let chipIdx = 0;
@@ -498,14 +535,26 @@ function InlineCitations({
     if (match.index > lastIndex) {
       out.push(text.slice(lastIndex, match.index));
     }
-    if (knownIds.has(id)) {
+    if (entityIds.has(id)) {
       out.push(
         <button
           type="button"
           key={`cite-${chipIdx++}`}
           onClick={() => onOpenEntity(id)}
           className="citation-chip"
-          title={`Open ${id} in a side panel`}
+          title={`Open entity ${id} in a side panel`}
+        >
+          {id}
+        </button>,
+      );
+    } else if (memberIds.has(id)) {
+      out.push(
+        <button
+          type="button"
+          key={`cite-${chipIdx++}`}
+          onClick={() => onOpenMember(id)}
+          className="citation-chip"
+          title={`Open committee member ${id} in a side panel`}
         >
           {id}
         </button>,

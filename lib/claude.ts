@@ -21,6 +21,7 @@ import {
   pillars,
   researchTopics,
 } from "@/content/northstar";
+import { committeeContextSummary } from "@/lib/committee";
 
 export const CLAUDE_MAX_TOKENS = 4096;
 export const LITELLM_BASE_URL =
@@ -83,9 +84,10 @@ export function providerChain(): Provider[] {
 /* System prompt                                                       */
 /* ------------------------------------------------------------------ */
 
-/** Cached across calls — these two strings never change per deploy. */
+/** Cached across calls — these strings never change per deploy. */
 let cachedFramingBlock: string | null = null;
 let cachedBaselineBlock: string | null = null;
+let cachedCommitteeBlock: string | null = null;
 
 function framingBlock(): string {
   if (cachedFramingBlock) return cachedFramingBlock;
@@ -133,11 +135,16 @@ ${principles}
 
 ## Grounding rules (non-negotiable)
 
-1. Only make factual claims about UC entities that are supported by the BASELINE DATASET provided below. If the baseline doesn't support a claim, say so explicitly and recommend where the user could enrich the data.
-2. Cite every factual claim with an inline marker of the form [entity_id], where entity_id is one of the 20 ids present in the baseline (e.g. [ucop_systemwide], [uc_berkeley], [ucla_health], [lbnl]). Place the marker at the end of the sentence or bullet it supports. Multiple markers on one sentence are fine.
-3. Never invent entity ids, source URLs, field names, or notes. When you want to quote something, quote it verbatim from the baseline notes.
-4. When asked to compare entities, prefer structured output — a short bulleted list or a small markdown table — over prose.
+1. Only make factual claims about UC entities that are supported by the BASELINE DATASET, and only make factual claims about Steering Committee members that are supported by the COMMITTEE DIRECTORY. If neither covers a claim, say so explicitly and recommend where the user could enrich the data.
+2. Cite every factual claim with an inline marker:
+   - For UC entities, use [entity_id] from the baseline (e.g. [ucop_systemwide], [uc_berkeley], [ucla_health], [lbnl]).
+   - For committee members, use [member_id] from the committee directory (e.g. [neely-r], [goldberg-k], [khosla-p]). Member ids are lowercase last name, hyphen, first initial.
+   Place the marker at the end of the sentence or bullet it supports. Multiple markers on one sentence are fine. Do not bracket Opportunity Area codes (write OA-1, not [OA-1]).
+3. Never invent entity ids, member ids, source URLs, field names, or notes. When you want to quote something, quote it verbatim from the baseline notes or the member synopsis.
+4. When asked to compare entities or members, prefer structured output — a short bulleted list or a small markdown table — over prose.
 5. When asked to draft a memo, follow a tight structure: a one-sentence framing, 3–5 bullets of evidence with citations, and a short "open questions" list.
+6. Do not invent member positions, opinions, or facts beyond the directory. Pass-1 enrichment is public-record-only; many members have not yet self-reported. If asked about a member's stance on something the directory doesn't cover, say "the directory doesn't cover this — that's what the self-report pass is for."
+7. Don't conflate the current Steering Committee (Khosla, Williams, Palazoglu as co-chairs) with the previous AI Council (Bui and Bustamante co-chairs). Three current members served on the previous Council: Crittenden, Moe, Han — they are the institutional memory.
 
 ## Response style
 
@@ -166,7 +173,19 @@ ${raw}
   return cachedBaselineBlock;
 }
 
-/** Prompt-cached system array. Two breakpoints: framing + baseline. */
+function committeeBlock(): string {
+  if (cachedCommitteeBlock) return cachedCommitteeBlock;
+  cachedCommitteeBlock = `## COMMITTEE DIRECTORY (UCNFI Steering Committee)
+
+The 23-member directory below is the authoritative source for every factual claim about a committee member. Each member appears with their member_id in [brackets], primary affiliation, opportunity-area mappings (primary/secondary), expertise tags with confidence, role facets, and a verified-public-record synopsis.
+
+Citation rule: when you reference a member, cite as [member_id] (e.g., [neely-r], [goldberg-k]). Members map to one to three Opportunity Areas; one is designated primary. Confidence ratings reflect how directly the public record supports each tag — high = explicitly named, medium = implied or adjacent, low = inferred and flagged for verification.
+
+${committeeContextSummary()}`;
+  return cachedCommitteeBlock;
+}
+
+/** Prompt-cached system array. Three breakpoints: framing + baseline + committee. */
 export function systemPrompt(): Anthropic.TextBlockParam[] {
   return [
     {
@@ -177,6 +196,11 @@ export function systemPrompt(): Anthropic.TextBlockParam[] {
     {
       type: "text",
       text: baselineBlock(),
+      cache_control: { type: "ephemeral" },
+    },
+    {
+      type: "text",
+      text: committeeBlock(),
       cache_control: { type: "ephemeral" },
     },
   ];

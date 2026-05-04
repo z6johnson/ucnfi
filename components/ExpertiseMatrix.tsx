@@ -71,11 +71,6 @@ export function ExpertiseMatrix({
   const [view, setView] = useState<ViewMode>("list");
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const selectedMember = useMemo(
-    () => members.find((m) => m.member_id === selectedId) ?? null,
-    [members, selectedId],
-  );
-
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return members.filter((m) => {
@@ -239,7 +234,8 @@ export function ExpertiseMatrix({
       </section>
 
       <MemberDrawer
-        member={selectedMember}
+        memberId={selectedId}
+        members={members}
         onClose={() => setSelectedId(null)}
       />
     </div>
