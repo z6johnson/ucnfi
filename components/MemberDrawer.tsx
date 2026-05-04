@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type {
   AiRelationship,
   CommitteeMember,
@@ -84,22 +84,139 @@ const CONFIDENCE_LABEL: Record<Confidence, string> = {
 /* ------------------------------------------------------------------ */
 
 type Props = {
-  member: CommitteeMember | null;
+  memberId: string | null;
+  /**
+   * Optional in-memory lookup pool. When provided and the id matches,
+   * the drawer skips the network and renders directly. Pages that
+   * already loaded the full member set server-side (like /expertise)
+   * pass this; the chat page does not, and the drawer fetches.
+   */
+  members?: CommitteeMember[];
   onClose: () => void;
 };
 
-export function MemberDrawer({ member, onClose }: Props) {
+type FetchState =
+  | { status: "idle" }
+  | { status: "loading"; id: string }
+  | { status: "ready"; id: string; data: CommitteeMember }
+  | { status: "error"; id: string; message: string };
+
+export function MemberDrawer({ memberId, members, onClose }: Props) {
   // Close on Escape.
   useEffect(() => {
-    if (!member) return;
+    if (!memberId) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [member, onClose]);
+  }, [memberId, onClose]);
 
-  if (!member) return null;
+  const inMemory = useMemo(() => {
+    if (!memberId || !members) return null;
+    return members.find((m) => m.member_id === memberId) ?? null;
+  }, [memberId, members]);
+
+  const [fetchState, setFetchState] = useState<FetchState>({ status: "idle" });
+  const [cache, setCache] = useState<Record<string, CommitteeMember>>({});
+
+  useEffect(() => {
+    if (!memberId || inMemory) return;
+    if (cache[memberId]) {
+      setFetchState({ status: "ready", id: memberId, data: cache[memberId] });
+      return;
+    }
+    let cancelled = false;
+    setFetchState({ status: "loading", id: memberId });
+    fetch(`/api/member/${encodeURIComponent(memberId)}`)
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`Failed to load (${res.status})`);
+        return (await res.json()) as CommitteeMember;
+      })
+      .then((data) => {
+        if (cancelled) return;
+        setCache((c) => ({ ...c, [memberId]: data }));
+        setFetchState({ status: "ready", id: memberId, data });
+      })
+      .catch((err: unknown) => {
+        if (cancelled) return;
+        setFetchState({
+          status: "error",
+          id: memberId,
+          message: err instanceof Error ? err.message : "Unknown error",
+        });
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [memberId, inMemory, cache]);
+
+  if (!memberId) return null;
+
+  const member: CommitteeMember | null =
+    inMemory ??
+    (fetchState.status === "ready" ? fetchState.data : null);
+
+  if (!member) {
+    return (
+      <div
+        className="fixed inset-0 z-40 flex justify-end"
+        aria-modal="true"
+        role="dialog"
+        aria-label="Member detail"
+      >
+        <button
+          type="button"
+          aria-label="Close member detail"
+          onClick={onClose}
+          className="absolute inset-0"
+          style={{ background: "rgba(0, 32, 51, 0.28)", cursor: "pointer" }}
+        />
+        <aside
+          className="relative flex h-full w-full max-w-[560px] flex-col px-8 py-8 shadow-xl md:px-10"
+          style={{
+            background: "var(--color-bg)",
+            borderLeft: "1px solid var(--color-border-hair)",
+          }}
+        >
+          <div className="flex items-start justify-between gap-4">
+            <span className="label">Committee member</span>
+            <button
+              type="button"
+              onClick={onClose}
+              className="label"
+              style={{ color: "var(--color-text-subtle)", cursor: "pointer" }}
+            >
+              Close ✕
+            </button>
+          </div>
+          {fetchState.status === "loading" ? (
+            <p
+              className="label mt-6"
+              style={{ color: "var(--color-text-subtle)" }}
+            >
+              Loading {fetchState.id}…
+            </p>
+          ) : fetchState.status === "error" ? (
+            <div
+              className="rail-accent mt-6"
+              style={{ borderLeftColor: "var(--color-danger)" }}
+            >
+              <span className="label" style={{ color: "var(--color-danger)" }}>
+                Error
+              </span>
+              <p
+                className="mt-1 text-sm"
+                style={{ color: "var(--color-text-muted)" }}
+              >
+                {fetchState.message}
+              </p>
+            </div>
+          ) : null}
+        </aside>
+      </div>
+    );
+  }
 
   const displayName = member.name.preferred ?? member.name.full;
   const roleLabel =

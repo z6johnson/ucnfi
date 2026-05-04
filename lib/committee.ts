@@ -181,6 +181,51 @@ export function getMember(id: string): CommitteeMember | undefined {
   return records.find((m) => m.member_id === id);
 }
 
+export function memberIds(): string[] {
+  return records.map((m) => m.member_id);
+}
+
+/**
+ * Compact text summary of every member, suitable for inlining into a
+ * system prompt. Drops evidence and source URLs to keep the cached
+ * block small; the full record is still available at runtime via
+ * `getMember()` and the `/api/member/[id]` route.
+ */
+export function committeeContextSummary(): string {
+  const lines: string[] = [];
+  for (const m of listMembers()) {
+    const role = COMMITTEE_ROLE_LABEL[m.committee_role.role];
+    const oas = (m.enrichment.opportunity_areas ?? [])
+      .map((o) => `${o.oa}/${o.relevance}`)
+      .join(", ");
+    const tags = (m.enrichment.expertise_tags ?? [])
+      .map((t) => `${t.tag} (${t.confidence})`)
+      .join("; ");
+    const facets = m.enrichment.role_facets;
+    const facetParts: string[] = [];
+    if (facets?.sector) facetParts.push(`sector=${facets.sector}`);
+    if (facets?.ai_relationship && facets.ai_relationship.length > 0) {
+      facetParts.push(`ai=${facets.ai_relationship.join("|")}`);
+    }
+    if (
+      facets?.governance_orientation &&
+      facets.governance_orientation.length > 0
+    ) {
+      facetParts.push(`gov=${facets.governance_orientation.join("|")}`);
+    }
+    const display = m.name.preferred ?? m.name.full;
+    lines.push(
+      `[${m.member_id}] ${display} — ${role}, ${m.primary_affiliation.title}, ${m.primary_affiliation.organization}.`,
+    );
+    if (oas) lines.push(`  OAs: ${oas}`);
+    if (tags) lines.push(`  Expertise: ${tags}`);
+    if (facetParts.length > 0) lines.push(`  Facets: ${facetParts.join(", ")}`);
+    lines.push(`  Synopsis: ${m.enrichment.synopsis}`);
+    lines.push("");
+  }
+  return lines.join("\n");
+}
+
 /* ------------------------------------------------------------------ */
 /* Facets — for filter pickers                                         */
 /* ------------------------------------------------------------------ */
