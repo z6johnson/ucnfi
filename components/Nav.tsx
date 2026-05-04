@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const items: { href: string; label: string }[] = [
   { href: "/chat", label: "Chat" },
+  { href: "/expertise", label: "Expertise" },
   { href: "/memos", label: "Memos" },
   { href: "/about", label: "About" },
 ];
