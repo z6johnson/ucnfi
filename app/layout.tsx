@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Link from "next/link";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 
@@ -18,7 +19,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <main className="pb-24">{children}</main>
           <footer className="hairline mt-16 flex items-center justify-between py-6">
             <span className="label">UC Next Frontier Initiative</span>
-            <span className="label">UCNFI Baseline · v0.6.0</span>
+            <div className="flex items-center gap-6">
+              <Link
+                href="/baseline"
+                className="label hover:text-[var(--color-accent)]"
+              >
+                Baseline
+              </Link>
+              <span className="label">UCNFI Baseline · v0.6.0</span>
+            </div>
           </footer>
         </div>
       </body>
