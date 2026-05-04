@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type {
   AiRelationship,
   CommitteeMember,
@@ -12,6 +12,7 @@ import type {
 import { MemberDrawer } from "@/components/MemberDrawer";
 
 type ViewMode = "list" | "matrix";
+type FacetKey = "oa" | "sector" | "rel" | "tag";
 
 const OPPORTUNITY_AREA_IDS: OpportunityAreaId[] = [
   "OA-1",
@@ -70,6 +71,27 @@ export function ExpertiseMatrix({
   const [rels, setRels] = useState<Set<AiRelationship>>(new Set());
   const [view, setView] = useState<ViewMode>("list");
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [openFacet, setOpenFacet] = useState<FacetKey | null>(null);
+  const filterBarRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (openFacet === null) return;
+    const onMouseDown = (e: MouseEvent) => {
+      const root = filterBarRef.current;
+      if (root && e.target instanceof Node && !root.contains(e.target)) {
+        setOpenFacet(null);
+      }
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpenFacet(null);
+    };
+    window.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [openFacet]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -150,8 +172,8 @@ export function ExpertiseMatrix({
         />
       </section>
 
-      {/* ---------- Filters (collapsed disclosures) ---------- */}
-      <section className="mt-6">
+      {/* ---------- Filters (horizontal trigger row + shared panel) ---------- */}
+      <section className="mt-6" ref={filterBarRef}>
         <div className="hairline flex items-baseline justify-between pb-2">
           <span className="label">Filters</span>
           {anyFilter ? (
@@ -167,32 +189,77 @@ export function ExpertiseMatrix({
             <span className="label">none active</span>
           )}
         </div>
-        <CollapsibleFacet
-          label="Opportunity area"
-          sublabel={`${opportunityAreaFacets.length} OAs`}
-          items={opportunityAreaFacets}
-          selected={oas}
-          onToggle={(id) => toggle(setOas, id)}
-        />
-        <CollapsibleFacet
-          label="Sector"
-          items={sectorFacets}
-          selected={sectors}
-          onToggle={(id) => toggle(setSectors, id)}
-        />
-        <CollapsibleFacet
-          label="AI relationship"
-          items={aiRelationshipFacets}
-          selected={rels}
-          onToggle={(id) => toggle(setRels, id)}
-        />
-        <CollapsibleFacet
-          label="Expertise"
-          sublabel={`${expertiseTagFacets.length} tags`}
-          items={expertiseTagFacets}
-          selected={tags}
-          onToggle={(id) => toggle(setTags, id)}
-        />
+        <div className="mt-3 flex flex-col gap-3 md:flex-row">
+          <FilterTrigger
+            label="Opportunity area"
+            sublabel={`${opportunityAreaFacets.length} OAs`}
+            selectedCount={oas.size}
+            open={openFacet === "oa"}
+            onClick={() =>
+              setOpenFacet((cur) => (cur === "oa" ? null : "oa"))
+            }
+          />
+          <FilterTrigger
+            label="Sector"
+            sublabel={`${sectorFacets.length} sectors`}
+            selectedCount={sectors.size}
+            open={openFacet === "sector"}
+            onClick={() =>
+              setOpenFacet((cur) => (cur === "sector" ? null : "sector"))
+            }
+          />
+          <FilterTrigger
+            label="AI relationship"
+            sublabel={`${aiRelationshipFacets.length} types`}
+            selectedCount={rels.size}
+            open={openFacet === "rel"}
+            onClick={() =>
+              setOpenFacet((cur) => (cur === "rel" ? null : "rel"))
+            }
+          />
+          <FilterTrigger
+            label="Expertise"
+            sublabel={`${expertiseTagFacets.length} tags`}
+            selectedCount={tags.size}
+            open={openFacet === "tag"}
+            onClick={() =>
+              setOpenFacet((cur) => (cur === "tag" ? null : "tag"))
+            }
+          />
+        </div>
+        {openFacet === "oa" ? (
+          <FilterPanel
+            label="Opportunity area"
+            items={opportunityAreaFacets}
+            selected={oas}
+            onToggle={(id) => toggle(setOas, id)}
+            onClose={() => setOpenFacet(null)}
+          />
+        ) : openFacet === "sector" ? (
+          <FilterPanel
+            label="Sector"
+            items={sectorFacets}
+            selected={sectors}
+            onToggle={(id) => toggle(setSectors, id)}
+            onClose={() => setOpenFacet(null)}
+          />
+        ) : openFacet === "rel" ? (
+          <FilterPanel
+            label="AI relationship"
+            items={aiRelationshipFacets}
+            selected={rels}
+            onToggle={(id) => toggle(setRels, id)}
+            onClose={() => setOpenFacet(null)}
+          />
+        ) : openFacet === "tag" ? (
+          <FilterPanel
+            label="Expertise"
+            items={expertiseTagFacets}
+            selected={tags}
+            onToggle={(id) => toggle(setTags, id)}
+            onClose={() => setOpenFacet(null)}
+          />
+        ) : null}
       </section>
 
       {/* ---------- Results ---------- */}
@@ -491,120 +558,194 @@ function CoverageMatrix({
 }
 
 /* ------------------------------------------------------------------ */
-/* Collapsible facet — one-line disclosure that expands to chip row    */
+/* Filter trigger — one of four buttons in the FilterBar trigger row   */
 /* ------------------------------------------------------------------ */
 
-type CollapsibleFacetProps<T extends string> = {
+type FilterTriggerProps = {
   label: string;
-  sublabel?: string;
-  items: Facet<T>[];
-  selected: Set<T>;
-  onToggle: (id: T) => void;
+  sublabel: string;
+  selectedCount: number;
+  open: boolean;
+  onClick: () => void;
 };
 
-function CollapsibleFacet<T extends string>({
+function FilterTrigger({
   label,
   sublabel,
-  items,
-  selected,
-  onToggle,
-}: CollapsibleFacetProps<T>) {
-  const [open, setOpen] = useState(false);
-  if (items.length === 0) return null;
-  const selectedCount = selected.size;
-  const summary =
-    selectedCount > 0
-      ? `${selectedCount} selected`
-      : sublabel ?? `${items.length}`;
+  selectedCount,
+  open,
+  onClick,
+}: FilterTriggerProps) {
+  const hasSelection = selectedCount > 0;
+  const borderColor =
+    open || hasSelection
+      ? "var(--color-accent)"
+      : "var(--color-border-hair)";
+  const background = open ? "var(--color-accent-wash)" : "transparent";
+  const labelColor =
+    open || hasSelection ? "var(--color-accent)" : "var(--color-text)";
+  const summaryColor =
+    open || hasSelection
+      ? "var(--color-accent)"
+      : "var(--color-text-subtle)";
 
   return (
-    <div
-      style={{ borderBottom: "1px solid var(--color-border-hair)" }}
+    <button
+      type="button"
+      onClick={onClick}
+      aria-expanded={open}
+      aria-haspopup="true"
+      className="md:flex-1"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: "0.75rem",
+        padding: "0.55rem 0.75rem",
+        border: `1px solid ${borderColor}`,
+        background,
+        cursor: "pointer",
+        textAlign: "left",
+        width: "100%",
+      }}
     >
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        className="flex w-full items-center justify-between"
-        style={{
-          padding: "var(--space-3) 0",
-          background: "transparent",
-          border: 0,
-          cursor: "pointer",
-          textAlign: "left",
-        }}
-      >
-        <span className="flex items-baseline gap-2">
-          <span
-            aria-hidden
-            style={{
-              display: "inline-block",
-              width: "0.75rem",
-              color: "var(--color-text-subtle)",
-              fontSize: "0.7rem",
-            }}
-          >
-            {open ? "▾" : "▸"}
-          </span>
-          <span className="label" style={{ color: "var(--color-text)" }}>
-            {label}
-          </span>
-        </span>
+      <span className="flex items-baseline gap-2 min-w-0">
         <span
           className="label"
           style={{
-            color:
-              selectedCount > 0
-                ? "var(--color-accent)"
-                : "var(--color-text-subtle)",
+            color: labelColor,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
         >
-          {summary}
+          {label}
         </span>
-      </button>
-      {open ? (
-        <div className="flex flex-wrap gap-2 pb-3">
-          {items.map((it) => {
-            const active = selected.has(it.id);
-            return (
-              <button
-                key={it.id}
-                type="button"
-                onClick={() => onToggle(it.id)}
-                className="label"
-                style={{
-                  padding: "0.4rem 0.65rem",
-                  border: `1px solid ${
-                    active
-                      ? "var(--color-accent)"
-                      : "var(--color-border-hair)"
-                  }`,
-                  background: active
-                    ? "var(--color-accent-wash)"
-                    : "transparent",
-                  color: active
+        {hasSelection ? (
+          <span
+            className="label"
+            style={{
+              padding: "0.05rem 0.35rem",
+              background: "var(--color-accent)",
+              color: "var(--color-bg)",
+              fontWeight: 700,
+              borderRadius: "2px",
+            }}
+          >
+            {selectedCount}
+          </span>
+        ) : null}
+      </span>
+      <span className="flex items-center gap-2">
+        <span
+          className="label"
+          style={{
+            color: summaryColor,
+            whiteSpace: "nowrap",
+            opacity: hasSelection ? 0 : 1,
+          }}
+          aria-hidden={hasSelection}
+        >
+          {sublabel}
+        </span>
+        <span
+          aria-hidden
+          style={{
+            color: summaryColor,
+            fontSize: "0.7rem",
+            transform: open ? "rotate(180deg)" : undefined,
+            transition: "transform 120ms ease",
+          }}
+        >
+          ▾
+        </span>
+      </span>
+    </button>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Filter panel — shared expansion area below the trigger row          */
+/* ------------------------------------------------------------------ */
+
+type FilterPanelProps<T extends string> = {
+  label: string;
+  items: Facet<T>[];
+  selected: Set<T>;
+  onToggle: (id: T) => void;
+  onClose: () => void;
+};
+
+function FilterPanel<T extends string>({
+  label,
+  items,
+  selected,
+  onToggle,
+  onClose,
+}: FilterPanelProps<T>) {
+  if (items.length === 0) return null;
+  return (
+    <div
+      role="region"
+      aria-label={`${label} filter`}
+      className="mt-3 p-4"
+      style={{
+        border: "1px solid var(--color-border-hair)",
+        background: "var(--color-bg)",
+      }}
+    >
+      <div className="flex items-baseline justify-between">
+        <span className="label">{label}</span>
+        <button
+          type="button"
+          onClick={onClose}
+          className="label"
+          style={{ color: "var(--color-accent)", cursor: "pointer" }}
+        >
+          Done
+        </button>
+      </div>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {items.map((it) => {
+          const active = selected.has(it.id);
+          return (
+            <button
+              key={it.id}
+              type="button"
+              onClick={() => onToggle(it.id)}
+              className="label"
+              style={{
+                padding: "0.4rem 0.65rem",
+                border: `1px solid ${
+                  active
                     ? "var(--color-accent)"
-                    : "var(--color-text-subtle)",
-                  cursor: "pointer",
-                  textAlign: "left",
+                    : "var(--color-border-hair)"
+                }`,
+                background: active
+                  ? "var(--color-accent-wash)"
+                  : "transparent",
+                color: active
+                  ? "var(--color-accent)"
+                  : "var(--color-text-subtle)",
+                cursor: "pointer",
+                textAlign: "left",
+              }}
+              aria-pressed={active}
+            >
+              {it.label}
+              <span
+                style={{
+                  marginLeft: "0.5rem",
+                  opacity: 0.7,
+                  fontWeight: 500,
                 }}
-                aria-pressed={active}
               >
-                {it.label}
-                <span
-                  style={{
-                    marginLeft: "0.5rem",
-                    opacity: 0.7,
-                    fontWeight: 500,
-                  }}
-                >
-                  {it.count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      ) : null}
+                {it.count}
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
