@@ -1,7 +1,13 @@
 /**
- * Tier-2 collector: LiteLLM (TritonAI) chat with the Anthropic
- * web-search tool enabled. Catches op-eds, podcasts, interviews, and
+ * Tier-2 collector: direct Anthropic API with the server-side
+ * web_search tool enabled. Catches op-eds, podcasts, interviews, and
  * press quotes that don't appear in any structured feed.
+ *
+ * Was originally wired through LiteLLM (TritonAI) for cost reasons,
+ * but TritonAI's gateway didn't proxy the web_search tool — every
+ * request returned `{"items": []}` because the model couldn't search.
+ * Switched to the direct Anthropic API where web_search is a
+ * first-party feature.
  *
  * The model is asked for strict JSON in its final text block so we can
  * parse without paying tokens for prose.
@@ -21,23 +27,17 @@ import { type CommitteeMember } from "../committee.ts";
 /* Client                                                              */
 /* ------------------------------------------------------------------ */
 
-const LITELLM_BASE_URL =
-  process.env.LITELLM_BASE_URL ?? "https://tritonai-api.ucsd.edu";
-const SCAN_MODEL = process.env.SCAN_MODEL ?? process.env.CLAUDE_MODEL ?? "claude-opus-4-6";
+const SCAN_MODEL = process.env.SCAN_MODEL ?? "claude-opus-4-6";
 const MAX_TOOL_USES = 5;
 
 let client: Anthropic | null = null;
 function getClient(): Anthropic {
   if (client) return client;
-  const authToken = process.env.LITELLM_API_KEY;
-  if (!authToken) {
-    throw new Error("LITELLM_API_KEY is not set; tier-2 web search requires it.");
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    throw new Error("ANTHROPIC_API_KEY is not set; tier-2 web search requires it.");
   }
-  client = new Anthropic({
-    authToken,
-    baseURL: LITELLM_BASE_URL,
-    apiKey: null,
-  });
+  client = new Anthropic({ apiKey });
   return client;
 }
 
@@ -192,8 +192,8 @@ export async function collectTier2(
       max_tokens: 2048,
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: buildUserPrompt(member, aliases) }],
-      // Cast to bypass SDK literal type narrowing — LiteLLM passes the
-      // tool through to upstream Anthropic verbatim.
+      // Cast to bypass SDK literal type narrowing for the server-side
+      // web_search tool. The Anthropic API accepts it verbatim.
       tools: [
         {
           type: "web_search_20250305",
@@ -209,6 +209,21 @@ export async function collectTier2(
     );
     return [];
   }
+
+  // Diagnostic: count content-block types so we can see whether the
+  // model actually used the web_search tool. If `web_search_tool_use`
+  // and `web_search_tool_result` are both zero, the tool wasn't being
+  // invoked — usually a config or proxy issue.
+  const blockCounts: Record<string, number> = {};
+  for (const block of message.content) {
+    blockCounts[block.type] = (blockCounts[block.type] ?? 0) + 1;
+  }
+  const blockSummary = Object.entries(blockCounts)
+    .map(([t, n]) => `${t}=${n}`)
+    .join(",");
+  console.info(
+    `[scan] tier-2 ${member.member_id} blocks=[${blockSummary}] stop=${message.stop_reason ?? "?"}`,
+  );
 
   const text = extractFinalText(message);
   if (!text) {

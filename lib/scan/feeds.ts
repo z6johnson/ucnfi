@@ -241,7 +241,9 @@ async function collectFromArxiv(
   authorQuery: string,
   opts: CollectOptions,
 ): Promise<ActivityItem[]> {
-  // arXiv API: au: prefix, quoted phrase, descending by submission date
+  // arXiv API: au: prefix, quoted phrase, descending by submission date.
+  // The author query in feeds.json is a plain name with spaces (e.g.
+  // "Aric Hagberg"); encodeURIComponent turns spaces into %20.
   const q = encodeURIComponent(`au:"${authorQuery.replace(/"/g, "")}"`);
   const url = `https://export.arxiv.org/api/query?search_query=${q}&sortBy=submittedDate&sortOrder=descending&max_results=15`;
   const xml = await fetchText(url);
@@ -251,10 +253,9 @@ async function collectFromArxiv(
   for (const e of entries) {
     if (!e.url) continue;
     if (!withinLookback(e.publishedAt, lookback)) continue;
-    const blob = `${e.title} ${e.summary}`;
-    // arXiv author queries are still noisy if the author works outside AI;
-    // keep the keyword filter on unless caller explicitly opts out.
-    if (!opts.skipKeywordFilter && !isAiRelevant(blob)) continue;
+    // The author query already targets the right person, so we skip
+    // the AI-keyword pre-filter here. The weekly digest's grounding
+    // rules drop non-AI papers when assembling the digest.
     out.push({
       id: itemId(e.url),
       member_id: memberId,

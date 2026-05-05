@@ -99,7 +99,7 @@ The schema reserves a `pass_3_reserved` field for positions and sensitivities �
 
 ## Activity log
 
-`activity/` is the daily/weekly heartbeat between full enrichment passes — a record of what each member has been publishing or saying about AI in public. It is **generated, not hand-edited**: a GitHub Actions workflow runs `npm run scan:daily` once a day (RSS/Atom + arXiv + LiteLLM web search) and `npm run digest:weekly` once a week (Anthropic API), and commits both back to this directory.
+`activity/` is the daily/weekly heartbeat between full enrichment passes — a record of what each member has been publishing or saying about AI in public. It is **generated, not hand-edited**: a GitHub Actions workflow runs `npm run scan:daily` once a day (RSS/Atom + arXiv + Anthropic web search) and `npm run digest:weekly` once a week (Anthropic API), and commits both back to this directory.
 
 - Per-member feed sources live in `feeds.json`. Add an RSS URL or arXiv author query for a member and the next daily run picks it up.
 - Daily items: `activity/items/YYYY-MM-DD.jsonl`

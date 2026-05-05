@@ -2,10 +2,8 @@
  * Weekly digest builder.
  *
  * Reads the last 7 days of activity items, calls the Anthropic API
- * directly (NOT LiteLLM — the digest is a one-shot reasoning step that
- * benefits from Anthropic's prompt caching when the committee block
- * goes unchanged), and produces a markdown digest grouped by topic
- * and mapped to OA-1..OA-8.
+ * directly with prompt caching on the unchanging committee block, and
+ * produces a markdown digest grouped by topic and mapped to OA-1..OA-8.
  */
 
 import Anthropic from "@anthropic-ai/sdk";
