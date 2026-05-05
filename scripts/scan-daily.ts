@@ -40,8 +40,10 @@ import { collectTier2 } from "../lib/scan/websearch.ts";
 const REPO_ROOT = process.cwd();
 const DRY_RUN = process.env.DRY_RUN === "1" || process.env.DRY_RUN === "true";
 const MEMBER_FILTER = process.env.MEMBER_FILTER?.trim() || null;
-const TIER = (process.env.TIER ?? "both").toLowerCase();
-const CONCURRENCY = Math.max(1, Number(process.env.CONCURRENCY ?? 5) | 0);
+// `||` (not `??`) so empty-string env vars — common from GitHub Actions
+// `vars.X` interpolation when X is unset — fall back to the defaults.
+const TIER = (process.env.TIER || "both").toLowerCase();
+const CONCURRENCY = Math.max(1, Number(process.env.CONCURRENCY || 5) | 0);
 const LOOKBACK_DAYS = process.env.LOOKBACK_DAYS ? Number(process.env.LOOKBACK_DAYS) : undefined;
 const LEDGER_RETENTION_DAYS = 90;
 

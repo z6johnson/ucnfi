@@ -27,7 +27,7 @@ import { type CommitteeMember } from "../committee.ts";
 /* Client                                                              */
 /* ------------------------------------------------------------------ */
 
-const SCAN_MODEL = process.env.SCAN_MODEL ?? "claude-opus-4-6";
+const SCAN_MODEL = process.env.SCAN_MODEL || "claude-opus-4-6";
 const MAX_TOOL_USES = 5;
 
 let client: Anthropic | null = null;
