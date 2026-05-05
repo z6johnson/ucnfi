@@ -97,6 +97,17 @@ The schema reserves a `pass_3_reserved` field for positions and sensitivities â€
 - Every claim in `expertise_tags.evidence` should be verifiable from the listed sources
 - The synopsis is what a human reads. It should hold up without the structured fields above it
 
+## Activity log
+
+`activity/` is the daily/weekly heartbeat between full enrichment passes â€” a record of what each member has been publishing or saying about AI in public. It is **generated, not hand-edited**: a GitHub Actions workflow runs `npm run scan:daily` once a day (RSS/Atom + arXiv + LiteLLM web search) and `npm run digest:weekly` once a week (Anthropic API), and commits both back to this directory.
+
+- Per-member feed sources live in `feeds.json`. Add an RSS URL or arXiv author query for a member and the next daily run picks it up.
+- Daily items: `activity/items/YYYY-MM-DD.jsonl`
+- Weekly digests: `activity/digests/YYYY-Www.md`
+- Dedup ledger: `activity/seen.json`
+
+See `activity/README.md` for layout, `enrichment-strategy.md` for cadence and the rule that recurring items get hand-promoted into the relevant member record on the next quarterly pass.
+
 ## Related projects
 
 The maintained-record system here is conceptually similar to the work being done in TOOLS for the Privacy Office, Research Alignment, and other UCSD-internal systems. Schema and validation patterns can probably be lifted between projects. The voice rules in CLAUDE.md and the seed docs in `_context/` are shared across all of Zach's work.

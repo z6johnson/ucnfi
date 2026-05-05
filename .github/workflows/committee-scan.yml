@@ -1,0 +1,123 @@
+name: Committee AI activity scan
+
+# Daily scan + weekly digest of UCNFI Steering Committee public AI output.
+# - Daily scan polls per-member feeds and runs LiteLLM (TritonAI) web
+#   search, then commits new items to data/ucnfi-committee/activity/.
+# - Weekly digest reads the last 7 days of items, calls the Anthropic
+#   API directly, and commits the markdown digest.
+#
+# Both jobs commit back to the same branch the workflow ran on (default
+# branch on a normal schedule; the working branch when triggered via
+# workflow_dispatch from a PR).
+#
+# Required repo secrets:
+#   LITELLM_API_KEY    — for the daily tier-2 scan (TritonAI gateway)
+#   ANTHROPIC_API_KEY  — for the weekly digest
+
+on:
+  schedule:
+    # 13:00 UTC daily — late enough that yesterday's UTC-late posts are indexed
+    - cron: "0 13 * * *"
+    # 14:00 UTC every Sunday — runs after Sunday's daily scan
+    - cron: "0 14 * * 0"
+  workflow_dispatch:
+    inputs:
+      job:
+        description: "Which job to run"
+        required: true
+        default: "daily"
+        type: choice
+        options:
+          - daily
+          - weekly
+          - both
+
+permissions:
+  contents: write
+
+concurrency:
+  group: committee-scan-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  daily:
+    if: |
+      (github.event_name == 'schedule' && github.event.schedule == '0 13 * * *') ||
+      (github.event_name == 'workflow_dispatch' && (inputs.job == 'daily' || inputs.job == 'both'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Need a real token so the post-step git push goes through.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate committee records
+        run: npm run validate:committee
+
+      - name: Run daily scan
+        env:
+          LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
+          LITELLM_BASE_URL: ${{ vars.LITELLM_BASE_URL }}
+          SCAN_MODEL: ${{ vars.SCAN_MODEL }}
+        run: npm run scan:daily
+
+      - name: Commit and push if changes
+        run: |
+          git config user.name "ucnfi-scan-bot"
+          git config user.email "ucnfi-scan-bot@users.noreply.github.com"
+          git add data/ucnfi-committee/activity/
+          if git diff --cached --quiet; then
+            echo "No activity changes to commit."
+          else
+            DATE=$(date -u +%Y-%m-%d)
+            git commit -m "Daily committee AI scan — $DATE"
+            git push origin HEAD:${GITHUB_REF#refs/heads/}
+          fi
+
+  weekly:
+    if: |
+      (github.event_name == 'schedule' && github.event.schedule == '0 14 * * 0') ||
+      (github.event_name == 'workflow_dispatch' && (inputs.job == 'weekly' || inputs.job == 'both'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate committee records
+        run: npm run validate:committee
+
+      - name: Build weekly digest
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DIGEST_MODEL: ${{ vars.DIGEST_MODEL }}
+        run: npm run digest:weekly
+
+      - name: Commit and push if changes
+        run: |
+          git config user.name "ucnfi-scan-bot"
+          git config user.email "ucnfi-scan-bot@users.noreply.github.com"
+          git add data/ucnfi-committee/activity/digests/
+          if git diff --cached --quiet; then
+            echo "No digest changes to commit."
+          else
+            WEEK=$(date -u +%G-W%V)
+            git commit -m "Weekly committee AI digest — $WEEK"
+            git push origin HEAD:${GITHUB_REF#refs/heads/}
+          fi
