@@ -31,6 +31,11 @@ on:
           - daily
           - weekly
           - both
+      lookback_days:
+        description: "Override lookback window in days (blank = defaults: 2 RSS, 7 arXiv, 7 tier-2). Use 30 for a one-shot backfill seed."
+        required: false
+        default: ""
+        type: string
 
 permissions:
   contents: write
@@ -66,6 +71,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           SCAN_MODEL: ${{ vars.SCAN_MODEL }}
+          LOOKBACK_DAYS: ${{ inputs.lookback_days }}
         run: npm run scan:daily
 
       - name: Commit and push if changes

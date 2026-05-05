@@ -18,7 +18,8 @@
  *
  * Optional:
  *   SCAN_MODEL        — defaults to claude-opus-4-6
- *   LOOKBACK_DAYS     — feed-side filter (default 2 for RSS, 7 for arXiv)
+ *   LOOKBACK_DAYS     — overrides defaults: 2 (RSS), 7 (arXiv), 7 (tier-2).
+ *                       Set to 30 for a one-shot backfill seed.
  *   CONCURRENCY       — default 5
  */
 
@@ -77,6 +78,7 @@ async function processMember(member: CommitteeMember, feedsConfig: ReturnType<ty
       try {
         result.tier2 = await collectTier2(member, {
           searchAliases: cfg?.search_aliases ?? [],
+          lookbackDays: LOOKBACK_DAYS,
         });
       } catch (err) {
         result.errors.push(`tier2: ${(err as Error).message}`);
