@@ -1,8 +1,8 @@
 name: Committee AI activity scan
 
 # Daily scan + weekly digest of UCNFI Steering Committee public AI output.
-# - Daily scan polls per-member feeds and runs LiteLLM (TritonAI) web
-#   search, then commits new items to data/ucnfi-committee/activity/.
+# - Daily scan polls per-member feeds and runs Anthropic web_search,
+#   then commits new items to data/ucnfi-committee/activity/.
 # - Weekly digest reads the last 7 days of items, calls the Anthropic
 #   API directly, and commits the markdown digest.
 #
@@ -11,8 +11,8 @@ name: Committee AI activity scan
 # workflow_dispatch from a PR).
 #
 # Required repo secrets:
-#   LITELLM_API_KEY    — for the daily tier-2 scan (TritonAI gateway)
-#   ANTHROPIC_API_KEY  — for the weekly digest
+#   ANTHROPIC_API_KEY  — used by both the daily tier-2 scan and the
+#                        weekly digest
 
 on:
   schedule:
@@ -64,8 +64,7 @@ jobs:
 
       - name: Run daily scan
         env:
-          LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
-          LITELLM_BASE_URL: ${{ vars.LITELLM_BASE_URL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           SCAN_MODEL: ${{ vars.SCAN_MODEL }}
         run: npm run scan:daily
 

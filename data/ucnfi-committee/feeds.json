@@ -1,5 +1,5 @@
 {
-  "$comment": "Per-member feed sources for the daily activity scan. Each entry: rss[] = list of RSS/Atom URLs; arxiv_author = author query for the arXiv API (e.g. \"Aric+Hagberg\"); scholar_id = Google Scholar id (currently unused — Scholar has no public API); x_handle = X/Bluesky handle (currently unused); search_aliases[] = additional name forms for tier-2 web search to disambiguate. Members may be safely omitted; if so, the daily scan falls back to tier-2 search using only the directory's name.full plus their primary affiliation. Keys are member_id values from records/.",
+  "$comment": "Per-member feed sources for the daily activity scan. Each entry: rss[] = list of RSS/Atom URLs; arxiv_author = author query for the arXiv API (a plain name, e.g. \"Aric Hagberg\" — the script URL-encodes it); scholar_id = Google Scholar id (currently unused — Scholar has no public API); x_handle = X/Bluesky handle (currently unused); search_aliases[] = additional name forms for tier-2 web search to disambiguate. Members may be safely omitted; if so, the daily scan falls back to tier-2 search using only the directory's name.full plus their primary affiliation. Keys are member_id values from records/.",
 
   "arkilic-e": {
     "rss": [],
@@ -18,17 +18,17 @@
   },
   "goldberg-k": {
     "rss": [],
-    "arxiv_author": "Ken+Goldberg",
+    "arxiv_author": "Ken Goldberg",
     "search_aliases": ["Ken Goldberg UC Berkeley", "Kenneth Y. Goldberg robotics"]
   },
   "gupta-r": {
     "rss": [],
-    "arxiv_author": "Rajesh+Gupta",
+    "arxiv_author": "Rajesh Gupta",
     "search_aliases": ["Rajesh K. Gupta UCSD", "Rajesh Gupta UC San Diego"]
   },
   "hagberg-a": {
     "rss": [],
-    "arxiv_author": "Aric+Hagberg",
+    "arxiv_author": "Aric Hagberg",
     "search_aliases": ["Aric Hagberg LANL", "Aric Hagberg Los Alamos"]
   },
   "han-c": {
@@ -98,7 +98,7 @@
   },
   "vigna-g": {
     "rss": [],
-    "arxiv_author": "Giovanni+Vigna",
+    "arxiv_author": "Giovanni Vigna",
     "search_aliases": ["Giovanni Vigna UC Santa Barbara", "Giovanni Vigna security"]
   },
   "williams-v": {

@@ -2,9 +2,8 @@
  * Weekly committee AI-activity digest.
  *
  * Reads the last 7 days of activity items, calls the Anthropic API
- * (NOT LiteLLM — direct Anthropic so we get prompt-cache hits across
- * weeks for the unchanging committee block), and writes a markdown
- * digest under data/ucnfi-committee/activity/digests/.
+ * with prompt caching on the unchanging committee block, and writes a
+ * markdown digest under data/ucnfi-committee/activity/digests/.
  *
  * Usage:
  *   npm run digest:weekly

@@ -19,9 +19,10 @@ activity/
 
 Each line in `items/YYYY-MM-DD.jsonl` is one `ActivityItem` (see
 `lib/activity.ts` for the type). Tier 1 items come from configured
-RSS/Atom feeds and the arXiv author API. Tier 2 items come from
-LiteLLM web search. The `id` is a 32-hex prefix of `sha256(canonical_url)`
-and is used as the dedup key in `seen.json`.
+RSS/Atom feeds and the arXiv author API. Tier 2 items come from the
+Anthropic API with the `web_search_20250305` server-side tool. The
+`id` is a 32-hex prefix of `sha256(canonical_url)` and is used as the
+dedup key in `seen.json`.
 
 ## Manual edits
 
