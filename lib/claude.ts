@@ -37,7 +37,7 @@ export type Provider = "litellm" | "anthropic";
 let litellmClient: Anthropic | null = null;
 let anthropicClient: Anthropic | null = null;
 
-function getLiteLLMClient(): Anthropic {
+export function getLiteLLMClient(): Anthropic {
   if (!litellmClient) {
     const authToken = process.env.LITELLM_API_KEY;
     if (!authToken) {
@@ -52,7 +52,7 @@ function getLiteLLMClient(): Anthropic {
   return litellmClient;
 }
 
-function getAnthropicClient(): Anthropic {
+export function getAnthropicClient(): Anthropic {
   if (!anthropicClient) {
     const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) {
@@ -89,7 +89,7 @@ let cachedFramingBlock: string | null = null;
 let cachedBaselineBlock: string | null = null;
 let cachedCommitteeBlock: string | null = null;
 
-function framingBlock(): string {
+export function framingBlock(): string {
   if (cachedFramingBlock) return cachedFramingBlock;
 
   const principles = readFileSync(
@@ -157,7 +157,7 @@ ${principles}
   return cachedFramingBlock;
 }
 
-function baselineBlock(): string {
+export function baselineBlock(): string {
   if (cachedBaselineBlock) return cachedBaselineBlock;
   const raw = readFileSync(
     join(process.cwd(), "data", "uc_ai_baseline.json"),
@@ -173,7 +173,7 @@ ${raw}
   return cachedBaselineBlock;
 }
 
-function committeeBlock(): string {
+export function committeeBlock(): string {
   if (cachedCommitteeBlock) return cachedCommitteeBlock;
   cachedCommitteeBlock = `## COMMITTEE DIRECTORY (UCNFI Steering Committee)
 

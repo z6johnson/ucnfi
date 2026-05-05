@@ -91,3 +91,16 @@ The records are the working artifact. Anyone with commit access can update a rec
 - Leave `needs_attention` cleaner than it found it.
 
 Disputes about a member's framing get resolved with the member, not in the record. That's why `self_report` and `reconciliation` exist.
+
+## Daily activity log
+
+Between full enrichment passes, a daily scan tracks what each member is publishing or saying about AI in public. The output lives at `activity/` and is generated, not hand-curated.
+
+- **Daily** (GitHub Actions, 13:00 UTC): `npm run scan:daily` polls the per-member feeds in `feeds.json` (RSS/Atom + arXiv author queries) and runs LiteLLM (TritonAI) web search for op-eds, podcasts, and press quotes. New items append to `activity/items/YYYY-MM-DD.jsonl`. The dedup ledger `activity/seen.json` keeps an item from showing up twice; ids older than 90 days are pruned.
+- **Weekly** (GitHub Actions, 14:00 UTC Sunday): `npm run digest:weekly` reads the last seven days of items, calls the Anthropic API directly, and writes `activity/digests/YYYY-Www.md` grouped by topic and member, with a "flag for the next meeting" section.
+
+The activity log does **not** modify member records. It's a candidate pool. When a member produces something substantive enough to belong in the record proper — a recurring position, a new public commitment, a venue that shifts how they're framed — that's a hand-promotion into `enrichment.synopsis` (or `pass_3_reserved` once that pass is opened) on the next pass through that record. The activity log doesn't override the public-record-only rule for Pass 1; it just makes the decision of what to promote much easier.
+
+If a member's role changes and the activity scan is the first place we see it, treat that the same as any other ad-hoc trigger above: update the record immediately and bump `last_verified`.
+
+To extend coverage for a member, add their RSS URL, arXiv author query, or search aliases to `data/ucnfi-committee/feeds.json`. Members without an entry still get tier-2 web-search coverage from their `name.full` and primary affiliation.
