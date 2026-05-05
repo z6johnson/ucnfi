@@ -3,11 +3,11 @@
  * web_search tool enabled. Catches op-eds, podcasts, interviews, and
  * press quotes that don't appear in any structured feed.
  *
- * Was originally wired through LiteLLM (TritonAI) for cost reasons,
- * but TritonAI's gateway didn't proxy the web_search tool — every
- * request returned `{"items": []}` because the model couldn't search.
- * Switched to the direct Anthropic API where web_search is a
- * first-party feature.
+ * Uses the 20260209 web_search tool revision and forces tool use
+ * (`tool_choice: { type: "any" }`) so the model can't short-circuit to
+ * an empty answer without searching. The lookback window is parameterised
+ * via `WebSearchOptions.lookbackDays` so the same code drives both the
+ * normal 7-day daily run and one-shot wider backfills.
  *
  * The model is asked for strict JSON in its final text block so we can
  * parse without paying tokens for prose.
@@ -45,13 +45,18 @@ function getClient(): Anthropic {
 /* Prompts                                                             */
 /* ------------------------------------------------------------------ */
 
-const SYSTEM_PROMPT = `You scan public web sources for recent AI-related output by one named member of the UC Next Frontier Initiative (UCNFI) Steering Committee. Use the web_search tool to look for items from the past 7 days only.
+function buildSystemPrompt(lookbackDays: number): string {
+  return `You scan public web sources for recent AI-related output by one named member of the UC Next Frontier Initiative (UCNFI) Steering Committee. You MUST call the web_search tool at least once before answering.
 
-Count an item as a hit only if it is BOTH:
-  (a) clearly attributable to the named member (author, interviewee, quoted source, or session lead — not just mentioned in passing), and
-  (b) substantively about AI: artificial intelligence, machine learning, AI governance/policy/safety/ethics, AI literacy, foundation models, LLMs, AI infrastructure, applied AI in health/research/education, etc.
+Look for items from the past ${lookbackDays} day(s) only.
 
-Skip stock-image bios, conference attendee lists, and items where the member is named but not the subject.
+Be permissive about what counts as a hit:
+  (a) the named person is the author, interviewee, quoted source, panel/keynote speaker, or named lead — not just mentioned in passing, AND
+  (b) the item touches AI in any substantive way: artificial intelligence, machine learning, AI governance/policy/safety/ethics, AI literacy, foundation models, LLMs, AI infrastructure, applied AI in health/research/education, or the member commenting on the field.
+
+Include items where the AI angle is secondary — the digest layer will filter further. When in doubt, include and explain in match_reason.
+
+Skip stock-image bios, conference attendee lists, items where the member is named but not the subject, and anything older than ${lookbackDays} days.
 
 Source kinds (use exactly one of these strings): publication, op_ed, podcast, interview, press_quote, position_statement, blog_post, talk, other.
 
@@ -70,15 +75,16 @@ Your final assistant message MUST be a single JSON object and nothing else, with
   ]
 }
 
-If no qualifying items are found, return {"items": []}. Do not include explanatory prose. Do not wrap the JSON in code fences.`;
+If your searches genuinely found nothing in the window, return {"items": []}. Do not include explanatory prose. Do not wrap the JSON in code fences.`;
+}
 
-function buildUserPrompt(member: CommitteeMember, aliases: string[]): string {
+function buildUserPrompt(member: CommitteeMember, aliases: string[], lookbackDays: number): string {
   const aliasLine = aliases.length > 0 ? `Also try aliases: ${aliases.map((a) => `"${a}"`).join(", ")}.` : "";
   return `Member: "${member.name.full}".
 Primary affiliation: ${member.primary_affiliation.title}, ${member.primary_affiliation.organization}.
 ${aliasLine}
 
-Search for AI-related output by this person published in the last 7 days. Return strict JSON per the system instructions.`;
+Search the public web for AI-related output by this person published in the last ${lookbackDays} day(s). Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -176,7 +182,11 @@ export type WebSearchOptions = {
   searchAliases?: string[];
   /** Cap the number of tool calls Claude can make. Default 5. */
   maxToolUses?: number;
+  /** Lookback window passed into the system + user prompts. Default 7. */
+  lookbackDays?: number;
 };
+
+const DEFAULT_LOOKBACK_DAYS = 7;
 
 export async function collectTier2(
   member: CommitteeMember,
@@ -184,19 +194,24 @@ export async function collectTier2(
 ): Promise<ActivityItem[]> {
   const aliases = opts.searchAliases ?? [];
   const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
+  const lookbackDays = opts.lookbackDays ?? DEFAULT_LOOKBACK_DAYS;
 
   let message: Anthropic.Message;
   try {
     message = await getClient().messages.create({
       model: SCAN_MODEL,
       max_tokens: 2048,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: buildUserPrompt(member, aliases) }],
+      system: buildSystemPrompt(lookbackDays),
+      messages: [{ role: "user", content: buildUserPrompt(member, aliases, lookbackDays) }],
+      // Force the model to emit at least one tool call. With `auto`, the
+      // model could shortcut to {"items": []} without searching at all,
+      // which is what we observed in the 2026-05-05 wet run.
+      tool_choice: { type: "any" },
       // Cast to bypass SDK literal type narrowing for the server-side
-      // web_search tool. The Anthropic API accepts it verbatim.
+      // web_search tool. Use the newer 20260209 version of the tool.
       tools: [
         {
-          type: "web_search_20250305",
+          type: "web_search_20260209",
           name: "web_search",
           max_uses: maxUses,
         },
@@ -210,10 +225,11 @@ export async function collectTier2(
     return [];
   }
 
-  // Diagnostic: count content-block types so we can see whether the
-  // model actually used the web_search tool. If `web_search_tool_use`
-  // and `web_search_tool_result` are both zero, the tool wasn't being
-  // invoked — usually a config or proxy issue.
+  // Diagnostic: count content-block types and the actual web_search
+  // request count from usage. If `web_search_requests` is 0, the model
+  // never called the tool; if it's > 0 but items come back empty, the
+  // search ran and genuinely found nothing or our prompt is dropping
+  // results.
   const blockCounts: Record<string, number> = {};
   for (const block of message.content) {
     blockCounts[block.type] = (blockCounts[block.type] ?? 0) + 1;
@@ -221,8 +237,9 @@ export async function collectTier2(
   const blockSummary = Object.entries(blockCounts)
     .map(([t, n]) => `${t}=${n}`)
     .join(",");
+  const searchCount = message.usage?.server_tool_use?.web_search_requests ?? 0;
   console.info(
-    `[scan] tier-2 ${member.member_id} blocks=[${blockSummary}] stop=${message.stop_reason ?? "?"}`,
+    `[scan] tier-2 ${member.member_id} searches=${searchCount} blocks=[${blockSummary}] stop=${message.stop_reason ?? "?"}`,
   );
 
   const text = extractFinalText(message);
