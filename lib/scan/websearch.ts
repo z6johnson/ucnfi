@@ -17,7 +17,9 @@ import Anthropic from "@anthropic-ai/sdk";
 
 import {
   type ActivityItem,
+  type ActivityScope,
   type ActivitySourceKind,
+  COMMITTEE_SCOPE_ID,
   itemId,
   isoNowUTC,
 } from "../activity.ts";
@@ -87,21 +89,60 @@ ${aliasLine}
 Search the public web for AI-related output by this person published in the last ${lookbackDays} day(s). Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
 }
 
+function buildCommitteeSystemPrompt(lookbackDays: number): string {
+  return `You scan public web sources for recent mentions of the UC Next Frontier Initiative (UCNFI) Steering Committee — also called the UC AI Steering Committee — as a body. You MUST call the web_search tool at least once before answering.
+
+Look for items from the past ${lookbackDays} day(s) only.
+
+A hit is an item that:
+  (a) names the committee, initiative, or its formal launch / charge / membership / output as a body — NOT just an individual member doing their own work, AND
+  (b) is published in a credible venue: UC newsroom or campus communications, UCOP press, mainstream press, trade press (Inside Higher Ed, Chronicle of Higher Education, EdSurge), policy outlets, or official UC system pages.
+
+Examples of hits:
+  - press coverage announcing or describing the committee
+  - UC Newsroom / campus comms about the committee
+  - the committee's own published statements, charters, charges, working group outputs
+  - quotes from committee co-chairs (Khosla, Williams, Palazoglu) speaking AS committee leadership about the committee's work
+  - mentions of the initiative in legislative or regulatory contexts
+
+Do NOT include:
+  - work by an individual committee member that doesn't reference the committee itself
+  - older items predating the committee's formation
+  - aggregator pages, member directories, or CV listings
+
+Source kinds (use exactly one of these strings): press_release, news_article, op_ed, position_statement, blog_post, podcast, talk, other.
+
+Your final assistant message MUST be a single JSON object and nothing else, with this shape:
+
+{
+  "items": [
+    {
+      "title": "...",
+      "url": "https://...",
+      "published_at": "2026-05-04" or null,
+      "snippet": "first ~300 chars of context, plain text",
+      "source_kind": "news_article",
+      "match_reason": "one short sentence: why this is about the committee as a body, not an individual member"
+    }
+  ]
+}
+
+If your searches genuinely found nothing in the window, return {"items": []}. Do not include explanatory prose. Do not wrap the JSON in code fences.`;
+}
+
+function buildCommitteeUserPrompt(aliases: string[], lookbackDays: number): string {
+  const aliasLine = aliases.length > 0
+    ? `Search for these names: ${aliases.map((a) => `"${a}"`).join(", ")}.`
+    : "";
+  return `Subject: the UCNFI Steering Committee (the UC AI Steering Committee, UC Next Frontier Initiative).
+${aliasLine}
+
+Search the public web for items about this committee as a body, published in the last ${lookbackDays} day(s). Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
+}
+
 /* ------------------------------------------------------------------ */
 /* Response parsing                                                    */
 /* ------------------------------------------------------------------ */
-
-const VALID_SOURCE_KINDS = new Set([
-  "publication",
-  "op_ed",
-  "podcast",
-  "interview",
-  "press_quote",
-  "position_statement",
-  "blog_post",
-  "talk",
-  "other",
-]);
 
 type RawWebItem = {
   title?: unknown;
@@ -145,7 +186,11 @@ function tryParseJsonBlock(text: string): { items?: RawWebItem[] } | null {
   return null;
 }
 
-function normaliseItem(memberId: string, raw: RawWebItem): ActivityItem | null {
+function normaliseItem(
+  memberId: string,
+  raw: RawWebItem,
+  scope: ActivityScope = "member",
+): ActivityItem | null {
   const url = typeof raw.url === "string" ? raw.url.trim() : "";
   if (!url || !/^https?:\/\//i.test(url)) return null;
   const title = typeof raw.title === "string" ? raw.title.trim().slice(0, 300) : "";
@@ -153,7 +198,7 @@ function normaliseItem(memberId: string, raw: RawWebItem): ActivityItem | null {
   const sourceKindRaw = typeof raw.source_kind === "string" ? raw.source_kind : "other";
   const sourceKind: ActivitySourceKind = "websearch"; // tier-2 always tagged websearch at the activity level
   const match = typeof raw.match_reason === "string" ? raw.match_reason.slice(0, 240) : "";
-  const matchReason = `websearch (${VALID_SOURCE_KINDS.has(sourceKindRaw) ? sourceKindRaw : "other"})${match ? ` — ${match}` : ""}`;
+  const matchReason = `websearch (${sourceKindRaw})${match ? ` — ${match}` : ""}`;
   const snippet = typeof raw.snippet === "string" ? raw.snippet.slice(0, 400) : "";
   let publishedAt: string | null = null;
   if (typeof raw.published_at === "string" && raw.published_at) {
@@ -163,6 +208,7 @@ function normaliseItem(memberId: string, raw: RawWebItem): ActivityItem | null {
   return {
     id: itemId(url),
     member_id: memberId,
+    scope,
     tier: 2,
     source_kind: sourceKind,
     title,
@@ -188,21 +234,18 @@ export type WebSearchOptions = {
 
 const DEFAULT_LOOKBACK_DAYS = 7;
 
-export async function collectTier2(
-  member: CommitteeMember,
-  opts: WebSearchOptions = {},
-): Promise<ActivityItem[]> {
-  const aliases = opts.searchAliases ?? [];
-  const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
-  const lookbackDays = opts.lookbackDays ?? DEFAULT_LOOKBACK_DAYS;
-
-  let message: Anthropic.Message;
+async function runWebSearch(args: {
+  systemPrompt: string;
+  userPrompt: string;
+  maxUses: number;
+  logTag: string;
+}): Promise<Anthropic.Message | null> {
   try {
-    message = await getClient().messages.create({
+    return await getClient().messages.create({
       model: SCAN_MODEL,
       max_tokens: 2048,
-      system: buildSystemPrompt(lookbackDays),
-      messages: [{ role: "user", content: buildUserPrompt(member, aliases, lookbackDays) }],
+      system: args.systemPrompt,
+      messages: [{ role: "user", content: args.userPrompt }],
       // Force the model to emit at least one tool call. With `auto`, the
       // model could shortcut to {"items": []} without searching at all,
       // which is what we observed in the 2026-05-05 wet run.
@@ -213,23 +256,20 @@ export async function collectTier2(
         {
           type: "web_search_20260209",
           name: "web_search",
-          max_uses: maxUses,
+          max_uses: args.maxUses,
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any,
     });
   } catch (err) {
     console.warn(
-      `[scan] tier-2 messages.create failed member=${member.member_id} err=${(err as Error).message}`,
+      `[scan] tier-2 messages.create failed ${args.logTag} err=${(err as Error).message}`,
     );
-    return [];
+    return null;
   }
+}
 
-  // Diagnostic: count content-block types and the actual web_search
-  // request count from usage. If `web_search_requests` is 0, the model
-  // never called the tool; if it's > 0 but items come back empty, the
-  // search ran and genuinely found nothing or our prompt is dropping
-  // results.
+function logSearchDiagnostics(message: Anthropic.Message, logTag: string): void {
   const blockCounts: Record<string, number> = {};
   for (const block of message.content) {
     blockCounts[block.type] = (blockCounts[block.type] ?? 0) + 1;
@@ -239,23 +279,78 @@ export async function collectTier2(
     .join(",");
   const searchCount = message.usage?.server_tool_use?.web_search_requests ?? 0;
   console.info(
-    `[scan] tier-2 ${member.member_id} searches=${searchCount} blocks=[${blockSummary}] stop=${message.stop_reason ?? "?"}`,
+    `[scan] tier-2 ${logTag} searches=${searchCount} blocks=[${blockSummary}] stop=${message.stop_reason ?? "?"}`,
   );
+}
 
+function parseSearchItems(
+  message: Anthropic.Message,
+  logTag: string,
+): RawWebItem[] {
   const text = extractFinalText(message);
   if (!text) {
-    console.warn(`[scan] tier-2 empty response member=${member.member_id}`);
+    console.warn(`[scan] tier-2 empty response ${logTag}`);
     return [];
   }
   const parsed = tryParseJsonBlock(text);
   if (!parsed) {
-    console.warn(`[scan] tier-2 unparseable response member=${member.member_id}: ${text.slice(0, 200)}`);
+    console.warn(`[scan] tier-2 unparseable response ${logTag}: ${text.slice(0, 200)}`);
     return [];
   }
-  const rawItems = Array.isArray(parsed.items) ? parsed.items : [];
+  return Array.isArray(parsed.items) ? parsed.items : [];
+}
+
+export async function collectTier2(
+  member: CommitteeMember,
+  opts: WebSearchOptions = {},
+): Promise<ActivityItem[]> {
+  const aliases = opts.searchAliases ?? [];
+  const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
+  const lookbackDays = opts.lookbackDays ?? DEFAULT_LOOKBACK_DAYS;
+  const logTag = member.member_id;
+
+  const message = await runWebSearch({
+    systemPrompt: buildSystemPrompt(lookbackDays),
+    userPrompt: buildUserPrompt(member, aliases, lookbackDays),
+    maxUses,
+    logTag,
+  });
+  if (!message) return [];
+  logSearchDiagnostics(message, logTag);
+
   const items: ActivityItem[] = [];
-  for (const r of rawItems) {
-    const norm = normaliseItem(member.member_id, r);
+  for (const r of parseSearchItems(message, logTag)) {
+    const norm = normaliseItem(member.member_id, r, "member");
+    if (norm) items.push(norm);
+  }
+  return items;
+}
+
+/**
+ * Tier-2 collector for the steering committee as a body. Mirrors
+ * `collectTier2` but uses a committee-focused prompt and stamps items
+ * with `scope: "committee"` and `member_id: COMMITTEE_SCOPE_ID`.
+ */
+export async function collectTier2Committee(
+  opts: WebSearchOptions = {},
+): Promise<ActivityItem[]> {
+  const aliases = opts.searchAliases ?? [];
+  const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
+  const lookbackDays = opts.lookbackDays ?? DEFAULT_LOOKBACK_DAYS;
+  const logTag = COMMITTEE_SCOPE_ID;
+
+  const message = await runWebSearch({
+    systemPrompt: buildCommitteeSystemPrompt(lookbackDays),
+    userPrompt: buildCommitteeUserPrompt(aliases, lookbackDays),
+    maxUses,
+    logTag,
+  });
+  if (!message) return [];
+  logSearchDiagnostics(message, logTag);
+
+  const items: ActivityItem[] = [];
+  for (const r of parseSearchItems(message, logTag)) {
+    const norm = normaliseItem(COMMITTEE_SCOPE_ID, r, "committee");
     if (norm) items.push(norm);
   }
   return items;

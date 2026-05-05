@@ -1,6 +1,18 @@
 {
-  "$comment": "Per-member feed sources for the daily activity scan. Each entry: rss[] = list of RSS/Atom URLs; arxiv_author = author query for the arXiv API (a plain name, e.g. \"Aric Hagberg\" — the script URL-encodes it); scholar_id = Google Scholar id (currently unused — Scholar has no public API); x_handle = X/Bluesky handle (currently unused); search_aliases[] = additional name forms for tier-2 web search to disambiguate. Members may be safely omitted; if so, the daily scan falls back to tier-2 search using only the directory's name.full plus their primary affiliation. Keys are member_id values from records/.",
+  "$comment": "Per-member feed sources for the daily activity scan. Each entry: rss[] = list of RSS/Atom URLs; arxiv_author = author query for the arXiv API (a plain name, e.g. \"Aric Hagberg\" — the script URL-encodes it); scholar_id = Google Scholar id (currently unused — Scholar has no public API); x_handle = X/Bluesky handle (currently unused); search_aliases[] = additional name forms for tier-2 web search to disambiguate. Members may be safely omitted; if so, the daily scan falls back to tier-2 search using only the directory's name.full plus their primary affiliation. Keys are member_id values from records/, plus the synthetic key \"committee\" for items mentioning the steering committee as a body.",
 
+  "committee": {
+    "rss": [],
+    "arxiv_author": null,
+    "search_aliases": [
+      "UC Next Frontier Initiative",
+      "UCNFI",
+      "UCNFI Steering Committee",
+      "UC AI Steering Committee",
+      "University of California AI Steering Committee",
+      "UC system AI committee"
+    ]
+  },
   "arkilic-e": {
     "rss": [],
     "arxiv_author": null,

@@ -10,9 +10,11 @@ import Anthropic from "@anthropic-ai/sdk";
 
 import {
   type ActivityItem,
+  COMMITTEE_SCOPE_ID,
   isoWeekLabel,
   lastNDates,
   readItemsForDates,
+  scopeOf,
 } from "../activity.ts";
 import { committeeContextSummary, listMembers } from "../committee.ts";
 
@@ -41,8 +43,9 @@ Strict rules:
 1. Only reference members and items that appear in the COMMITTEE DIRECTORY and the WEEKLY ITEMS list below. Never invent a member, item, URL, or quote.
 2. Cite every member reference inline as [member_id] (lowercase last name, hyphen, first initial — e.g., [neely-r], [khosla-p]). Never bracket OA codes (write OA-1, not [OA-1]).
 3. The COMMITTEE DIRECTORY is the source of truth for who counts as a member; if an item names someone not in it, ignore that item.
-4. Plain language. Person-to-person register. No marketing language. Lead with the implication.
-5. If the items don't support a claim, don't make the claim. "The week's items don't cover this" is fine.
+4. Items grouped under the synthetic id [committee] are about the steering committee as a body (press coverage, official statements, the initiative itself) — NOT about any one member. Cite these as [committee], and call them out in a dedicated subsection rather than mixing them into individual-member counts.
+5. Plain language. Person-to-person register. No marketing language. Lead with the implication.
+6. If the items don't support a claim, don't make the claim. "The week's items don't cover this" is fine.
 
 Output structure (markdown, no code fences around prose):
 
@@ -130,9 +133,14 @@ export async function buildWeeklyDigest(
   const isoWeek = isoWeekLabel(endDate);
 
   // Filter out items for member_ids that don't actually exist in the
-  // directory — protects against stale ids in the activity log.
+  // directory — protects against stale ids in the activity log. The
+  // synthetic "committee" id is always allowed: those items are about
+  // the steering committee as a body, not any single member.
   const knownIds = new Set(listMembers().map((m) => m.member_id));
-  const filtered = items.filter((i) => knownIds.has(i.member_id));
+  const filtered = items.filter((i) => {
+    if (scopeOf(i) === "committee" || i.member_id === COMMITTEE_SCOPE_ID) return true;
+    return knownIds.has(i.member_id);
+  });
 
   // Short-circuit: if no items, return a stub digest without an API
   // call. No reason to spend tokens to say "nothing happened".

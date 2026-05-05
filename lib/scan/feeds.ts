@@ -16,6 +16,7 @@ import { XMLParser } from "fast-xml-parser";
 
 import {
   type ActivityItem,
+  type ActivityScope,
   type FeedConfig,
   itemId,
   isoNowUTC,
@@ -196,6 +197,8 @@ export type CollectOptions = {
   lookbackDays?: number;
   /** When true, skip the AI-keyword pre-filter (used for arXiv where the query already targets the author). */
   skipKeywordFilter?: boolean;
+  /** Scope to stamp on emitted items. Defaults to "member". */
+  scope?: ActivityScope;
 };
 
 function withinLookback(publishedAt: string | null, lookbackDays: number): boolean {
@@ -223,6 +226,7 @@ async function collectFromRss(
     out.push({
       id: itemId(e.url),
       member_id: memberId,
+      scope: opts.scope ?? "member",
       tier: 1,
       source_kind: "rss",
       title: e.title.trim().slice(0, 300),
@@ -259,6 +263,7 @@ async function collectFromArxiv(
     out.push({
       id: itemId(e.url),
       member_id: memberId,
+      scope: opts.scope ?? "member",
       tier: 1,
       source_kind: "arxiv",
       title: e.title.trim().slice(0, 300),
