@@ -3,14 +3,24 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   /**
-   * The baseline JSON is loaded via readFileSync in lib/baseline.ts so
-   * it stays out of the webpack import graph (which OOM-killed the
-   * Vercel build traces step). This tracing-includes entry makes sure
-   * the file is copied into the /api/chat serverless function bundle,
-   * where the loader runs at request time rather than build time.
+   * Files loaded via readFileSync at request time need explicit tracing
+   * entries so Vercel copies them into the serverless function bundle.
+   * Webpack's static analysis can't follow dynamically-constructed paths
+   * (e.g. today's `YYYY-MM-DD.jsonl`), so the activity page would otherwise
+   * see an empty directory in production.
+   *
+   * - /api/chat: baseline JSON kept out of the import graph to avoid the
+   *   Vercel build-trace OOM that motivated this pattern.
+   * - /activity: per-day JSONL items, weekly digest markdown, and the
+   *   committee records read by lib/committee.ts at request time.
    */
   outputFileTracingIncludes: {
     "/api/chat": ["./data/uc_ai_baseline.json"],
+    "/activity": [
+      "./data/ucnfi-committee/activity/items/*.jsonl",
+      "./data/ucnfi-committee/activity/digests/*.md",
+      "./data/ucnfi-committee/records/*.json",
+    ],
   },
   async redirects() {
     return [
