@@ -33,9 +33,25 @@ export type ActivitySourceKind =
   | "websearch"
   | "manual";
 
+export type ActivityScope = "member" | "committee";
+
+/**
+ * Synthetic member_id used for items that mention the steering committee
+ * itself rather than a single named member. Lets the existing JSONL +
+ * seen-ledger pipeline carry committee-scope items without a parallel
+ * storage layer.
+ */
+export const COMMITTEE_SCOPE_ID = "committee";
+
 export type ActivityItem = {
   id: string;
   member_id: string;
+  /**
+   * Optional. Items written before the committee-scope rollout don't
+   * have this field; treat absent as "member". Use `scopeOf(item)` to
+   * read it safely.
+   */
+  scope?: ActivityScope;
   tier: ActivityTier;
   source_kind: ActivitySourceKind;
   title: string;
@@ -45,6 +61,11 @@ export type ActivityItem = {
   match_reason: string;
   discovered_at: string;
 };
+
+export function scopeOf(item: ActivityItem): ActivityScope {
+  if (item.scope) return item.scope;
+  return item.member_id === COMMITTEE_SCOPE_ID ? "committee" : "member";
+}
 
 export type FeedConfig = {
   rss?: string[];
@@ -194,6 +215,16 @@ export function listItemDates(repoRoot: string): string[] {
   return readdirSync(dir)
     .filter((f) => f.endsWith(".jsonl"))
     .map((f) => f.slice(0, -".jsonl".length))
+    .sort();
+}
+
+/** Returns the ISO-week labels (YYYY-Www) of the digests/ markdown files, sorted ascending. */
+export function listDigestWeeks(repoRoot: string): string[] {
+  const dir = join(activityRoot(repoRoot), "digests");
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => f.slice(0, -".md".length))
     .sort();
 }
 

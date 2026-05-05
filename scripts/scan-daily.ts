@@ -25,6 +25,7 @@
 
 import {
   type ActivityItem,
+  COMMITTEE_SCOPE_ID,
   appendItems,
   isoDateUTC,
   isoNowUTC,
@@ -35,7 +36,7 @@ import {
 } from "../lib/activity.ts";
 import { type CommitteeMember, listMembers } from "../lib/committee.ts";
 import { collectTier1 } from "../lib/scan/feeds.ts";
-import { collectTier2 } from "../lib/scan/websearch.ts";
+import { collectTier2, collectTier2Committee } from "../lib/scan/websearch.ts";
 
 const REPO_ROOT = process.cwd();
 const DRY_RUN = process.env.DRY_RUN === "1" || process.env.DRY_RUN === "true";
@@ -90,6 +91,43 @@ async function processMember(member: CommitteeMember, feedsConfig: ReturnType<ty
   return result;
 }
 
+async function processCommittee(feedsConfig: ReturnType<typeof readFeedsConfig>): Promise<MemberResult> {
+  const result: MemberResult = {
+    memberId: COMMITTEE_SCOPE_ID,
+    tier1: [],
+    tier2: [],
+    errors: [],
+  };
+  const cfg = feedsConfig[COMMITTEE_SCOPE_ID];
+
+  if (TIER === "1" || TIER === "both") {
+    try {
+      result.tier1 = await collectTier1(COMMITTEE_SCOPE_ID, cfg, {
+        lookbackDays: LOOKBACK_DAYS,
+        scope: "committee",
+      });
+    } catch (err) {
+      result.errors.push(`tier1: ${(err as Error).message}`);
+    }
+  }
+
+  if (TIER === "2" || TIER === "both") {
+    if (!process.env.ANTHROPIC_API_KEY) {
+      result.errors.push("tier2: ANTHROPIC_API_KEY not set, skipped");
+    } else {
+      try {
+        result.tier2 = await collectTier2Committee({
+          searchAliases: cfg?.search_aliases ?? [],
+          lookbackDays: LOOKBACK_DAYS,
+        });
+      } catch (err) {
+        result.errors.push(`tier2: ${(err as Error).message}`);
+      }
+    }
+  }
+  return result;
+}
+
 async function runWithConcurrency<T, R>(
   items: T[],
   worker: (item: T) => Promise<R>,
@@ -113,11 +151,13 @@ async function runWithConcurrency<T, R>(
 
 async function main(): Promise<void> {
   const allMembers = listMembers();
+  const memberFilterIsCommittee = MEMBER_FILTER === COMMITTEE_SCOPE_ID;
   const members = MEMBER_FILTER
     ? allMembers.filter((m) => m.member_id === MEMBER_FILTER)
     : allMembers;
+  const includeCommittee = !MEMBER_FILTER || memberFilterIsCommittee;
 
-  if (members.length === 0) {
+  if (members.length === 0 && !memberFilterIsCommittee) {
     console.error(`No members matched filter=${MEMBER_FILTER ?? "*"}.`);
     process.exit(2);
   }
@@ -128,14 +168,16 @@ async function main(): Promise<void> {
   const now = isoNowUTC();
 
   console.info(
-    `[scan] start date=${today} members=${members.length} tier=${TIER} concurrency=${CONCURRENCY} dry_run=${DRY_RUN}`,
+    `[scan] start date=${today} members=${members.length} committee=${includeCommittee ? "yes" : "no"} tier=${TIER} concurrency=${CONCURRENCY} dry_run=${DRY_RUN}`,
   );
 
-  const results = await runWithConcurrency(
+  const memberResults = await runWithConcurrency(
     members,
     (m) => processMember(m, feedsConfig),
     CONCURRENCY,
   );
+  const committeeResults = includeCommittee ? [await processCommittee(feedsConfig)] : [];
+  const results: MemberResult[] = [...memberResults, ...committeeResults];
 
   // Dedupe: only keep items whose id is not in `seen`. Items new to this
   // run are appended to the ledger immediately so duplicates within the
