@@ -1,12 +1,11 @@
 /**
  * Weekly digest builder.
  *
- * Reads the last 7 days of activity items, calls the Anthropic API
- * directly with prompt caching on the unchanging committee block, and
- * produces a markdown digest grouped by topic and mapped to OA-1..OA-8.
+ * Reads the last 7 days of activity items, calls the UCSD TritonAI
+ * LiteLLM proxy with prompt caching on the unchanging committee block,
+ * and produces a markdown digest grouped by topic and mapped to
+ * OA-1..OA-8.
  */
-
-import Anthropic from "@anthropic-ai/sdk";
 
 import {
   type ActivityItem,
@@ -16,21 +15,11 @@ import {
   readItemsForDates,
   scopeOf,
 } from "../activity.ts";
+import { getLiteLLMClient } from "../claude.ts";
 import { committeeContextSummary, listMembers } from "../committee.ts";
 
 const DIGEST_MODEL = process.env.DIGEST_MODEL || "claude-opus-4-6";
 const DIGEST_MAX_TOKENS = 4096;
-
-let client: Anthropic | null = null;
-function getClient(): Anthropic {
-  if (client) return client;
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    throw new Error("ANTHROPIC_API_KEY is not set; the weekly digest requires the direct Anthropic API.");
-  }
-  client = new Anthropic({ apiKey });
-  return client;
-}
 
 /* ------------------------------------------------------------------ */
 /* Prompt                                                              */
@@ -151,7 +140,7 @@ export async function buildWeeklyDigest(
 
   const userPrompt = itemsBlock(filtered, isoWeek, dates);
 
-  const message = await getClient().messages.create({
+  const message = await getLiteLLMClient().messages.create({
     model: DIGEST_MODEL,
     max_tokens: DIGEST_MAX_TOKENS,
     system: [

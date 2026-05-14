@@ -96,8 +96,8 @@ Disputes about a member's framing get resolved with the member, not in the recor
 
 Between full enrichment passes, a daily scan tracks what each member is publishing or saying about AI in public. The output lives at `activity/` and is generated, not hand-curated.
 
-- **Daily** (GitHub Actions, 13:00 UTC): `npm run scan:daily` polls the per-member feeds in `feeds.json` (RSS/Atom + arXiv author queries) and runs the Anthropic API with the server-side `web_search` tool for op-eds, podcasts, and press quotes. New items append to `activity/items/YYYY-MM-DD.jsonl`. The dedup ledger `activity/seen.json` keeps an item from showing up twice; ids older than 90 days are pruned.
-- **Weekly** (GitHub Actions, 14:00 UTC Sunday): `npm run digest:weekly` reads the last seven days of items, calls the Anthropic API directly, and writes `activity/digests/YYYY-Www.md` grouped by topic and member, with a "flag for the next meeting" section.
+- **Daily** (GitHub Actions, 13:00 UTC): `npm run scan:daily` polls the per-member feeds in `feeds.json` (RSS/Atom + arXiv author queries) and calls Claude through the UCSD TritonAI LiteLLM proxy with the server-side `web_search` tool for op-eds, podcasts, and press quotes. New items append to `activity/items/YYYY-MM-DD.jsonl`. The dedup ledger `activity/seen.json` keeps an item from showing up twice; ids older than 90 days are pruned.
+- **Weekly** (GitHub Actions, 14:00 UTC Sunday): `npm run digest:weekly` reads the last seven days of items, calls Claude through the same LiteLLM proxy, and writes `activity/digests/YYYY-Www.md` grouped by topic and member, with a "flag for the next meeting" section.
 
 The activity log does **not** modify member records. It's a candidate pool. When a member produces something substantive enough to belong in the record proper — a recurring position, a new public commitment, a venue that shifts how they're framed — that's a hand-promotion into `enrichment.synopsis` (or `pass_3_reserved` once that pass is opened) on the next pass through that record. The activity log doesn't override the public-record-only rule for Pass 1; it just makes the decision of what to promote much easier.
 

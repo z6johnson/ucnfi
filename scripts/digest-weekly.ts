@@ -1,9 +1,9 @@
 /**
  * Weekly committee AI-activity digest.
  *
- * Reads the last 7 days of activity items, calls the Anthropic API
- * with prompt caching on the unchanging committee block, and writes a
- * markdown digest under data/ucnfi-committee/activity/digests/.
+ * Reads the last 7 days of activity items, calls the UCSD TritonAI
+ * LiteLLM proxy with prompt caching on the unchanging committee block,
+ * and writes a markdown digest under data/ucnfi-committee/activity/digests/.
  *
  * Usage:
  *   npm run digest:weekly
@@ -11,7 +11,7 @@
  *   DRY_RUN=1 npm run digest:weekly            # build, print, don't write
  *
  * Env required:
- *   ANTHROPIC_API_KEY
+ *   LITELLM_API_KEY
  *
  * Optional:
  *   DIGEST_MODEL  — defaults to claude-opus-4-6

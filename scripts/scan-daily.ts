@@ -2,7 +2,7 @@
  * Daily committee AI-activity scan.
  *
  * Walks every committee member, runs Tier-1 feed collectors (RSS/Atom,
- * arXiv) and Tier-2 web search via the direct Anthropic API in
+ * arXiv) and Tier-2 web search via the UCSD TritonAI LiteLLM proxy in
  * parallel with a concurrency cap, dedupes against the seen-ledger,
  * and appends new items to today's JSONL file under
  * data/ucnfi-committee/activity/items/.
@@ -14,7 +14,7 @@
  *   DRY_RUN=1 npm run scan:daily                       # collect, don't write
  *
  * Env required (when tier-2 is enabled):
- *   ANTHROPIC_API_KEY — for tier-2 web search
+ *   LITELLM_API_KEY — for tier-2 web search via the TritonAI proxy
  *
  * Optional:
  *   SCAN_MODEL        — defaults to claude-opus-4-6
@@ -75,8 +75,8 @@ async function processMember(member: CommitteeMember, feedsConfig: ReturnType<ty
   }
 
   if (TIER === "2" || TIER === "both") {
-    if (!process.env.ANTHROPIC_API_KEY) {
-      result.errors.push("tier2: ANTHROPIC_API_KEY not set, skipped");
+    if (!process.env.LITELLM_API_KEY) {
+      result.errors.push("tier2: LITELLM_API_KEY not set, skipped");
     } else {
       try {
         result.tier2 = await collectTier2(member, {
@@ -112,8 +112,8 @@ async function processCommittee(feedsConfig: ReturnType<typeof readFeedsConfig>)
   }
 
   if (TIER === "2" || TIER === "both") {
-    if (!process.env.ANTHROPIC_API_KEY) {
-      result.errors.push("tier2: ANTHROPIC_API_KEY not set, skipped");
+    if (!process.env.LITELLM_API_KEY) {
+      result.errors.push("tier2: LITELLM_API_KEY not set, skipped");
     } else {
       try {
         result.tier2 = await collectTier2Committee({

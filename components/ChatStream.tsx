@@ -28,7 +28,7 @@ type Usage = {
   cache_read_input_tokens: number;
 };
 
-type Provider = "litellm" | "anthropic";
+type Provider = "litellm";
 
 type StreamEvent =
   | { type: "delta"; text: string }
@@ -424,13 +424,7 @@ export function ChatStream({
           {usage ? (
             <span>
               {provider ? (
-                <span
-                  title={
-                    provider === "litellm"
-                      ? "Served via UCSD TritonAI LiteLLM proxy"
-                      : "Served via Anthropic API (fallback)"
-                  }
-                >
+                <span title="Served via UCSD TritonAI LiteLLM proxy">
                   via {provider}
                   {" · "}
                 </span>

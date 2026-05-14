@@ -32,13 +32,12 @@ export const LITELLM_BASE_URL =
 export const CLAUDE_MODEL = process.env.CLAUDE_MODEL || "claude-opus-4-6";
 
 /* ------------------------------------------------------------------ */
-/* Clients                                                             */
+/* Client                                                              */
 /* ------------------------------------------------------------------ */
 
-export type Provider = "litellm" | "anthropic";
+export type Provider = "litellm";
 
 let litellmClient: Anthropic | null = null;
-let anthropicClient: Anthropic | null = null;
 
 export function getLiteLLMClient(): Anthropic {
   if (!litellmClient) {
@@ -55,32 +54,10 @@ export function getLiteLLMClient(): Anthropic {
   return litellmClient;
 }
 
-export function getAnthropicClient(): Anthropic {
-  if (!anthropicClient) {
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) {
-      throw new Error("ANTHROPIC_API_KEY is not set.");
-    }
-    anthropicClient = new Anthropic({ apiKey });
+export function assertLiteLLMConfigured(): void {
+  if (!process.env.LITELLM_API_KEY) {
+    throw new Error("LITELLM_API_KEY is not set.");
   }
-  return anthropicClient;
-}
-
-/**
- * Ordered list of providers to try. LiteLLM is preferred; Anthropic is
- * a fallback if either the LiteLLM credentials are missing or the
- * LiteLLM stream errors before emitting any tokens.
- */
-export function providerChain(): Provider[] {
-  const chain: Provider[] = [];
-  if (process.env.LITELLM_API_KEY) chain.push("litellm");
-  if (process.env.ANTHROPIC_API_KEY) chain.push("anthropic");
-  if (chain.length === 0) {
-    throw new Error(
-      "No Claude credentials set. Provide LITELLM_API_KEY (preferred) and/or ANTHROPIC_API_KEY.",
-    );
-  }
-  return chain;
 }
 
 /* ------------------------------------------------------------------ */
@@ -221,22 +198,17 @@ export type ChatMessage = {
 };
 
 /**
- * Start a streaming Claude response for a user turn against the given
- * provider. The caller is responsible for plumbing the SDK's
- * AsyncIterable of events into whatever transport they're using (SSE
- * from a Route Handler) and for retrying against the next provider in
- * the chain if this one errors before any tokens are emitted.
+ * Start a streaming Claude response for a user turn against the UCSD
+ * TritonAI LiteLLM proxy. The caller is responsible for plumbing the
+ * SDK's AsyncIterable of events into whatever transport they're using
+ * (SSE from a Route Handler).
  */
 export function startChatStream(
   messages: ChatMessage[],
-  provider: Provider,
   signal?: AbortSignal,
 ) {
-  const client =
-    provider === "litellm" ? getLiteLLMClient() : getAnthropicClient();
-  console.info(
-    `[chat] provider=${provider} model=${JSON.stringify(CLAUDE_MODEL)}`,
-  );
+  const client = getLiteLLMClient();
+  console.info(`[chat] provider=litellm model=${JSON.stringify(CLAUDE_MODEL)}`);
   return client.messages.stream(
     {
       model: CLAUDE_MODEL,

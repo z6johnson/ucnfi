@@ -99,7 +99,7 @@ Every page is prerendered at build time (28 static pages, including all 20 entit
 
 ### Step 2 — Grounded Chat
 
-Adds the Anthropic Claude SDK (`@anthropic-ai/sdk`) pointed at the UCSD TritonAI LiteLLM proxy and a streaming `/api/chat` route with prompt caching of the full baseline.
+Adds the Anthropic Claude SDK (`@anthropic-ai/sdk`) pointed at the UCSD TritonAI LiteLLM proxy — the sole LLM provider — and a streaming `/api/chat` route with prompt caching of the full baseline.
 
 **Environment variables** (Project Settings → Environment Variables — add to Production, Preview, and Development):
 
@@ -110,7 +110,7 @@ Adds the Anthropic Claude SDK (`@anthropic-ai/sdk`) pointed at the UCSD TritonAI
 
 **Function duration.** The `/api/chat` route will export `maxDuration = 60` so Vercel allows long-running streams. On Vercel's Hobby plan, Serverless Function duration is capped — upgrade to Pro if streaming responses are getting truncated.
 
-**Runtime.** Node runtime (not Edge) so the Anthropic SDK's prompt caching and streaming helpers work without shimming.
+**Runtime.** Node runtime (not Edge) so the Claude SDK's prompt caching and streaming helpers work without shimming.
 
 No database yet — chat history lives in the browser (URL/localStorage) until Step 3.
 
