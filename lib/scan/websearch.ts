@@ -1,5 +1,5 @@
 /**
- * Tier-2 collector: direct Anthropic API with the server-side
+ * Tier-2 collector: UCSD TritonAI LiteLLM proxy with the server-side
  * web_search tool enabled. Catches op-eds, podcasts, interviews, and
  * press quotes that don't appear in any structured feed.
  *
@@ -13,7 +13,7 @@
  * parse without paying tokens for prose.
  */
 
-import Anthropic from "@anthropic-ai/sdk";
+import type Anthropic from "@anthropic-ai/sdk";
 
 import {
   type ActivityItem,
@@ -23,6 +23,7 @@ import {
   itemId,
   isoNowUTC,
 } from "../activity.ts";
+import { getLiteLLMClient } from "../claude.ts";
 import { type CommitteeMember } from "../committee.ts";
 
 /* ------------------------------------------------------------------ */
@@ -31,17 +32,6 @@ import { type CommitteeMember } from "../committee.ts";
 
 const SCAN_MODEL = process.env.SCAN_MODEL || "claude-opus-4-6";
 const MAX_TOOL_USES = 5;
-
-let client: Anthropic | null = null;
-function getClient(): Anthropic {
-  if (client) return client;
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    throw new Error("ANTHROPIC_API_KEY is not set; tier-2 web search requires it.");
-  }
-  client = new Anthropic({ apiKey });
-  return client;
-}
 
 /* ------------------------------------------------------------------ */
 /* Prompts                                                             */
@@ -241,7 +231,7 @@ async function runWebSearch(args: {
   logTag: string;
 }): Promise<Anthropic.Message | null> {
   try {
-    return await getClient().messages.create({
+    return await getLiteLLMClient().messages.create({
       model: SCAN_MODEL,
       max_tokens: 2048,
       system: args.systemPrompt,

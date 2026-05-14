@@ -44,7 +44,7 @@ What's missing is a place to *work* with that baseline: a tool for Zach to explo
 
 - **Next.js 15** (App Router, React 19, TypeScript) — single project at repo root
 - **Tailwind CSS v4** with tokens derived from `docs/seed-style-guide.md`
-- **Anthropic SDK** (`@anthropic-ai/sdk`) pointed at the **UCSD TritonAI LiteLLM proxy** (`https://tritonai-api.ucsd.edu`) for Claude, using **Claude Opus 4.6** (`claude-opus-4-6-v1`) as the default model and **prompt caching** for the baseline payload
+- **Claude SDK** (`@anthropic-ai/sdk`) pointed exclusively at the **UCSD TritonAI LiteLLM proxy** (`https://tritonai-api.ucsd.edu`), using **Claude Opus 4.6** (`claude-opus-4-6-v1`) as the default model and **prompt caching** for the baseline payload
 - **Vercel Postgres** (or Neon) via **Drizzle ORM** for the small amount of mutable state (memos, saved chats, share slugs). Keeps deploys simple on Vercel.
 - **Basic gate** for Zach's editing routes: a single `ADMIN_PASSWORD` env var behind a cookie-based auth. Public `/share/[slug]` routes bypass the gate.
 - **Deploy:** Vercel, with `LITELLM_API_KEY`, `DATABASE_URL`, `ADMIN_PASSWORD`, `NFI_BASE_URL` as env vars.
@@ -183,7 +183,7 @@ App:
 Lib:
 
 - `lib/baseline.ts` — load + query the JSON
-- `lib/claude.ts` — Anthropic client, system prompt assembly, prompt caching, tool definition
+- `lib/claude.ts` — LiteLLM (TritonAI) Claude client, system prompt assembly, prompt caching, tool definition
 - `lib/db.ts` — Drizzle client
 - `lib/schema.ts` — Drizzle schema
 - `lib/auth.ts` — admin cookie gate
@@ -249,7 +249,7 @@ Each step is independently deployable to Vercel so there's something to show aft
   2. "Summarize differences between UCSD TritonAI and UCLA's OAI." — expect Claude to pull infrastructure/policy fields for both and contrast them.
   3. "Where are the biggest gaps in health AI governance across the UC health systems?" — expect `health_ai` dimension query and grounded gap analysis.
   4. "Draft a one-page memo for OA-1 Trusted AI Standard that identifies three systemwide gaps." — expect structured memo output with citations.
-- Confirm prompt cache hit rate > 90% on the second and subsequent turns (check Anthropic response `usage.cache_read_input_tokens`).
+- Confirm prompt cache hit rate > 90% on the second and subsequent turns (check the LiteLLM response `usage.cache_read_input_tokens`).
 - Deploy a Vercel preview; open `/share/<slug>` from a logged-out browser and confirm read-only rendering, no admin chrome.
 - `npm run build` + `npm run typecheck` clean.
 
@@ -257,4 +257,4 @@ Each step is independently deployable to Vercel so there's something to show aft
 
 ## Open items
 
-None blocking. NFI color palette and Anthropic API key are in hand. Committee meeting date, steering/advisory roster, and existing NFI visual assets are intentionally deferred — v1 does not require them.
+None blocking. NFI color palette and the UCSD TritonAI LiteLLM key are in hand. Committee meeting date, steering/advisory roster, and existing NFI visual assets are intentionally deferred — v1 does not require them.
