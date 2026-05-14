@@ -163,7 +163,7 @@ export function ExpertiseMatrix({
               Clear all
             </button>
           ) : (
-            <span className="label">none active</span>
+            <span className="label">No filters — all members shown</span>
           )}
         </div>
         <div className="mt-3 flex flex-col gap-3 md:flex-row">
@@ -480,21 +480,28 @@ function CoverageMatrix({
         </tbody>
       </table>
       <div
-        className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 pt-3 text-xs"
+        className="mt-4 flex flex-col gap-2 pt-3 text-xs"
         style={{ color: "var(--color-text-subtle)" }}
       >
-        <span className="label">Legend</span>
-        <span>
-          <span style={{ color: "var(--color-accent)" }}>●</span> primary
-        </span>
-        <span>
-          <span style={{ color: "var(--color-info)" }}>○</span> secondary
-        </span>
-        <span>
-          <span>—</span> not mapped
-        </span>
-        <span aria-hidden>·</span>
-        <span>Header counts: primary · secondary across visible members.</span>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <span className="label">Legend</span>
+          <span>
+            <span style={{ color: "var(--color-accent)" }}>●</span> primary
+          </span>
+          <span>
+            <span style={{ color: "var(--color-info)" }}>○</span> secondary
+          </span>
+          <span>
+            <span>—</span> not mapped
+          </span>
+          <span aria-hidden>·</span>
+          <span>Header counts: primary · secondary across visible members.</span>
+        </div>
+        <p style={{ lineHeight: 1.45 }}>
+          Dots reflect each member’s own opportunity-area mapping and do not
+          change with filters above. Filters narrow which rows appear; the
+          default state shows every member.
+        </p>
       </div>
     </div>
   );
@@ -627,6 +634,7 @@ function FilterPanel<T extends string>({
   onClose,
 }: FilterPanelProps<T>) {
   if (items.length === 0) return null;
+  const hasSelection = selected.size > 0;
   return (
     <div
       role="region"
@@ -648,6 +656,17 @@ function FilterPanel<T extends string>({
           Done
         </button>
       </div>
+      <p
+        className="mt-2 text-xs"
+        style={{ color: "var(--color-text-subtle)", lineHeight: 1.45 }}
+        aria-live="polite"
+      >
+        {hasSelection
+          ? `Filtering to members matching any of the ${selected.size} selected ${
+              selected.size === 1 ? "chip" : "chips"
+            }. Tap a chip to remove it, or “Clear all” above to reset.`
+          : "No filter applied — all members are shown by default. Tap any chip below to narrow the list."}
+      </p>
       <div className="mt-3 flex flex-wrap gap-2">
         {items.map((it) => {
           const active = selected.has(it.id);
