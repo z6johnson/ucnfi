@@ -15,7 +15,7 @@ import {
   readItemsForDates,
   scopeOf,
 } from "../activity.ts";
-import { getLiteLLMClient } from "../claude.ts";
+import { getLiteLLMClient } from "../litellm.ts";
 import { committeeContextSummary, listMembers } from "../committee.ts";
 
 const DIGEST_MODEL = process.env.DIGEST_MODEL || "claude-opus-4-6";

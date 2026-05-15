@@ -23,7 +23,7 @@ import {
   itemId,
   isoNowUTC,
 } from "../activity.ts";
-import { getLiteLLMClient } from "../claude.ts";
+import { getLiteLLMClient } from "../litellm.ts";
 import { type CommitteeMember } from "../committee.ts";
 
 /* ------------------------------------------------------------------ */
