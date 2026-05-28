@@ -1,0 +1,45 @@
+{
+  "_comment": "Curated source list for the weekly Brief. Edit this file to add or remove feeds; the brief generator picks it up on the next run. Verify each URL is reachable before relying on it; the brief generator logs and swallows failed feeds rather than crashing the whole run.",
+  "external": [
+    {
+      "url": "https://www.federalregister.gov/api/v1/documents.rss?conditions%5Btopics%5D%5B%5D=education",
+      "subkind": "federal_register"
+    },
+    {
+      "url": "https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bterm%5D=artificial+intelligence",
+      "subkind": "federal_register"
+    },
+    {
+      "url": "https://www.ed.gov/news/feed",
+      "subkind": "ed_ocr"
+    }
+  ],
+  "vendor": [
+    {
+      "url": "https://www.anthropic.com/news/rss.xml",
+      "subkind": "vendor_anthropic"
+    },
+    {
+      "url": "https://openai.com/blog/rss.xml",
+      "subkind": "vendor_openai"
+    },
+    {
+      "url": "https://blogs.microsoft.com/ai/feed/",
+      "subkind": "vendor_microsoft"
+    },
+    {
+      "url": "https://www.educause.edu/feeds/news",
+      "subkind": "edu_press"
+    }
+  ],
+  "peers": [
+    {
+      "peer_id": "umich",
+      "url": "https://genai.umich.edu/feed/"
+    },
+    {
+      "peer_id": "stanford",
+      "url": "https://hai.stanford.edu/news/rss.xml"
+    }
+  ]
+}

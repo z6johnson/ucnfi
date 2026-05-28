@@ -1,0 +1,184 @@
+{
+  "metadata": {
+    "title": "Peer Institution AI Governance Baseline",
+    "version": "0.1.0",
+    "created": "2026-05-28",
+    "source": "Hand-curated from each peer institution's public AI portals and policy pages.",
+    "purpose": "Mirror of uc_ai_baseline.json for non-UC peer institutions. Lets the Brief tab anchor 'peer moves' claims to a verifiable peer field, and feeds the companion 'UC's position vs. the field' gap matrix.",
+    "schema_version": "1.0",
+    "notes": "Seed v0.1.0: only a small set of high-confidence public-record fields per peer. Fields not yet verified appear as { value: false, source_id: 'inventory-gap' } so the gap matrix surfaces them honestly. Enrich over time as the peer-move feed surfaces new positions."
+  },
+  "schema": {
+    "peer_kinds": ["public_aau", "private_aau", "system", "other"],
+    "dimensions": {
+      "governance": "Formal governance structures, councils, committees, oversight bodies",
+      "policy": "Written use policies, guidelines, principles documents",
+      "academic_integrity": "GenAI-specific academic integrity policies and guidance",
+      "infrastructure": "Enterprise AI platforms, approved tools, technical deployments",
+      "leadership": "Named AI leadership roles (CAIO, CIO involvement, etc.)",
+      "health_ai": "Health-system-specific AI governance, oversight, clinical AI",
+      "research": "AI in research policy, IRB guidance, responsible research use",
+      "training": "AI literacy programs, training resources, education initiatives",
+      "engagement": "Community engagement, faculty/staff/student guidance, communications",
+      "security": "Data classification, security policies specific to AI tools"
+    }
+  },
+  "entities": {
+    "umich": {
+      "entity_id": "umich",
+      "entity_name": "University of Michigan",
+      "peer_kind": "public_aau",
+      "uc_counterpart_id": "ucla",
+      "infrastructure": {
+        "has_enterprise_ai_platform": {
+          "value": true,
+          "source_id": "umich-01",
+          "source_url": "https://genai.umich.edu/",
+          "notes": "U-M GPT, Maizey, and U-M GPT Toolkit form U-M's enterprise generative AI platform, available to all U-M faculty, staff, and students. Launched at scale in 2024."
+        }
+      },
+      "policy": {
+        "has_genai_policy": {
+          "value": false,
+          "source_id": "inventory-gap",
+          "source_url": null,
+          "notes": "Public GenAI use policy not yet inventoried for this baseline; verify before citing in the brief."
+        }
+      }
+    },
+    "uw_seattle": {
+      "entity_id": "uw_seattle",
+      "entity_name": "University of Washington — Seattle",
+      "peer_kind": "public_aau",
+      "uc_counterpart_id": "uc_san_diego",
+      "governance": {
+        "has_ai_council": {
+          "value": false,
+          "source_id": "inventory-gap",
+          "source_url": null,
+          "notes": "Formal AI council structure not yet inventoried; UW publishes guidance through multiple offices."
+        }
+      },
+      "policy": {
+        "has_genai_policy": {
+          "value": true,
+          "source_id": "uw-01",
+          "source_url": "https://www.washington.edu/provost/ai/",
+          "notes": "UW Office of the Provost AI portal aggregates campus guidance and policies."
+        }
+      }
+    },
+    "uw_madison": {
+      "entity_id": "uw_madison",
+      "entity_name": "University of Wisconsin–Madison",
+      "peer_kind": "public_aau",
+      "uc_counterpart_id": "uc_davis",
+      "policy": {
+        "has_genai_policy": {
+          "value": false,
+          "source_id": "inventory-gap",
+          "source_url": null,
+          "notes": "Not yet inventoried for this baseline."
+        }
+      }
+    },
+    "ut_austin": {
+      "entity_id": "ut_austin",
+      "entity_name": "University of Texas at Austin",
+      "peer_kind": "public_aau",
+      "uc_counterpart_id": "uc_berkeley",
+      "policy": {
+        "has_genai_policy": {
+          "value": false,
+          "source_id": "inventory-gap",
+          "source_url": null,
+          "notes": "Not yet inventoried."
+        }
+      }
+    },
+    "illinois": {
+      "entity_id": "illinois",
+      "entity_name": "University of Illinois Urbana–Champaign",
+      "peer_kind": "public_aau",
+      "uc_counterpart_id": "uc_san_diego",
+      "policy": {
+        "has_genai_policy": {
+          "value": false,
+          "source_id": "inventory-gap",
+          "source_url": null,
+          "notes": "Not yet inventoried."
+        }
+      }
+    },
+    "penn_state": {
+      "entity_id": "penn_state",
+      "entity_name": "Pennsylvania State University",
+      "peer_kind": "public_aau",
+      "uc_counterpart_id": "uc_davis",
+      "policy": {
+        "has_genai_policy": {
+          "value": false,
+          "source_id": "inventory-gap",
+          "source_url": null,
+          "notes": "Not yet inventoried."
+        }
+      }
+    },
+    "ohio_state": {
+      "entity_id": "ohio_state",
+      "entity_name": "Ohio State University",
+      "peer_kind": "public_aau",
+      "uc_counterpart_id": "uc_davis",
+      "policy": {
+        "has_genai_policy": {
+          "value": false,
+          "source_id": "inventory-gap",
+          "source_url": null,
+          "notes": "Not yet inventoried."
+        }
+      }
+    },
+    "stanford": {
+      "entity_id": "stanford",
+      "entity_name": "Stanford University",
+      "peer_kind": "private_aau",
+      "uc_counterpart_id": "uc_berkeley",
+      "governance": {
+        "has_ai_council": {
+          "value": true,
+          "source_id": "stanford-01",
+          "source_url": "https://hai.stanford.edu/",
+          "notes": "Stanford Institute for Human-Centered Artificial Intelligence (HAI) anchors the university's AI research and policy convening function."
+        }
+      }
+    },
+    "mit": {
+      "entity_id": "mit",
+      "entity_name": "Massachusetts Institute of Technology",
+      "peer_kind": "private_aau",
+      "uc_counterpart_id": "uc_san_diego",
+      "governance": {
+        "has_ai_council": {
+          "value": true,
+          "source_id": "mit-01",
+          "source_url": "https://computing.mit.edu/",
+          "notes": "MIT Schwarzman College of Computing organizes AI research, education, and policy collaboration across the institute."
+        }
+      }
+    },
+    "cmu": {
+      "entity_id": "cmu",
+      "entity_name": "Carnegie Mellon University",
+      "peer_kind": "private_aau",
+      "uc_counterpart_id": "uc_berkeley",
+      "research": {
+        "has_ai_research_strategy": {
+          "value": true,
+          "source_id": "cmu-01",
+          "source_url": "https://ai.cs.cmu.edu/",
+          "notes": "CMU AI organizes one of the longest-running and broadest university AI research portfolios; the dedicated portal anchors strategy and program directories."
+        }
+      }
+    }
+  }
+}
