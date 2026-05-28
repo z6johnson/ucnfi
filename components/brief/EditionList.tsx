@@ -12,8 +12,7 @@ export function EditionList({ editions }: Props) {
         className="mt-8 text-sm"
         style={{ color: "var(--color-text-subtle)" }}
       >
-        No published editions yet. Once an edition is generated and a reviewer
-        flips its status to <code>published</code>, it appears here.
+        No editions yet. Once an edition is generated it appears here.
       </p>
     );
   }
@@ -40,6 +39,14 @@ export function EditionList({ editions }: Props) {
                 }}
               >
                 Week {edition.edition_id}
+                {edition.status === "draft" ? (
+                  <span
+                    className="label ml-3"
+                    style={{ color: "var(--color-text-subtle)" }}
+                  >
+                    Draft
+                  </span>
+                ) : null}
               </h2>
               <span className="label">
                 {edition.items.length} item{edition.items.length === 1 ? "" : "s"}
