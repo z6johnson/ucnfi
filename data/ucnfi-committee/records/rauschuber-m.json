@@ -1,0 +1,114 @@
+{
+  "member_id": "rauschuber-m",
+  "name": {
+    "full": "Mark Rauschuber",
+    "first": "Mark",
+    "last": "Rauschuber"
+  },
+  "primary_affiliation": {
+    "organization": "UCSF Health",
+    "title": "Vice President and Chief Information Officer",
+    "campus_or_unit": "UCSF Health"
+  },
+  "secondary_affiliations": [
+    {
+      "organization": "UT Southwestern Medical Center",
+      "role": "Associate Vice President and Chief Information Officer, Health System",
+      "type": "other",
+      "active": false
+    }
+  ],
+  "committee_role": {
+    "role": "member",
+    "represents": [
+      "UC Health system",
+      "enterprise health-IT strategy and operations",
+      "CIO perspective on AI infrastructure and clinical-systems delivery"
+    ]
+  },
+  "enrichment": {
+    "expertise_tags": [
+      {
+        "tag": "Health system IT strategy and operations",
+        "confidence": "high",
+        "evidence": "Vice President and Chief Information Officer at UCSF Health since January 2023, responsible for design, development, release, and maintenance of technology systems and services for the health system, and oversight of IT strategy, optimization, and management. Previously developed and executed the health system IT strategic plan at UT Southwestern Medical Center as Associate Vice President and CIO of the Health System."
+      },
+      {
+        "tag": "Electronic health record and clinical systems",
+        "confidence": "high",
+        "evidence": "Leads medical and nursing informatics services at UCSF Health and oversees the clinical-systems backbone. In early 2026 UCSF Health brought on Midori Kondo as VP of Applications to partner with him on clinical and revenue-cycle systems. Career arc through Eclipsys Corporation (project manager) and Cap Gemini Ernst & Young (senior consultant in healthcare IT) is rooted in clinical-systems delivery."
+      },
+      {
+        "tag": "Enterprise imaging and virtual care",
+        "confidence": "medium",
+        "evidence": "Public announcement of the Midori Kondo hire (early 2026) names enterprise imaging and virtual care strategy as joint priorities under his portfolio."
+      },
+      {
+        "tag": "Predictive analytics and scalable IT",
+        "confidence": "medium",
+        "evidence": "Tapped in 2024 to head an assessment team shaping the IT and analytics organization for Canopy Health, a UCSF affiliate, with a focus on cost-of-care management, predictive analytics, and scalability."
+      }
+    ],
+    "opportunity_areas": [
+      {
+        "oa": "OA-4",
+        "relevance": "primary",
+        "rationale": "Runs the enterprise infrastructure and clinical-systems platform for UCSF Health, including EHR, enterprise imaging, and virtual-care delivery at scale."
+      },
+      {
+        "oa": "OA-8",
+        "relevance": "primary",
+        "rationale": "Sits at the operational center of UCSF Health's clinical-systems backbone, and led the Canopy Health assessment focused on cost-of-care management and predictive analytics."
+      },
+      {
+        "oa": "OA-5",
+        "relevance": "secondary",
+        "rationale": "Career strength is scaling IT to match health-system growth and tightening operational delivery; partners directly with applications and revenue-cycle leadership."
+      }
+    ],
+    "role_facets": {
+      "sector": "uc_health",
+      "ai_relationship": ["deployer_or_operator", "governor_or_policy"],
+      "governance_orientation": ["health_system"]
+    },
+    "synopsis": "Mark Rauschuber is Vice President and Chief Information Officer at UCSF Health, a role he has held since January 2023. He runs the technology systems and services for the health system, leads medical and nursing informatics services, and oversees UCSF Health's IT strategy, optimization, and management. Before UCSF he spent two decades at UT Southwestern Medical Center (2001 to 2022), most recently as Associate Vice President and CIO of the Health System; earlier roles include lead programmer analyst at Texas Health Resources, project manager at Eclipsys, and senior healthcare-IT consultant at Cap Gemini Ernst & Young. He holds a Master of Health Administration from the University of Missouri. Recent activity includes leading a 2024 assessment team for Canopy Health (a UCSF affiliate) focused on cost-of-care management, predictive analytics, and scalability, and partnering with the newly hired VP of Applications on clinical and revenue-cycle systems, enterprise imaging, and virtual care. His strengths sit in enterprise infrastructure and delivery rather than clinical practice or research AI.",
+    "sources": [
+      {
+        "url": "https://www.ucsfhealth.org/about/leadership",
+        "type": "institutional_bio",
+        "accessed": "2026-05-28",
+        "note": "UCSF Health leadership page; current role, scope of responsibility, and informatics oversight."
+      },
+      {
+        "url": "https://www.linkedin.com/in/mark-rauschuber",
+        "type": "linkedin",
+        "accessed": "2026-05-28",
+        "note": "Timeline for UT Southwestern (Oct 2001 to Dec 2022) and earlier career roles at Texas Health Resources, Eclipsys, and Cap Gemini Ernst & Young."
+      }
+    ],
+    "pass_3_reserved": {}
+  },
+  "self_report": { "submitted": false },
+  "reconciliation": { "status": "not_yet_reconciled" },
+  "record_meta": {
+    "created": "2026-05-28",
+    "last_verified": "2026-05-28",
+    "fields_updated_this_pass": [
+      "primary_affiliation",
+      "secondary_affiliations",
+      "committee_role",
+      "enrichment.expertise_tags",
+      "enrichment.opportunity_areas",
+      "enrichment.role_facets",
+      "enrichment.synopsis",
+      "enrichment.sources"
+    ],
+    "schema_version": "1.0.0",
+    "enrichment_pass": "pass_2_synopsis",
+    "needs_attention": [
+      "First-name spelling: pasted profile uses 'Mark', initial replacement instruction used 'Marc'. Verify the spelling UCSF Health publishes before any external use.",
+      "Bachelor's field discrepancy noted in source material (Management Information Systems per UCSF page vs. BBA per ZoomInfo). Synopsis omits the specific field pending verification.",
+      "UCSF Health leadership URL is a placeholder; confirm the canonical leadership page URL and update the source entry."
+    ]
+  }
+}

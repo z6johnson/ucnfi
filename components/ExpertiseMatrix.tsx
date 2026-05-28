@@ -6,23 +6,10 @@ import type {
   CommitteeMember,
   Confidence,
   Facet,
-  OpportunityAreaId,
 } from "@/lib/committee";
 import { MemberDrawer } from "@/components/MemberDrawer";
 
-type ViewMode = "list" | "matrix";
 type FacetKey = "rel" | "tag";
-
-const OPPORTUNITY_AREA_IDS: OpportunityAreaId[] = [
-  "OA-1",
-  "OA-2",
-  "OA-3",
-  "OA-4",
-  "OA-5",
-  "OA-6",
-  "OA-7",
-  "OA-8",
-];
 
 /* ------------------------------------------------------------------ */
 /* Display constants — duplicated to keep server-only `lib/committee`  */
@@ -62,7 +49,6 @@ export function ExpertiseMatrix({
   const [query, setQuery] = useState("");
   const [tags, setTags] = useState<Set<string>>(new Set());
   const [rels, setRels] = useState<Set<AiRelationship>>(new Set());
-  const [view, setView] = useState<ViewMode>("list");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [openFacet, setOpenFacet] = useState<FacetKey | null>(null);
   const filterBarRef = useRef<HTMLDivElement | null>(null);
@@ -211,17 +197,14 @@ export function ExpertiseMatrix({
           <h2 className="display" style={{ fontSize: "var(--text-lg)" }}>
             Members
           </h2>
-          <div className="flex items-center gap-4">
-            <ViewToggle view={view} onChange={setView} />
-            <span className="label">
-              {filtered.length} {filtered.length === 1 ? "member" : "members"}
-            </span>
-          </div>
+          <span className="label">
+            {filtered.length} {filtered.length === 1 ? "member" : "members"}
+          </span>
         </div>
 
         {filtered.length === 0 ? (
           <EmptyState label="No committee members match the current filters. Try widening the search or clearing a facet." />
-        ) : view === "list" ? (
+        ) : (
           <ul className="mt-6 grid gap-6 md:grid-cols-2">
             {filtered.map((m) => (
               <li key={m.member_id}>
@@ -232,11 +215,6 @@ export function ExpertiseMatrix({
               </li>
             ))}
           </ul>
-        ) : (
-          <CoverageMatrix
-            members={filtered}
-            onOpen={(id) => setSelectedId(id)}
-          />
         )}
       </section>
 
@@ -245,264 +223,6 @@ export function ExpertiseMatrix({
         members={members}
         onClose={() => setSelectedId(null)}
       />
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* View toggle                                                         */
-/* ------------------------------------------------------------------ */
-
-function ViewToggle({
-  view,
-  onChange,
-}: {
-  view: ViewMode;
-  onChange: (v: ViewMode) => void;
-}) {
-  const options: { id: ViewMode; label: string }[] = [
-    { id: "list", label: "List" },
-    { id: "matrix", label: "Matrix" },
-  ];
-  return (
-    <div
-      role="tablist"
-      aria-label="View mode"
-      style={{
-        display: "inline-flex",
-        border: "1px solid var(--color-border-hair)",
-      }}
-    >
-      {options.map((o) => {
-        const active = view === o.id;
-        return (
-          <button
-            key={o.id}
-            type="button"
-            role="tab"
-            aria-selected={active}
-            onClick={() => onChange(o.id)}
-            className="label"
-            style={{
-              padding: "0.4rem 0.75rem",
-              background: active
-                ? "var(--color-accent-wash)"
-                : "transparent",
-              color: active
-                ? "var(--color-accent)"
-                : "var(--color-text-subtle)",
-              cursor: "pointer",
-              borderRight: o.id === "list"
-                ? "1px solid var(--color-border-hair)"
-                : "none",
-            }}
-          >
-            {o.label}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Coverage matrix — members × opportunity areas                       */
-/* ------------------------------------------------------------------ */
-
-function CoverageMatrix({
-  members,
-  onOpen,
-}: {
-  members: CommitteeMember[];
-  onOpen: (memberId: string) => void;
-}) {
-  // Per-OA primary/secondary counts surface coverage gaps in the
-  // column headers. Mirrors the summary table in pass1 aggregate.
-  const coverage = useMemo(() => {
-    const counts: Record<OpportunityAreaId, { primary: number; secondary: number }> = {
-      "OA-1": { primary: 0, secondary: 0 },
-      "OA-2": { primary: 0, secondary: 0 },
-      "OA-3": { primary: 0, secondary: 0 },
-      "OA-4": { primary: 0, secondary: 0 },
-      "OA-5": { primary: 0, secondary: 0 },
-      "OA-6": { primary: 0, secondary: 0 },
-      "OA-7": { primary: 0, secondary: 0 },
-      "OA-8": { primary: 0, secondary: 0 },
-    };
-    for (const m of members) {
-      for (const o of m.enrichment.opportunity_areas ?? []) {
-        counts[o.oa][o.relevance] += 1;
-      }
-    }
-    return counts;
-  }, [members]);
-
-  return (
-    <div
-      className="mt-6 overflow-x-auto"
-      style={{ borderTop: "1px solid var(--color-border-hair)" }}
-    >
-      <table
-        className="w-full border-collapse"
-        style={{ minWidth: "780px" }}
-      >
-        <thead>
-          <tr>
-            <th
-              className="label pb-3 pr-5 pt-4 text-left align-bottom"
-              style={{
-                position: "sticky",
-                left: 0,
-                background: "var(--color-bg)",
-                minWidth: "240px",
-                zIndex: 1,
-              }}
-            >
-              Member
-            </th>
-            {OPPORTUNITY_AREA_IDS.map((oa) => {
-              const c = coverage[oa];
-              return (
-                <th
-                  key={oa}
-                  className="pb-3 pr-3 pt-4 text-left align-bottom"
-                  style={{ minWidth: "60px" }}
-                  title={`${OPPORTUNITY_AREA_LABEL[oa]} · ${c.primary} primary, ${c.secondary} secondary`}
-                >
-                  <div className="flex flex-col gap-1">
-                    <span
-                      className="label"
-                      style={{ color: "var(--color-text-subtle)" }}
-                    >
-                      {oa}
-                    </span>
-                    <span
-                      className="text-xs"
-                      style={{ color: "var(--color-text-subtle)" }}
-                    >
-                      {c.primary}·{c.secondary}
-                    </span>
-                  </div>
-                </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {members.map((m) => {
-            const map = new Map<OpportunityAreaId, "primary" | "secondary">();
-            for (const o of m.enrichment.opportunity_areas ?? []) {
-              map.set(o.oa, o.relevance);
-            }
-            return (
-              <tr
-                key={m.member_id}
-                style={{
-                  borderTop: "1px solid var(--color-border-hair)",
-                }}
-              >
-                <td
-                  className="py-3 pr-5 align-top"
-                  style={{
-                    position: "sticky",
-                    left: 0,
-                    background: "var(--color-bg)",
-                  }}
-                >
-                  <button
-                    type="button"
-                    onClick={() => onOpen(m.member_id)}
-                    className="text-left"
-                    style={{
-                      cursor: "pointer",
-                      background: "transparent",
-                      border: 0,
-                      padding: 0,
-                    }}
-                  >
-                    <div
-                      className="text-sm font-semibold"
-                      style={{ color: "var(--color-ink)" }}
-                    >
-                      {m.name.preferred ?? m.name.full}
-                    </div>
-                    <div
-                      className="text-xs"
-                      style={{ color: "var(--color-text-subtle)" }}
-                    >
-                      {m.primary_affiliation.organization}
-                    </div>
-                  </button>
-                </td>
-                {OPPORTUNITY_AREA_IDS.map((oa) => {
-                  const r = map.get(oa);
-                  return (
-                    <td
-                      key={oa}
-                      className="py-3 pr-3 align-middle"
-                    >
-                      <button
-                        type="button"
-                        onClick={() => onOpen(m.member_id)}
-                        title={
-                          r
-                            ? `${OPPORTUNITY_AREA_LABEL[oa]} · ${r}`
-                            : `No mapping to ${OPPORTUNITY_AREA_LABEL[oa]}`
-                        }
-                        aria-label={
-                          r
-                            ? `${m.name.full} ${r} on ${oa}`
-                            : `${m.name.full} not mapped to ${oa}`
-                        }
-                        style={{
-                          cursor: "pointer",
-                          background: "transparent",
-                          border: 0,
-                          padding: "0.125rem 0.25rem",
-                          color:
-                            r === "primary"
-                              ? "var(--color-accent)"
-                              : r === "secondary"
-                                ? "var(--color-info)"
-                                : "var(--color-text-subtle)",
-                          fontSize: r ? "1rem" : "0.875rem",
-                          lineHeight: 1,
-                        }}
-                      >
-                        {r === "primary" ? "●" : r === "secondary" ? "○" : "—"}
-                      </button>
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div
-        className="mt-4 flex flex-col gap-2 pt-3 text-xs"
-        style={{ color: "var(--color-text-subtle)" }}
-      >
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-          <span className="label">Legend</span>
-          <span>
-            <span style={{ color: "var(--color-accent)" }}>●</span> primary
-          </span>
-          <span>
-            <span style={{ color: "var(--color-info)" }}>○</span> secondary
-          </span>
-          <span>
-            <span>—</span> not mapped
-          </span>
-          <span aria-hidden>·</span>
-          <span>Header counts: primary · secondary across visible members.</span>
-        </div>
-        <p style={{ lineHeight: 1.45 }}>
-          Dots reflect each member’s own opportunity-area mapping and do not
-          change with filters above. Filters narrow which rows appear; the
-          default state shows every member.
-        </p>
-      </div>
     </div>
   );
 }
@@ -715,17 +435,6 @@ function FilterPanel<T extends string>({
 /* ------------------------------------------------------------------ */
 /* Member card                                                         */
 /* ------------------------------------------------------------------ */
-
-const OPPORTUNITY_AREA_LABEL: Record<OpportunityAreaId, string> = {
-  "OA-1": "Trusted AI Standard",
-  "OA-2": "Strategic Expansion / Partnerships",
-  "OA-3": "National AI Literacy",
-  "OA-4": "AI Infrastructure",
-  "OA-5": "Operational Streamlining",
-  "OA-6": "21st Century Public University",
-  "OA-7": "Grand Challenges",
-  "OA-8": "360° Health Intelligence",
-};
 
 function MemberCard({
   member,
