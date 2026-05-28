@@ -21,6 +21,8 @@ const nextConfig: NextConfig = {
       "./data/ucnfi-committee/activity/digests/*.md",
       "./data/ucnfi-committee/records/*.json",
     ],
+    "/brief": ["./data/brief/editions/*.md"],
+    "/brief/[edition_id]": ["./data/brief/editions/*.md"],
   },
   async redirects() {
     return [
