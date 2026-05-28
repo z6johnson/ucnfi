@@ -21,10 +21,6 @@ export default async function BriefEditionPage({
   const edition = readEdition(process.cwd(), edition_id);
   if (!edition) notFound();
 
-  // Drafts are not visible on the public site. The 404 keeps draft
-  // content from leaking via direct URL.
-  if (edition.status !== "published") notFound();
-
   // Resolve baseline anchors at render time so chips display the live
   // FieldRecord rather than a stale snapshot from generation.
   const memberNames: Record<string, string> = {};
@@ -61,7 +57,17 @@ export default async function BriefEditionPage({
 
       <header className="mt-4">
         <span className="label">UCNFI · The Brief</span>
-        <h1 className="display mt-2">Week {edition.edition_id}</h1>
+        <h1 className="display mt-2">
+          Week {edition.edition_id}
+          {edition.status === "draft" ? (
+            <span
+              className="label ml-3"
+              style={{ color: "var(--color-text-subtle)" }}
+            >
+              Draft
+            </span>
+          ) : null}
+        </h1>
         <p
           className="mt-2 text-sm"
           style={{ color: "var(--color-text-subtle)" }}
@@ -75,8 +81,7 @@ export default async function BriefEditionPage({
           className="mt-12 text-sm"
           style={{ color: "var(--color-text-subtle)" }}
         >
-          This edition was published with zero items. An empty Brief is better
-          than a padded one.
+          This edition has zero items. An empty Brief is better than a padded one.
         </p>
       ) : null}
 
