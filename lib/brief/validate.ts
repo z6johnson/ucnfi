@@ -17,6 +17,7 @@ import {
 } from "../baseline.ts";
 import { getPeer } from "../peers.ts";
 import { memberIds } from "../committee.ts";
+import { effectiveDateMs } from "./recency.ts";
 import type {
   BaselineAnchor,
   BriefItem,
@@ -35,6 +36,21 @@ export type ValidationFailure = {
 export type ValidationResult = {
   accepted: BriefItem[];
   rejected: ValidationFailure[];
+};
+
+/**
+ * Recency window for the date gate. The committee window is wider (grace)
+ * than the strict window applied to external/peer/vendor sources. When
+ * omitted, the date gate is skipped (e.g. legacy callers).
+ */
+export type ValidateWindow = {
+  strictStartMs: number;
+  committeeStartMs: number;
+  endMs: number;
+  /** Human-readable "from..to" for the strict window, used in reasons. */
+  strictLabel: string;
+  /** Human-readable "from..to" for the committee grace window. */
+  committeeLabel: string;
 };
 
 function validateBaselineAnchor(anchor: BaselineAnchor): string | null {
@@ -113,11 +129,43 @@ function validateFeedSource(
   return null;
 }
 
+/**
+ * Date gate. Returns a rejection reason if the feed_source's effective date
+ * (published_at, else the raw item's discovered_at) falls outside the
+ * applicable window — the grace window for committee_signal, the strict
+ * window otherwise. Returns null when the source is fresh.
+ */
+function validateFeedSourceDate(
+  fs: FeedSource,
+  byId: Map<string, BriefRawItem>,
+  byUrl: Map<string, BriefRawItem>,
+  window: ValidateWindow,
+): string | null {
+  const raw =
+    fs.kind === "committee_signal"
+      ? byId.get(fs.activity_item_id)
+      : byUrl.get(fs.url);
+  const t = effectiveDateMs({
+    published_at: fs.published_at,
+    discovered_at: raw?.discovered_at ?? null,
+  });
+  const isCommittee = fs.kind === "committee_signal";
+  const startMs = isCommittee ? window.committeeStartMs : window.strictStartMs;
+  const label = isCommittee ? window.committeeLabel : window.strictLabel;
+  if (t === null || t < startMs || t > window.endMs) {
+    return `feed_source "${fs.title}" published_at=${fs.published_at ?? "null"} is outside the brief window [${label}]`;
+  }
+  return null;
+}
+
 export function validateItems(
   items: BriefItem[],
   rawItems: BriefRawItem[],
+  window?: ValidateWindow,
 ): ValidationResult {
   const rawIds = new Set(rawItems.map((r) => r.id));
+  const byId = new Map(rawItems.map((r) => [r.id, r]));
+  const byUrl = new Map(rawItems.map((r) => [r.url, r]));
   const memberIdSet = new Set(memberIds());
   const accepted: BriefItem[] = [];
   const rejected: ValidationFailure[] = [];
@@ -152,6 +200,10 @@ export function validateItems(
       for (const fs of item.feed_sources) {
         const err = validateFeedSource(fs, rawIds, memberIdSet);
         if (err) reasons.push(err);
+        if (window) {
+          const dateErr = validateFeedSourceDate(fs, byId, byUrl, window);
+          if (dateErr) reasons.push(dateErr);
+        }
       }
     }
 

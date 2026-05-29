@@ -25,6 +25,7 @@ import {
   peerBaselineBlock,
   userInputsBlock,
 } from "./prompt.ts";
+import { windowBounds } from "./recency.ts";
 import { validateItems, type ValidationResult } from "./validate.ts";
 import type {
   BriefEdition,
@@ -48,8 +49,10 @@ export type GenerateBriefOpts = {
   config: SourcesConfig;
   /** Lookback for external / peer / vendor RSS feeds. Default 7 days. */
   feedLookbackDays?: number;
-  /** Lookback for committee signal (matches Brief cadence). Default 7. */
+  /** Days of committee activity JSONL files to read, by discovery date. Default 7. */
   committeeWindowDays?: number;
+  /** Publication-recency grace window for committee signal. Default 30 days. */
+  committeeGraceDays?: number;
 };
 
 export type GenerateBriefResult = {
@@ -63,27 +66,34 @@ export async function generateBrief(
 ): Promise<GenerateBriefResult> {
   const feedLookback = opts.feedLookbackDays ?? 7;
   const committeeWindow = opts.committeeWindowDays ?? 7;
+  const committeeGrace = opts.committeeGraceDays ?? 30;
+
+  // Recency windows, anchored to endDate (never wall-clock now) so a
+  // regenerated or backfilled Brief is deterministic.
+  const strict = windowBounds(opts.endDate, feedLookback);
+  const grace = windowBounds(opts.endDate, committeeGrace);
 
   // Collect the four feeds in parallel. Each collector swallows
   // individual feed errors so one broken RSS endpoint doesn't sink
   // the whole run.
   const [external, peer, vendor, committee] = await Promise.all([
-    collectExternal({ config: opts.config, lookbackDays: feedLookback }),
-    collectPeerMoves({ config: opts.config, lookbackDays: feedLookback }),
-    collectVendor({ config: opts.config, lookbackDays: feedLookback }),
+    collectExternal({ config: opts.config, lookbackDays: feedLookback, endDate: opts.endDate }),
+    collectPeerMoves({ config: opts.config, lookbackDays: feedLookback, endDate: opts.endDate }),
+    collectVendor({ config: opts.config, lookbackDays: feedLookback, endDate: opts.endDate }),
     Promise.resolve(
       collectCommitteeSignal({
         repoRoot: opts.repoRoot,
         endDate: opts.endDate,
         windowDays: committeeWindow,
+        graceDays: committeeGrace,
       }),
     ),
   ]);
 
   const allRaw = [...external, ...peer, ...vendor, ...committee.items];
   const isoWeek = isoWeekLabel(opts.endDate);
-  const windowFrom = computeWindowStart(opts.endDate, feedLookback);
-  const windowTo = isoDateOf(opts.endDate);
+  const windowFrom = strict.startIso;
+  const windowTo = strict.endIso;
 
   const manifest: InputsManifest = {
     external: { from: windowFrom, to: windowTo, n: external.length },
@@ -144,7 +154,13 @@ export async function generateBrief(
   });
 
   const drafted = parseDraftResponse(message);
-  const validation = validateItems(drafted, allRaw);
+  const validation = validateItems(drafted, allRaw, {
+    strictStartMs: strict.startMs,
+    committeeStartMs: grace.startMs,
+    endMs: strict.endMs,
+    strictLabel: `${strict.startIso}..${strict.endIso}`,
+    committeeLabel: `${grace.startIso}..${grace.endIso}`,
+  });
 
   const edition: BriefEdition = {
     edition_id: isoWeek,
@@ -248,12 +264,6 @@ function stringField(v: unknown): string {
 
 function isoDateOf(d: Date): string {
   return d.toISOString().slice(0, 10);
-}
-
-function computeWindowStart(end: Date, lookbackDays: number): string {
-  const d = new Date(end);
-  d.setUTCDate(d.getUTCDate() - (lookbackDays - 1));
-  return isoDateOf(d);
 }
 
 function emptyEdition(args: {

@@ -21,6 +21,7 @@ import {
   type ActivityItem,
 } from "../../activity.ts";
 import { canonicalUrl } from "../../activity.ts";
+import { isFresh, windowBounds } from "../recency.ts";
 import type { BriefRawItem } from "../types.ts";
 
 /**
@@ -38,7 +39,16 @@ function isSignalItem(item: ActivityItem): boolean {
 export type CollectCommitteeOpts = {
   repoRoot: string;
   endDate: Date;
+  /** How many days of daily JSONL files to read, by discovery date. */
   windowDays: number;
+  /**
+   * Publication-recency grace window (days, inclusive of endDate). A member
+   * position often surfaces in a scan well after it was published, so this
+   * is wider than the strict RSS lookback. An item is admitted only if its
+   * published_at (or discovered_at fallback) lands inside this window.
+   * Default 30.
+   */
+  graceDays?: number;
 };
 
 export type CommitteeSignalBundle = {
@@ -52,9 +62,13 @@ export function collectCommitteeSignal(
 ): CommitteeSignalBundle {
   const dates = lastNDates(opts.windowDays, opts.endDate);
   const items = readItemsForDates(opts.repoRoot, dates);
+  const { startMs, endMs } = windowBounds(opts.endDate, opts.graceDays ?? 30);
   const out: BriefRawItem[] = [];
   for (const item of items) {
     if (!isSignalItem(item)) continue;
+    // Reading a file by discovery date is not enough: a re-surfaced story
+    // can carry a published_at from months ago. Enforce the recency floor.
+    if (!isFresh(item, startMs, endMs)) continue;
     out.push({
       id: item.id,
       feed_kind: "committee_signal",

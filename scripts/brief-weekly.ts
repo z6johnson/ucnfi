@@ -16,9 +16,12 @@
  *   LITELLM_API_KEY
  *
  * Optional:
- *   BRIEF_MODEL    — defaults to CLAUDE_MODEL
- *   END_DATE       — YYYY-MM-DD, defaults to today
- *   LOOKBACK_DAYS  — feed lookback, default 7
+ *   BRIEF_MODEL          — defaults to CLAUDE_MODEL
+ *   END_DATE             — YYYY-MM-DD, defaults to today
+ *   LOOKBACK_DAYS        — external/peer/vendor feed lookback, default 7
+ *   COMMITTEE_GRACE_DAYS — committee-signal publication-recency window, default 30
+ *                          (wider than LOOKBACK_DAYS because member positions
+ *                          often surface in a scan after they were published)
  *
  * The generated draft is NOT visible on /brief until a human reviewer
  * edits the file, sets status: "published" in the frontmatter, fills
@@ -43,6 +46,9 @@ const REPO_ROOT = process.cwd();
 const DRY_RUN = process.env.DRY_RUN === "1" || process.env.DRY_RUN === "true";
 const END_DATE_RAW = process.env.END_DATE?.trim() || null;
 const LOOKBACK_DAYS = process.env.LOOKBACK_DAYS ? Number(process.env.LOOKBACK_DAYS) : 7;
+const COMMITTEE_GRACE_DAYS = process.env.COMMITTEE_GRACE_DAYS
+  ? Number(process.env.COMMITTEE_GRACE_DAYS)
+  : 30;
 
 function parseEndDate(): Date {
   if (!END_DATE_RAW) return new Date();
@@ -76,7 +82,8 @@ async function main(): Promise<void> {
   console.info(
     `[brief] start end_date=${endDate.toISOString().slice(0, 10)} ` +
       `external=${config.external.length} vendor=${config.vendor.length} ` +
-      `peers=${config.peers.length} lookback=${LOOKBACK_DAYS} dry_run=${DRY_RUN}`,
+      `peers=${config.peers.length} lookback=${LOOKBACK_DAYS} ` +
+      `committee_grace=${COMMITTEE_GRACE_DAYS} dry_run=${DRY_RUN}`,
   );
 
   const { edition, validation, rawItems } = await generateBrief({
@@ -84,6 +91,7 @@ async function main(): Promise<void> {
     endDate,
     config,
     feedLookbackDays: LOOKBACK_DAYS,
+    committeeGraceDays: COMMITTEE_GRACE_DAYS,
   });
 
   console.info(

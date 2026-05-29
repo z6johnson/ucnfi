@@ -12,6 +12,7 @@ import type { BriefRawItem, SourcesConfig } from "../types.ts";
 export type CollectExternalOpts = {
   config: SourcesConfig;
   lookbackDays: number;
+  endDate: Date;
 };
 
 export async function collectExternal(
@@ -24,6 +25,7 @@ export async function collectExternal(
         feedKind: "external",
         subkind: source.subkind,
         lookbackDays: opts.lookbackDays,
+        endDate: opts.endDate,
         skipKeywordFilter: source.skip_ai_filter,
         contextLabel: source.url,
       }).catch((err: unknown) => {

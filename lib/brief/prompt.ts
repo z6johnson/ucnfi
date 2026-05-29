@@ -43,6 +43,7 @@ Four parts, in order, no exceptions:
 6. If an item only restates a development with no UC-relative consequence the baseline can speak to, DROP IT. An empty Brief is better than a padded one. The target is three to five items; if only two clear the bar, return two.
 7. Headlines are plain, not teasers. for_the_committee is a framed question or choice, never an answer.
 8. AI-assembled, human-accountable. A human reviewer reads what you produce before it reaches the President. Be precise; do not paraphrase the baseline imprecisely.
+9. Timeliness is mandatory. The WEEKLY INPUTS header states the window. Every item must describe a development from within it. A source's published date is shown on each input line — if it predates the window (or is older than what a re-surfaced item should be), DROP the item. The Brief surfaces what is on the President's plate now, not stale news. When in doubt about freshness, drop it.
 
 ## Output format
 
@@ -142,6 +143,7 @@ export function userInputsBlock(args: {
     lines.push("");
   }
 
+  lines.push(`The window ${args.windowFrom} through ${args.windowTo} is authoritative for timeliness — drop any item whose source predates it.`);
   lines.push("Assemble the Brief now. Three to five items. JSON object only. Drop items that cannot be anchored to the baseline.");
   return lines.join("\n");
 }

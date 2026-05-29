@@ -16,6 +16,7 @@ import type { BriefRawItem, SourcesConfig } from "../types.ts";
 export type CollectVendorOpts = {
   config: SourcesConfig;
   lookbackDays: number;
+  endDate: Date;
 };
 
 export async function collectVendor(
@@ -28,6 +29,7 @@ export async function collectVendor(
         feedKind: "vendor",
         subkind: source.subkind,
         lookbackDays: opts.lookbackDays,
+        endDate: opts.endDate,
         skipKeywordFilter: source.skip_ai_filter,
         contextLabel: source.url,
       }).catch((err: unknown) => {
