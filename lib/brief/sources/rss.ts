@@ -14,6 +14,7 @@
 
 import { XMLParser } from "fast-xml-parser";
 import { canonicalUrl, isoNowUTC, itemId } from "../../activity.ts";
+import { isFresh, windowBounds } from "../recency.ts";
 import type { BriefRawItem, FeedSourceKind } from "../types.ts";
 
 const FETCH_TIMEOUT_MS = 15_000;
@@ -194,18 +195,13 @@ function parseFeed(xml: string): RawEntry[] {
 /* Public collector                                                    */
 /* ------------------------------------------------------------------ */
 
-function withinLookback(publishedAt: string | null, lookbackDays: number): boolean {
-  if (!publishedAt) return true;
-  const t = Date.parse(publishedAt);
-  if (!Number.isFinite(t)) return true;
-  const cutoff = Date.now() - lookbackDays * 24 * 60 * 60 * 1000;
-  return t >= cutoff;
-}
-
 export type CollectRssOpts = {
   feedKind: FeedSourceKind;
   subkind: string;
+  /** Recency window length in days, inclusive of endDate. */
   lookbackDays: number;
+  /** Brief end date; the recency window is anchored here, not wall-clock. */
+  endDate: Date;
   skipKeywordFilter?: boolean;
   /** Stamped on emitted items as match_reason context. */
   contextLabel?: string;
@@ -220,10 +216,16 @@ export async function collectFromRss(
 ): Promise<BriefRawItem[]> {
   const xml = await fetchText(feedUrl);
   const entries = parseFeed(xml);
+  const { startMs, endMs } = windowBounds(opts.endDate, opts.lookbackDays);
+  // discovered_at is the recency fallback for entries with no parseable
+  // published_at; compute it once so the filter and the emitted item agree.
+  const discoveredAt = isoNowUTC();
   const out: BriefRawItem[] = [];
   for (const e of entries) {
     if (!e.url) continue;
-    if (!withinLookback(e.publishedAt, opts.lookbackDays)) continue;
+    if (!isFresh({ published_at: e.publishedAt, discovered_at: discoveredAt }, startMs, endMs)) {
+      continue;
+    }
     const blob = `${e.title} ${e.summary}`;
     if (!opts.skipKeywordFilter && !isRelevant(blob)) continue;
     const canonical = canonicalUrl(e.url);
@@ -238,7 +240,7 @@ export async function collectFromRss(
       match_reason: opts.contextLabel
         ? `${opts.subkind} — ${opts.contextLabel}`
         : opts.subkind,
-      discovered_at: isoNowUTC(),
+      discovered_at: discoveredAt,
       ...(opts.memberId ? { member_id: opts.memberId } : {}),
       ...(opts.peerId ? { peer_id: opts.peerId } : {}),
     });

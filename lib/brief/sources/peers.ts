@@ -11,6 +11,7 @@ import type { BriefRawItem, SourcesConfig } from "../types.ts";
 export type CollectPeersOpts = {
   config: SourcesConfig;
   lookbackDays: number;
+  endDate: Date;
 };
 
 export async function collectPeerMoves(
@@ -23,6 +24,7 @@ export async function collectPeerMoves(
         feedKind: "peer",
         subkind: source.peer_id,
         lookbackDays: opts.lookbackDays,
+        endDate: opts.endDate,
         peerId: source.peer_id,
         contextLabel: source.url,
       }).catch((err: unknown) => {
