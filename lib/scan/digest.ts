@@ -22,6 +22,51 @@ const DIGEST_MODEL = process.env.DIGEST_MODEL || "claude-opus-4-6";
 const DIGEST_MAX_TOKENS = 4096;
 
 /* ------------------------------------------------------------------ */
+/* Transient-error retry                                               */
+/* ------------------------------------------------------------------ */
+
+// Statuses worth retrying: rate limits (429), overloaded (529), and the
+// gateway/upstream errors (500/502/503/504) the LiteLLM proxy's nginx
+// front-end emits when it briefly can't reach an upstream. The weekly
+// digest runs unattended on a schedule, so a momentary 502 shouldn't sink
+// the whole run — the SDK's default of two retries proved too fragile.
+const RETRYABLE_STATUSES = new Set([408, 409, 429, 500, 502, 503, 504, 529]);
+const MAX_MODEL_ATTEMPTS = 5;
+
+function isRetryableError(err: unknown): boolean {
+  const status = (err as { status?: unknown } | null)?.status;
+  if (typeof status === "number") return RETRYABLE_STATUSES.has(status);
+  // Connection/timeout errors surface without an HTTP status — retry those too.
+  const name = (err as { name?: unknown } | null)?.name;
+  return name === "APIConnectionError" || name === "APIConnectionTimeoutError";
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function withRetry<T>(label: string, fn: () => Promise<T>): Promise<T> {
+  let lastErr: unknown;
+  for (let attempt = 1; attempt <= MAX_MODEL_ATTEMPTS; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastErr = err;
+      if (attempt === MAX_MODEL_ATTEMPTS || !isRetryableError(err)) break;
+      // Exponential backoff with jitter: ~1s, 2s, 4s, 8s (+ up to 1s).
+      const backoff = 2 ** (attempt - 1) * 1000 + Math.floor(Math.random() * 1000);
+      const status = (err as { status?: unknown } | null)?.status ?? "connection";
+      console.warn(
+        `[digest] ${label} attempt ${attempt}/${MAX_MODEL_ATTEMPTS} failed ` +
+          `(status=${status}); retrying in ${backoff}ms`,
+      );
+      await sleep(backoff);
+    }
+  }
+  throw lastErr;
+}
+
+/* ------------------------------------------------------------------ */
 /* Prompt                                                              */
 /* ------------------------------------------------------------------ */
 
@@ -141,23 +186,25 @@ export async function buildWeeklyDigest(
 
   const userPrompt = itemsBlock(filtered, isoWeek, dates);
 
-  const message = await getLiteLLMClient().messages.create({
-    model: DIGEST_MODEL,
-    max_tokens: DIGEST_MAX_TOKENS,
-    system: [
-      {
-        type: "text",
-        text: FRAMING.replace("<ISO_WEEK_LABEL>", isoWeek),
-        cache_control: { type: "ephemeral" },
-      },
-      {
-        type: "text",
-        text: committeeBlock(),
-        cache_control: { type: "ephemeral" },
-      },
-    ],
-    messages: [{ role: "user", content: userPrompt }],
-  });
+  const message = await withRetry("messages.create", () =>
+    getLiteLLMClient().messages.create({
+      model: DIGEST_MODEL,
+      max_tokens: DIGEST_MAX_TOKENS,
+      system: [
+        {
+          type: "text",
+          text: FRAMING.replace("<ISO_WEEK_LABEL>", isoWeek),
+          cache_control: { type: "ephemeral" },
+        },
+        {
+          type: "text",
+          text: committeeBlock(),
+          cache_control: { type: "ephemeral" },
+        },
+      ],
+      messages: [{ role: "user", content: userPrompt }],
+    }),
+  );
 
   let markdown = "";
   for (const block of message.content) {
