@@ -31,7 +31,10 @@ import { type CommitteeMember } from "../committee.ts";
 /* ------------------------------------------------------------------ */
 
 const SCAN_MODEL = process.env.SCAN_MODEL || "claude-opus-4-6";
-const MAX_TOOL_USES = 5;
+// Raised from 5 to give the model room for the extra platform-scoped
+// searches (mainstream press + each social platform) without starving
+// press coverage of tool budget.
+const MAX_TOOL_USES = 8;
 
 /* ------------------------------------------------------------------ */
 /* Prompts                                                             */
@@ -42,15 +45,23 @@ function buildSystemPrompt(lookbackDays: number): string {
 
 Look for items from the past ${lookbackDays} day(s) only.
 
+Cover BOTH mass media and public social/owned media. Do not stop at news articles — this member's thought leadership also surfaces as:
+  - X/Twitter posts and threads
+  - LinkedIn posts and articles
+  - YouTube talks, lectures, panels, and interview recordings
+  - Bluesky, Mastodon, and Threads posts
+  - Substack posts and Notes
+Run searches against both mainstream press AND these platforms. Site-scoped queries help: e.g. \`site:x.com\`, \`site:linkedin.com/posts\`, \`site:bsky.app\`, \`site:youtube.com\`. Return the canonical post/video URL, not a search or aggregator URL.
+
 Be permissive about what counts as a hit:
-  (a) the named person is the author, interviewee, quoted source, panel/keynote speaker, or named lead — not just mentioned in passing, AND
+  (a) the named person is the author, poster, interviewee, quoted source, panel/keynote speaker, or named lead — not just mentioned in passing, AND
   (b) the item touches AI in any substantive way: artificial intelligence, machine learning, AI governance/policy/safety/ethics, AI literacy, foundation models, LLMs, AI infrastructure, applied AI in health/research/education, or the member commenting on the field.
 
 Include items where the AI angle is secondary — the digest layer will filter further. When in doubt, include and explain in match_reason.
 
-Skip stock-image bios, conference attendee lists, items where the member is named but not the subject, and anything older than ${lookbackDays} days.
+Skip stock-image bios, conference attendee lists, items where the member is named but not the subject, pure reshares/retweets with no added commentary of their own, and anything older than ${lookbackDays} days.
 
-Source kinds (use exactly one of these strings): publication, op_ed, podcast, interview, press_quote, position_statement, blog_post, talk, other.
+Source kinds (use exactly one of these strings): publication, op_ed, podcast, video, social_post, interview, press_quote, position_statement, blog_post, talk, other. Use \`social_post\` for X/LinkedIn/Bluesky/Mastodon/Threads posts and \`video\` for YouTube and other video talks; keep \`podcast\` for audio.
 
 Your final assistant message MUST be a single JSON object and nothing else, with this shape:
 
@@ -70,13 +81,37 @@ Your final assistant message MUST be a single JSON object and nothing else, with
 If your searches genuinely found nothing in the window, return {"items": []}. Do not include explanatory prose. Do not wrap the JSON in code fences.`;
 }
 
-function buildUserPrompt(member: CommitteeMember, aliases: string[], lookbackDays: number): string {
+/** Known social/owned-media accounts for a member, when configured. */
+export type MemberHandles = {
+  x_handle?: string | null;
+  linkedin?: string | null;
+  bluesky?: string | null;
+  youtube?: string | null;
+};
+
+function buildHandleLine(handles: MemberHandles): string {
+  const parts: string[] = [];
+  if (handles.x_handle) parts.push(`X: ${handles.x_handle}`);
+  if (handles.linkedin) parts.push(`LinkedIn: ${handles.linkedin}`);
+  if (handles.bluesky) parts.push(`Bluesky: ${handles.bluesky}`);
+  if (handles.youtube) parts.push(`YouTube: ${handles.youtube}`);
+  return parts.length > 0 ? `Known accounts to check directly: ${parts.join("; ")}.` : "";
+}
+
+function buildUserPrompt(
+  member: CommitteeMember,
+  aliases: string[],
+  handles: MemberHandles,
+  lookbackDays: number,
+): string {
   const aliasLine = aliases.length > 0 ? `Also try aliases: ${aliases.map((a) => `"${a}"`).join(", ")}.` : "";
+  const handleLine = buildHandleLine(handles);
   return `Member: "${member.name.full}".
 Primary affiliation: ${member.primary_affiliation.title}, ${member.primary_affiliation.organization}.
 ${aliasLine}
+${handleLine}
 
-Search the public web for AI-related output by this person published in the last ${lookbackDays} day(s). Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
+Search the public web — including social platforms — for AI-related output by this person published in the last ${lookbackDays} day(s). Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
 }
 
 function buildCommitteeSystemPrompt(lookbackDays: number): string {
@@ -86,13 +121,16 @@ Look for items from the past ${lookbackDays} day(s) only.
 
 A hit is an item that:
   (a) names the committee, initiative, or its formal launch / charge / membership / output as a body — NOT just an individual member doing their own work, AND
-  (b) is published in a credible venue: UC newsroom or campus communications, UCOP press, mainstream press, trade press (Inside Higher Ed, Chronicle of Higher Education, EdSurge), policy outlets, or official UC system pages.
+  (b) is published in a credible venue: UC newsroom or campus communications, UCOP press, mainstream press, trade press (Inside Higher Ed, Chronicle of Higher Education, EdSurge), policy outlets, official UC system pages, OR official/leadership social media (UC and campus accounts, or a co-chair posting AS committee leadership).
+
+Cover BOTH mass media and public social/owned media — check X/Twitter, LinkedIn, YouTube, Bluesky, Mastodon, and Threads as well as press. Site-scoped queries help: e.g. \`site:x.com\`, \`site:linkedin.com/posts\`, \`site:youtube.com\`. Return the canonical post/video URL, not a search or aggregator URL.
 
 Examples of hits:
   - press coverage announcing or describing the committee
   - UC Newsroom / campus comms about the committee
   - the committee's own published statements, charters, charges, working group outputs
-  - quotes from committee co-chairs (Khosla, Williams, Palazoglu) speaking AS committee leadership about the committee's work
+  - quotes from or posts by committee co-chairs (Khosla, Williams, Palazoglu) speaking AS committee leadership about the committee's work
+  - official UC/initiative social posts or recorded talks about the committee
   - mentions of the initiative in legislative or regulatory contexts
 
 Do NOT include:
@@ -100,7 +138,7 @@ Do NOT include:
   - older items predating the committee's formation
   - aggregator pages, member directories, or CV listings
 
-Source kinds (use exactly one of these strings): press_release, news_article, op_ed, position_statement, blog_post, podcast, talk, other.
+Source kinds (use exactly one of these strings): press_release, news_article, op_ed, position_statement, blog_post, podcast, video, social_post, talk, other. Use \`social_post\` for X/LinkedIn/Bluesky/Mastodon/Threads posts and \`video\` for YouTube and other video talks.
 
 Your final assistant message MUST be a single JSON object and nothing else, with this shape:
 
@@ -127,7 +165,7 @@ function buildCommitteeUserPrompt(aliases: string[], lookbackDays: number): stri
   return `Subject: the UCNFI Steering Committee (the UC AI Steering Committee, UC Next Frontier Initiative).
 ${aliasLine}
 
-Search the public web for items about this committee as a body, published in the last ${lookbackDays} day(s). Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
+Search the public web — including social platforms — for items about this committee as a body, published in the last ${lookbackDays} day(s). Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -216,7 +254,9 @@ function normaliseItem(
 
 export type WebSearchOptions = {
   searchAliases?: string[];
-  /** Cap the number of tool calls Claude can make. Default 5. */
+  /** Known social/owned-media accounts to target directly, when configured. */
+  handles?: MemberHandles;
+  /** Cap the number of tool calls Claude can make. Default 8. */
   maxToolUses?: number;
   /** Lookback window passed into the system + user prompts. Default 7. */
   lookbackDays?: number;
@@ -295,13 +335,14 @@ export async function collectTier2(
   opts: WebSearchOptions = {},
 ): Promise<ActivityItem[]> {
   const aliases = opts.searchAliases ?? [];
+  const handles = opts.handles ?? {};
   const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
   const lookbackDays = opts.lookbackDays ?? DEFAULT_LOOKBACK_DAYS;
   const logTag = member.member_id;
 
   const message = await runWebSearch({
     systemPrompt: buildSystemPrompt(lookbackDays),
-    userPrompt: buildUserPrompt(member, aliases, lookbackDays),
+    userPrompt: buildUserPrompt(member, aliases, handles, lookbackDays),
     maxUses,
     logTag,
   });
