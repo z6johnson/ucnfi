@@ -1,0 +1,1602 @@
+{
+  "fc9bee52554ca0592425c3fdc33d5e39": {
+    "source_id": "ucop-01",
+    "url": "https://ai.universityofcalifornia.edu/_files/documents/uc-ai-working-group-final-report.pdf",
+    "content_hash": "3be520ff393b2152b21bbf2e50252e9b14ae03baa1d4347f6989d1d26bbb2ca1",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "a26281f13fe9df69e3e6bd8ce91878ae": {
+    "source_id": "ucop-02",
+    "url": "https://ai.universityofcalifornia.edu/_files/documents/ai-council-uc-responsible-ai-principles.pdf",
+    "content_hash": "359743a3270d271f4f4bbed59c84d441e7107207b48c90e7916b923e2429674f",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "526cdab1a41f92714021149ce0b11b5c": {
+    "source_id": "ucop-03",
+    "url": "https://regents.universityofcalifornia.edu/regmeet/nov21/b2.pdf",
+    "content_hash": "3fec6123e2fc29285ee0a351d24b6e97d6a674abb52c4d170f2f639347bb952b",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "be4bf26424a099b80c159fa871edb04e": {
+    "source_id": "ucop-04a",
+    "url": "https://www.ucop.edu/ethics-compliance-audit-services/compliance/aicouncil/index.html",
+    "content_hash": "4d99e7dc388f692bf23b73aac308e3d947829cf9274128c5b4414c3bed9de6df",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "c4542fd5e2c59e9792a5da1ba781e180": {
+    "source_id": "ucop-04b",
+    "url": "https://ai.universityofcalifornia.edu/",
+    "content_hash": "46ce06f5b3df1ed27d328563d0934f687fbeeacc79e170a8dcde93f151b3daa1",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "198404d42b087c2573cce119838a57f4": {
+    "source_id": "ucop-05",
+    "url": "https://ai.universityofcalifornia.edu/_files/uc-ai-council-executive-summary-fy-23_24-final.pdf",
+    "content_hash": "bb5f3b99b409dd6fc0f5accc77fc10d85bcd408efe14f2c8bd84980f92cbdb75",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "814f86bf8d7832677dbc3b4822682dc4": {
+    "source_id": "ucop-06",
+    "url": "https://ai.universityofcalifornia.edu/_files/documents/transparency-subcommittee-report-june-28-2024_accessible-1.pdf",
+    "content_hash": "e9598b85f7b7cac3b5abc80e0f0fdead8bdfd6471785d4f9e712481c9895a665",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "6d8ccbd268b0053ac0295a5a827cba3b": {
+    "source_id": "ucop-07a",
+    "url": "https://ai.universityofcalifornia.edu/_files/documents/uc-ai-council-risk-assessment-guide-1.1-1.pdf",
+    "content_hash": "d69de41ebcd59d5b2cf14d9623736a542998fe8c7c024074978c26b6ffd967ef",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "2356b45814d9d37110c50b60387b00e0": {
+    "source_id": "ucop-07b",
+    "url": "https://ai.universityofcalifornia.edu/_files/documents/uc-ai-council-risk-assessment-guide-1.1-initial-assessment-final-1.pdf",
+    "content_hash": "28f4087557350e5f8f6fd7c04b2121cf2e24e8ad397519295329ca60fedd04e5",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "96133916fde10263202ef47e6f8cb9a1": {
+    "source_id": "ucop-08",
+    "url": "https://ai.universityofcalifornia.edu/_files/ai-ogc-24-06-28-practice-areas-expertise-chart-for-website-1.pdf",
+    "content_hash": "a3a338e37485a532c18777aaa7a20a3973b49c419e1bc54da641d5582db08ba4",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "6572cce168ea1f0eb1b71a2eeea8738b": {
+    "source_id": "ucop-09",
+    "url": "https://ai.universityofcalifornia.edu/_files/documents/ai-alert.pdf",
+    "content_hash": "face80380fa4176bd375328600dda119039ff77c153673e60ec1c6a9c8f68e97",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "9e567dbb911b383c702b2a1b609cbedb": {
+    "source_id": "ucop-10",
+    "url": "https://ai.universityofcalifornia.edu/_files/documents/statement-of-awareness-on-ai.pdf",
+    "content_hash": "180f0c5304ef3f18fffad2a3f53856ef3f10c58aa759f296319a8363e81162e0",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "2154162e739d7425f9b0a492aacf041b": {
+    "source_id": "ucop-11",
+    "url": "https://rise.articulate.com/share/B8DxWcOO3ALcVHlgqyQosNxIABql7Pn4",
+    "content_hash": "1befae9593992dbe4ceae5120a7e7339f068b136a1d485b41b8f28ced37f5d95",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "e6a8779415cad06f7bd8fc72ecb4f58c": {
+    "source_id": "ucop-12",
+    "url": "https://ai.universityofcalifornia.edu/_files/documents/ai-council-uc-ai-glossary.pdf",
+    "content_hash": "d5d21bff81ba7a970889cb7af89aa8cc33a82a2383139c08c114948bb804df05",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "34b15f21e5b919bd6443daa227ee52b7": {
+    "source_id": "ucop-13",
+    "url": "https://ai.universityofcalifornia.edu/governance-transparency/applicable-law-and-policy.html",
+    "content_hash": "2e6db7362a41e01609399694100a5b74ac70d508f91366c63c4624809313e625",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "69ba1826b5e4f79068f1fdc883088b07": {
+    "source_id": "ucop-14",
+    "url": "https://ai.universityofcalifornia.edu/uchealth-data-governance-task-force-report_2024_final_06272024.pdf",
+    "content_hash": "f8f0ded3069116944be8ee03398cc243a35855d5e7838d21a0f68e0ebbde05a3",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "d3aec2ad9dfc91884907293a298d55ac": {
+    "source_id": "ucop-14b",
+    "url": "https://regents.universityofcalifornia.edu/regmeet/june24/h4.pdf",
+    "content_hash": "0458f4c3b3c421f9a7f3eaddff446c8ae08a9b72db762900449690ca37e8e262",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "690334d0d64543933bcb949da3cf44a8": {
+    "source_id": "ucop-15",
+    "url": "https://uctechnews.ucop.edu/2024-uc-academic-congress-on-artificial-intelligence-ai",
+    "content_hash": "a69a1f1eab16dcb7ce7aeb8dca55100854e9c76f1d23cd8ed8d9bcaac1ce9857",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "ffd9ac7aa1265a6d66b4094d5c961b26": {
+    "source_id": "ucop-16",
+    "url": "https://regents.universityofcalifornia.edu/meetings/agendas/march24.html",
+    "content_hash": "53de52f977f1d6463ad1c094d7cb438068c98289b1b88a4b0797b4b9aa433b7f",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "f30f205ef6adf025956c3675fc17e311": {
+    "source_id": "ucop-17",
+    "url": "https://senate.universityofcalifornia.edu/files/committees/ucep/updated_uceptocouncil_academicintegrity_sept2025.pdf",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "15a8626e93f9ee1876f750279a27a120": {
+    "source_id": "ucop-18",
+    "url": "https://ai.universityofcalifornia.edu/tools-and-resources.html",
+    "content_hash": "65dddac26f3cb07de6b0dbd6b536eb383133b1db5b72ff44648a694fdadd5429",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "cec6c1287591e2c53a844b59650f2cd2": {
+    "source_id": "ucop-20",
+    "url": "https://ai.universityofcalifornia.edu/ai-communities",
+    "content_hash": "c558e6b048f2c1082ccf5cafb1c9310b65883ebaddf152ad512b1ea0e7c8ee1c",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "faef3b0ed953f124bcb90ca3a884c4ef": {
+    "source_id": "ucb-01",
+    "url": "https://evcp.berkeley.edu/initiatives/provosts-advisory-council-artificial-intelligence-pac-ai",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "967629f15d99db1d88faa67bb7d03a1b": {
+    "source_id": "ucb-02",
+    "url": "https://academic-senate.berkeley.edu/committees/divco/wgonai",
+    "content_hash": "a6c6498252105f5816ee2f5e4ba5bb7b4a69f1697d89925d749e709f9ad3d74c",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "ed9f6e57fc2edd82018b5f19b8a06c6c": {
+    "source_id": "ucb-03",
+    "url": "https://academic-senate.berkeley.edu/sites/default/files/genai_guidance_for_instructors_2025.pdf",
+    "content_hash": "22ec9c393d24c05f187d5fd94839a7ef06c6c726ff3c1f5126f798859f84832e",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "2c7566d27b68ef0576ffcc65bf059bc9": {
+    "source_id": "ucb-04",
+    "url": "https://evcp.berkeley.edu/news/new-ai-tools-faculty-and-staff",
+    "content_hash": "e8e63cdf76058cd30651a10d0517bd1d2b033b99665291406da9ff35990aa44b",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "9b55c425eb05ed24fb141bc0f0c23eae": {
+    "source_id": "ucb-05",
+    "url": "https://technology.berkeley.edu/AI",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "21b1ff01e558ab83d8cd2d2cd97067bc": {
+    "source_id": "ucb-06",
+    "url": "https://technology.berkeley.edu/ai/river",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "95bb249daf18007ff632a83537d0fc6a": {
+    "source_id": "ucb-07",
+    "url": "https://oercs.berkeley.edu/ai-governing-advisory-bodies",
+    "content_hash": "83139efe4014d5fe54ba26ccc3c1a1b9c4a6c8d698d8217d28f124cda2063e08",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "e99d98847629ee529728a825180effa8": {
+    "source_id": "ucb-08",
+    "url": "https://teaching.berkeley.edu/teaching-strategies/genai-teaching/understanding-genai-and-campus-expectations",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "b48702d78c914e63889fc04d4b62a62b": {
+    "source_id": "ucb-09",
+    "url": "https://oercs.berkeley.edu/",
+    "content_hash": "f02409b4f2274d1630cab710c722963e1ded9bf9dfe4c0452cdb848abb72e27a",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "2403f7cd482f10b71e9e2c86f338f9c7": {
+    "source_id": "ucb-10",
+    "url": "https://grad.berkeley.edu/academics/graduate-academic-integrity/resources-for-faculty-and-staff",
+    "content_hash": "f7baf267cd2dcff81e1816210dee49abeff151c0b286b929603bfcfa969edcad",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "770e95bb77ba977d405fd1f4978f818f": {
+    "source_id": "ucd-01",
+    "url": "https://leadership.ucdavis.edu/about/councils-committees-boards/artificial-intelligence",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 403,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "ebd4660c2348b4d4762ba988d6c8938f": {
+    "source_id": "ucd-02",
+    "url": "https://leadership.ucdavis.edu/sites/g/files/dgvnsk1166/files/media/documents/AI%20Council_report_2025-02-18_CLEAN%20(1).pdf",
+    "content_hash": "46a439ad881e7123dc9168371f7329d19894c4f73b4bf34741bcae725afd2ede",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "9a8b8e74c368fb9aa270f283b2bda302": {
+    "source_id": "ucd-03",
+    "url": "https://iet.ucdavis.edu/aggie-ai/ai-guidance",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 403,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "5f017ba7d77b620aa4e4e3deb6a2084a": {
+    "source_id": "ucd-04",
+    "url": "https://iet.ucdavis.edu/news/sensitive-data-and-ai-guidance",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 403,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "fdf749d024c71d509e4a946a5d3e166b": {
+    "source_id": "ucd-05",
+    "url": "https://iet.ucdavis.edu/aggie-ai",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 403,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "eeccd16dca4a9a738ef888bfebc9b225": {
+    "source_id": "ucd-06",
+    "url": "https://health.ucdavis.edu/compliance/regulatory/guidelines-for-using-ai",
+    "content_hash": "0e168360624376fc8ca630d7f8d9e0ba565881bf0967085a3dd88ca680b1748b",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "20b7239b2ebdb7bf3e70d2964ce41041": {
+    "source_id": "ucd-07",
+    "url": "https://adminit.ucdavis.edu/vra/ai-data-guidance",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 403,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "650cdc0f0811b43127258afcf2077d31": {
+    "source_id": "ucd-08",
+    "url": "https://iet.ucdavis.edu/student-guide-gen-ai",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 403,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "b8564a4b45bdacd5eea37237b13f105c": {
+    "source_id": "ucd-09",
+    "url": "https://academicsenate.ucdavis.edu/sites/g/files/dgvnsk3876/files/inline-files/ra-call-2025.10.06.pdf",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "f4354fac8c0b6612afc88b1fec04451e": {
+    "source_id": "ucd-10",
+    "url": "https://guides.library.ucdavis.edu/genai/resource",
+    "content_hash": "5ee8ab3dd492c56a8504db3be4b5952f1eda4ed022a56fd2fb28c3733b3e1753",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "9e86320c2e4050a08a38af0f56840f73": {
+    "source_id": "uci-08",
+    "url": "https://dtei.uci.edu/generative-ai",
+    "content_hash": "a1699f03e3f01d594563097f6f15775afd57f23cd97a1d47229b371f89eb34eb",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "1f3955d9b36cd4a9c0af95797a521615": {
+    "source_id": "uci-02",
+    "url": "https://www.oit.uci.edu/services/ai/zotgpt",
+    "content_hash": "6a25ff2d104b75a002c326005fb1809b4a444fbbb7fad9310577caea98633829",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "f73030be512b021dd1f36fc66049f8eb": {
+    "source_id": "uci-03",
+    "url": "https://research.uci.edu/ai-in-research",
+    "content_hash": "fe330a08484eee85ad7f88685e19da0abe718bd86d22ba0a629184e38d4e0c1b",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "c5a4c08f34fdf92d63b7cd351a5bfc5c": {
+    "source_id": "uci-04",
+    "url": "https://research.uci.edu/human-research-protections/assessing-risks-and-benefits/privacy-and-confidentiality/artificial-intelligence-and-human-subject-research",
+    "content_hash": "20970fd2c4a2ed6803b9199fbc4e711856fdaa1cdc924f32764040ecf48edba0",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "8f6782ae18c5f77fc5a2fe0c4407afc8": {
+    "source_id": "uci-05",
+    "url": "https://conduct.uci.edu/academic-integrity",
+    "content_hash": "234e656340279af9df1ac506ab6eaf39ce81db38591f6442e7e6cb70525b71e6",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "bbd8d0c0a39d80cb353282307e97e9d2": {
+    "source_id": "uci-06",
+    "url": "https://studentaffairs.uci.edu/ai-resources-support",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "25c173aa9b7842279ec9d87ff390f6bd": {
+    "source_id": "uci-07",
+    "url": "https://writing.uci.edu/2025/05/04/generative-ai-and-writing-course-policies",
+    "content_hash": "482dd6d06e9092b3b0ad53b4ac0bdd74deb7a9c730cf3788b0829dd7857bf3cd",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "bfd0055431f1149c1678c049b160d932": {
+    "source_id": "uci-09",
+    "url": "https://ucinoyce.org/AIpolicy.html",
+    "content_hash": "b3593639cdfd99c26e89ea3d9b40e057902b4f67c06bff4254ebc8a046721cd2",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "ea11cec7d06d954143e2317c71c9ba4a": {
+    "source_id": "uci-10",
+    "url": "https://research.bio.uci.edu/generative-ai",
+    "content_hash": "e54395e424e207e13bfdcec8209bf81a03743124cf141a4e89dd139018b9c5f0",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "a84f9e5795576760cd4c742035b65704": {
+    "source_id": "ucla-01",
+    "url": "https://dts.ucla.edu/strategy-roadmap/governance/strategic-committees/ai",
+    "content_hash": "98513d619e295ca357df93558a7ed21ce916bae330b13347e019b08a42172c03",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "bdd03e8d54f2ed433def9f9b68cdff56": {
+    "source_id": "ucla-02",
+    "url": "https://dts.ucla.edu/initiatives/ai/governance",
+    "content_hash": "ae7f2344a9a44079612aeb64502ad3a66b36219edd03f66a4173a0a164926f0d",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "efb808c7f3f14a1fa7ef1e211fe8d5b1": {
+    "source_id": "ucla-03",
+    "url": "https://dts.ucla.edu/initiatives/ai/ai-use-recommendation-guide",
+    "content_hash": "b4b43233aa7ba6e06c554092549c76f6ad2f08eab92b974b2e407393826fff5c",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "94418b6e3272b0e47391a43d98f34fe9": {
+    "source_id": "ucla-04",
+    "url": "https://dts.ucla.edu/initiatives/ai/guiding-principles-responsible-use",
+    "content_hash": "57f523470dca839d8d3b05721577e85c048545bb6c7f46c080cbb3cdff4586f6",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "b87cd1676dd7db46e20d2fb33f407521": {
+    "source_id": "ucla-05",
+    "url": "https://teaching.ucla.edu/about-us/committees/tlc-advisory-committee-on-ai-in-teaching-and-learning",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "c1345963ad8723e1d649577bd38f8e5b": {
+    "source_id": "ucla-06",
+    "url": "https://senate.ucla.edu/news/teaching-guidance-chatgpt-and-related-ai-developments",
+    "content_hash": "b2084400dcf1ce69859f8394299e0c45b900085f21c8aa501a7b1b25e06a7bd7",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "5e687711b597a6023c4ed9d52f26cd3a": {
+    "source_id": "ucla-07",
+    "url": "https://dts.ucla.edu/initiatives/ai",
+    "content_hash": "3ea76d617f7cf34e28b4e416e0373925307498deadd3c28ffc474ce4046b1c7b",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "1e291563b027bba3198bec41551914a7": {
+    "source_id": "ucla-08",
+    "url": "https://dts.ucla.edu/initiatives/ai/available-tools",
+    "content_hash": "9744aec939de0987118c51563dcda10aa64ef09e5f1304917e7423aa4b5104b5",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "8f3baa05836458424a12ebe03a8eb844": {
+    "source_id": "ucla-09",
+    "url": "https://teaching.ucla.edu/resources/teaching-guides/using-generative-ai-reflectively-and-responsibly-in-teaching-and-learning",
+    "content_hash": "fb5dbcfc0203de956f90a71905cfa5d12a1351337bdc6da757b5bc54f3cab217",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "88a2a14197a6b45ff084878cb6af9634": {
+    "source_id": "ucla-10",
+    "url": "https://dts.ucla.edu/initiatives/ai/ai-education-hub",
+    "content_hash": "a93cbf214c25cbd305af0269b9978138527f5f4cdbd67b17ca0fd908eba78337",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "5b2d48ae329d9925183e7668b426b01b": {
+    "source_id": "ucla-11",
+    "url": "https://newsroom.ucla.edu/releases/ucla-to-introduce-chatgpt-enterprise-on-campus",
+    "content_hash": "1a6aeca88fc388c8bd2e55aa2f9a44a3285c4cf8f6d8f221e3faf41754aeb6b7",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "de113b58be33577ea23ae6f1bd001f91": {
+    "source_id": "ucm-01",
+    "url": "https://ai.ucmerced.edu/advisory-council",
+    "content_hash": "72fcafd703cf4d5ffa197f0f5233a8f3d6e27bbc53f27378245b34c11b6f0746",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "20946f4d6d950a9bc99b400ea5a012ff": {
+    "source_id": "ucm-01b",
+    "url": "https://ai.ucmerced.edu/news/2026/formation-uc-merced-ai-advisory-council",
+    "content_hash": "a7c948b0f99a74b44569c3d26badbc73eb82a06000b3336f8120a74b16c97cf6",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "4e5cf0182b70b4af18cd6af5021c2456": {
+    "source_id": "ucm-02",
+    "url": "https://ai.ucmerced.edu/",
+    "content_hash": "eb32d6585e717c48419f4a2d46c89e25fe594a1d3d13d50111bd14f29e03bdfd",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "329c2bee317ef490401845a46caa4d60": {
+    "source_id": "ucm-03",
+    "url": "https://teach.ucmerced.edu/generative-AI-syllabus",
+    "content_hash": "2b7a6453bc586a241aefb8828f6ce6ec25c3035c8d915c401027a148a219c80a",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "8f266552b9ea5b4ded126620488d7fa5": {
+    "source_id": "ucm-04",
+    "url": "https://libguides.ucmerced.edu/Generative-AI",
+    "content_hash": "57b61069e0022025c67d8e9950aeff036be33581db0298adb18a3247ebcecc94",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "07aede8b9f0d2f71eebdcec99519a453": {
+    "source_id": "ucm-05",
+    "url": "https://ai.ucmerced.edu/news/2025/does-future-need-us-ethics-ai-education",
+    "content_hash": "3916b62e1313e08ee2c289d98564f4542160c1b7682e3dc7266a7a84ab4a32e8",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "86a3d2c336170e61eeadfb28c4d07c73": {
+    "source_id": "ucm-06",
+    "url": "https://graduatedivision.ucmerced.edu/AI-tools",
+    "content_hash": "cc2c732142048081ca0aca14617d76f1e072daef22767721c945eadf9383b096",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "c07e6ccebbf85cc4d48f2e4da905f0b8": {
+    "source_id": "ucr-01",
+    "url": "https://provost.ucr.edu/media/2947/download?attachment=",
+    "content_hash": "463795b013c4c4702de5a22bd1ba21d85f5b356a33aef32af9feb32d42b3c3ca",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "601c7404f633bdde763f5975647e9aa0": {
+    "source_id": "ucr-01b",
+    "url": "https://provost.ucr.edu/document/generative-ai-guidelines",
+    "content_hash": "25010497a92ff03fa0790e8d151e6b0b096900cf84070a5df326fbde5a362bd1",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "478707c34c064a26373d38b1e6dde343": {
+    "source_id": "ucr-02",
+    "url": "https://its.ucr.edu/ai",
+    "content_hash": "e73324d3c9b01e91f47b83b797532392575e43fa024778f4d4d16ae728688484",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "c1d7bcbeabd073f24830f3f6c74c0d49": {
+    "source_id": "ucr-03",
+    "url": "https://documents.ucr.edu/university-relations/AI_Marcomms_Guidelines.pdf",
+    "content_hash": "20d338a028db057cd45b815bade292f6ca66f329d146f650f99eaf74327e7eb5",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "438e11551f50e575ccc84fb7648e8cbb": {
+    "source_id": "ucr-04",
+    "url": "https://insideucr.ucr.edu/announcements/2023/11/03/update-artificial-intelligence-use-students",
+    "content_hash": "d033c3bee63e2416ffa4f852e6991252363d36d7d97e8a170ff392b04851ba9d",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "773935110a90154145eab7e1a8fab0b8": {
+    "source_id": "ucr-05",
+    "url": "https://teaching.ucr.edu/ai-classroom",
+    "content_hash": "bc26f17ee5269069f597b3693a49b01943190d0dfa57272ed28395baaa781114",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "9be3c39eecbb080044b7219de866caf2": {
+    "source_id": "ucr-06",
+    "url": "https://insideucr.ucr.edu/stories/2026/03/20/ucr-community-urged-use-google-ai-tools",
+    "content_hash": "4d88ddaf159d674473a4625e9030eed4ddea29f818805b50f80dee9ccf7eff5d",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "2455e48f24eefe19817c1041d8877c8b": {
+    "source_id": "ucsd-01",
+    "url": "https://tritonai.ucsd.edu/about/index.html",
+    "content_hash": "595a25935a05f7b0be074fc583cd380a0f0cff26cde4386aaf91423705d98c1c",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "5bf3c4e637c0734079095fff0b769230": {
+    "source_id": "ucsd-02",
+    "url": "https://blink.ucsd.edu/technology/ai/tritongpt/terms.html",
+    "content_hash": "c8aecaee17c274f88208b3f8b897a4e3e8df8d4d27a412b679b3430b792e14b3",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "5379af2fc1ce1b57b7de5306ba8dab8c": {
+    "source_id": "ucsd-03",
+    "url": "https://blink.ucsd.edu/technology/ai/tritongpt/privacy.html",
+    "content_hash": "595a25935a05f7b0be074fc583cd380a0f0cff26cde4386aaf91423705d98c1c",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "8d4ab86555522495f4097afab4d8853b": {
+    "source_id": "ucsd-04",
+    "url": "https://blink.ucsd.edu/technology/ai/acceptable-use.html",
+    "content_hash": "595a25935a05f7b0be074fc583cd380a0f0cff26cde4386aaf91423705d98c1c",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "c805ae6c565f071981985b47c1d545d5": {
+    "source_id": "ucsd-05",
+    "url": "https://blink.ucsd.edu/technology/ai",
+    "content_hash": "9fc670d6a85789c88f1c3e73d2203fa3f76597526187f270385ba9f5d12aee33",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "1bfb4a686121d4f01c6c92785c3fe036": {
+    "source_id": "ucsd-06",
+    "url": "https://tritonai.ucsd.edu/about/workgroup.html",
+    "content_hash": "554cbb4821c35eed9b5f4fa88667d67bb70c966663fea06a7c249f22231b5e37",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "b08ffb83c28604b28bc94ed47db89653": {
+    "source_id": "ucsd-07",
+    "url": "https://univcomms.ucsd.edu/resources/ai-guidance/index.html",
+    "content_hash": "d5408851327c141229d741c69b3d92ba15ecbe93b81f11d1e25d2c2083a9c470",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "46e9108b00739c20cd4f46ae60b28f09": {
+    "source_id": "ucsd-08",
+    "url": "https://academicintegrity.ucsd.edu/choose-integrity/gen-ai/index.html",
+    "content_hash": "64a7976cedd9587df84f27e67905cc7cf17f7fc8daca43dcd430bd5bc36f0af1",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "6bf89a7f7419fbd41f02c01dfd27c41a": {
+    "source_id": "ucsd-09",
+    "url": "https://sites.google.com/ucsd.edu/crafting-a-genai-and-ai-policy",
+    "content_hash": "ee693dbdb9da5636ec60cdccf254cd9239b990de9a11390307f03c5e9e623e87",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "12fa43d27221d811c0d5e8d8b174936b": {
+    "source_id": "ucsd-10",
+    "url": "https://canvas.ucsd.edu/enroll/M6NG3T",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 500,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "9a5c0c3ff33dc368bda6563ae062094a": {
+    "source_id": "ucsd-11",
+    "url": "https://ucsd.libguides.com/AI",
+    "content_hash": "539274c023dfc1bbff66a38a00031a34de3abdc560d04797323bec76e806bc11",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "cf9345fe455a6765fc90a1d080bfc7a1": {
+    "source_id": "ucsd-12",
+    "url": "https://health.ucsd.edu/about-us/ai-at-uc-san-diego-health",
+    "content_hash": "daceb55e5dd018345e280dd7e223061e497f0d20da95c0f4bfdd6bf15017e3b9",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "5702683b279f6cf7b68638b092aa5339": {
+    "source_id": "ucsd-13",
+    "url": "https://healthinnovation.ucsd.edu/our-principles",
+    "content_hash": "20952715b349c12a02e17bad4053528af606756c9ba3ecf894fd925ea2adc31c",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "869653cf7aa062aa783969ad16d50cab": {
+    "source_id": "ucsd-14",
+    "url": "https://health.ucsd.edu/news/press-releases/2023-12-12-karandeep-singh-md-named-inaugural-chief-health-ai-officer-at-uc-san-diego-health",
+    "content_hash": "341b4e432fb8aba9ef85801843f324f303f6f5172fb604a253dae02f82e4a919",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "82c79323eb08181bd6c7419a8a7573a5": {
+    "source_id": "ucsd-15",
+    "url": "https://health.ucsd.edu/news/press-releases/2025-12-08-alexander-khalessi-md-mba-appointed-chief-innovation-officer",
+    "content_hash": "0a85c8d8e5389dc1b66bb3f864475dd12c5964d2843fee3b4440de05341b7d36",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "ac44d9824a3d80d0c1b93dbf901ef2c3": {
+    "source_id": "ucsd-16",
+    "url": "https://evc.ucsd.edu/mission-initiatives/partnering-with-the-academic-senate.html",
+    "content_hash": "2ba8828496d581d3ed4d8fc5cee1978f2c3ecfb1a6febb670ad1263589ec13a1",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "12c67ecaac515401d241488a605e3bd0": {
+    "source_id": "ucsf-01",
+    "url": "https://ai.ucsf.edu/governance-guidance-and-policy",
+    "content_hash": "b76cc3297210e63f4d42e37d70263b36ec6684b94f831124615192e1cb7c9157",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "4e8848ab057accdba9e92ed98f0e34a9": {
+    "source_id": "ucsf-02",
+    "url": "https://ai.ucsf.edu/ucsf-ai-guidance",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 403,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "86208312d633dbbd7b07e89e3d284374": {
+    "source_id": "ucsf-03",
+    "url": "https://ai.ucsf.edu/data-policies",
+    "content_hash": "6b9db692ad89ac05a6b29388042849fc24a3ea0658435d88b0a67018dc07a8d2",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "b823d05910701c7603238fc3fab93516": {
+    "source_id": "ucsf-04",
+    "url": "https://ai.ucsf.edu/oversight",
+    "content_hash": "a34f91915ba535f9e4775c51a7ade62f30e484a78ac27007a296141632c2b14a",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "720709a23df88025c457550230b47a36": {
+    "source_id": "ucsf-05",
+    "url": "https://docit.ucsf.edu/news/first-continuous-ai-monitoring-platform-clinical-care",
+    "content_hash": "97bfd135f825c6fdc92946852889a2454d99b192b04a7919fe6935a6be94dfa1",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "0376d0727faa3b48dd9378e6ae116793": {
+    "source_id": "ucsf-06",
+    "url": "https://www.hcinnovationgroup.com/analytics-ai/artificial-intelligence-machine-learning/news/55275983/ucsf-creates-executive-director-of-ai-monitoring-in-clinical-care-role",
+    "content_hash": "9e4658049644d6b910869b0e258482aa700a4f0ad7c3ef16efc40caf85cadf51",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "1071c33ce5f216cc6b74ad64de2d43df": {
+    "source_id": "ucsf-07",
+    "url": "https://it.ucsf.edu/standards-and-guidelines/data-protection-and-large-language-models",
+    "content_hash": "d8c484eca827bad43a76aed789c63af0380edfe315f8ffed9d06b8739d1f868a",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "e9e3c8a53494f0c92af0f0d68153d60c": {
+    "source_id": "ucsf-08",
+    "url": "https://chancellor.ucsf.edu/news/leadership-announcements/chatgtopen-ai-usage-ucsf",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "08b6f48d2fca03ca9b2c2befaee7b95c": {
+    "source_id": "ucsf-09",
+    "url": "https://chancellor.ucsf.edu/news/now-available-versa-ucsf-generative-ai-platform",
+    "content_hash": "7d3e95e497383aba9c99a85ebb66a9e3d19fb5620ae338d9ff278c4164474031",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "c2dea0496e2d2341eaf9706cbf15cd39": {
+    "source_id": "ucsf-10",
+    "url": "https://meded.ucsf.edu/policies-procedures/bridges-curriculum-generative-artificial-intelligence-usage-policy",
+    "content_hash": "feadf756af6642f36edcd6b41346caa13abe220f336113ed72a5470cbc8562a4",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "97f99f87f155752f03312674af4180d4": {
+    "source_id": "ucsf-11",
+    "url": "https://pharm.ucsf.edu/current/policies/ai",
+    "content_hash": "6d97d653a4b8b2e1b71e4b369c5b295fed99a60a465c76d45a62c691ece9a835",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "7193eccc40bc0cf7fa64ffc919468c09": {
+    "source_id": "ucsf-12",
+    "url": "https://globalhealthsciences.ucsf.edu/wp-content/uploads/2025/01/IGHS-Policy-on-Use-of-AI_Final.pdf",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "c93902a0af4eb8128dc3d30475e56f9e": {
+    "source_id": "ucsf-13",
+    "url": "https://irb.ucsf.edu/chatgpt-large-language-models-llm-artificial-intelligence-ai",
+    "content_hash": "505e08f1d11bd426d2c426547b4416ba35da795d0b00f06612f137648e084a45",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "3243f2f73209bd7fb1bf9f60f683e7b5": {
+    "source_id": "ucsf-14",
+    "url": "https://ai.ucsf.edu/sites/ai.ucsf.edu/files/2024-06/Jan%2012%20Panel_AI%20in%20RW%20Clinical%20Settings.pdf",
+    "content_hash": "e093db285b58ff07a739b1461f71ff1b3d47bfac2c74e112d35d1e92e09c98f9",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "cf3fd21c7d1d2b5602ddbe34eb785a75": {
+    "source_id": "ucsf-15",
+    "url": "https://meded.ucsf.edu/artificial-intelligence-medical-education",
+    "content_hash": "c47b2a1d4ad67f554b7a61de8a7ed409110aad6572557287fdaf6a5794c521c5",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "d90d40b086531acf78961c3abd95a0db": {
+    "source_id": "ucsf-16",
+    "url": "https://www.ucsf.edu/news/2023/12/426746/chancellor-sees-ucsf-leading-ais-new-era-annual-state-university-address",
+    "content_hash": "61946d5da6dd070922280561d407c0decf013c42c4e03f105609a62cc5944070",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "f39e311b50e477e720d2036939259efb": {
+    "source_id": "ucsf-17",
+    "url": "https://ai.ucsf.edu/trustworthy",
+    "content_hash": "94978b98be72f168909062f23064ca260834c35034ecc99dcfd5f085822bf200",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "cb2117f055b8d56af0c444d1f99a62a3": {
+    "source_id": "ucsb-01",
+    "url": "https://cio.ucsb.edu/artificial-intelligence",
+    "content_hash": "0957b5bcc5efcafe04229898088df9f691350d56253faad27dde2ac6c1d21986",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "8d3bf0169af73ebb165a0e10aa2bc7c5": {
+    "source_id": "ucsb-02",
+    "url": "https://cio.ucsb.edu/artificial-intelligence/ai-use-guidelines",
+    "content_hash": "3e66c0c7842431cced95153010f663cb6e06c2218810e2d067e84c9e36484501",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "0aa6e5dccdd93db1a3d5f4d150146fe4": {
+    "source_id": "ucsb-03",
+    "url": "https://evc.ucsb.edu/committees/AI-advisory-uses",
+    "content_hash": "2442c3fcf3e22f7cec4da1b4bfb37ce27df29baec82986e194ca160cd1937614",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "c8df73abff45647d0db516f5e3f33dc7": {
+    "source_id": "ucsb-04",
+    "url": "https://evc.ucsb.edu/communications/memos/2023-05-01-behalf-office-teaching-and-learning-guidance-regarding-ai-writing",
+    "content_hash": "b5a695a403c20c9e3daea36410f7746a341d6ba1cd15dc6b474b505b45a917f6",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "7e5d61b6cf39586ab269b52c29950026": {
+    "source_id": "ucsb-05",
+    "url": "https://otl.ucsb.edu/resources/assessing-learning/ai-in-classes",
+    "content_hash": "b3e5c32e19bfbc092a198f118a5c8bda0ce5d6da428c73526ab0471cfd4b4023",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "d866423a30a5dac8fd7734ac3f7794f2": {
+    "source_id": "ucsb-06",
+    "url": "https://otl.ucsb.edu/tales/ai-101",
+    "content_hash": "89a8ada811d66971110717e2b1b0d7594a24d661f23fc59137bfd63584935a8c",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "a070ece61f70968801a3af03b043f71e": {
+    "source_id": "ucsb-07",
+    "url": "https://www.writing.ucsb.edu/resources/faculty/ai-policy",
+    "content_hash": "095132c6cc700158106ea8ef9bc899465e113d7a074f74c381afc6cacbd063e9",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "d86ede9cbe9a5ef6361f1c5aa5ba53f7": {
+    "source_id": "ucsb-08",
+    "url": "https://otl.ucsb.edu/cop/artificial-intelligence-community-practice",
+    "content_hash": "a6d3b24aeedc7ea9643f6d5fa1d0002ae2f021a6e571f48f0fbfa301c04cafb8",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "dd2f6c8c31b194c45da6561d19f553a0": {
+    "source_id": "ucsb-09",
+    "url": "https://guides.library.ucsb.edu/ai",
+    "content_hash": "bb717c00b27544a16a5d1bedb38471b1ce5ba663057c9c3e85569e1219af2788",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "3bb88d18241ee1d4f36013fb6397938f": {
+    "source_id": "ucsc-02",
+    "url": "https://campusai.ucsc.edu/",
+    "content_hash": "29e72554dcfca62d298ff6deb3f83f84e3629ed7ab5ba01d8a0a388a3df8b25c",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "b2ef881dac8eb6477e19d690fc5e19a3": {
+    "source_id": "ucsc-03",
+    "url": "https://campusai.ucsc.edu/guiding-principles",
+    "content_hash": "6256375a06725734c8d61671219f8345d72b1650e22126cd18514fef3fa79e9e",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "1707f3d65ea6dc91740303250eb917af": {
+    "source_id": "ucsc-04",
+    "url": "https://campusai.ucsc.edu/faq",
+    "content_hash": "1be9a09cca94173b20488334fec9d540aadf09288f1b3cc73ebfd05ab1d18d72",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "852145cfb0111cab72b3648cc5b043f0": {
+    "source_id": "ucsc-05",
+    "url": "https://news.ucsc.edu/2024/01/generative-ai-statement",
+    "content_hash": "881d1ff8ee9011157a1242f2ef9367d1888a4defc58a5bbc84f4433ec1d883d1",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "a2c6e3428fde3f17ec0457ae4b267ac7": {
+    "source_id": "ucsc-06",
+    "url": "https://news.ucsc.edu/2023/09/generative-ai-in-teaching-and-learning-link-corrected",
+    "content_hash": "f935119f400c56e5a69b82862f52e5a8eed7d4c47ed554bf8d2dff03c07e04d9",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "40564eaad32b0e6dc3144cbf07580e32": {
+    "source_id": "ucsc-07",
+    "url": "https://tlc.ucsc.edu/academic-integrity/generative-ai-use-policy",
+    "content_hash": "91dbed0074c87593eddca1f4daa31079ae89676cd332ba13b96a75ea9ad736cf",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "7595715dcede3aaf677a2d1701507c53": {
+    "source_id": "ucsc-08",
+    "url": "https://campusai.ucsc.edu/tools",
+    "content_hash": "57db5a76d7b3c33ba81306bef71070f0cbbea99cf7a243f838058c7d86b07460",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "c26a0da2bb71eeabc2a4d8728d488691": {
+    "source_id": "ucsc-09",
+    "url": "https://campusai.ucsc.edu/training-and-guides",
+    "content_hash": "52003457b6e4369ef82c882f62d7b149f1c501a38e03a462c7d0e624cea266d8",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "eaf427e6d592b32db15c27f637b40356": {
+    "source_id": "ucsc-10",
+    "url": "https://genai.ucsc.edu/",
+    "content_hash": "399d3488a18225efcf551afbff8c655fb4f50785869878a72a76498cb4d9e8f7",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "eee0ccec86403b28d2bde94a5c0ccb5c": {
+    "source_id": "ucsc-11",
+    "url": "https://www.santacruzworks.org/news/from-the-chancellor-harnessing-the-power-of-aiwhile-avoiding-its-perils",
+    "content_hash": "a9bd5e22cf01c3888fc375b7503a6a29b24455aa3d5e7684d794ffdcd7fbddbc",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "9b5d807bcb1a2e9c4a23fcced5190d3e": {
+    "source_id": "uclah-01",
+    "url": "https://www.uclahealth.org/health-ai/ucla-health-ai-council-haic",
+    "content_hash": "be1a9080d992eaadb96b6d85bc88c59c170a5a83b6c4013270b75a3b7ac431bd",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "49c281f3b6341881c6e3726cae3d21a8": {
+    "source_id": "ucdh-01",
+    "url": "https://www.himss.org/resources/university-of-california-davis-health-pioneers-framework-for-ethical-health-ai-and-data-governance",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 403,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "940df3a766a81251c45074dc9041cf7b": {
+    "source_id": "ucdh-02",
+    "url": "https://health.ucdavis.edu/news/headlines/pilot-program-in-emergency-medicine-department-trains-residents-to-use-ai-tool/2026/03",
+    "content_hash": "3a992aa910b10af033600d31d577b0905df04092fdf5c169628144246932cd96",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "7a4cbc47fcde1ca5017d8ac6a2de76d1": {
+    "source_id": "cuch-01",
+    "url": "https://health.ucdavis.edu/news/headlines/uc-davis-health-and-leading-health-systems-launch-valid-ai/2023/10",
+    "content_hash": "9182001dea9e31de4e7b6b4bd4768c45bb4764438a077538a0b9be41d224d1c0",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "eafa09668bd73a98c4dcbb7fe14137f3": {
+    "source_id": "cuch-02",
+    "url": "https://health.universityofcalifornia.edu/news/uc-health-grand-rounds-explores-data-and-ai-asking-whats-real-whats-allowed-and-whats",
+    "content_hash": "d8690880325b19b154d37a7dc2fb8ef26ce535462db4ae12c940bffce93f7dbc",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "9579022b11fb61fa4bbc2c77e061df23": {
+    "source_id": "lbnl-01",
+    "url": "https://www.anl.gov/sites/www/files/2023-06/AI4SESReport-2023-v5.pdf",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 403,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "906820fe2d055f538f08da3e6442afdf": {
+    "source_id": "lbnl-02",
+    "url": "https://cborg.lbl.gov/about",
+    "content_hash": "a93ea84031d6ade1d126ae1bee2d0396fb62e134b029326de8d97afecf0d695c",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "8930881d4db055555c25d708824323d0": {
+    "source_id": "llnl-01",
+    "url": "https://data-science.llnl.gov/sites/data_science/files/2024-12/SafeAIforDOE%20Digital.pdf",
+    "content_hash": "00a1ba7624a4b8da9664696853e7c30bf5bb7daf96be9136369c1c201bf55fdc",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "e912b8c55d55c41b65822534821b9086": {
+    "source_id": "llnl-02",
+    "url": "https://data-science.llnl.gov/sites/data_science/files/2026-01/ai-in-8-final_report_for_web.pdf",
+    "content_hash": "9518ba3d08da9e216187196d429ba97029aa19f97ac2d7b8f454b9effcd2e688",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "dda9713bff24dea0b8ad5c5ed6a8d13c": {
+    "source_id": "llnl-03",
+    "url": "https://www.llnl.gov/article/5171/university-californiallnl-joint-workshop-sparks-crucial-dialogue-ai-safety",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "62602ac0f0e668406835accf5ca62957": {
+    "source_id": "lanl-01",
+    "url": "https://insidehpc.com/2025/02/los-alamos-and-openai-partner-on-national-security",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": "error",
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "4fb73cf59fb260602a79ed6691115885": {
+    "source_id": "lanl-02",
+    "url": "https://openai.com/index/openai-and-los-alamos-national-laboratory-work-together",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 403,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "bbb6fa8733d00d50af2c4b3c8f0659b7": {
+    "source_id": "ucop-08",
+    "url": "https://ai.universityofcalifornia.edu/_files/documents/ai-ogc-24-06-28-practice-areas-expertise-chart-for-website-1.pdf",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "5c6d356d98620e39f63c601b3d4cde7b": {
+    "source_id": "ucb-03",
+    "url": "https://academic-senate.berkeley.edu/genai",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "0549052520644e10c9b41f0e1df5d0e2": {
+    "source_id": "ucd-04",
+    "url": "https://itpolicy.ucdavis.edu/",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": "error",
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "2412a03c6f719b786d8892b8ef90e9c3": {
+    "source_id": "uci-02",
+    "url": "https://oit.uci.edu/zotgpt",
+    "content_hash": "c95f7791acd97804e407abff5f4af7e9537de797cb374c7f29ac5deb37bd5a10",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "d799861f2c18e89c079491fed43a8166": {
+    "source_id": "ucla-06",
+    "url": "https://teaching.ucla.edu/resources/teaching-guidance-for-chatgpt-and-related-ai-developments",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "054feb32862e6ee351cac359d97616ba": {
+    "source_id": "ucla-03",
+    "url": "https://oai.ucla.edu/about",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": "error",
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "a857ff934b63469cc83725d01d5386d7": {
+    "source_id": "ucla-07",
+    "url": "https://oai.ucla.edu/education-and-training",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": "error",
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "9a5126b43cf0f4432b11f4e6b1455e1b": {
+    "source_id": "ucla-06",
+    "url": "https://oai.ucla.edu/ai-adoption-overview",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": "error",
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "85215ef92d5ca7aad49114353ecee716": {
+    "source_id": "ucla-01",
+    "url": "https://oai.ucla.edu/",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": "error",
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "9a19fd8cf799094840a77f45d442a6e1": {
+    "source_id": "ucla-08",
+    "url": "https://oai.ucla.edu/tools",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": "error",
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "ef4a1d0bc7585d607f8c85ee2cbfed27": {
+    "source_id": "ucsd-02",
+    "url": "https://tritonai.ucsd.edu/tritongpt/terms.html",
+    "content_hash": "c8aecaee17c274f88208b3f8b897a4e3e8df8d4d27a412b679b3430b792e14b3",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "107ecf2dd98b291666a7970db330de48": {
+    "source_id": "ucsf-06",
+    "url": "https://www.hcinnovationgroup.com/analytics-ai/artificial-intelligence-machine-learning/news/55275983",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "e8d917d1943f8e75eb5b0b9e14fb27ff": {
+    "source_id": "ucsb-08",
+    "url": "https://otl.ucsf.edu/cop/artificial-intelligence-community-practice",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": "error",
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "be5bf4e81f354cd08384e2fd578d7a95": {
+    "source_id": "ucsd-12",
+    "url": "https://health.ucsd.edu/health-services/ai",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 404,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "99d13a08436acd2b6de0961375f80853": {
+    "source_id": "ucsf-04",
+    "url": "https://docit.ucsf.edu/",
+    "content_hash": "cb4502a50f36121737cd8ba80c4058bb681c74f9eefbc5a45ab98ac72affda03",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "15eafb722cd738b812587ae21fafe3aa": {
+    "source_id": "umich-01",
+    "url": "https://genai.umich.edu/",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 403,
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  },
+  "b67f9a2e0c552b95de4fad5a9eec9d3b": {
+    "source_id": "uw-01",
+    "url": "https://www.washington.edu/provost/ai",
+    "content_hash": "96a393b6b26e7b99483fcc31adc6031185522ac4dee65c57d698fed479ec8397",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "c0a5858881a7ac1c510b859177391efd": {
+    "source_id": "stanford-01",
+    "url": "https://hai.stanford.edu/",
+    "content_hash": "b4e9951371576d8c2b60b964891bb206be44aff29062b37cb8b623c563fec2e8",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "ad27ddcf3a17747aeaa1ce1f4f313b63": {
+    "source_id": "mit-01",
+    "url": "https://computing.mit.edu/",
+    "content_hash": "2ccd6366e59b1f854a91a562a4f47c870714f4e1ed0ddb8cda73253b36136db4",
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": 200,
+    "last_changed": "2026-05-30T19:42:05.508Z",
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 0
+  },
+  "9206bcecdf75da3cf1eec388990945fe": {
+    "source_id": "cmu-01",
+    "url": "https://ai.cs.cmu.edu/",
+    "content_hash": null,
+    "last_fetched": "2026-05-30T19:42:05.508Z",
+    "last_status": "error",
+    "last_changed": null,
+    "first_seen": "2026-05-30T19:42:05.508Z",
+    "consecutive_failures": 1
+  }
+}
