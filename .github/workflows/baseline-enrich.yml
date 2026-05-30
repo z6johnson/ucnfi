@@ -1,0 +1,116 @@
+name: Monthly shared-picture enrichment
+
+# Monthly refresh of the UC "shared picture": re-fetches known sources, runs a
+# full entity×dimension discovery sweep, and writes DRAFT changesets under
+# data/enrich/changesets/ for human review. This job PROPOSES only — it never
+# mutates the canonical baseline / peer / committee files. Applying a reviewed
+# changeset is done by a human via `npm run enrich:apply` (see the changeset
+# header for the exact command).
+#
+# Required repo secret:
+#   LITELLM_API_KEY  — TritonAI bearer token for discovery + extraction
+#
+# Coexists with .github/workflows/committee-scan.yml: that runs daily at 13:00
+# UTC and weekly Sundays at 14:00 UTC; this runs at 11:00 UTC on the 1st of the
+# month — a distinct hour and day so the commit/push loops never collide.
+
+on:
+  schedule:
+    - cron: "0 11 1 * *"
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Which surface to enrich"
+        required: true
+        default: "all"
+        type: choice
+        options:
+          - all
+          - baseline
+          - peer
+          - committee
+      lookback_days:
+        description: "Discovery lookback window in days (default 35)"
+        required: false
+        default: "35"
+        type: string
+      full_sweep:
+        description: "Full entity×dimension sweep (off = changed cells only)"
+        required: false
+        default: true
+        type: boolean
+      dry_run:
+        description: "Build and print changesets without writing/committing"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: baseline-enrich-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Real token so the post-step git push goes through.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate baseline (pre-flight gate)
+        run: npm run validate:baseline
+
+      - name: Run monthly enrichment (propose only)
+        env:
+          LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
+          LITELLM_BASE_URL: ${{ vars.LITELLM_BASE_URL }}
+          ENRICH_MODEL: ${{ vars.ENRICH_MODEL }}
+          TARGET: ${{ inputs.target || 'all' }}
+          LOOKBACK_DAYS: ${{ inputs.lookback_days || '35' }}
+          FULL_SWEEP: ${{ inputs.full_sweep == false && '0' || '1' }}
+          DRY_RUN: ${{ inputs.dry_run == true && '1' || '0' }}
+        run: npm run enrich:monthly
+
+      - name: Validate generated changesets
+        if: ${{ inputs.dry_run != true }}
+        run: npm run validate:baseline
+
+      - name: Commit and push if changes
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          git config user.name "ucnfi-enrich-bot"
+          git config user.email "ucnfi-enrich-bot@users.noreply.github.com"
+          git add data/enrich/
+          if git diff --cached --quiet; then
+            echo "No proposed changes to commit."
+          else
+            MONTH=$(date -u +%Y-%m)
+            git commit -m "Monthly shared-picture enrichment proposals — $MONTH"
+            branch="${GITHUB_REF#refs/heads/}"
+            for attempt in 1 2 3 4 5; do
+              if git push origin "HEAD:${branch}"; then
+                echo "Pushed on attempt ${attempt}."
+                break
+              fi
+              if [ "$attempt" = "5" ]; then
+                echo "Giving up after 5 push attempts."
+                exit 1
+              fi
+              echo "Push rejected on attempt ${attempt}; rebasing onto origin/${branch}…"
+              git fetch origin "${branch}"
+              git rebase "origin/${branch}"
+              sleep "$((attempt * 2))"
+            done
+          fi
