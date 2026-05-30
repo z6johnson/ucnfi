@@ -49,6 +49,7 @@ For each topic that has items this week, a level-3 heading and a bulleted list. 
 - Publications (papers, preprints) — \`source_kind=publication\` or \`source_kind=arxiv\`
 - Op-eds & positions — \`source_kind=op_ed, position_statement\`
 - Podcasts & interviews — \`source_kind=podcast, interview\`
+- Social posts & video — match notes \`social_post\` or \`video\` (X/LinkedIn/Bluesky/Mastodon/Threads posts, YouTube talks)
 - Press quotes — \`source_kind=press_quote\`
 - Talks & blog posts — \`source_kind=talk, blog_post, rss\`
 - Other

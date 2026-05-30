@@ -81,6 +81,12 @@ async function processMember(member: CommitteeMember, feedsConfig: ReturnType<ty
       try {
         result.tier2 = await collectTier2(member, {
           searchAliases: cfg?.search_aliases ?? [],
+          handles: {
+            x_handle: cfg?.x_handle ?? null,
+            linkedin: cfg?.linkedin ?? null,
+            bluesky: cfg?.bluesky ?? null,
+            youtube: cfg?.youtube ?? null,
+          },
           lookbackDays: LOOKBACK_DAYS,
         });
       } catch (err) {

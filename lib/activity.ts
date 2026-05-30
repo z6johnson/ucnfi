@@ -71,7 +71,11 @@ export type FeedConfig = {
   rss?: string[];
   arxiv_author?: string | null;
   scholar_id?: string | null;
+  /** Social/owned-media accounts; passed to tier-2 search to target directly. */
   x_handle?: string | null;
+  linkedin?: string | null;
+  bluesky?: string | null;
+  youtube?: string | null;
   search_aliases?: string[];
 };
 
