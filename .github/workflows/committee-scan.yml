@@ -72,6 +72,7 @@ jobs:
         env:
           LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
           LITELLM_BASE_URL: ${{ vars.LITELLM_BASE_URL }}
+          LITELLM_MCP_URL: ${{ vars.LITELLM_MCP_URL }}
           SCAN_MODEL: ${{ vars.SCAN_MODEL }}
           LOOKBACK_DAYS: ${{ inputs.lookback_days }}
         run: npm run scan:daily
