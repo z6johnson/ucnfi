@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
+import { baselineStats, metadata as baselineMeta } from "@/lib/baseline";
 
 export const metadata: Metadata = {
   title: "UCNFI — UC Next Frontier Initiative",
@@ -11,6 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const stats = baselineStats();
+  const ageDays = Math.floor(
+    (Date.now() - Date.parse(baselineMeta.created)) / 86_400_000,
+  );
+  const stale = Number.isFinite(ageDays) && ageDays > 45;
   return (
     <html lang="en">
       <body>
@@ -21,14 +27,27 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <span className="label">UC Next Frontier Initiative</span>
             <div className="flex items-center gap-6">
               <Link
-                href="/baseline"
+                href="/data-status"
                 className="label hover:text-[var(--color-accent)]"
               >
-                Baseline
+                Data status
               </Link>
-              <span className="label">
-                Baseline v0.7.0 · 20 entities · 262 data points
-              </span>
+              <Link
+                href="/data-status"
+                className="label hover:text-[var(--color-accent)]"
+                title={`Baseline as of ${baselineMeta.created}`}
+              >
+                <span className="label">
+                  Baseline v{stats.version} · {stats.entityCount} entities ·{" "}
+                  {stats.dataPointCount} data points · as of {baselineMeta.created}
+                  {stale ? (
+                    <span style={{ color: "var(--color-warn-strong)" }}>
+                      {" "}
+                      ({ageDays}d old)
+                    </span>
+                  ) : null}
+                </span>
+              </Link>
             </div>
           </footer>
         </div>

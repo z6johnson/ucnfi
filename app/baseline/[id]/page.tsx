@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { DimensionSection } from "@/components/DimensionSection";
+import { DimensionSection, type FieldUpdateMeta } from "@/components/DimensionSection";
 import {
   DIMENSION_IDS,
   ENTITY_TYPE_LABEL,
@@ -8,6 +8,7 @@ import {
   fieldsOf,
   getEntity,
 } from "@/lib/baseline";
+import { fieldLastUpdatedIndex } from "@/lib/enrich/history";
 
 export function generateStaticParams() {
   return entityIds().map((id) => ({ id }));
@@ -27,6 +28,17 @@ export default async function EntityDetailPage({
     (n, d) => n + fieldsOf(entity, d).length,
     0,
   );
+
+  // Per-field "last updated" derived from applied changeset history.
+  const updateIndex = fieldLastUpdatedIndex(process.cwd());
+  const updatesFor = (dim: string): Record<string, FieldUpdateMeta> => {
+    const out: Record<string, FieldUpdateMeta> = {};
+    for (const [field] of fieldsOf(entity, dim as (typeof DIMENSION_IDS)[number])) {
+      const hit = updateIndex.get(`${entity.entity_id}.${dim}.${field}`);
+      if (hit) out[field] = { version: hit.version, date: hit.applied_at.slice(0, 10) };
+    }
+    return out;
+  };
 
   return (
     <div className="pt-12">
@@ -58,6 +70,7 @@ export default async function EntityDetailPage({
           key={dim}
           dimension={dim}
           fields={fieldsOf(entity, dim)}
+          updates={updatesFor(dim)}
         />
       ))}
     </div>

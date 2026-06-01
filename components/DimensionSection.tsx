@@ -5,9 +5,13 @@ import {
   type FieldRecord,
 } from "@/lib/baseline";
 
+export type FieldUpdateMeta = { version: string; date: string };
+
 type Props = {
   dimension: DimensionId;
   fields: Array<[string, FieldRecord]>;
+  /** Per-field "last updated" info, keyed by field name. */
+  updates?: Record<string, FieldUpdateMeta>;
 };
 
 function renderValue(value: FieldRecord["value"]) {
@@ -23,7 +27,7 @@ function valueTone(value: FieldRecord["value"]) {
   return "var(--color-ink)";
 }
 
-export function DimensionSection({ dimension, fields }: Props) {
+export function DimensionSection({ dimension, fields, updates }: Props) {
   if (fields.length === 0) return null;
   return (
     <section className="mt-10">
@@ -58,8 +62,8 @@ export function DimensionSection({ dimension, fields }: Props) {
                 {record.notes}
               </p>
             ) : null}
-            {record.source_id || record.source_url ? (
-              <div className="flex items-center gap-3 pt-1">
+            {record.source_id || record.source_url || updates?.[name] ? (
+              <div className="flex flex-wrap items-center gap-3 pt-1">
                 {record.source_id ? (
                   <span className="label">{record.source_id}</span>
                 ) : null}
@@ -72,6 +76,14 @@ export function DimensionSection({ dimension, fields }: Props) {
                   >
                     Source ↗
                   </a>
+                ) : null}
+                {updates?.[name] ? (
+                  <span
+                    className="text-xs"
+                    style={{ color: "var(--color-text-subtle)" }}
+                  >
+                    updated v{updates[name].version} · {updates[name].date}
+                  </span>
                 ) : null}
               </div>
             ) : null}

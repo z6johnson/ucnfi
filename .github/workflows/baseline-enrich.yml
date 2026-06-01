@@ -47,6 +47,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: baseline-enrich-${{ github.ref }}
@@ -87,30 +88,74 @@ jobs:
         if: ${{ inputs.dry_run != true }}
         run: npm run validate:baseline
 
-      - name: Commit and push if changes
+      # Open a draft PR with the proposals rather than committing silently to the
+      # default branch. A PR is an actionable inbox item — it makes a pending
+      # refresh impossible to miss and carries the exact apply command, closing
+      # the "I ran the enrichment but nothing changed" gap. The canonical files
+      # are still untouched; applying remains a human step on the PR branch.
+      - name: Open a draft PR with the proposals
         if: ${{ inputs.dry_run != true }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "ucnfi-enrich-bot"
           git config user.email "ucnfi-enrich-bot@users.noreply.github.com"
           git add data/enrich/
           if git diff --cached --quiet; then
             echo "No proposed changes to commit."
-          else
-            MONTH=$(date -u +%Y-%m)
-            git commit -m "Monthly shared-picture enrichment proposals — $MONTH"
-            branch="${GITHUB_REF#refs/heads/}"
-            for attempt in 1 2 3 4 5; do
-              if git push origin "HEAD:${branch}"; then
-                echo "Pushed on attempt ${attempt}."
-                break
-              fi
-              if [ "$attempt" = "5" ]; then
-                echo "Giving up after 5 push attempts."
-                exit 1
-              fi
-              echo "Push rejected on attempt ${attempt}; rebasing onto origin/${branch}…"
-              git fetch origin "${branch}"
-              git rebase "origin/${branch}"
-              sleep "$((attempt * 2))"
+            exit 0
+          fi
+
+          MONTH=$(date -u +%Y-%m)
+          BASE="${GITHUB_REF#refs/heads/}"
+          BRANCH="enrich/proposals-$MONTH"
+
+          # Which changeset files did this run touch (for the PR summary)?
+          CHANGED_MD="$(git diff --cached --name-only -- 'data/enrich/changesets/*.md' || true)"
+
+          git checkout -b "$BRANCH"
+          git commit -m "Monthly shared-picture enrichment proposals — $MONTH"
+
+          # A re-run in the same month updates the existing proposal branch.
+          for attempt in 1 2 3 4 5; do
+            if git push --force-with-lease origin "$BRANCH"; then
+              echo "Pushed on attempt ${attempt}."
+              break
+            fi
+            if [ "$attempt" = "5" ]; then
+              echo "Giving up after 5 push attempts."
+              exit 1
+            fi
+            sleep "$((attempt * 2))"
+          done
+
+          BODY_FILE="$(mktemp)"
+          {
+            echo "Automated monthly enrichment produced the draft changeset(s) below."
+            echo
+            echo "**These are proposals — the canonical baseline is unchanged until a"
+            echo "human reviews and applies them.** That is why a refresh run on its own"
+            echo "does not move any numbers in the app."
+            echo
+            for f in $CHANGED_MD; do
+              [ -e "$f" ] || continue
+              id="$(basename "$f" .md)"
+              acc="$(grep -c 'DECISION: accept' "$f" || true)"
+              rev="$(grep -c 'DECISION: review' "$f" || true)"
+              rej="$(grep -c 'DECISION: reject' "$f" || true)"
+              echo "- **$id** — $acc ready · $rev need a decision · $rej declined"
+              echo "  - To land: \`npm run enrich:apply -- --changeset $id\` (set \`reviewed_by\` first)"
             done
+            echo
+            echo "Review each \`DECISION:\` line, set \`reviewed_by\`/\`reviewed_at\` in the"
+            echo "changeset frontmatter, then apply. Pending proposals are also listed at"
+            echo "\`/data-status\` in the app."
+          } > "$BODY_FILE"
+
+          if gh pr view "$BRANCH" >/dev/null 2>&1; then
+            echo "PR already open for $BRANCH; branch updated."
+          else
+            gh pr create --draft --base "$BASE" --head "$BRANCH" \
+              --title "Monthly shared-picture enrichment — $MONTH" \
+              --body-file "$BODY_FILE"
           fi
