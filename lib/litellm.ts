@@ -14,7 +14,7 @@ export const CLAUDE_MAX_TOKENS = 4096;
 // default. With `??` we'd send `model: ""` to the API and 400 out.
 export const LITELLM_BASE_URL =
   process.env.LITELLM_BASE_URL || "https://tritonai-api.ucsd.edu";
-export const CLAUDE_MODEL = process.env.CLAUDE_MODEL || "claude-opus-4-6";
+export const CLAUDE_MODEL = process.env.CLAUDE_MODEL || "claude-sonnet-4-6";
 
 export type Provider = "litellm";
 
