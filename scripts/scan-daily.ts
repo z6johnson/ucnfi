@@ -17,7 +17,7 @@
  *   LITELLM_API_KEY — for tier-2 web search via the TritonAI proxy
  *
  * Optional:
- *   SCAN_MODEL        — defaults to claude-opus-4-6
+ *   SCAN_MODEL        — defaults to claude-sonnet-4-6
  *   LOOKBACK_DAYS     — overrides defaults: 2 (RSS), 7 (arXiv), 7 (tier-2).
  *                       Set to 30 for a one-shot backfill seed.
  *   CONCURRENCY       — default 5

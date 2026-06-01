@@ -14,7 +14,7 @@
  *   LITELLM_API_KEY
  *
  * Optional:
- *   DIGEST_MODEL  — defaults to claude-opus-4-6
+ *   DIGEST_MODEL  — defaults to claude-sonnet-4-6
  *   END_DATE      — YYYY-MM-DD, defaults to today
  */
 

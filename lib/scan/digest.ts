@@ -18,7 +18,7 @@ import {
 import { getLiteLLMClient } from "../litellm.ts";
 import { committeeContextSummary, listMembers } from "../committee.ts";
 
-const DIGEST_MODEL = process.env.DIGEST_MODEL || "claude-opus-4-6";
+const DIGEST_MODEL = process.env.DIGEST_MODEL || "claude-sonnet-4-6";
 const DIGEST_MAX_TOKENS = 4096;
 
 /* ------------------------------------------------------------------ */

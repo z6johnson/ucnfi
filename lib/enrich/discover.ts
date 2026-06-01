@@ -17,7 +17,7 @@ import { canonicalUrl, itemId } from "../activity.ts";
 import { getLiteLLMClient } from "../litellm.ts";
 import type { DiscoveredArtifact } from "./types.ts";
 
-const SCAN_MODEL = process.env.SCAN_MODEL || process.env.CLAUDE_MODEL || "claude-opus-4-6";
+const SCAN_MODEL = process.env.SCAN_MODEL || process.env.CLAUDE_MODEL || "claude-sonnet-4-6";
 const DEFAULT_MAX_TOOL_USES = 4;
 
 export type DiscoverArgs = {

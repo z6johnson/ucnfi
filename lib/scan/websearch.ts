@@ -30,7 +30,7 @@ import { type CommitteeMember } from "../committee.ts";
 /* Client                                                              */
 /* ------------------------------------------------------------------ */
 
-const SCAN_MODEL = process.env.SCAN_MODEL || "claude-opus-4-6";
+const SCAN_MODEL = process.env.SCAN_MODEL || "claude-sonnet-4-6";
 // Raised from 5 to give the model room for the extra platform-scoped
 // searches (mainstream press + each social platform) without starving
 // press coverage of tool budget.
