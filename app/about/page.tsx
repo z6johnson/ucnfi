@@ -8,10 +8,25 @@ import {
   listEntities,
   metadata,
 } from "@/lib/baseline";
+import { AppliedList, PendingList } from "@/components/enrich/ChangesetList";
+import { appliedChangesets, pendingChangesets } from "@/lib/enrich/history";
+
+export const dynamic = "force-dynamic";
+
+function ageInDays(isoDate: string): number {
+  const then = Date.parse(isoDate);
+  if (Number.isNaN(then)) return 0;
+  return Math.floor((Date.now() - then) / 86_400_000);
+}
 
 export default function AboutPage() {
   const stats = baselineStats();
   const entities = listEntities();
+
+  const pending = pendingChangesets(process.cwd());
+  const applied = appliedChangesets(process.cwd());
+  const age = ageInDays(metadata.created);
+  const stale = age > 45;
 
   const dimStats = DIMENSION_IDS.map((d, i) => {
     let entityCount = 0;
@@ -345,6 +360,66 @@ export default function AboutPage() {
             </dd>
           </div>
         </dl>
+      </section>
+
+      {/* ---------- Data status ---------- */}
+      <section id="data-status" className="mt-16 scroll-mt-24">
+        <div className="hairline flex items-baseline justify-between pb-2">
+          <h2 className="display">Data status</h2>
+          <span className="label">When the data was last updated</span>
+        </div>
+
+        <div
+          className="mt-6 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-sm"
+          style={{ color: "var(--color-text-subtle)" }}
+        >
+          <span>
+            Live baseline <strong>v{stats.version}</strong> · {stats.entityCount}{" "}
+            entities · {stats.dataPointCount} data points
+          </span>
+          <span>
+            as of {metadata.created}
+            {stale ? (
+              <span style={{ color: "var(--color-warn-strong)" }}>
+                {" "}
+                · {age} days old
+              </span>
+            ) : null}
+          </span>
+        </div>
+
+        <p
+          className="prose-body mt-4 max-w-2xl text-sm"
+          style={{ color: "var(--color-text-muted)" }}
+        >
+          The shared picture is refreshed by a monthly enrichment run that{" "}
+          <em>proposes</em> changes. Nothing reaches this baseline until a human
+          reviews the proposal and applies it — so a refresh that is still
+          pending review will not change the numbers above. Both states are
+          shown below.
+        </p>
+
+        <div className="mt-10">
+          <h3 className="display" style={{ fontSize: "var(--text-lg)" }}>
+            Pending review
+            {pending.length > 0 ? (
+              <span
+                className="label ml-3"
+                style={{ color: "var(--color-warn-strong)" }}
+              >
+                {pending.length} awaiting
+              </span>
+            ) : null}
+          </h3>
+          <PendingList items={pending} />
+        </div>
+
+        <div className="mt-12">
+          <h3 className="display" style={{ fontSize: "var(--text-lg)" }}>
+            Applied refreshes
+          </h3>
+          <AppliedList items={applied} />
+        </div>
       </section>
 
       {/* ---------- Jump-off ---------- */}
