@@ -125,3 +125,5 @@ These were noted in the original inventory document and should inform Steering C
 - **UCI Health**: Active governance process but no publicly posted standalone policy document.
 - **UCR Health/School of Medicine**: No health-specific AI governance documents identified publicly.
 - Several campuses may have internal-only documents behind authentication not discoverable through public web search.
+
+- **v0.8.0** — Monthly automated enrichment applied 2026-06-01 (changeset `2026-06`, target baseline). 2 human-approved changes (2 new fields, 0 value updates) across 1 entities. Per-dimension: governance +1, policy +1. 41 proposed changes were not approved. Reviewed changeset and rejection sidecar retained under data/enrich/changesets/.
