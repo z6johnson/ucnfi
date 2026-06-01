@@ -1,5 +1,5 @@
 /**
- * Baseline loader + query layer for uc_ai_baseline.json (v0.6.0).
+ * Baseline loader + query layer for uc_ai_baseline.json.
  *
  * Server-only. This module reads the JSON once on first import and
  * exposes typed accessors over it. All pages use this module — no

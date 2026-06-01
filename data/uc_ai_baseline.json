@@ -1,12 +1,12 @@
 {
   "metadata": {
     "title": "UC System AI Governance Baseline Dataset",
-    "version": "0.7.0",
-    "created": "2026-05-04",
+    "version": "0.8.0",
+    "created": "2026-06-01",
     "source": "UC System AI Governance Document Inventory (Campuses, Health Systems, and National Laboratories)",
     "purpose": "Baseline data collection for the UCNFI Steering Committee — mapping AI governance, strategy, policy, infrastructure, and adoption across the UC system",
     "schema_version": "1.0",
-    "notes": "v0.7.0: Targeted gap fill (2026-05-04). Closes thin dimensions across the v0.6.0 baseline: security expanded from 9 to ~17 entities; academic_integrity, health_ai, and leadership given depth where public sources support it. Sources are derived strictly from facts already cited in v0.6.0 notes and underlying batch2 archives — no invented content. For UCI Health, LLNL, and LANL, explicit value:false fields with 'inventory-gap' source_id record absent governance artifacts as committee-actionable signals. 20 entities, ~262 data points."
+    "notes": "v0.8.0: automated monthly enrichment applied 2026-06-01. 2 human-approved field changes across 1 entities. See data/enrich/changesets/ for the reviewed changeset and rejection sidecar."
   },
   "schema": {
     "entity_types": [
@@ -1657,6 +1657,12 @@
           "source_id": "uclah-01",
           "source_url": "https://www.uclahealth.org/health-ai/ucla-health-ai-council-haic",
           "notes": "Health AI Council (HAIC) — AI guidelines, oversight, strategic direction for entire UCLA Health system. Adopted UC RAI Principles from 2021 Presidential Working Group."
+        },
+        "has_ai_council": {
+          "value": true,
+          "source_id": "uclah-01",
+          "source_url": "https://www.uclahealth.org/health-ai/ucla-health-ai-council-haic",
+          "notes": "The UCLA Health AI Council (HAIC) is a named governance body providing AI guidelines, oversight, and strategic direction for the entire UCLA Health system."
         }
       },
       "policy": {
@@ -1665,6 +1671,12 @@
           "source_id": "uclah-01",
           "source_url": "https://www.uclahealth.org/health-ai/ucla-health-ai-council-haic",
           "notes": "Responsible AI Principles and Governance Framework adopted by HAIC."
+        },
+        "has_ai_council": {
+          "value": true,
+          "source_id": "uclah-01",
+          "source_url": "https://www.uclahealth.org/health-ai/ucla-health-ai-council-haic",
+          "notes": "The page is dedicated to the UCLA Health AI Council (HAIC), confirming a formal AI council exists within UCLA Health."
         }
       },
       "document_count": 1,

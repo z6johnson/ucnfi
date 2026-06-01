@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "computed_at": "2026-05-04",
-    "baseline_version": "0.7.0",
+    "computed_at": "2026-06-01",
+    "baseline_version": "0.8.0",
     "derived_version": "0.1.0",
     "notes": "Computed from data/uc_ai_baseline.json by data/compute_derived.py. Three signals: maturity (entity x dimension, 0-4), RAI principle concordance (verbatim|adapted|absent across the 8 UC RAI Principles), and policy adoption timeline (regex extraction over notes text)."
   },
