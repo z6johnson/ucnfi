@@ -16,26 +16,33 @@
   "arkilic-e": {
     "rss": [],
     "arxiv_author": null,
+    "linkedin": "https://www.linkedin.com/in/errol-arkilic-350b8/",
     "search_aliases": ["Errol Arkilic"]
   },
   "crittenden-c": {
     "rss": [],
     "arxiv_author": null,
+    "x_handle": "@CamCritt",
+    "linkedin": "https://www.linkedin.com/in/camillecrittenden/",
     "search_aliases": ["Camille Crittenden CITRIS", "Camille Crittenden UC Berkeley"]
   },
   "dugan-n": {
     "rss": [],
     "arxiv_author": null,
+    "linkedin": "https://www.linkedin.com/in/nddugan",
     "search_aliases": ["Nick Dugan UC Merced"]
   },
   "goldberg-k": {
     "rss": [],
     "arxiv_author": "Ken Goldberg",
+    "x_handle": "@Ken_Goldberg",
+    "linkedin": "https://www.linkedin.com/in/goldbergken/",
     "search_aliases": ["Ken Goldberg UC Berkeley", "Kenneth Y. Goldberg robotics"]
   },
   "gupta-r": {
     "rss": [],
     "arxiv_author": "Rajesh Gupta",
+    "x_handle": "@GuptaUcsd",
     "search_aliases": ["Rajesh K. Gupta UCSD", "Rajesh Gupta UC San Diego"]
   },
   "hagberg-a": {
@@ -46,56 +53,63 @@
   "han-c": {
     "rss": [],
     "arxiv_author": null,
+    "linkedin": "https://www.linkedin.com/in/cora-han-67220511/",
     "search_aliases": ["Cora Han UC Health", "Cora Han University of California Health"]
   },
   "hu-s": {
     "rss": [],
     "arxiv_author": null,
+    "linkedin": "https://www.linkedin.com/in/s-jack-hu-10840562/",
     "search_aliases": ["Shixin Jack Hu UC Riverside", "S. Jack Hu chancellor"]
   },
   "khosla-p": {
     "rss": [],
     "arxiv_author": null,
+    "x_handle": "@pkkhosla",
+    "linkedin": "https://www.linkedin.com/in/pradeepkhosla/",
     "search_aliases": ["Pradeep Khosla UCSD chancellor", "Pradeep K. Khosla"]
   },
   "kirschner-a": {
     "rss": [],
     "arxiv_author": null,
+    "linkedin": "https://www.linkedin.com/in/annkirschner/",
     "search_aliases": ["Ann Kirschner", "Ann Kirschner Meyer Family Philanthropies"]
   },
   "martin-a": {
     "rss": [],
     "arxiv_author": null,
-    "search_aliases": ["Andrew Martin UC Merced chancellor"]
+    "search_aliases": ["Andrew Martin UC Merced sociology", "Andrew Martin UC Merced PhD student sociology"]
   },
   "milburn-c": {
     "rss": [],
     "arxiv_author": null,
+    "x_handle": "@cnmilburn",
     "search_aliases": ["Colin Milburn UC Davis", "Colin Milburn science studies"]
   },
   "moe-r": {
     "rss": [],
     "arxiv_author": null,
+    "linkedin": "https://www.linkedin.com/in/rolinm",
     "search_aliases": ["Rolin Moe UCOP", "Rolin Moe University of California"]
-  },
-  "murray-s": {
-    "rss": [],
-    "arxiv_author": null,
-    "search_aliases": ["Sara Murray UCSF", "Sara G. Murray UCSF Health"]
   },
   "neely-r": {
     "rss": [],
     "arxiv_author": null,
+    "linkedin": "https://www.linkedin.com/in/robneely/",
     "search_aliases": ["Robert Neely LLNL", "J. Robert Neely Lawrence Livermore"]
   },
   "noble-s": {
     "rss": [],
     "arxiv_author": null,
+    "x_handle": "@safiyanoble",
+    "linkedin": "https://www.linkedin.com/in/safiyanoble",
+    "bluesky": "safiyanoble.bsky.social",
     "search_aliases": ["Safiya Umoja Noble", "Safiya Noble UCLA", "Algorithms of Oppression"]
   },
   "palazoglu-a": {
     "rss": [],
     "arxiv_author": null,
+    "linkedin": "https://www.linkedin.com/in/ahmet-palazoglu-56130659/",
     "search_aliases": ["Ahmet Palazoglu UC Davis", "Ahmet Palazoglu Senate"]
   },
   "raley-r": {
@@ -103,19 +117,28 @@
     "arxiv_author": null,
     "search_aliases": ["Rita Raley UC Santa Barbara", "Rita Raley English"]
   },
+  "rauschuber-m": {
+    "rss": [],
+    "arxiv_author": null,
+    "linkedin": "https://www.linkedin.com/in/mark-rauschuber-25538b10/",
+    "search_aliases": ["Mark Rauschuber UCSF", "Mark Rauschuber UCSF Health"]
+  },
   "tassio-m": {
     "rss": [],
     "arxiv_author": null,
+    "linkedin": "https://www.linkedin.com/in/michael-tassio-24aab53/",
     "search_aliases": ["Michael Tassio UC Santa Cruz"]
   },
   "vigna-g": {
     "rss": [],
     "arxiv_author": "Giovanni Vigna",
+    "x_handle": "@giovanni_vigna",
     "search_aliases": ["Giovanni Vigna UC Santa Barbara", "Giovanni Vigna security"]
   },
   "williams-v": {
     "rss": [],
     "arxiv_author": null,
+    "linkedin": "https://www.linkedin.com/in/van-williams-069590ba/",
     "search_aliases": ["Van Williams UCOP", "Van Williams CIO University of California"]
   },
   "zambani-k": {

@@ -93,7 +93,8 @@
     "enrichment_pass": "pass_2_synopsis",
     "needs_attention": [
       "Thin record by design: doctoral student with limited public footprint. Self-report will be especially valuable for refining tags and opportunity area assignments.",
-      "Roster lists fields as 'Education, Philosophy, Sociology' which combines BA fields (Philosophy + Education at UCR) with current PhD field (Sociology at UCM). Confirmed accurate."
+      "Roster lists fields as 'Education, Philosophy, Sociology' which combines BA fields (Philosophy + Education at UCR) with current PhD field (Sociology at UCM). Confirmed accurate.",
+      "Identity disambiguation for the activity scan: this Andrew Martin is the UC Merced Sociology PhD student — NOT the statistician Andrew D. Martin who is Chancellor of Washington University in St. Louis. A prior feeds.json search alias ('Andrew Martin UC Merced chancellor') was incorrect and risked surfacing the wrong person; corrected to sociology/PhD-student aliases on 2026-06-01. No verified social handle was found for this member."
     ]
   }
 }
