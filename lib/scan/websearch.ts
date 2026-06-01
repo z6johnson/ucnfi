@@ -351,6 +351,18 @@ function tryParseJsonBlock(text: string): { items?: RawWebItem[] } | null {
   return null;
 }
 
+/**
+ * Raw model source_kinds that represent social / owned-media activity
+ * (platform-native posts and self-published video) rather than press.
+ * Used to split tier-2 hits into a "social" bucket distinct from "websearch"
+ * so the activity UI can surface social separately from web/press.
+ */
+const SOCIAL_RAW_KINDS = new Set(["social_post", "video"]);
+
+export function isSocialSourceKind(rawKind: string): boolean {
+  return SOCIAL_RAW_KINDS.has(rawKind.trim().toLowerCase());
+}
+
 function normaliseItem(
   memberId: string,
   raw: RawWebItem,
@@ -361,9 +373,15 @@ function normaliseItem(
   const title = typeof raw.title === "string" ? raw.title.trim().slice(0, 300) : "";
   if (!title) return null;
   const sourceKindRaw = typeof raw.source_kind === "string" ? raw.source_kind : "other";
-  const sourceKind: ActivitySourceKind = "websearch"; // tier-2 always tagged websearch at the activity level
+  // Tier-2 always comes through the web_search tool, but we split the
+  // activity-level source_kind so platform-native posts/video land in a
+  // "social" bucket the UI can chip separately from web/press. The granular
+  // raw kind still rides along in match_reason.
+  const sourceKind: ActivitySourceKind = isSocialSourceKind(sourceKindRaw)
+    ? "social"
+    : "websearch";
   const match = typeof raw.match_reason === "string" ? raw.match_reason.slice(0, 240) : "";
-  const matchReason = `websearch (${sourceKindRaw})${match ? ` — ${match}` : ""}`;
+  const matchReason = `${sourceKind} (${sourceKindRaw})${match ? ` — ${match}` : ""}`;
   const snippet = typeof raw.snippet === "string" ? raw.snippet.slice(0, 400) : "";
   let publishedAt: string | null = null;
   if (typeof raw.published_at === "string" && raw.published_at) {
@@ -531,8 +549,9 @@ export async function collectTier2Committee(
  * Dedicated social/owned-media pass for a single member. Same plumbing as
  * `collectTier2` but with a social-only prompt, its own (wider) default
  * window, and the same per-pass tool budget so social isn't out-competed
- * by press in a shared search. Items are still tagged `source_kind:
- * "websearch"` at the activity level (the platform lives in match_reason).
+ * by press in a shared search. Platform-native posts/video are tagged
+ * `source_kind: "social"` by `normaliseItem` (the granular platform lives
+ * in match_reason), so they surface under the Activity "Social" chip.
  */
 export async function collectTier2Social(
   member: CommitteeMember,

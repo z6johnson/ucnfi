@@ -31,6 +31,7 @@ export type ActivitySourceKind =
   | "arxiv"
   | "scholar"
   | "websearch"
+  | "social"
   | "manual";
 
 export type ActivityScope = "member" | "committee";

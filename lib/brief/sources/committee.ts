@@ -26,11 +26,12 @@ import type { BriefRawItem } from "../types.ts";
 
 /**
  * Activity source_kinds the brief considers "signal" (vs. raw output).
- * Tier-2 websearch items inherit the broader source-kind detail in
- * their match_reason, so all websearch items are eligible.
+ * Tier-2 web/press ("websearch") and social/owned-media ("social") items
+ * inherit the broader source-kind detail in their match_reason, so all of
+ * them are eligible.
  */
 function isSignalItem(item: ActivityItem): boolean {
-  if (item.source_kind === "websearch") return true;
+  if (item.source_kind === "websearch" || item.source_kind === "social") return true;
   // Tier-1 rss + arxiv items are typically raw output (papers, blog
   // posts). They belong in the weekly digest, not the President's brief.
   return false;

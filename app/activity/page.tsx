@@ -63,6 +63,7 @@ function readFilters(sp: Record<string, string | string[] | undefined>): Filters
       source === "arxiv" ||
       source === "scholar" ||
       source === "websearch" ||
+      source === "social" ||
       source === "manual"
         ? source
         : "all",
@@ -140,7 +141,8 @@ const SOURCE_TABS: Array<{ id: SourceFilter; label: string }> = [
   { id: "all", label: "All sources" },
   { id: "arxiv", label: "arXiv" },
   { id: "rss", label: "RSS" },
-  { id: "websearch", label: "Web search" },
+  { id: "websearch", label: "Web" },
+  { id: "social", label: "Social" },
 ];
 
 function FilterRow({
