@@ -17,10 +17,11 @@
  *   LITELLM_API_KEY — for tier-2 web search via the TritonAI proxy
  *
  * Optional:
- *   SCAN_MODEL        — defaults to claude-sonnet-4-6
- *   LOOKBACK_DAYS     — overrides defaults: 2 (RSS), 7 (arXiv), 7 (tier-2).
- *                       Set to 30 for a one-shot backfill seed.
- *   CONCURRENCY       — default 5
+ *   SCAN_MODEL          — defaults to claude-sonnet-4-6
+ *   LOOKBACK_DAYS       — overrides defaults: 2 (RSS), 7 (arXiv), 7 (tier-2 press).
+ *                         Set to 30 for a one-shot backfill seed.
+ *   SOCIAL_LOOKBACK_DAYS — overrides the dedicated social pass window (default 30).
+ *   CONCURRENCY         — default 5
  */
 
 import {
@@ -36,7 +37,12 @@ import {
 } from "../lib/activity.ts";
 import { type CommitteeMember, listMembers } from "../lib/committee.ts";
 import { collectTier1 } from "../lib/scan/feeds.ts";
-import { collectTier2, collectTier2Committee } from "../lib/scan/websearch.ts";
+import {
+  collectTier2,
+  collectTier2Committee,
+  collectTier2Social,
+  collectTier2SocialCommittee,
+} from "../lib/scan/websearch.ts";
 
 const REPO_ROOT = process.cwd();
 const DRY_RUN = process.env.DRY_RUN === "1" || process.env.DRY_RUN === "true";
@@ -46,6 +52,7 @@ const MEMBER_FILTER = process.env.MEMBER_FILTER?.trim() || null;
 const TIER = (process.env.TIER || "both").toLowerCase();
 const CONCURRENCY = Math.max(1, Number(process.env.CONCURRENCY || 5) | 0);
 const LOOKBACK_DAYS = process.env.LOOKBACK_DAYS ? Number(process.env.LOOKBACK_DAYS) : undefined;
+const SOCIAL_LOOKBACK_DAYS = process.env.SOCIAL_LOOKBACK_DAYS ? Number(process.env.SOCIAL_LOOKBACK_DAYS) : undefined;
 const LEDGER_RETENTION_DAYS = 90;
 
 type MemberResult = {
@@ -78,19 +85,30 @@ async function processMember(member: CommitteeMember, feedsConfig: ReturnType<ty
     if (!process.env.LITELLM_API_KEY) {
       result.errors.push("tier2: LITELLM_API_KEY not set, skipped");
     } else {
+      const handles = {
+        x_handle: cfg?.x_handle ?? null,
+        linkedin: cfg?.linkedin ?? null,
+        bluesky: cfg?.bluesky ?? null,
+        youtube: cfg?.youtube ?? null,
+      };
       try {
         result.tier2 = await collectTier2(member, {
           searchAliases: cfg?.search_aliases ?? [],
-          handles: {
-            x_handle: cfg?.x_handle ?? null,
-            linkedin: cfg?.linkedin ?? null,
-            bluesky: cfg?.bluesky ?? null,
-            youtube: cfg?.youtube ?? null,
-          },
+          handles,
           lookbackDays: LOOKBACK_DAYS,
         });
       } catch (err) {
         result.errors.push(`tier2: ${(err as Error).message}`);
+      }
+      try {
+        const social = await collectTier2Social(member, {
+          searchAliases: cfg?.search_aliases ?? [],
+          handles,
+          lookbackDays: SOCIAL_LOOKBACK_DAYS,
+        });
+        result.tier2 = [...result.tier2, ...social];
+      } catch (err) {
+        result.errors.push(`tier2-social: ${(err as Error).message}`);
       }
     }
   }
@@ -128,6 +146,15 @@ async function processCommittee(feedsConfig: ReturnType<typeof readFeedsConfig>)
         });
       } catch (err) {
         result.errors.push(`tier2: ${(err as Error).message}`);
+      }
+      try {
+        const social = await collectTier2SocialCommittee({
+          searchAliases: cfg?.search_aliases ?? [],
+          lookbackDays: SOCIAL_LOOKBACK_DAYS,
+        });
+        result.tier2 = [...result.tier2, ...social];
+      } catch (err) {
+        result.errors.push(`tier2-social: ${(err as Error).message}`);
       }
     }
   }
