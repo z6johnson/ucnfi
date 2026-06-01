@@ -45,6 +45,18 @@ const MAX_TOOL_USES = 8;
 // the context window across an 8-turn loop.
 const MAX_TOOL_RESULT_CHARS = 16000;
 
+/**
+ * The model otherwise infers "now" from whatever dates show up in search
+ * results and routinely gets it wrong (we saw it decide it was "late July
+ * 2025"), which wrecks the lookback window. Pin the real date and the cutoff.
+ */
+function dateContextLine(lookbackDays: number): string {
+  const now = new Date();
+  const today = now.toISOString().slice(0, 10);
+  const start = new Date(now.getTime() - lookbackDays * 86_400_000).toISOString().slice(0, 10);
+  return `Today's date is ${today} (UTC). "The past ${lookbackDays} day(s)" means published on or after ${start}; judge recency by this date, not by guessing from search results.`;
+}
+
 /* ------------------------------------------------------------------ */
 /* Date enforcement                                                    */
 /* ------------------------------------------------------------------ */
@@ -85,7 +97,7 @@ export function isWithinPublishedWindow(
 function buildSystemPrompt(lookbackDays: number): string {
   return `You scan public web sources for recent AI-related output by one named member of the UC Next Frontier Initiative (UCNFI) Steering Committee. You MUST use the internet search tool at least once before answering.
 
-Look for items from the past ${lookbackDays} day(s) only.
+${dateContextLine(lookbackDays)}
 
 Cover BOTH mass media and public social/owned media. Do not stop at news articles — this member's thought leadership also surfaces as:
   - X/Twitter posts and threads
@@ -159,7 +171,7 @@ Search the public web — including social platforms — for AI-related output b
 function buildCommitteeSystemPrompt(lookbackDays: number): string {
   return `You scan public web sources for recent mentions of the UC Next Frontier Initiative (UCNFI) Steering Committee — also called the UC AI Steering Committee — as a body. You MUST use the internet search tool at least once before answering.
 
-Look for items from the past ${lookbackDays} day(s) only.
+${dateContextLine(lookbackDays)}
 
 A hit is an item that:
   (a) names the committee, initiative, or its formal launch / charge / membership / output as a body — NOT just an individual member doing their own work, AND
@@ -221,7 +233,7 @@ Search the public web — including social platforms — for items about this co
 function buildSocialSystemPrompt(lookbackDays: number): string {
   return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent AI-related output by one named member of the UC Next Frontier Initiative (UCNFI) Steering Committee. You MUST use the internet search tool at least once before answering.
 
-Look for items from the past ${lookbackDays} day(s) only.
+${dateContextLine(lookbackDays)}
 
 Search ONLY social/owned-media platforms — NOT mainstream news sites. Lead with site-scoped queries:
   - \`site:x.com\` — X/Twitter posts and threads
@@ -276,7 +288,7 @@ Search ONLY social/owned-media platforms for AI-related posts/videos by this per
 function buildSocialCommitteeSystemPrompt(lookbackDays: number): string {
   return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent posts/videos about the UC Next Frontier Initiative (UCNFI) Steering Committee — also called the UC AI Steering Committee — as a body. You MUST use the internet search tool at least once before answering.
 
-Look for items from the past ${lookbackDays} day(s) only.
+${dateContextLine(lookbackDays)}
 
 Search ONLY social/owned-media platforms — NOT mainstream news sites. Lead with site-scoped queries: \`site:x.com\`, \`site:linkedin.com/posts\`, \`site:bsky.app\`, \`site:youtube.com\`, plus Mastodon, Threads, and Substack. Return the canonical post/video URL.
 
@@ -502,7 +514,34 @@ async function runAgenticSearch(args: {
       (b): b is Anthropic.ToolUseBlock => b.type === "tool_use",
     );
     if (resp.stop_reason !== "tool_use" || toolUses.length === 0) {
-      return { text: extractFinalText(resp), toolCalls, stop };
+      let text = extractFinalText(resp);
+      // The model frequently stops on narration ("Let me check…") or empty
+      // text instead of the required JSON. Salvage with one no-tools turn that
+      // demands the JSON object only.
+      if (!text || !tryParseJsonBlock(text)) {
+        messages.push({
+          role: "assistant",
+          content: text ? resp.content : [{ type: "text", text: "(no answer)" }],
+        });
+        messages.push({
+          role: "user",
+          content:
+            'Output ONLY the JSON object now, exactly {"items": [...]}, including every qualifying item you found above. No prose, no markdown fences. If nothing qualifies, output {"items": []}.',
+        });
+        try {
+          const salvage = await client.messages.create({
+            model: SCAN_MODEL,
+            max_tokens: 2048,
+            system: args.systemPrompt,
+            messages,
+          });
+          stop = `${stop}->reformat:${salvage.stop_reason ?? "?"}`;
+          text = extractFinalText(salvage) || text;
+        } catch (err) {
+          console.warn(`[scan] tier-2 reformat failed ${args.logTag} err=${(err as Error).message}`);
+        }
+      }
+      return { text, toolCalls, stop };
     }
 
     // Echo the assistant's tool-use turn, then execute each call over MCP.
