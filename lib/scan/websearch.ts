@@ -37,6 +37,39 @@ const SCAN_MODEL = process.env.SCAN_MODEL || "claude-sonnet-4-6";
 const MAX_TOOL_USES = 8;
 
 /* ------------------------------------------------------------------ */
+/* Date enforcement                                                    */
+/* ------------------------------------------------------------------ */
+
+/** One day of slack on the cutoff so timezone/boundary rounding doesn't
+ *  drop an item published right at the edge of the window. */
+const WINDOW_GRACE_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Server-side guard for the lookback window. The prompt asks the model to
+ * stay within `lookbackDays`, but it reliably ignores that and returns
+ * well-known older hits, so we enforce it here.
+ *
+ * Returns true (keep) when:
+ *   - there is no usable published date — the model emits `null` for
+ *     undatable posts, and dropping those would throw away fresh-but-undated
+ *     social content; or
+ *   - the published date is within `lookbackDays` of now (plus a day of grace).
+ * Returns false (drop) only for an item carrying a parseable date that is
+ * clearly older than the window — exactly the stale 2025 press hits.
+ */
+export function isWithinPublishedWindow(
+  publishedAtIso: string | null,
+  lookbackDays: number,
+  now: number = Date.now(),
+): boolean {
+  if (!publishedAtIso) return true;
+  const t = Date.parse(publishedAtIso);
+  if (!Number.isFinite(t)) return true;
+  const cutoff = now - lookbackDays * 24 * 60 * 60 * 1000 - WINDOW_GRACE_MS;
+  return t >= cutoff;
+}
+
+/* ------------------------------------------------------------------ */
 /* Prompts                                                             */
 /* ------------------------------------------------------------------ */
 
@@ -169,6 +202,110 @@ Search the public web — including social platforms — for items about this co
 }
 
 /* ------------------------------------------------------------------ */
+/* Social-only prompts                                                 */
+/* ------------------------------------------------------------------ */
+/* A dedicated pass scoped to social/owned media. The combined press+social
+ * search lets easy press hits eat the tool budget, so social posts rarely
+ * surface; this pass searches only the platforms, with its own (wider)
+ * window, so sparse social content gets found. */
+
+function buildSocialSystemPrompt(lookbackDays: number): string {
+  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent AI-related output by one named member of the UC Next Frontier Initiative (UCNFI) Steering Committee. You MUST call the web_search tool at least once before answering.
+
+Look for items from the past ${lookbackDays} day(s) only.
+
+Search ONLY social/owned-media platforms — NOT mainstream news sites. Lead with site-scoped queries:
+  - \`site:x.com\` — X/Twitter posts and threads
+  - \`site:linkedin.com/posts\` and \`site:linkedin.com/pulse\` — LinkedIn posts and articles
+  - \`site:bsky.app\` — Bluesky posts
+  - \`site:youtube.com\` — talks, lectures, panels, interview recordings
+  - Mastodon, Threads, and Substack posts and Notes
+Return the canonical post/video URL, not a search or aggregator URL.
+
+A hit is an item where:
+  (a) the named person is the author/poster, interviewee, or named speaker — not merely tagged or mentioned in passing, AND
+  (b) it touches AI in any substantive way (artificial intelligence, ML, AI governance/policy/safety/ethics, AI literacy, foundation models, LLMs, AI infrastructure, applied AI, or commentary on the field).
+
+Skip pure reshares/retweets with no added commentary of their own, and anything older than ${lookbackDays} days.
+
+Source kinds (use exactly one): use \`social_post\` for X/LinkedIn/Bluesky/Mastodon/Threads/Substack posts and \`video\` for YouTube and other video talks. Do not return mainstream news articles here.
+
+Your final assistant message MUST be a single JSON object and nothing else, with this shape:
+
+{
+  "items": [
+    {
+      "title": "...",
+      "url": "https://...",
+      "published_at": "2026-05-04" or null,
+      "snippet": "first ~300 chars of context, plain text",
+      "source_kind": "social_post",
+      "match_reason": "one short sentence: why this is the named member, not someone else"
+    }
+  ]
+}
+
+If your searches genuinely found nothing in the window, return {"items": []}. Do not include explanatory prose. Do not wrap the JSON in code fences.`;
+}
+
+function buildSocialUserPrompt(
+  member: CommitteeMember,
+  aliases: string[],
+  handles: MemberHandles,
+  lookbackDays: number,
+): string {
+  const aliasLine = aliases.length > 0 ? `Also try aliases: ${aliases.map((a) => `"${a}"`).join(", ")}.` : "";
+  const handleLine = buildHandleLine(handles);
+  return `Member: "${member.name.full}".
+Primary affiliation: ${member.primary_affiliation.title}, ${member.primary_affiliation.organization}.
+${aliasLine}
+${handleLine}
+
+Search ONLY social/owned-media platforms for AI-related posts/videos by this person published in the last ${lookbackDays} day(s). Prefer the known accounts above when present. Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
+}
+
+function buildSocialCommitteeSystemPrompt(lookbackDays: number): string {
+  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent posts/videos about the UC Next Frontier Initiative (UCNFI) Steering Committee — also called the UC AI Steering Committee — as a body. You MUST call the web_search tool at least once before answering.
+
+Look for items from the past ${lookbackDays} day(s) only.
+
+Search ONLY social/owned-media platforms — NOT mainstream news sites. Lead with site-scoped queries: \`site:x.com\`, \`site:linkedin.com/posts\`, \`site:bsky.app\`, \`site:youtube.com\`, plus Mastodon, Threads, and Substack. Return the canonical post/video URL.
+
+A hit is a social post or video that names the committee, initiative, or its launch/charge/membership/output as a body — NOT an individual member doing their own work — from official UC/campus/initiative accounts or a co-chair (Khosla, Williams, Palazoglu) posting AS committee leadership.
+
+Skip pure reshares with no added commentary, and anything older than ${lookbackDays} days.
+
+Source kinds (use exactly one): \`social_post\` for X/LinkedIn/Bluesky/Mastodon/Threads/Substack posts, \`video\` for YouTube and other video talks.
+
+Your final assistant message MUST be a single JSON object and nothing else, with this shape:
+
+{
+  "items": [
+    {
+      "title": "...",
+      "url": "https://...",
+      "published_at": "2026-05-04" or null,
+      "snippet": "first ~300 chars of context, plain text",
+      "source_kind": "social_post",
+      "match_reason": "one short sentence: why this is about the committee as a body, not an individual member"
+    }
+  ]
+}
+
+If your searches genuinely found nothing in the window, return {"items": []}. Do not include explanatory prose. Do not wrap the JSON in code fences.`;
+}
+
+function buildSocialCommitteeUserPrompt(aliases: string[], lookbackDays: number): string {
+  const aliasLine = aliases.length > 0
+    ? `Search for these names: ${aliases.map((a) => `"${a}"`).join(", ")}.`
+    : "";
+  return `Subject: the UCNFI Steering Committee (the UC AI Steering Committee, UC Next Frontier Initiative).
+${aliasLine}
+
+Search ONLY social/owned-media platforms for posts/videos about this committee as a body, published in the last ${lookbackDays} day(s). Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
+}
+
+/* ------------------------------------------------------------------ */
 /* Response parsing                                                    */
 /* ------------------------------------------------------------------ */
 
@@ -263,6 +400,9 @@ export type WebSearchOptions = {
 };
 
 const DEFAULT_LOOKBACK_DAYS = 7;
+/** Social posts are sparse, so the dedicated social pass reaches back
+ *  further than the tight press window. */
+const DEFAULT_SOCIAL_LOOKBACK_DAYS = 30;
 
 async function runWebSearch(args: {
   systemPrompt: string;
@@ -352,7 +492,7 @@ export async function collectTier2(
   const items: ActivityItem[] = [];
   for (const r of parseSearchItems(message, logTag)) {
     const norm = normaliseItem(member.member_id, r, "member");
-    if (norm) items.push(norm);
+    if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
   }
   return items;
 }
@@ -382,7 +522,70 @@ export async function collectTier2Committee(
   const items: ActivityItem[] = [];
   for (const r of parseSearchItems(message, logTag)) {
     const norm = normaliseItem(COMMITTEE_SCOPE_ID, r, "committee");
-    if (norm) items.push(norm);
+    if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
+  }
+  return items;
+}
+
+/**
+ * Dedicated social/owned-media pass for a single member. Same plumbing as
+ * `collectTier2` but with a social-only prompt, its own (wider) default
+ * window, and the same per-pass tool budget so social isn't out-competed
+ * by press in a shared search. Items are still tagged `source_kind:
+ * "websearch"` at the activity level (the platform lives in match_reason).
+ */
+export async function collectTier2Social(
+  member: CommitteeMember,
+  opts: WebSearchOptions = {},
+): Promise<ActivityItem[]> {
+  const aliases = opts.searchAliases ?? [];
+  const handles = opts.handles ?? {};
+  const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
+  const lookbackDays = opts.lookbackDays ?? DEFAULT_SOCIAL_LOOKBACK_DAYS;
+  const logTag = `${member.member_id} (social)`;
+
+  const message = await runWebSearch({
+    systemPrompt: buildSocialSystemPrompt(lookbackDays),
+    userPrompt: buildSocialUserPrompt(member, aliases, handles, lookbackDays),
+    maxUses,
+    logTag,
+  });
+  if (!message) return [];
+  logSearchDiagnostics(message, logTag);
+
+  const items: ActivityItem[] = [];
+  for (const r of parseSearchItems(message, logTag)) {
+    const norm = normaliseItem(member.member_id, r, "member");
+    if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
+  }
+  return items;
+}
+
+/**
+ * Dedicated social/owned-media pass for the steering committee as a body.
+ * Mirrors `collectTier2Social` with a committee-focused social prompt.
+ */
+export async function collectTier2SocialCommittee(
+  opts: WebSearchOptions = {},
+): Promise<ActivityItem[]> {
+  const aliases = opts.searchAliases ?? [];
+  const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
+  const lookbackDays = opts.lookbackDays ?? DEFAULT_SOCIAL_LOOKBACK_DAYS;
+  const logTag = `${COMMITTEE_SCOPE_ID} (social)`;
+
+  const message = await runWebSearch({
+    systemPrompt: buildSocialCommitteeSystemPrompt(lookbackDays),
+    userPrompt: buildSocialCommitteeUserPrompt(aliases, lookbackDays),
+    maxUses,
+    logTag,
+  });
+  if (!message) return [];
+  logSearchDiagnostics(message, logTag);
+
+  const items: ActivityItem[] = [];
+  for (const r of parseSearchItems(message, logTag)) {
+    const norm = normaliseItem(COMMITTEE_SCOPE_ID, r, "committee");
+    if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
   }
   return items;
 }

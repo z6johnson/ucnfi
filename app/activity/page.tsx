@@ -14,6 +14,7 @@ import {
   scopeOf,
 } from "@/lib/activity";
 import { listMembers } from "@/lib/committee";
+import { isFresh, windowBounds } from "@/lib/brief/recency";
 
 export const metadata = {
   title: "Activity — UCNFI",
@@ -91,8 +92,16 @@ function loadItems(filters: Filters): ActivityItem[] {
       : lastNDates(Number(filters.days));
   const items = readItemsForDates(repoRoot, dates);
 
+  // Window by the item's own date, not just the scan-run date its file is
+  // keyed on. Otherwise a recent scan that surfaces an old (e.g. 2025) article
+  // shows up in the "30 days" view. Effective date = published_at, falling
+  // back to discovered_at for undated items (so fresh-but-undated posts stay).
+  const bounds =
+    filters.days === "all" ? null : windowBounds(new Date(), Number(filters.days));
+
   return items
     .filter((i) => {
+      if (bounds && !isFresh(i, bounds.startMs, bounds.endMs)) return false;
       if (filters.scope !== "all" && scopeOf(i) !== filters.scope) return false;
       if (filters.tier !== "all" && i.tier !== (Number(filters.tier) as ActivityTier)) return false;
       if (filters.source !== "all" && i.source_kind !== filters.source) return false;
@@ -278,7 +287,10 @@ export default async function ActivityPage({
   const repoRoot = process.cwd();
   const windowDates =
     filters.days === "all" ? listItemDates(repoRoot) : lastNDates(Number(filters.days));
+  const countBounds =
+    filters.days === "all" ? null : windowBounds(new Date(), Number(filters.days));
   const allInWindow = readItemsForDates(repoRoot, windowDates).filter((i) => {
+    if (countBounds && !isFresh(i, countBounds.startMs, countBounds.endMs)) return false;
     if (filters.tier !== "all" && i.tier !== (Number(filters.tier) as ActivityTier)) return false;
     if (filters.source !== "all" && i.source_kind !== filters.source) return false;
     return true;
