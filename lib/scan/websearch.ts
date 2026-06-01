@@ -1,13 +1,18 @@
 /**
- * Tier-2 collector: UCSD TritonAI LiteLLM proxy with the server-side
- * web_search tool enabled. Catches op-eds, podcasts, interviews, and
- * press quotes that don't appear in any structured feed.
+ * Tier-2 collector: UCSD TritonAI LiteLLM proxy driving the LiteLLM
+ * `internet_tool` MCP server for live web search. Catches op-eds,
+ * podcasts, interviews, and press quotes that don't appear in any
+ * structured feed.
  *
- * Uses the 20260209 web_search tool revision and forces tool use
- * (`tool_choice: { type: "any" }`) so the model can't short-circuit to
- * an empty answer without searching. The lookback window is parameterised
- * via `WebSearchOptions.lookbackDays` so the same code drives both the
- * normal 7-day daily run and one-shot wider backfills.
+ * The TritonAI gateway does NOT execute Anthropic's server-side
+ * `web_search` tool (the model emits a client-style tool_use and stops,
+ * so tier-2 returned `searches=0 stop=tool_use` and zero items). So we
+ * run the agentic loop ourselves: expose the MCP search tool(s) as normal
+ * tools, force a first call (`tool_choice: { type: "any" }`) so the model
+ * can't short-circuit to an empty answer, execute each tool call over MCP,
+ * and feed results back until the model returns its final JSON. The
+ * lookback window is parameterised via `WebSearchOptions.lookbackDays` so
+ * the same code drives both the normal daily run and wider backfills.
  *
  * The model is asked for strict JSON in its final text block so we can
  * parse without paying tokens for prose.
@@ -25,16 +30,20 @@ import {
 } from "../activity.ts";
 import { getLiteLLMClient } from "../litellm.ts";
 import { type CommitteeMember } from "../committee.ts";
+import { type McpTool, callInternetTool, listInternetTools } from "./internet-tool.ts";
 
 /* ------------------------------------------------------------------ */
 /* Client                                                              */
 /* ------------------------------------------------------------------ */
 
 const SCAN_MODEL = process.env.SCAN_MODEL || "claude-sonnet-4-6";
-// Raised from 5 to give the model room for the extra platform-scoped
-// searches (mainstream press + each social platform) without starving
-// press coverage of tool budget.
+// Max number of tool-calling turns before we force the model to answer.
+// Generous so it can search press + each social platform without starving
+// coverage; the model usually stops well before the cap.
 const MAX_TOOL_USES = 8;
+// Cap each tool result fed back to the model so a long page dump can't blow
+// the context window across an 8-turn loop.
+const MAX_TOOL_RESULT_CHARS = 16000;
 
 /* ------------------------------------------------------------------ */
 /* Date enforcement                                                    */
@@ -74,7 +83,7 @@ export function isWithinPublishedWindow(
 /* ------------------------------------------------------------------ */
 
 function buildSystemPrompt(lookbackDays: number): string {
-  return `You scan public web sources for recent AI-related output by one named member of the UC Next Frontier Initiative (UCNFI) Steering Committee. You MUST call the web_search tool at least once before answering.
+  return `You scan public web sources for recent AI-related output by one named member of the UC Next Frontier Initiative (UCNFI) Steering Committee. You MUST use the internet search tool at least once before answering.
 
 Look for items from the past ${lookbackDays} day(s) only.
 
@@ -144,11 +153,11 @@ Primary affiliation: ${member.primary_affiliation.title}, ${member.primary_affil
 ${aliasLine}
 ${handleLine}
 
-Search the public web — including social platforms — for AI-related output by this person published in the last ${lookbackDays} day(s). Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
+Search the public web — including social platforms — for AI-related output by this person published in the last ${lookbackDays} day(s). Run at least one internet search before answering. Return strict JSON per the system instructions.`;
 }
 
 function buildCommitteeSystemPrompt(lookbackDays: number): string {
-  return `You scan public web sources for recent mentions of the UC Next Frontier Initiative (UCNFI) Steering Committee — also called the UC AI Steering Committee — as a body. You MUST call the web_search tool at least once before answering.
+  return `You scan public web sources for recent mentions of the UC Next Frontier Initiative (UCNFI) Steering Committee — also called the UC AI Steering Committee — as a body. You MUST use the internet search tool at least once before answering.
 
 Look for items from the past ${lookbackDays} day(s) only.
 
@@ -198,7 +207,7 @@ function buildCommitteeUserPrompt(aliases: string[], lookbackDays: number): stri
   return `Subject: the UCNFI Steering Committee (the UC AI Steering Committee, UC Next Frontier Initiative).
 ${aliasLine}
 
-Search the public web — including social platforms — for items about this committee as a body, published in the last ${lookbackDays} day(s). Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
+Search the public web — including social platforms — for items about this committee as a body, published in the last ${lookbackDays} day(s). Run at least one internet search before answering. Return strict JSON per the system instructions.`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -210,7 +219,7 @@ Search the public web — including social platforms — for items about this co
  * window, so sparse social content gets found. */
 
 function buildSocialSystemPrompt(lookbackDays: number): string {
-  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent AI-related output by one named member of the UC Next Frontier Initiative (UCNFI) Steering Committee. You MUST call the web_search tool at least once before answering.
+  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent AI-related output by one named member of the UC Next Frontier Initiative (UCNFI) Steering Committee. You MUST use the internet search tool at least once before answering.
 
 Look for items from the past ${lookbackDays} day(s) only.
 
@@ -261,11 +270,11 @@ Primary affiliation: ${member.primary_affiliation.title}, ${member.primary_affil
 ${aliasLine}
 ${handleLine}
 
-Search ONLY social/owned-media platforms for AI-related posts/videos by this person published in the last ${lookbackDays} day(s). Prefer the known accounts above when present. Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
+Search ONLY social/owned-media platforms for AI-related posts/videos by this person published in the last ${lookbackDays} day(s). Prefer the known accounts above when present. Run at least one internet search before answering. Return strict JSON per the system instructions.`;
 }
 
 function buildSocialCommitteeSystemPrompt(lookbackDays: number): string {
-  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent posts/videos about the UC Next Frontier Initiative (UCNFI) Steering Committee — also called the UC AI Steering Committee — as a body. You MUST call the web_search tool at least once before answering.
+  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent posts/videos about the UC Next Frontier Initiative (UCNFI) Steering Committee — also called the UC AI Steering Committee — as a body. You MUST use the internet search tool at least once before answering.
 
 Look for items from the past ${lookbackDays} day(s) only.
 
@@ -302,7 +311,7 @@ function buildSocialCommitteeUserPrompt(aliases: string[], lookbackDays: number)
   return `Subject: the UCNFI Steering Committee (the UC AI Steering Committee, UC Next Frontier Initiative).
 ${aliasLine}
 
-Search ONLY social/owned-media platforms for posts/videos about this committee as a body, published in the last ${lookbackDays} day(s). Run at least one web_search call before answering. Return strict JSON per the system instructions.`;
+Search ONLY social/owned-media platforms for posts/videos about this committee as a body, published in the last ${lookbackDays} day(s). Run at least one internet search before answering. Return strict JSON per the system instructions.`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -422,60 +431,107 @@ const DEFAULT_LOOKBACK_DAYS = 7;
  *  further than the tight press window. */
 const DEFAULT_SOCIAL_LOOKBACK_DAYS = 30;
 
-async function runWebSearch(args: {
+type SearchResult = { text: string; toolCalls: number; stop: string };
+
+/**
+ * Run the model with the `internet_tool` MCP search tool(s) exposed, execute
+ * each tool call over MCP, and loop until the model emits its final JSON
+ * answer or the tool budget is spent. Replaces the dead server-side
+ * `web_search` tool: the gateway only relays messages, so we own the loop.
+ *
+ * Returns `null` when no search tool is reachable (so the caller skips rather
+ * than letting the model hallucinate URLs with no real search backing).
+ */
+async function runAgenticSearch(args: {
   systemPrompt: string;
   userPrompt: string;
-  maxUses: number;
+  maxToolCalls: number;
   logTag: string;
-}): Promise<Anthropic.Message | null> {
+}): Promise<SearchResult | null> {
+  let tools: McpTool[];
   try {
-    return await getLiteLLMClient().messages.create({
-      model: SCAN_MODEL,
-      max_tokens: 2048,
-      system: args.systemPrompt,
-      messages: [{ role: "user", content: args.userPrompt }],
-      // Force the model to emit at least one tool call. With `auto`, the
-      // model could shortcut to {"items": []} without searching at all,
-      // which is what we observed in the 2026-05-05 wet run.
-      tool_choice: { type: "any" },
-      // Cast to bypass SDK literal type narrowing for the server-side
-      // web_search tool. Use the newer 20260209 version of the tool.
-      tools: [
-        {
-          type: "web_search_20260209",
-          name: "web_search",
-          max_uses: args.maxUses,
-        },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ] as any,
-    });
+    tools = await listInternetTools();
   } catch (err) {
-    console.warn(
-      `[scan] tier-2 messages.create failed ${args.logTag} err=${(err as Error).message}`,
-    );
+    console.warn(`[scan] tier-2 mcp tools/list failed ${args.logTag} err=${(err as Error).message}`);
     return null;
   }
-}
-
-function logSearchDiagnostics(message: Anthropic.Message, logTag: string): void {
-  const blockCounts: Record<string, number> = {};
-  for (const block of message.content) {
-    blockCounts[block.type] = (blockCounts[block.type] ?? 0) + 1;
+  if (tools.length === 0) {
+    console.warn(`[scan] tier-2 no internet tools advertised ${args.logTag}; skipping`);
+    return null;
   }
-  const blockSummary = Object.entries(blockCounts)
-    .map(([t, n]) => `${t}=${n}`)
-    .join(",");
-  const searchCount = message.usage?.server_tool_use?.web_search_requests ?? 0;
-  console.info(
-    `[scan] tier-2 ${logTag} searches=${searchCount} blocks=[${blockSummary}] stop=${message.stop_reason ?? "?"}`,
-  );
+  const anthropicTools = tools.map((t) => ({
+    name: t.name,
+    description: t.description,
+    input_schema: t.inputSchema,
+  })) as Anthropic.Tool[];
+  const toolNames = new Set(tools.map((t) => t.name));
+
+  const client = getLiteLLMClient();
+  const messages: Anthropic.MessageParam[] = [
+    { role: "user", content: args.userPrompt },
+  ];
+  let toolCalls = 0;
+  let stop = "?";
+
+  // One iteration beyond the budget runs with no tools, forcing the model to
+  // turn its gathered results into the final JSON.
+  for (let turn = 0; turn <= args.maxToolCalls; turn++) {
+    const offerTools = turn < args.maxToolCalls;
+    let resp: Anthropic.Message;
+    try {
+      resp = await client.messages.create({
+        model: SCAN_MODEL,
+        max_tokens: 2048,
+        system: args.systemPrompt,
+        messages,
+        ...(offerTools
+          ? {
+              tools: anthropicTools,
+              // Force a search on the first turn so the model can't shortcut
+              // to {"items": []} without searching; afterwards let it decide.
+              tool_choice: turn === 0 ? { type: "any" } : { type: "auto" },
+            }
+          : {}),
+      });
+    } catch (err) {
+      console.warn(`[scan] tier-2 messages.create failed ${args.logTag} err=${(err as Error).message}`);
+      return null;
+    }
+    stop = resp.stop_reason ?? "?";
+    const toolUses = resp.content.filter(
+      (b): b is Anthropic.ToolUseBlock => b.type === "tool_use",
+    );
+    if (resp.stop_reason !== "tool_use" || toolUses.length === 0) {
+      return { text: extractFinalText(resp), toolCalls, stop };
+    }
+
+    // Echo the assistant's tool-use turn, then execute each call over MCP.
+    messages.push({ role: "assistant", content: resp.content });
+    const results: Anthropic.ToolResultBlockParam[] = [];
+    for (const tu of toolUses) {
+      toolCalls++;
+      let output: string;
+      if (!toolNames.has(tu.name)) {
+        output = `ERROR: unknown tool "${tu.name}"`;
+      } else {
+        try {
+          output = await callInternetTool(tu.name, (tu.input ?? {}) as Record<string, unknown>);
+        } catch (err) {
+          output = `ERROR: ${(err as Error).message}`;
+        }
+      }
+      results.push({
+        type: "tool_result",
+        tool_use_id: tu.id,
+        content: output.slice(0, MAX_TOOL_RESULT_CHARS),
+      });
+    }
+    messages.push({ role: "user", content: results });
+  }
+  return { text: "", toolCalls, stop };
 }
 
-function parseSearchItems(
-  message: Anthropic.Message,
-  logTag: string,
-): RawWebItem[] {
-  const text = extractFinalText(message);
+function parseSearchItems(text: string, logTag: string): RawWebItem[] {
   if (!text) {
     console.warn(`[scan] tier-2 empty response ${logTag}`);
     return [];
@@ -498,17 +554,17 @@ export async function collectTier2(
   const lookbackDays = opts.lookbackDays ?? DEFAULT_LOOKBACK_DAYS;
   const logTag = member.member_id;
 
-  const message = await runWebSearch({
+  const res = await runAgenticSearch({
     systemPrompt: buildSystemPrompt(lookbackDays),
     userPrompt: buildUserPrompt(member, aliases, handles, lookbackDays),
-    maxUses,
+    maxToolCalls: maxUses,
     logTag,
   });
-  if (!message) return [];
-  logSearchDiagnostics(message, logTag);
+  if (!res) return [];
+  console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
 
   const items: ActivityItem[] = [];
-  for (const r of parseSearchItems(message, logTag)) {
+  for (const r of parseSearchItems(res.text, logTag)) {
     const norm = normaliseItem(member.member_id, r, "member");
     if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
   }
@@ -528,17 +584,17 @@ export async function collectTier2Committee(
   const lookbackDays = opts.lookbackDays ?? DEFAULT_LOOKBACK_DAYS;
   const logTag = COMMITTEE_SCOPE_ID;
 
-  const message = await runWebSearch({
+  const res = await runAgenticSearch({
     systemPrompt: buildCommitteeSystemPrompt(lookbackDays),
     userPrompt: buildCommitteeUserPrompt(aliases, lookbackDays),
-    maxUses,
+    maxToolCalls: maxUses,
     logTag,
   });
-  if (!message) return [];
-  logSearchDiagnostics(message, logTag);
+  if (!res) return [];
+  console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
 
   const items: ActivityItem[] = [];
-  for (const r of parseSearchItems(message, logTag)) {
+  for (const r of parseSearchItems(res.text, logTag)) {
     const norm = normaliseItem(COMMITTEE_SCOPE_ID, r, "committee");
     if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
   }
@@ -563,17 +619,17 @@ export async function collectTier2Social(
   const lookbackDays = opts.lookbackDays ?? DEFAULT_SOCIAL_LOOKBACK_DAYS;
   const logTag = `${member.member_id} (social)`;
 
-  const message = await runWebSearch({
+  const res = await runAgenticSearch({
     systemPrompt: buildSocialSystemPrompt(lookbackDays),
     userPrompt: buildSocialUserPrompt(member, aliases, handles, lookbackDays),
-    maxUses,
+    maxToolCalls: maxUses,
     logTag,
   });
-  if (!message) return [];
-  logSearchDiagnostics(message, logTag);
+  if (!res) return [];
+  console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
 
   const items: ActivityItem[] = [];
-  for (const r of parseSearchItems(message, logTag)) {
+  for (const r of parseSearchItems(res.text, logTag)) {
     const norm = normaliseItem(member.member_id, r, "member");
     if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
   }
@@ -592,17 +648,17 @@ export async function collectTier2SocialCommittee(
   const lookbackDays = opts.lookbackDays ?? DEFAULT_SOCIAL_LOOKBACK_DAYS;
   const logTag = `${COMMITTEE_SCOPE_ID} (social)`;
 
-  const message = await runWebSearch({
+  const res = await runAgenticSearch({
     systemPrompt: buildSocialCommitteeSystemPrompt(lookbackDays),
     userPrompt: buildSocialCommitteeUserPrompt(aliases, lookbackDays),
-    maxUses,
+    maxToolCalls: maxUses,
     logTag,
   });
-  if (!message) return [];
-  logSearchDiagnostics(message, logTag);
+  if (!res) return [];
+  console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
 
   const items: ActivityItem[] = [];
-  for (const r of parseSearchItems(message, logTag)) {
+  for (const r of parseSearchItems(res.text, logTag)) {
     const norm = normaliseItem(COMMITTEE_SCOPE_ID, r, "committee");
     if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
   }
