@@ -8,7 +8,8 @@
  * fully derivable from the set of applied changesets.
  *
  * Pure reuse of lib/enrich/storage.ts — no new parsing. Consumed by the
- * /data-status page and the per-field "updated" captions on entity views.
+ * About page's "Data status" section and the per-field "updated" captions
+ * on entity views.
  */
 
 import {

@@ -27,13 +27,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <span className="label">UC Next Frontier Initiative</span>
             <div className="flex items-center gap-6">
               <Link
-                href="/data-status"
+                href="/about#data-status"
                 className="label hover:text-[var(--color-accent)]"
               >
                 Data status
               </Link>
               <Link
-                href="/data-status"
+                href="/about#data-status"
                 className="label hover:text-[var(--color-accent)]"
                 title={`Baseline as of ${baselineMeta.created}`}
               >
