@@ -40,6 +40,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { isoNowUTC } from "../lib/activity.ts";
 import { generateBrief } from "../lib/brief/generate.ts";
 import {
+  readEdition,
   rejectedPath,
   serializeEdition,
   sourcesConfigPath,
@@ -127,6 +128,57 @@ async function main(): Promise<void> {
     console.info("---");
     console.info(serializeEdition(edition));
     return;
+  }
+
+  // Empty-edition guard. A zero-item edition is only legitimate when the
+  // week was genuinely empty (no raw inputs at all — handled upstream by
+  // emptyEdition). If we collected inputs but ended up with no items, the
+  // generation failed (truncated/unparseable model response, or every
+  // draft rejected). Publishing it would overwrite any existing edition
+  // for the week with a blank one AND report a green run while shipping an
+  // empty Brief. Refuse to write, preserve what's on disk, and exit non-zero.
+  if (edition.items.length === 0 && rawItems.length > 0) {
+    if (validation.rejected.length > 0) {
+      // Preserve the audit trail of what was drafted-and-rejected.
+      const rejectedFile = writeRejected(REPO_ROOT, edition.edition_id, {
+        edition_id: edition.edition_id,
+        rejected_at: isoNowUTC(),
+        items: validation.rejected.map((r) => ({
+          headline: r.item.headline,
+          reasons: r.reasons,
+          raw: r.item,
+        })),
+      });
+      console.error(
+        `[brief] FAILED: all ${validation.rejected.length} drafted item(s) failed validation; ` +
+          `wrote rejection sidecar ${rejectedFile}.`,
+      );
+    } else {
+      console.error(
+        `[brief] FAILED: model returned no parseable items from ${rawItems.length} raw input(s) ` +
+          `(likely a truncated or malformed response). Not publishing an empty Brief.`,
+      );
+    }
+    const existing = readEdition(REPO_ROOT, edition.edition_id);
+    if (existing && existing.items.length > 0) {
+      console.error(
+        `[brief] left existing ${edition.edition_id} edition (${existing.items.length} item(s)) untouched.`,
+      );
+    }
+    process.exit(1);
+  }
+
+  // Don't clobber a non-empty published edition with a genuinely empty one
+  // either — a stale-but-real Brief beats a blank page on a re-run.
+  if (edition.items.length === 0) {
+    const existing = readEdition(REPO_ROOT, edition.edition_id);
+    if (existing && existing.items.length > 0) {
+      console.warn(
+        `[brief] week ${edition.edition_id} has no items but an existing edition has ` +
+          `${existing.items.length} — keeping the existing edition, nothing written.`,
+      );
+      return;
+    }
   }
 
   const out = writeEdition(REPO_ROOT, edition);

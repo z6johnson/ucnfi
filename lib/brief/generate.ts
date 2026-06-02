@@ -38,7 +38,16 @@ import type {
 } from "./types.ts";
 
 const BRIEF_MODEL = process.env.BRIEF_MODEL || CLAUDE_MODEL;
-const BRIEF_MAX_TOKENS = 4096;
+/**
+ * Output budget for the drafting call. Three to five items, each carrying
+ * four prose fields plus feed_sources / baseline_anchors / peer_anchors /
+ * experts arrays, routinely run past 4k tokens — and a truncated response
+ * parses to zero items (see parseDraftResponse), silently publishing an
+ * empty Brief. 8k leaves headroom; override with BRIEF_MAX_TOKENS.
+ */
+const BRIEF_MAX_TOKENS = process.env.BRIEF_MAX_TOKENS
+  ? Number(process.env.BRIEF_MAX_TOKENS)
+  : 8192;
 /** Stamped into reviewed_by since editions auto-publish without a human gate. */
 const AUTO_REVIEWER = "auto";
 
@@ -188,6 +197,19 @@ export async function generateBrief(
   });
 
   const drafted = parseDraftResponse(message);
+  // A zero-item draft from a non-empty input set is an anomaly: the model
+  // is instructed to return three to five items. The usual culprit is a
+  // truncated (max_tokens) or otherwise unparseable response, which
+  // parseDraftResponse swallows into []. Log the stop_reason and a snippet
+  // so the run is debuggable instead of silently shipping an empty Brief —
+  // mirrors the web-search path's "unparseable response" diagnostic.
+  if (drafted.length === 0) {
+    const rawText = extractText(message);
+    console.warn(
+      `[brief] draft produced 0 items stop=${message.stop_reason ?? "?"} ` +
+        `raw_len=${rawText.length} snippet=${JSON.stringify(rawText.slice(0, 400))}`,
+    );
+  }
   const validation = validateItems(drafted, allRaw, {
     strictStartMs: strict.startMs,
     committeeStartMs: grace.startMs,
