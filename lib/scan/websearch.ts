@@ -85,7 +85,7 @@ export function isWithinPublishedWindow(
 /* ------------------------------------------------------------------ */
 
 function buildSystemPrompt(lookbackDays: number): string {
-  return `You scan public web sources for recent AI-related output by one named member of the UC Next Frontier Initiative (UCNFI) Steering Committee. You MUST use the internet search tool at least once before answering.
+  return `You scan public web sources for recent AI-related output by one named member of the UCOP AI Steering Committee. You MUST use the internet search tool at least once before answering.
 
 ${dateContextLine(lookbackDays)}
 
@@ -159,7 +159,7 @@ Search the public web — including social platforms — for AI-related output b
 }
 
 function buildCommitteeSystemPrompt(lookbackDays: number): string {
-  return `You scan public web sources for recent mentions of the UC Next Frontier Initiative (UCNFI) Steering Committee — also called the UC AI Steering Committee — as a body. You MUST use the internet search tool at least once before answering.
+  return `You scan public web sources for recent mentions of the UCOP AI Steering Committee — also called the UC AI Steering Committee — as a body. You MUST use the internet search tool at least once before answering.
 
 ${dateContextLine(lookbackDays)}
 
@@ -206,7 +206,7 @@ function buildCommitteeUserPrompt(aliases: string[], lookbackDays: number): stri
   const aliasLine = aliases.length > 0
     ? `Search for these names: ${aliases.map((a) => `"${a}"`).join(", ")}.`
     : "";
-  return `Subject: the UCNFI Steering Committee (the UC AI Steering Committee, UC Next Frontier Initiative).
+  return `Subject: the UCOP AI Steering Committee (also known as the UC AI Steering Committee).
 ${aliasLine}
 
 Search the public web — including social platforms — for items about this committee as a body, published in the last ${lookbackDays} day(s). Run at least one internet search before answering. Return strict JSON per the system instructions.`;
@@ -221,7 +221,7 @@ Search the public web — including social platforms — for items about this co
  * window, so sparse social content gets found. */
 
 function buildSocialSystemPrompt(lookbackDays: number): string {
-  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent AI-related output by one named member of the UC Next Frontier Initiative (UCNFI) Steering Committee. You MUST use the internet search tool at least once before answering.
+  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent AI-related output by one named member of the UCOP AI Steering Committee. You MUST use the internet search tool at least once before answering.
 
 ${dateContextLine(lookbackDays)}
 
@@ -276,7 +276,7 @@ Search ONLY social/owned-media platforms for AI-related posts/videos by this per
 }
 
 function buildSocialCommitteeSystemPrompt(lookbackDays: number): string {
-  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent posts/videos about the UC Next Frontier Initiative (UCNFI) Steering Committee — also called the UC AI Steering Committee — as a body. You MUST use the internet search tool at least once before answering.
+  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent posts/videos about the UCOP AI Steering Committee — also called the UC AI Steering Committee — as a body. You MUST use the internet search tool at least once before answering.
 
 ${dateContextLine(lookbackDays)}
 
@@ -310,7 +310,7 @@ function buildSocialCommitteeUserPrompt(aliases: string[], lookbackDays: number)
   const aliasLine = aliases.length > 0
     ? `Search for these names: ${aliases.map((a) => `"${a}"`).join(", ")}.`
     : "";
-  return `Subject: the UCNFI Steering Committee (the UC AI Steering Committee, UC Next Frontier Initiative).
+  return `Subject: the UCOP AI Steering Committee (also known as the UC AI Steering Committee).
 ${aliasLine}
 
 Search ONLY social/owned-media platforms for posts/videos about this committee as a body, published in the last ${lookbackDays} day(s). Run at least one internet search before answering. Return strict JSON per the system instructions.`;

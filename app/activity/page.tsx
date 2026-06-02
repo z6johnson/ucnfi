@@ -17,9 +17,9 @@ import { listMembers } from "@/lib/committee";
 import { isFresh, windowBounds } from "@/lib/brief/recency";
 
 export const metadata = {
-  title: "Activity — UCNFI",
+  title: "Activity — UCOP",
   description:
-    "Daily AI-activity scan of UCNFI Steering Committee members and the committee itself.",
+    "Daily AI-activity scan of UCOP AI Steering Committee members and the committee itself.",
 };
 
 /* ------------------------------------------------------------------ */
@@ -310,7 +310,7 @@ export default async function ActivityPage({
     <div className="pt-8">
       <header className="flex flex-wrap items-baseline justify-between gap-4">
         <div>
-          <span className="label">UCNFI · Activity scan</span>
+          <span className="label">UCOP · Activity scan</span>
           <h1 className="display mt-2">
             What the committee — and its members — are saying about AI
           </h1>

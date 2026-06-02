@@ -1,6 +1,6 @@
 name: Committee AI activity scan
 
-# Daily scan + weekly digest of UCNFI Steering Committee public AI output.
+# Daily scan + weekly digest of UCOP AI Steering Committee public AI output.
 # - Daily scan polls per-member feeds and runs Claude `web_search` via
 #   the UCSD TritonAI LiteLLM proxy, then commits new items to
 #   data/ucnfi-committee/activity/.

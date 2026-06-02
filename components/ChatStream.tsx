@@ -90,7 +90,7 @@ const STARTERS: Starter[] = [
 ];
 
 function messagesToMarkdown(messages: Message[]): string {
-  const header = `# UCNFI chat export\n\nExported ${new Date().toISOString()}\n`;
+  const header = `# UCOP chat export\n\nExported ${new Date().toISOString()}\n`;
   const body = messages
     .map((m) => {
       const label = m.role === "assistant" ? "Research copilot" : "You";

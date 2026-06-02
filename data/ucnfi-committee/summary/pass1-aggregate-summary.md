@@ -1,4 +1,4 @@
-# UCNFI Steering Committee Pass 1 Summary
+# UCOP AI Steering Committee Pass 1 Summary
 
 Twenty-three members enriched. This document reads the records together rather than one at a time, and surfaces the patterns most likely to shape how working groups are formed and how the kickoff gets framed.
 

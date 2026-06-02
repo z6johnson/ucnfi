@@ -22,14 +22,14 @@ export default function EntitiesPage() {
   return (
     <div className="pt-12">
       <header>
-        <span className="label">UCNFI · Baseline explorer</span>
+        <span className="label">UCOP · Baseline explorer</span>
         <h1 className="display mt-2">All entities</h1>
         <p
           className="prose-body mt-4 max-w-2xl"
           style={{ color: "var(--color-text-muted)" }}
         >
           Every UC system, campus, health system, and national lab in the
-          UCNFI baseline. Each entity links to the full dimension
+          UCOP baseline. Each entity links to the full dimension
           breakdown — governance, policy, infrastructure, health AI,
           research, training, engagement, and more.
         </p>

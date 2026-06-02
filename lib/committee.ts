@@ -1,5 +1,5 @@
 /**
- * Committee member loader for the UCNFI Steering Committee directory.
+ * Committee member loader for the UCOP AI Steering Committee directory.
  *
  * Server-only. Reads every JSON file in
  * `data/ucnfi-committee/records/` once on first import and exposes

@@ -8,7 +8,7 @@ export default function ChatPage() {
   return (
     <div className="pt-8">
       <header>
-        <span className="label">UCNFI · Research copilot</span>
+        <span className="label">UCOP · Research copilot</span>
         <h1 className="display mt-2">Chat</h1>
       </header>
       <div className="mt-8">

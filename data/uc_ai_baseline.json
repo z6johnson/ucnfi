@@ -4,7 +4,7 @@
     "version": "0.8.0",
     "created": "2026-06-01",
     "source": "UC System AI Governance Document Inventory (Campuses, Health Systems, and National Laboratories)",
-    "purpose": "Baseline data collection for the UCNFI Steering Committee — mapping AI governance, strategy, policy, infrastructure, and adoption across the UC system",
+    "purpose": "Baseline data collection for the UCOP AI Steering Committee — mapping AI governance, strategy, policy, infrastructure, and adoption across the UC system",
     "schema_version": "1.0",
     "notes": "v0.8.0: automated monthly enrichment applied 2026-06-01. 2 human-approved field changes across 1 entities. See data/enrich/changesets/ for the reviewed changeset and rejection sidecar."
   },
@@ -50,7 +50,7 @@
           "value": true,
           "source_id": "ucnfi-deck",
           "source_url": null,
-          "notes": "UCNFI Steering Committee reconstituted April 2026 with Khosla/Williams as co-chairs, Palazoglu, Kirschner as advisor. Separate from AI Council."
+          "notes": "UCOP AI Steering Committee reconstituted April 2026 with Khosla/Williams as co-chairs, Palazoglu, Kirschner as advisor. Separate from AI Council."
         },
         "has_legal_ai_task_force": {
           "value": true,
@@ -68,7 +68,7 @@
           "value": "multi-layered",
           "source_id": "ucnfi-deck",
           "source_url": null,
-          "notes": "UCNFI structure: UC President -> Committee Co-Chairs -> Advisory Board -> Committee Members -> Team Leaders -> Team Members, with Working Groups for each opportunity area."
+          "notes": "UCOP structure: UC President -> Committee Co-Chairs -> Advisory Board -> Committee Members -> Team Leaders -> Team Members, with Working Groups for each opportunity area."
         },
         "has_presidential_working_group": {
           "value": true,
@@ -560,7 +560,7 @@
           "value": true,
           "source_id": "ucnfi-deck",
           "source_url": null,
-          "notes": "Errol Arkilich listed as Chief Innovation Officer, UC Irvine on UCNFI Steering Committee roster."
+          "notes": "Errol Arkilich listed as Chief Innovation Officer, UC Irvine on UCOP AI Steering Committee roster."
         }
       },
       "research": {
@@ -1032,7 +1032,7 @@
           "value": false,
           "source_id": null,
           "source_url": null,
-          "notes": "No dedicated CAIO for academic enterprise. Health system has Chief Health AI Officer (see ucsd_health entity). Chancellor Khosla co-chairs UCNFI Steering Committee."
+          "notes": "No dedicated CAIO for academic enterprise. Health system has Chief Health AI Officer (see ucsd_health entity). Chancellor Khosla co-chairs UCOP AI Steering Committee."
         },
         "has_chief_health_ai_officer": {
           "value": true,
@@ -1074,7 +1074,7 @@
           "value": true,
           "source_id": "ucnfi-deck",
           "source_url": null,
-          "notes": "Chancellor Khosla co-chairs the UCNFI Steering Committee. Deep technical AI background. Actively driving UC-wide AI strategy."
+          "notes": "Chancellor Khosla co-chairs the UCOP AI Steering Committee. Deep technical AI background. Actively driving UC-wide AI strategy."
         },
         "has_communications_ai_guidance": {
           "value": true,
@@ -1448,7 +1448,7 @@
           "value": false,
           "source_id": null,
           "source_url": null,
-          "notes": "No dedicated CAIO or equivalent. Michael Tassio (UCNFI Steering Committee member) is Asst. VP for Educational Innovation."
+          "notes": "No dedicated CAIO or equivalent. Michael Tassio (UCOP AI Steering Committee member) is Asst. VP for Educational Innovation."
         },
         "has_genai_center_role": {
           "value": true,

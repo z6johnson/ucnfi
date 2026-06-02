@@ -5,7 +5,7 @@ summary: Where UC Health's AI governance is visible in the baseline, where it is
 pillar: uplift
 oa: oa-8
 created: 2026-04-10
-author: UCNFI Research copilot
+author: UCOP Research copilot
 ---
 
 ## Framing

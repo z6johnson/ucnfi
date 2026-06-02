@@ -45,7 +45,7 @@ export type CommitteeRunResult = {
 };
 
 function systemPrompt(): string {
-  return `You re-verify the public professional facts of one named member of the UC Next Frontier Initiative (UCNFI) Steering Committee. You MUST call web_search at least once before answering, and rely only on what you find on current, credible institutional or press pages.
+  return `You re-verify the public professional facts of one named member of the UCOP AI Steering Committee. You MUST call web_search at least once before answering, and rely only on what you find on current, credible institutional or press pages.
 
 Only report a field when a live source confirms it AND it differs from, or fills a gap in, the current record provided. Allowed fields (use these exact names):
 - primary_affiliation.title   (their current primary job title)

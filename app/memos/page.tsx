@@ -20,7 +20,7 @@ export default function MemosPage() {
       <header>
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <span className="label">UCNFI · Memos</span>
+            <span className="label">UCOP · Memos</span>
             <h1 className="display mt-2">Committee memos</h1>
           </div>
           <Link
@@ -37,7 +37,7 @@ export default function MemosPage() {
         >
           Short, share-ready artifacts drafted from the baseline. Each memo
           answers a single committee-level question and cites every factual
-          claim back to specific entities in the UCNFI baseline.
+          claim back to specific entities in the UCOP baseline.
         </p>
       </header>
 
@@ -73,7 +73,7 @@ export default function MemosPage() {
                 >
                   <div className="flex flex-wrap items-baseline justify-between gap-3">
                     <span className="label">
-                      {memo.oa ? memo.oa.toUpperCase() : "UCNFI"}
+                      {memo.oa ? memo.oa.toUpperCase() : "UCOP"}
                       {pillar ? ` · ${pillar.name}` : ""}
                     </span>
                     <span

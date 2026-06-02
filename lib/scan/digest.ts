@@ -70,7 +70,7 @@ async function withRetry<T>(label: string, fn: () => Promise<T>): Promise<T> {
 /* Prompt                                                              */
 /* ------------------------------------------------------------------ */
 
-const FRAMING = `You are writing a weekly digest of UCNFI Steering Committee public AI activity for the committee co-chairs and program staff.
+const FRAMING = `You are writing a weekly digest of UCOP AI Steering Committee public AI activity for the committee co-chairs and program staff.
 
 Strict rules:
 
@@ -83,7 +83,7 @@ Strict rules:
 
 Output structure (markdown, no code fences around prose):
 
-# Week <ISO_WEEK_LABEL> — UCNFI committee AI activity
+# Week <ISO_WEEK_LABEL> — UCOP committee AI activity
 
 _<one-sentence framing of the week — volume and shape, not editorial>_
 
@@ -110,7 +110,7 @@ Compact list, only members with at least one item this week, sorted by item coun
 3–6 bullets. Items worth a co-chair's attention: a position taken, a high-profile venue, an item that contradicts or complicates the committee's stated direction, a new public stance that should be reconciled into the member's record on the next enrichment pass. If nothing this week warrants a flag, write a single bullet: "Nothing flagged this week."`;
 
 function committeeBlock(): string {
-  return `## COMMITTEE DIRECTORY (UCNFI Steering Committee)
+  return `## COMMITTEE DIRECTORY (UCOP AI Steering Committee)
 
 The 23-member directory below is the authoritative source for who is on the committee. Each member appears with their member_id in [brackets], primary affiliation, and OA mappings.
 
@@ -180,7 +180,7 @@ export async function buildWeeklyDigest(
   // Short-circuit: if no items, return a stub digest without an API
   // call. No reason to spend tokens to say "nothing happened".
   if (filtered.length === 0) {
-    const md = `# Week ${isoWeek} — UCNFI committee AI activity\n\n_No qualifying items collected for ${dates[0]} through ${dates[dates.length - 1]}._\n\n## Flag for the next meeting\n\n- Nothing flagged this week.\n`;
+    const md = `# Week ${isoWeek} — UCOP committee AI activity\n\n_No qualifying items collected for ${dates[0]} through ${dates[dates.length - 1]}._\n\n## Flag for the next meeting\n\n- Nothing flagged this week.\n`;
     return { isoWeek, dates, itemCount: 0, markdown: md };
   }
 

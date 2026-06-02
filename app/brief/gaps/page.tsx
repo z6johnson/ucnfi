@@ -3,7 +3,7 @@ import { GapMatrixTable } from "@/components/brief/GapMatrix";
 import { computeGapMatrix } from "@/lib/brief/gaps";
 
 export const metadata = {
-  title: "Gaps — UCNFI",
+  title: "Gaps — UCOP",
   description:
     "UC's position vs. the field — per dimension, where UC has a clear position, where it's silent, where campuses contradict each other, and where peers have done something UC hasn't.",
 };
@@ -16,7 +16,7 @@ export default function BriefGapsPage() {
         ← The Brief
       </Link>
       <header className="mt-4">
-        <span className="label">UCNFI · Position vs. the field</span>
+        <span className="label">UCOP · Position vs. the field</span>
         <h1 className="display mt-2">
           Where UC has a position, where it&apos;s silent, where peers are ahead
         </h1>

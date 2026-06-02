@@ -3,9 +3,9 @@ import { EditionList } from "@/components/brief/EditionList";
 import { listEditions } from "@/lib/brief/storage";
 
 export const metadata = {
-  title: "Brief — UCNFI",
+  title: "Brief — UCOP",
   description:
-    "Weekly, opinionated brief for the UC President — what's happening in AI between committee meetings, anchored to the UCNFI baseline.",
+    "Weekly, opinionated brief for the UC President — what's happening in AI between committee meetings, anchored to the UCOP baseline.",
 };
 
 export const dynamic = "force-dynamic";
@@ -16,7 +16,7 @@ export default function BriefIndexPage() {
     <div className="pt-8">
       <header className="flex flex-wrap items-baseline justify-between gap-4">
         <div>
-          <span className="label">UCNFI · The Brief</span>
+          <span className="label">UCOP · The Brief</span>
           <h1 className="display mt-2">
             What deserves the President's attention this week
           </h1>

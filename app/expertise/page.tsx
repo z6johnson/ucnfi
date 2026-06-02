@@ -7,9 +7,9 @@ import {
 } from "@/lib/committee";
 
 export const metadata = {
-  title: "Expertise — UCNFI",
+  title: "Expertise — UCOP",
   description:
-    "Search and filter the UCNFI Steering Committee by expertise and AI relationship.",
+    "Search and filter the UCOP AI Steering Committee by expertise and AI relationship.",
 };
 
 export default function ExpertisePage() {
@@ -21,7 +21,7 @@ export default function ExpertisePage() {
     <div className="pt-8">
       <header className="flex flex-wrap items-baseline justify-between gap-4">
         <div>
-          <span className="label">UCNFI · Committee directory</span>
+          <span className="label">UCOP · Committee directory</span>
           <h1 className="display mt-2">
             Who&rsquo;s on the Steering Committee, and what they bring
           </h1>

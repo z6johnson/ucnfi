@@ -52,7 +52,7 @@ export default async function DimensionDetailPage({
         ← All dimensions
       </Link>
       <header className="mt-4">
-        <span className="label">UCNFI · Position vs. the field</span>
+        <span className="label">UCOP · Position vs. the field</span>
         <h1 className="display mt-2">{detail.label}</h1>
       </header>
 

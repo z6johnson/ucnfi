@@ -1,5 +1,5 @@
 /**
- * LiteLLM client + model config for the UCNFI app.
+ * LiteLLM client + model config for the UCOP app.
  *
  * No "server-only" import: this module is shared by Next.js server
  * code (via lib/claude.ts) and the Node CLI scan/digest scripts, so it
