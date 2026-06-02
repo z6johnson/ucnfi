@@ -21,6 +21,7 @@ import {
   pillars,
   researchTopics,
 } from "../content/northstar.ts";
+import { baselineBlock } from "./baseline.ts";
 import { committeeContextSummary } from "./committee.ts";
 import { CLAUDE_MAX_TOKENS, CLAUDE_MODEL, getLiteLLMClient } from "./litellm.ts";
 
@@ -39,7 +40,6 @@ export {
 
 /** Cached across calls — these strings never change per deploy. */
 let cachedFramingBlock: string | null = null;
-let cachedBaselineBlock: string | null = null;
 let cachedCommitteeBlock: string | null = null;
 
 export function framingBlock(): string {
@@ -108,22 +108,6 @@ ${principles}
 `;
 
   return cachedFramingBlock;
-}
-
-export function baselineBlock(): string {
-  if (cachedBaselineBlock) return cachedBaselineBlock;
-  const raw = readFileSync(
-    join(process.cwd(), "data", "uc_ai_baseline.json"),
-    "utf-8",
-  );
-  cachedBaselineBlock = `## BASELINE DATASET (UC AI Governance, v0.6.0)
-
-The JSON document below is the authoritative source for every factual claim about UC entities. Every entity_id the user cares about appears here. Every dimension, field, value, source_id, source_url, and note lives here.
-
-\`\`\`json
-${raw}
-\`\`\``;
-  return cachedBaselineBlock;
 }
 
 export function committeeBlock(): string {

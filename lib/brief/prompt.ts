@@ -7,8 +7,7 @@
  * feed_sources.
  */
 
-import { DIMENSION_IDS } from "../baseline.ts";
-import { baselineBlock } from "../claude.ts";
+import { DIMENSION_IDS, baselineBlock } from "../baseline.ts";
 import { committeeContextSummary } from "../committee.ts";
 import { peerBaselineBlock } from "../peers.ts";
 import type { BriefRawItem } from "./types.ts";
