@@ -17,6 +17,14 @@
  *
  * No "server-only" import: callers run under --experimental-strip-types in
  * Node CLI scripts, not just Next.js.
+ *
+ * NOTE on the Anthropic SDK below: it is NOT a direct line to
+ * api.anthropic.com and NOT a second search path. `getLiteLLMClient()`
+ * (lib/litellm.ts) is the Anthropic SDK pointed at the TritonAI LiteLLM
+ * proxy via `baseURL`, so it is simply the transport we use to reach the
+ * model through the gateway. Live web search still happens entirely over
+ * the LiteLLM `internet_tool` MCP (callInternetTool / listInternetTools):
+ * the SDK drives the model, the MCP does the searching. Both are required.
  */
 
 import type Anthropic from "@anthropic-ai/sdk";
