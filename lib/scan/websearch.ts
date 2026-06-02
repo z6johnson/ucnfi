@@ -44,6 +44,9 @@ const MAX_TOOL_USES = 8;
 // Cap each tool result fed back to the model so a long page dump can't blow
 // the context window across an 8-turn loop.
 const MAX_TOOL_RESULT_CHARS = 16000;
+// Final/salvage answers carry the full items JSON; 2048 truncated prolific
+// members mid-array (goldberg-k), producing invalid JSON that parsed to zero.
+const MAX_OUTPUT_TOKENS = 4096;
 
 /**
  * The model otherwise infers "now" from whatever dates show up in search
@@ -493,7 +496,7 @@ async function runAgenticSearch(args: {
     try {
       resp = await client.messages.create({
         model: SCAN_MODEL,
-        max_tokens: 2048,
+        max_tokens: MAX_OUTPUT_TOKENS,
         system: args.systemPrompt,
         messages,
         ...(offerTools
@@ -531,7 +534,7 @@ async function runAgenticSearch(args: {
         try {
           const salvage = await client.messages.create({
             model: SCAN_MODEL,
-            max_tokens: 2048,
+            max_tokens: MAX_OUTPUT_TOKENS,
             system: args.systemPrompt,
             messages,
           });
