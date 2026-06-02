@@ -116,6 +116,35 @@ export function fieldsOf(
 }
 
 /* ------------------------------------------------------------------ */
+/* Prompt block                                                        */
+/* ------------------------------------------------------------------ */
+
+/** Cached across calls — the embedded baseline JSON never changes per deploy. */
+let cachedBaselineBlock: string | null = null;
+
+/**
+ * The BASELINE DATASET system block — the raw baseline JSON wrapped in
+ * the grounding framing shared by the chat copilot and the weekly Brief
+ * generator. Lives here (not in claude.ts) so the Node CLI generation
+ * pipeline can use it without dragging in the `server-only` chat module.
+ */
+export function baselineBlock(): string {
+  if (cachedBaselineBlock) return cachedBaselineBlock;
+  const rawText = readFileSync(
+    join(process.cwd(), "data", "uc_ai_baseline.json"),
+    "utf-8",
+  );
+  cachedBaselineBlock = `## BASELINE DATASET (UC AI Governance, v0.6.0)
+
+The JSON document below is the authoritative source for every factual claim about UC entities. Every entity_id the user cares about appears here. Every dimension, field, value, source_id, source_url, and note lives here.
+
+\`\`\`json
+${rawText}
+\`\`\``;
+  return cachedBaselineBlock;
+}
+
+/* ------------------------------------------------------------------ */
 /* Summary stats for the dashboard                                     */
 /* ------------------------------------------------------------------ */
 
