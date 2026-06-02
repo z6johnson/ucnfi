@@ -1,4 +1,4 @@
-# CLAUDE.md — UCNFI Committee Project
+# CLAUDE.md — UCOP Committee Project
 
 This is the project-specific operating manual. It supplements Zach's global CLAUDE.md (which lives in `~/Claude-Work/_context/`) with rules specific to this work.
 
@@ -6,7 +6,7 @@ Read this at the start of any session in this repo. Re-read before producing pro
 
 ## Project context
 
-This repo holds the maintained-record system for the UC AI Steering Committee (UCNFI). It is the working substrate for:
+This repo holds the maintained-record system for the UC AI Steering Committee (UCOP). It is the working substrate for:
 - Survey design and reconciliation with member self-reports
 - Working group composition for the eight Opportunity Areas
 - Identifying who should lead, speak, or write on specific topics
@@ -35,7 +35,7 @@ It is **not** the source of truth for committee membership — the deck appendix
 
 **The records are the authoritative artifact.** When summaries, one-pagers, or working group drafts are produced, they should be derived from the records, not from external memory. If a draft contains a claim about a member that isn't in their record, either the record needs updating or the draft is wrong.
 
-## Voice rules (specific to UCNFI work)
+## Voice rules (specific to UCOP work)
 
 The global voice rules apply. A few things specific to this project:
 
@@ -73,7 +73,7 @@ Pass 3 (positions and sensitivities) is deferred until after survey reconciliati
 ## Things not to do in this repo
 
 - Don't produce polished docx or PDF deliverables unless explicitly asked. The records and the markdown summary are the primary artifacts.
-- Don't fold this work into TOOLS or WORKSHOPS workstreams. UCNFI is its own UCOP-track work.
+- Don't fold this work into TOOLS or WORKSHOPS workstreams. UCOP is its own UCOP-track work.
 - Don't propose work that crosses into ITS, OSI operational, or Academic Senate territory.
 - Don't draft member-facing communications (survey instruments, one-pagers, etc.) until the schema and content decisions are settled. Drafts before decisions create the wrong kind of momentum.
 

@@ -8,7 +8,7 @@ export default function NewMemoPage() {
   return (
     <div className="pt-12">
       <header>
-        <span className="label">UCNFI · Memos</span>
+        <span className="label">UCOP · Memos</span>
         <h1 className="display mt-2">New memo</h1>
         <p
           className="prose-body mt-4 max-w-2xl"

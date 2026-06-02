@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ucnfi.uc.edu/schemas/committee-member.v1.json",
-  "title": "UCNFI Committee Member Record",
-  "description": "Schema for a single committee member record in the UCNFI committee directory. Holds verified identifiers, enrichment-derived expertise tags, opportunity area mapping, role facets, member-facing self-report, and reconciliation. Pass 3 fields (positions, sensitivities) reserved but not required in v1.",
+  "title": "UCOP Committee Member Record",
+  "description": "Schema for a single committee member record in the UCOP committee directory. Holds verified identifiers, enrichment-derived expertise tags, opportunity area mapping, role facets, member-facing self-report, and reconciliation. Pass 3 fields (positions, sensitivities) reserved but not required in v1.",
   "type": "object",
   "version": "1.0.0",
   "required": [
@@ -114,7 +114,7 @@
         },
         "opportunity_areas": {
           "type": "array",
-          "description": "Mapping to UCNFI Opportunity Areas (OA-1 through OA-8). Cap of 3, with one designated primary.",
+          "description": "Mapping to UCOP Opportunity Areas (OA-1 through OA-8). Cap of 3, with one designated primary.",
           "maxItems": 3,
           "items": {
             "type": "object",

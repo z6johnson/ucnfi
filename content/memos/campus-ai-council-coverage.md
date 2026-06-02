@@ -5,7 +5,7 @@ summary: Eight of ten UC campuses have stood up a formal campus-level AI council
 pillar: scale
 oa: oa-1
 created: 2026-04-12
-author: UCNFI Research copilot
+author: UCOP Research copilot
 ---
 
 ## Framing

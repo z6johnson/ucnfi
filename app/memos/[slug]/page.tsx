@@ -42,7 +42,7 @@ export default async function MemoDetailPage({
       <header className="mt-4 max-w-3xl">
         <div className="flex flex-wrap items-baseline gap-3">
           <span className="label">
-            {memo.oa ? memo.oa.toUpperCase() : "UCNFI"}
+            {memo.oa ? memo.oa.toUpperCase() : "UCOP"}
             {pillar ? ` · ${pillar.name}` : ""}
           </span>
           <span

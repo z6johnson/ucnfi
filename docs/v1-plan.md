@@ -1,8 +1,8 @@
-# UCNFI Research, Synthesis & Analytics Platform — v1 Plan
+# UCOP Research, Synthesis & Analytics Platform — v1 Plan
 
 ## Context
 
-The UC Next Frontier Initiative (UCNFI) Steering Committee was reconstituted April 2026 (Khosla/Williams co-chairs; Palazoglu and Kirschner advising). It operates against a **North Star** with three pillars and eight Opportunity Areas:
+The UCOP AI Steering Committee was reconstituted April 2026 (Khosla/Williams co-chairs; Palazoglu and Kirschner advising). It operates against a **North Star** with three pillars and eight Opportunity Areas:
 
 - **SCALE ETHICAL AI** — OA-1 Trusted AI Standard · OA-2 Strategic Expansion & Economic Partnerships · OA-3 National AI Literacy
 - **RESHAPE EDUCATION** — OA-4 AI Infra Development · OA-5 Operational Streamlining & Capital Reallocation · OA-6 21st Century Public University
@@ -72,7 +72,7 @@ One module responsible for:
 ### AI layer — `lib/claude.ts` + `app/api/chat/route.ts`
 
 - **System prompt** (static, cache-breakpoint):
-  1. UCNFI mission + North Star + 8 OAs + 8 research topics (verbatim from Zach's brief)
+  1. UCOP mission + North Star + 8 OAs + 8 research topics (verbatim from Zach's brief)
   2. Responsible AI seed principles (from `docs/responsible-ai-seed-principles.md`)
   3. Style guide for response formatting (terse, structural, cite sources)
   4. **Full `uc_ai_baseline.json`** inlined as a second cache breakpoint so every turn reuses the cache

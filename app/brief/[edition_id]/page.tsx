@@ -56,7 +56,7 @@ export default async function BriefEditionPage({
       </Link>
 
       <header className="mt-4">
-        <span className="label">UCNFI · The Brief</span>
+        <span className="label">UCOP · The Brief</span>
         <h1 className="display mt-2">
           Week {edition.edition_id}
           {edition.status === "draft" ? (

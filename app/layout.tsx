@@ -6,9 +6,9 @@ import { Nav } from "@/components/Nav";
 import { baselineStats, metadata as baselineMeta } from "@/lib/baseline";
 
 export const metadata: Metadata = {
-  title: "UCNFI — UC Next Frontier Initiative",
+  title: "UCOP — AI Steering Committee",
   description:
-    "Research, synthesis, and analytics for the UC Next Frontier Initiative Steering Committee.",
+    "Research, synthesis, and analytics for the UCOP AI Steering Committee.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Nav />
           <main className="pb-24">{children}</main>
           <footer className="hairline mt-16 flex items-center justify-between py-6">
-            <span className="label">UC Next Frontier Initiative</span>
+            <span className="label">UCOP AI Steering Committee</span>
             <div className="flex items-center gap-6">
               <Link
                 href="/about#data-status"

@@ -114,7 +114,7 @@ export async function POST(req: Request) {
       message: `memo: add ${slug}`,
       content: file,
       committer: {
-        name: "UCNFI memo bot",
+        name: "UCOP memo bot",
         email: "memos@ucnfi.invalid",
       },
     });

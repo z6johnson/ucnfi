@@ -16,7 +16,7 @@ export default function HomePage() {
     <div className="pt-8">
       <header className="flex flex-wrap items-baseline justify-between gap-4">
         <div>
-          <span className="label">UCNFI · Shared picture</span>
+          <span className="label">UCOP · Shared picture</span>
           <h1 className="display mt-2">
             What the UC system has built around AI
           </h1>

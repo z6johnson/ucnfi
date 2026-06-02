@@ -18,9 +18,9 @@ export function Nav() {
             className="text-lg font-extrabold tracking-tight"
             style={{ color: "var(--color-ink)" }}
           >
-            UCNFI
+            UCOP
           </span>
-          <span className="label">UC Next Frontier Initiative</span>
+          <span className="label">AI Steering Committee</span>
         </div>
       </Link>
       <nav className="flex items-center gap-6">

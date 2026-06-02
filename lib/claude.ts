@@ -1,8 +1,8 @@
 /**
- * Claude integration for the UCNFI research copilot.
+ * Claude integration for the UCOP research copilot.
  *
  * Assembles the system prompt (mission, pillars, OAs, research
- * topics, principles, response style, and the full UCNFI baseline),
+ * topics, principles, response style, and the full UCOP baseline),
  * applies prompt-cache breakpoints so every turn after the first
  * reuses the cached input, and exposes a thin streaming wrapper used
  * by /api/chat.
@@ -68,7 +68,7 @@ export function framingBlock(): string {
     .map((t) => `${t.number}. ${t.prompt}`)
     .join("\n");
 
-  cachedFramingBlock = `You are the UCNFI Research Copilot — an AI assistant for the University of California Next Frontier Initiative Steering Committee. Your user relies on you for grounded, cite-every-claim answers about AI governance across the UC system.
+  cachedFramingBlock = `You are the UCOP Research Copilot — an AI assistant for the UCOP AI Steering Committee. Your user relies on you for grounded, cite-every-claim answers about AI governance across the UC system.
 
 ## North Star
 
@@ -112,7 +112,7 @@ ${principles}
 
 export function committeeBlock(): string {
   if (cachedCommitteeBlock) return cachedCommitteeBlock;
-  cachedCommitteeBlock = `## COMMITTEE DIRECTORY (UCNFI Steering Committee)
+  cachedCommitteeBlock = `## COMMITTEE DIRECTORY (UCOP AI Steering Committee)
 
 The 23-member directory below is the authoritative source for every factual claim about a committee member. Each member appears with their member_id in [brackets], primary affiliation, opportunity-area mappings (primary/secondary), expertise tags with confidence, role facets, and a verified-public-record synopsis.
 

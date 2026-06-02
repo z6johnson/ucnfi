@@ -27,7 +27,7 @@ export default async function AdminLoginPage({
   return (
     <div className="pt-12">
       <header>
-        <span className="label">UCNFI · Admin</span>
+        <span className="label">UCOP · Admin</span>
         <h1 className="display mt-2">Sign in</h1>
         <p
           className="prose-body mt-4 max-w-xl"

@@ -5,12 +5,12 @@ summary: What the UC Office of the President has already built for AI governance
 pillar: scale
 oa: oa-1
 created: 2026-04-11
-author: UCNFI Research copilot
+author: UCOP Research copilot
 ---
 
 ## Why this matters
 
-The UCNFI Steering Committee's Opportunity Area 1 — the "Trusted AI" Standard — is not starting from zero. UCOP has a council, a set of principles, a risk assessment guide, a legal task force, and a transparency report. A credible Trusted AI Standard builds on those assets rather than replaces them.
+The UCOP AI Steering Committee's Opportunity Area 1 — the "Trusted AI" Standard — is not starting from zero. UCOP has a council, a set of principles, a risk assessment guide, a legal task force, and a transparency report. A credible Trusted AI Standard builds on those assets rather than replaces them.
 
 ## The systemwide stack today
 
@@ -29,6 +29,6 @@ The UCNFI Steering Committee's Opportunity Area 1 — the "Trusted AI" Standard 
 
 ## Open questions
 
-- Who owns the Trusted AI Standard once it exists? UC AI Council? UCNFI? A new body?
+- Who owns the Trusted AI Standard once it exists? UC AI Council? UCOP? A new body?
 - How does the Standard interact with the campus-level councils that already exist at 8 of 10 campuses? (See the companion memo on campus council coverage.)
 - Where does the Health AI Governance Forum fit — inside the Standard or alongside it?

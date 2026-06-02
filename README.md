@@ -1,8 +1,8 @@
-# UCNFI
+# UCOP
 
-**UC Next Frontier Initiative — research, synthesis, and analytics platform.**
+**UCOP AI Steering Committee — research, synthesis, and analytics platform.**
 
-A Next.js web app over the AI governance baseline dataset (20 entities, 262 data points, 10 dimensions, v0.7.0) and the UCNFI Steering Committee directory (23 members), with a grounded Claude copilot that cites every claim back to a specific entity or member. Organized around the three pillars and eight Opportunity Areas of the UCNFI North Star.
+A Next.js web app over the AI governance baseline dataset (20 entities, 262 data points, 10 dimensions, v0.7.0) and the UCOP AI Steering Committee directory (23 members), with a grounded Claude copilot that cites every claim back to a specific entity or member. Organized around the three pillars and eight Opportunity Areas of the UCOP North Star.
 
 ## Surfaces
 

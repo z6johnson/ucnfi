@@ -51,22 +51,10 @@ export default function AboutPage() {
   return (
     <div className="pt-12">
       <header>
-        <span className="label">UCNFI · About this resource</span>
+        <span className="label">UCOP · About this resource</span>
         <h1 className="hero mt-2 max-w-3xl">
           How this baseline was built, and what to do with it
         </h1>
-        <p
-          className="prose-body mt-6 max-w-2xl"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          UCNFI is a working surface for the Steering Committee to explore
-          what the UC system has already built around AI — who governs it,
-          how policies are framed, where the gaps are, and where the
-          leverage lies. This page documents the strategy behind the
-          resource, the ten dimensions along which every entity is
-          profiled, and the method used to capture and verify each data
-          point.
-        </p>
       </header>
 
       {/* ---------- Strategy ---------- */}

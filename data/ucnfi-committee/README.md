@@ -1,6 +1,6 @@
-# UCNFI Committee Records
+# UCOP Committee Records
 
-Maintained-record system for the UC AI Steering Committee (UCNFI). Twenty-three members enriched in Pass 1, validated against schema v1.0.0. Working files for further development of the survey instrument, working group assignments, and reconciliation workflow.
+Maintained-record system for the UC AI Steering Committee (UCOP). Twenty-three members enriched in Pass 1, validated against schema v1.0.0. Working files for further development of the survey instrument, working group assignments, and reconciliation workflow.
 
 ## What this is
 
@@ -39,7 +39,7 @@ ucnfi-committee/
 - `name` — full, first, last, optional preferred and pronouns
 - `primary_affiliation` — current title and organization
 - `secondary_affiliations` — array of additional roles
-- `committee_role` — role on UCNFI plus what they `represent`
+- `committee_role` — role on UCOP plus what they `represent`
 - `enrichment` — the working record
   - `expertise_tags` — controlled-vocab tags with confidence and evidence
   - `opportunity_areas` — OA-1 through OA-8 mappings, primary or secondary

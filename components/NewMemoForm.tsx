@@ -149,7 +149,7 @@ export function NewMemoForm({ pillars }: { pillars: Pillar[] }) {
           onChange={(e) => setAuthor(e.target.value)}
           disabled={disabled}
           className="ucnfi-input"
-          placeholder="UCNFI Research copilot"
+          placeholder="UCOP Research copilot"
         />
       </Field>
 
