@@ -323,6 +323,20 @@ export function listPublishedEditions(repoRoot: string): BriefEdition[] {
 }
 
 /**
+ * The single most recent published edition — the one the public Brief tab
+ * surfaces as its main content. Editions are sorted by edition_id (which is
+ * ISO week ordered, e.g. 2026-W23), so the last one is the newest. Returns
+ * null when nothing has been published yet. Drafts are never returned: only
+ * editions a reviewer has explicitly published reach the public page.
+ */
+export function readLatestEdition(repoRoot: string): BriefEdition | null {
+  const published = listPublishedEditions(repoRoot);
+  if (published.length === 0) return null;
+  published.sort((a, b) => a.edition_id.localeCompare(b.edition_id));
+  return published[published.length - 1];
+}
+
+/**
  * Items rejected by the validator. Kept as a JSON sidecar so the
  * generation pipeline's "tried and rejected" record is auditable in
  * git, but never displayed in the public Brief.
