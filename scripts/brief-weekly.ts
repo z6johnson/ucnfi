@@ -1,32 +1,38 @@
 /**
  * Weekly UC President's Brief — generator entry point.
  *
- * Pulls four feeds (external / peer / vendor / committee signal),
- * drafts three to five items with Claude via the UCSD TritonAI
- * LiteLLM proxy, validates every baseline anchor, and writes a draft
- * markdown edition under data/brief/editions/.
+ * Pulls the RSS feeds (external / peer / vendor), a live web-search pass
+ * over the TritonAI LiteLLM `internet_tool` MCP, and the committee signal,
+ * drafts three to five items with Claude via the same LiteLLM proxy,
+ * validates every baseline anchor, and writes a PUBLISHED markdown edition
+ * under data/brief/editions/.
  *
  * Usage:
  *   npm run brief:weekly
  *   END_DATE=2026-05-29 npm run brief:weekly        # week ending on a specific date
  *   DRY_RUN=1 npm run brief:weekly                  # build, print, don't write
- *   LOOKBACK_DAYS=14 npm run brief:weekly           # widen the feed window
+ *   LOOKBACK_DAYS=14 npm run brief:weekly           # widen the RSS feed window
+ *   WEB_LOOKBACK_DAYS=14 npm run brief:weekly       # widen the web-search window
+ *   DISABLE_WEB=1 npm run brief:weekly              # RSS-only run, no web search
  *
  * Env required:
- *   LITELLM_API_KEY
+ *   LITELLM_API_KEY      — TritonAI bearer token (LLM synthesis + MCP search)
  *
  * Optional:
+ *   LITELLM_BASE_URL     — defaults to https://tritonai-api.ucsd.edu
+ *   LITELLM_MCP_URL      — defaults to ${LITELLM_BASE_URL}/internet_tool/mcp
  *   BRIEF_MODEL          — defaults to CLAUDE_MODEL
  *   END_DATE             — YYYY-MM-DD, defaults to today
- *   LOOKBACK_DAYS        — external/peer/vendor feed lookback, default 7
+ *   LOOKBACK_DAYS        — external/peer/vendor RSS lookback, default 7
+ *   WEB_LOOKBACK_DAYS    — web-search lookback, default = LOOKBACK_DAYS
+ *   DISABLE_WEB          — set to 1 to skip the live web-search pass
  *   COMMITTEE_GRACE_DAYS — committee-signal publication-recency window, default 30
  *                          (wider than LOOKBACK_DAYS because member positions
  *                          often surface in a scan after they were published)
  *
- * The generated draft is NOT visible on /brief until a human reviewer
- * edits the file, sets status: "published" in the frontmatter, fills
- * reviewed_by + reviewed_at, and commits. That's the "AI-assembled,
- * human-accountable" gate.
+ * The edition is written with status: "published" and goes live on /brief
+ * immediately — there is no human review gate. The primary user catches and
+ * tunes any issues on the next scheduled refresh.
  */
 
 import { existsSync, readFileSync } from "node:fs";
@@ -46,6 +52,10 @@ const REPO_ROOT = process.cwd();
 const DRY_RUN = process.env.DRY_RUN === "1" || process.env.DRY_RUN === "true";
 const END_DATE_RAW = process.env.END_DATE?.trim() || null;
 const LOOKBACK_DAYS = process.env.LOOKBACK_DAYS ? Number(process.env.LOOKBACK_DAYS) : 7;
+const WEB_LOOKBACK_DAYS = process.env.WEB_LOOKBACK_DAYS
+  ? Number(process.env.WEB_LOOKBACK_DAYS)
+  : LOOKBACK_DAYS;
+const DISABLE_WEB = process.env.DISABLE_WEB === "1" || process.env.DISABLE_WEB === "true";
 const COMMITTEE_GRACE_DAYS = process.env.COMMITTEE_GRACE_DAYS
   ? Number(process.env.COMMITTEE_GRACE_DAYS)
   : 30;
@@ -83,6 +93,7 @@ async function main(): Promise<void> {
     `[brief] start end_date=${endDate.toISOString().slice(0, 10)} ` +
       `external=${config.external.length} vendor=${config.vendor.length} ` +
       `peers=${config.peers.length} lookback=${LOOKBACK_DAYS} ` +
+      `web_lookback=${WEB_LOOKBACK_DAYS} web=${DISABLE_WEB ? "off" : "on"} ` +
       `committee_grace=${COMMITTEE_GRACE_DAYS} dry_run=${DRY_RUN}`,
   );
 
@@ -91,12 +102,15 @@ async function main(): Promise<void> {
     endDate,
     config,
     feedLookbackDays: LOOKBACK_DAYS,
+    webLookbackDays: WEB_LOOKBACK_DAYS,
+    disableWeb: DISABLE_WEB,
     committeeGraceDays: COMMITTEE_GRACE_DAYS,
   });
 
   console.info(
     `[brief] collected raw=${rawItems.length} ` +
       `(external=${edition.inputs_manifest.external.n} ` +
+      `web=${edition.inputs_manifest.web.n} ` +
       `peer=${edition.inputs_manifest.peer.n} ` +
       `vendor=${edition.inputs_manifest.vendor.n} ` +
       `committee=${edition.inputs_manifest.committee_signal_dates.length} dates)`,
@@ -139,7 +153,7 @@ async function main(): Promise<void> {
   }
 
   console.info(
-    `[brief] draft is at data/brief/editions/${edition.edition_id}.md with status=draft. Edit the prose, set status to "published", fill reviewed_by + reviewed_at, then commit.`,
+    `[brief] published data/brief/editions/${edition.edition_id}.md with status=${edition.status} (${edition.items.length} item(s)) — live on /brief.`,
   );
 }
 

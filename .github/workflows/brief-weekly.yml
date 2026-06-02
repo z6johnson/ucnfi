@@ -1,0 +1,95 @@
+name: Weekly UC President's Brief
+
+# Generates the weekly Brief and pushes it straight to the branch — no PR,
+# no human review gate. It pulls the RSS feeds, runs a live web-search pass
+# over the TritonAI LiteLLM `internet_tool` MCP, drafts items with Claude,
+# validates every baseline anchor, and writes a published markdown edition
+# under data/brief/editions/.
+#
+# Runs Sunday 15:00 UTC — after the committee weekly digest (14:00 Sunday in
+# committee-scan.yml) so the committee-signal activity JSONL is fresh.
+#
+# Required repo secrets:
+#   LITELLM_API_KEY  — TritonAI bearer token (LLM synthesis + MCP search)
+
+on:
+  schedule:
+    - cron: "0 15 * * 0"
+  workflow_dispatch:
+    inputs:
+      end_date:
+        description: "Week ending date (YYYY-MM-DD, blank = today)"
+        required: false
+        default: ""
+        type: string
+      lookback_days:
+        description: "Override RSS lookback window in days (blank = default 7)"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: brief-weekly-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Need a real token so the post-step git push goes through.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate baseline + committee records
+        run: |
+          npm run validate:baseline
+          npm run validate:committee
+
+      - name: Build weekly brief
+        env:
+          LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
+          LITELLM_BASE_URL: ${{ vars.LITELLM_BASE_URL }}
+          LITELLM_MCP_URL: ${{ vars.LITELLM_MCP_URL }}
+          BRIEF_MODEL: ${{ vars.BRIEF_MODEL }}
+          END_DATE: ${{ inputs.end_date }}
+          LOOKBACK_DAYS: ${{ inputs.lookback_days }}
+        run: npm run brief:weekly
+
+      - name: Commit and push if changes
+        run: |
+          git config user.name "ucnfi-scan-bot"
+          git config user.email "ucnfi-scan-bot@users.noreply.github.com"
+          git add data/brief/
+          if git diff --cached --quiet; then
+            echo "No brief changes to commit."
+          else
+            WEEK=$(date -u +%G-W%V)
+            git commit -m "Weekly UC President's Brief — $WEEK"
+            branch="${GITHUB_REF#refs/heads/}"
+            for attempt in 1 2 3 4 5; do
+              if git push origin "HEAD:${branch}"; then
+                echo "Pushed on attempt ${attempt}."
+                break
+              fi
+              if [ "$attempt" = "5" ]; then
+                echo "Giving up after 5 push attempts."
+                exit 1
+              fi
+              echo "Push rejected on attempt ${attempt}; rebasing onto origin/${branch}…"
+              git fetch origin "${branch}"
+              git rebase "origin/${branch}"
+              sleep "$((attempt * 2))"
+            done
+          fi

@@ -75,10 +75,14 @@ Return a single JSON object and nothing else. No prose. No code fences.
 \`\`\`
 
 priority maps to the feed bucket the item came from:
-  1 = external developments (Federal Register, ED, CA Legislature, courts, peer-system moves)
+  1 = external developments (Federal Register, ED, CA Legislature, courts, peer-system moves) AND live web-search findings
   2 = peer institution moves
   3 = vendor & capability shifts
   4 = committee signal (from the activity scan)
+
+Items from the WEB SEARCH section are cited as external feed_sources with subkind "web_search":
+{ "kind": "external", "subkind": "web_search", "url": "...", "title": "...", "published_at": "..." }
+Quote the url exactly as it appears in the WEEKLY INPUTS line — do not reword or strip it.
 
 item_id is "item-N" where N is the item's position (1-based). Use it consistently across feed_sources references if needed.
 
@@ -118,6 +122,7 @@ export function userInputsBlock(args: {
   external: BriefRawItem[];
   peer: BriefRawItem[];
   vendor: BriefRawItem[];
+  web: BriefRawItem[];
   committee: BriefRawItem[];
 }): string {
   const lines: string[] = [];
@@ -126,6 +131,7 @@ export function userInputsBlock(args: {
 
   const sections: Array<[string, BriefRawItem[]]> = [
     ["EXTERNAL DEVELOPMENTS (priority 1)", args.external],
+    ["WEB SEARCH — RECENT AI DEVELOPMENTS (priority 1)", args.web],
     ["PEER INSTITUTION MOVES (priority 2)", args.peer],
     ["VENDOR & CAPABILITY SHIFTS (priority 3)", args.vendor],
     ["COMMITTEE SIGNAL (priority 4)", args.committee],

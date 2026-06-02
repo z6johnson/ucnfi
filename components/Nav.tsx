@@ -4,6 +4,7 @@ const items: { href: string; label: string }[] = [
   { href: "/", label: "Home" },
   { href: "/expertise", label: "Expertise" },
   { href: "/activity", label: "Activity" },
+  { href: "/brief", label: "Brief" },
   { href: "/chat", label: "Chat" },
   { href: "/about", label: "About" },
 ];

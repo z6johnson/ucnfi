@@ -16,9 +16,13 @@
  *
  * The model is asked for strict JSON in its final text block so we can
  * parse without paying tokens for prose.
+ *
+ * The agentic loop itself (runAgenticSearch), the date-pinning helper, and
+ * the JSON-response parsing live in ../search/agentic-search.ts so the weekly
+ * Brief can drive the same `internet_tool` loop. This file keeps the
+ * committee-scan-specific prompts, item normalization, and the published
+ * tier-2 collectors.
  */
-
-import type Anthropic from "@anthropic-ai/sdk";
 
 import {
   type ActivityItem,
@@ -28,34 +32,20 @@ import {
   itemId,
   isoNowUTC,
 } from "../activity.ts";
-import { getLiteLLMClient } from "../litellm.ts";
 import { type CommitteeMember } from "../committee.ts";
-import { type McpTool, callInternetTool, listInternetTools } from "./internet-tool.ts";
+import {
+  type RawWebItem,
+  MAX_TOOL_USES,
+  dateContextLine,
+  parseSearchItems,
+  runAgenticSearch,
+} from "../search/agentic-search.ts";
 
 /* ------------------------------------------------------------------ */
 /* Client                                                              */
 /* ------------------------------------------------------------------ */
 
 const SCAN_MODEL = process.env.SCAN_MODEL || "claude-sonnet-4-6";
-// Max number of tool-calling turns before we force the model to answer.
-// Generous so it can search press + each social platform without starving
-// coverage; the model usually stops well before the cap.
-const MAX_TOOL_USES = 8;
-// Cap each tool result fed back to the model so a long page dump can't blow
-// the context window across an 8-turn loop.
-const MAX_TOOL_RESULT_CHARS = 16000;
-
-/**
- * The model otherwise infers "now" from whatever dates show up in search
- * results and routinely gets it wrong (we saw it decide it was "late July
- * 2025"), which wrecks the lookback window. Pin the real date and the cutoff.
- */
-function dateContextLine(lookbackDays: number): string {
-  const now = new Date();
-  const today = now.toISOString().slice(0, 10);
-  const start = new Date(now.getTime() - lookbackDays * 86_400_000).toISOString().slice(0, 10);
-  return `Today's date is ${today} (UTC). "The past ${lookbackDays} day(s)" means published on or after ${start}; judge recency by this date, not by guessing from search results.`;
-}
 
 /* ------------------------------------------------------------------ */
 /* Date enforcement                                                    */
@@ -327,50 +317,8 @@ Search ONLY social/owned-media platforms for posts/videos about this committee a
 }
 
 /* ------------------------------------------------------------------ */
-/* Response parsing                                                    */
+/* Item normalization                                                  */
 /* ------------------------------------------------------------------ */
-
-type RawWebItem = {
-  title?: unknown;
-  url?: unknown;
-  published_at?: unknown;
-  snippet?: unknown;
-  source_kind?: unknown;
-  match_reason?: unknown;
-};
-
-function extractFinalText(message: Anthropic.Message): string {
-  const parts: string[] = [];
-  for (const block of message.content) {
-    if (block.type === "text") parts.push(block.text);
-  }
-  return parts.join("\n").trim();
-}
-
-function tryParseJsonBlock(text: string): { items?: RawWebItem[] } | null {
-  // Strip an accidental code fence if the model produced one despite instructions.
-  let s = text.trim();
-  const fenceMatch = s.match(/```(?:json)?\s*([\s\S]*?)```/i);
-  if (fenceMatch) s = fenceMatch[1].trim();
-  try {
-    const v = JSON.parse(s);
-    if (v && typeof v === "object") return v as { items?: RawWebItem[] };
-  } catch {
-    // Fall through.
-  }
-  // Last resort: find the first { ... } substring and try.
-  const start = s.indexOf("{");
-  const end = s.lastIndexOf("}");
-  if (start !== -1 && end > start) {
-    try {
-      const v = JSON.parse(s.slice(start, end + 1));
-      if (v && typeof v === "object") return v as { items?: RawWebItem[] };
-    } catch {
-      // Give up.
-    }
-  }
-  return null;
-}
 
 /**
  * Raw model source_kinds that represent social / owned-media activity
@@ -443,146 +391,6 @@ const DEFAULT_LOOKBACK_DAYS = 7;
  *  further than the tight press window. */
 const DEFAULT_SOCIAL_LOOKBACK_DAYS = 30;
 
-type SearchResult = { text: string; toolCalls: number; stop: string };
-
-/**
- * Run the model with the `internet_tool` MCP search tool(s) exposed, execute
- * each tool call over MCP, and loop until the model emits its final JSON
- * answer or the tool budget is spent. Replaces the dead server-side
- * `web_search` tool: the gateway only relays messages, so we own the loop.
- *
- * Returns `null` when no search tool is reachable (so the caller skips rather
- * than letting the model hallucinate URLs with no real search backing).
- */
-async function runAgenticSearch(args: {
-  systemPrompt: string;
-  userPrompt: string;
-  maxToolCalls: number;
-  logTag: string;
-}): Promise<SearchResult | null> {
-  let tools: McpTool[];
-  try {
-    tools = await listInternetTools();
-  } catch (err) {
-    console.warn(`[scan] tier-2 mcp tools/list failed ${args.logTag} err=${(err as Error).message}`);
-    return null;
-  }
-  if (tools.length === 0) {
-    console.warn(`[scan] tier-2 no internet tools advertised ${args.logTag}; skipping`);
-    return null;
-  }
-  const anthropicTools = tools.map((t) => ({
-    name: t.name,
-    description: t.description,
-    input_schema: t.inputSchema,
-  })) as Anthropic.Tool[];
-  const toolNames = new Set(tools.map((t) => t.name));
-
-  const client = getLiteLLMClient();
-  const messages: Anthropic.MessageParam[] = [
-    { role: "user", content: args.userPrompt },
-  ];
-  let toolCalls = 0;
-  let stop = "?";
-
-  // One iteration beyond the budget runs with no tools, forcing the model to
-  // turn its gathered results into the final JSON.
-  for (let turn = 0; turn <= args.maxToolCalls; turn++) {
-    const offerTools = turn < args.maxToolCalls;
-    let resp: Anthropic.Message;
-    try {
-      resp = await client.messages.create({
-        model: SCAN_MODEL,
-        max_tokens: 2048,
-        system: args.systemPrompt,
-        messages,
-        ...(offerTools
-          ? {
-              tools: anthropicTools,
-              // Force a search on the first turn so the model can't shortcut
-              // to {"items": []} without searching; afterwards let it decide.
-              tool_choice: turn === 0 ? { type: "any" } : { type: "auto" },
-            }
-          : {}),
-      });
-    } catch (err) {
-      console.warn(`[scan] tier-2 messages.create failed ${args.logTag} err=${(err as Error).message}`);
-      return null;
-    }
-    stop = resp.stop_reason ?? "?";
-    const toolUses = resp.content.filter(
-      (b): b is Anthropic.ToolUseBlock => b.type === "tool_use",
-    );
-    if (resp.stop_reason !== "tool_use" || toolUses.length === 0) {
-      let text = extractFinalText(resp);
-      // The model frequently stops on narration ("Let me check…") or empty
-      // text instead of the required JSON. Salvage with one no-tools turn that
-      // demands the JSON object only.
-      if (!text || !tryParseJsonBlock(text)) {
-        messages.push({
-          role: "assistant",
-          content: text ? resp.content : [{ type: "text", text: "(no answer)" }],
-        });
-        messages.push({
-          role: "user",
-          content:
-            'Output ONLY the JSON object now, exactly {"items": [...]}, including every qualifying item you found above. No prose, no markdown fences. If nothing qualifies, output {"items": []}.',
-        });
-        try {
-          const salvage = await client.messages.create({
-            model: SCAN_MODEL,
-            max_tokens: 2048,
-            system: args.systemPrompt,
-            messages,
-          });
-          stop = `${stop}->reformat:${salvage.stop_reason ?? "?"}`;
-          text = extractFinalText(salvage) || text;
-        } catch (err) {
-          console.warn(`[scan] tier-2 reformat failed ${args.logTag} err=${(err as Error).message}`);
-        }
-      }
-      return { text, toolCalls, stop };
-    }
-
-    // Echo the assistant's tool-use turn, then execute each call over MCP.
-    messages.push({ role: "assistant", content: resp.content });
-    const results: Anthropic.ToolResultBlockParam[] = [];
-    for (const tu of toolUses) {
-      toolCalls++;
-      let output: string;
-      if (!toolNames.has(tu.name)) {
-        output = `ERROR: unknown tool "${tu.name}"`;
-      } else {
-        try {
-          output = await callInternetTool(tu.name, (tu.input ?? {}) as Record<string, unknown>);
-        } catch (err) {
-          output = `ERROR: ${(err as Error).message}`;
-        }
-      }
-      results.push({
-        type: "tool_result",
-        tool_use_id: tu.id,
-        content: output.slice(0, MAX_TOOL_RESULT_CHARS),
-      });
-    }
-    messages.push({ role: "user", content: results });
-  }
-  return { text: "", toolCalls, stop };
-}
-
-function parseSearchItems(text: string, logTag: string): RawWebItem[] {
-  if (!text) {
-    console.warn(`[scan] tier-2 empty response ${logTag}`);
-    return [];
-  }
-  const parsed = tryParseJsonBlock(text);
-  if (!parsed) {
-    console.warn(`[scan] tier-2 unparseable response ${logTag}: ${text.slice(0, 200)}`);
-    return [];
-  }
-  return Array.isArray(parsed.items) ? parsed.items : [];
-}
-
 export async function collectTier2(
   member: CommitteeMember,
   opts: WebSearchOptions = {},
@@ -598,6 +406,7 @@ export async function collectTier2(
     userPrompt: buildUserPrompt(member, aliases, handles, lookbackDays),
     maxToolCalls: maxUses,
     logTag,
+    model: SCAN_MODEL,
   });
   if (!res) return [];
   console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
@@ -628,6 +437,7 @@ export async function collectTier2Committee(
     userPrompt: buildCommitteeUserPrompt(aliases, lookbackDays),
     maxToolCalls: maxUses,
     logTag,
+    model: SCAN_MODEL,
   });
   if (!res) return [];
   console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
@@ -663,6 +473,7 @@ export async function collectTier2Social(
     userPrompt: buildSocialUserPrompt(member, aliases, handles, lookbackDays),
     maxToolCalls: maxUses,
     logTag,
+    model: SCAN_MODEL,
   });
   if (!res) return [];
   console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
@@ -692,6 +503,7 @@ export async function collectTier2SocialCommittee(
     userPrompt: buildSocialCommitteeUserPrompt(aliases, lookbackDays),
     maxToolCalls: maxUses,
     logTag,
+    model: SCAN_MODEL,
   });
   if (!res) return [];
   console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);

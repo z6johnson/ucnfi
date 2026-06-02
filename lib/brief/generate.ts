@@ -18,6 +18,7 @@ import { collectCommitteeSignal } from "./sources/committee.ts";
 import { collectExternal } from "./sources/external.ts";
 import { collectPeerMoves } from "./sources/peers.ts";
 import { collectVendor } from "./sources/vendor.ts";
+import { collectWeb } from "./sources/web.ts";
 import {
   baselineBlock,
   briefFramingBlock,
@@ -38,6 +39,8 @@ import type {
 
 const BRIEF_MODEL = process.env.BRIEF_MODEL || CLAUDE_MODEL;
 const BRIEF_MAX_TOKENS = 4096;
+/** Stamped into reviewed_by since editions auto-publish without a human gate. */
+const AUTO_REVIEWER = "auto";
 
 /* ------------------------------------------------------------------ */
 /* Public API                                                          */
@@ -49,10 +52,14 @@ export type GenerateBriefOpts = {
   config: SourcesConfig;
   /** Lookback for external / peer / vendor RSS feeds. Default 7 days. */
   feedLookbackDays?: number;
+  /** Lookback for the live web-search pass. Default = feedLookbackDays. */
+  webLookbackDays?: number;
   /** Days of committee activity JSONL files to read, by discovery date. Default 7. */
   committeeWindowDays?: number;
   /** Publication-recency grace window for committee signal. Default 30 days. */
   committeeGraceDays?: number;
+  /** Skip the live web-search pass (RSS-only run). Default false. */
+  disableWeb?: boolean;
 };
 
 export type GenerateBriefResult = {
@@ -65,6 +72,7 @@ export async function generateBrief(
   opts: GenerateBriefOpts,
 ): Promise<GenerateBriefResult> {
   const feedLookback = opts.feedLookbackDays ?? 7;
+  const webLookback = opts.webLookbackDays ?? feedLookback;
   const committeeWindow = opts.committeeWindowDays ?? 7;
   const committeeGrace = opts.committeeGraceDays ?? 30;
 
@@ -73,13 +81,16 @@ export async function generateBrief(
   const strict = windowBounds(opts.endDate, feedLookback);
   const grace = windowBounds(opts.endDate, committeeGrace);
 
-  // Collect the four feeds in parallel. Each collector swallows
-  // individual feed errors so one broken RSS endpoint doesn't sink
-  // the whole run.
-  const [external, peer, vendor, committee] = await Promise.all([
+  // Collect the feeds in parallel. Each collector swallows its own
+  // errors so one broken RSS endpoint (or an unreachable web-search
+  // gateway) doesn't sink the whole run.
+  const [external, peer, vendor, web, committee] = await Promise.all([
     collectExternal({ config: opts.config, lookbackDays: feedLookback, endDate: opts.endDate }),
     collectPeerMoves({ config: opts.config, lookbackDays: feedLookback, endDate: opts.endDate }),
     collectVendor({ config: opts.config, lookbackDays: feedLookback, endDate: opts.endDate }),
+    opts.disableWeb
+      ? Promise.resolve([])
+      : collectWeb({ lookbackDays: webLookback, endDate: opts.endDate, model: BRIEF_MODEL }),
     Promise.resolve(
       collectCommitteeSignal({
         repoRoot: opts.repoRoot,
@@ -90,15 +101,37 @@ export async function generateBrief(
     ),
   ]);
 
-  const allRaw = [...external, ...peer, ...vendor, ...committee.items];
+  // Web search frequently surfaces the same press / Federal Register URLs
+  // the RSS feeds already carried. Dedup by stable id in priority order,
+  // keeping the first occurrence so the richer RSS subkind wins over the
+  // generic web_search one — and so the model and the validator both see
+  // each URL exactly once.
+  const seen = new Set<string>();
+  const keep = (items: BriefRawItem[]): BriefRawItem[] => {
+    const out: BriefRawItem[] = [];
+    for (const it of items) {
+      if (seen.has(it.id)) continue;
+      seen.add(it.id);
+      out.push(it);
+    }
+    return out;
+  };
+  const externalU = keep(external);
+  const peerU = keep(peer);
+  const vendorU = keep(vendor);
+  const webU = keep(web);
+  const committeeU = keep(committee.items);
+
+  const allRaw = [...externalU, ...peerU, ...vendorU, ...webU, ...committeeU];
   const isoWeek = isoWeekLabel(opts.endDate);
   const windowFrom = strict.startIso;
   const windowTo = strict.endIso;
 
   const manifest: InputsManifest = {
-    external: { from: windowFrom, to: windowTo, n: external.length },
-    peer: { from: windowFrom, to: windowTo, n: peer.length },
-    vendor: { from: windowFrom, to: windowTo, n: vendor.length },
+    external: { from: windowFrom, to: windowTo, n: externalU.length },
+    peer: { from: windowFrom, to: windowTo, n: peerU.length },
+    vendor: { from: windowFrom, to: windowTo, n: vendorU.length },
+    web: { from: windowFrom, to: windowTo, n: webU.length },
     committee_signal_dates: committee.windowDates,
   };
 
@@ -119,10 +152,11 @@ export async function generateBrief(
     isoWeek,
     windowFrom,
     windowTo,
-    external,
-    peer,
-    vendor,
-    committee: committee.items,
+    external: externalU,
+    peer: peerU,
+    vendor: vendorU,
+    web: webU,
+    committee: committeeU,
   });
 
   const message = await getLiteLLMClient().messages.create({
@@ -162,12 +196,15 @@ export async function generateBrief(
     committeeLabel: `${grace.startIso}..${grace.endIso}`,
   });
 
+  // Auto-published: the primary user opted out of the human review gate,
+  // so the edition goes straight to the site. reviewed_by records that no
+  // human signed off rather than leaving it blank.
   const edition: BriefEdition = {
     edition_id: isoWeek,
     week_ending: windowTo,
-    status: "draft" as EditionStatus,
-    reviewed_by: "",
-    reviewed_at: "",
+    status: "published" as EditionStatus,
+    reviewed_by: AUTO_REVIEWER,
+    reviewed_at: isoNowUTC(),
     generated_at: isoNowUTC(),
     generated_by_model: BRIEF_MODEL,
     inputs_manifest: manifest,
@@ -275,9 +312,9 @@ function emptyEdition(args: {
   const edition: BriefEdition = {
     edition_id: args.isoWeek,
     week_ending: isoDateOf(args.endDate),
-    status: "draft",
-    reviewed_by: "",
-    reviewed_at: "",
+    status: "published",
+    reviewed_by: AUTO_REVIEWER,
+    reviewed_at: isoNowUTC(),
     generated_at: isoNowUTC(),
     generated_by_model: BRIEF_MODEL,
     inputs_manifest: args.manifest,

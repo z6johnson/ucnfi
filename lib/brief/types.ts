@@ -58,6 +58,7 @@ export type ExternalSubkind =
   | "ca_legislature"
   | "court"
   | "peer_system_move"
+  | "web_search"
   | "other";
 
 export type VendorSubkind =
@@ -148,6 +149,7 @@ export type InputsManifest = {
   external: { from: string; to: string; n: number };
   peer: { from: string; to: string; n: number };
   vendor: { from: string; to: string; n: number };
+  web: { from: string; to: string; n: number };
   committee_signal_dates: string[];
 };
 
