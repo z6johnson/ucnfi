@@ -1,28 +1,23 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
 import { AuditTrail } from "@/components/brief/AuditTrail";
 import { BriefItemCard, type BriefItemCardData } from "@/components/brief/BriefItemCard";
 import { getEntity } from "@/lib/baseline";
-import { listEditionIds, readEdition } from "@/lib/brief/storage";
+import type { BriefEdition } from "@/lib/brief/types";
 import { listMembers } from "@/lib/committee";
 
-export const dynamic = "force-dynamic";
+type Props = {
+  edition: BriefEdition;
+};
 
-export function generateStaticParams() {
-  return listEditionIds(process.cwd()).map((edition_id) => ({ edition_id }));
-}
-
-export default async function BriefEditionPage({
-  params,
-}: {
-  params: Promise<{ edition_id: string }>;
-}) {
-  const { edition_id } = await params;
-  const edition = readEdition(process.cwd(), edition_id);
-  if (!edition) notFound();
-
-  // Resolve baseline anchors at render time so chips display the live
-  // FieldRecord rather than a stale snapshot from generation.
+/**
+ * Renders a single Brief edition: the week subheader, each item card, and the
+ * audit trail. Baseline anchors are resolved at render time so chips display
+ * the live FieldRecord rather than a stale snapshot from generation.
+ *
+ * Shared by the public Brief tab (app/brief/page.tsx), which shows the latest
+ * published edition. Server component — it reads the baseline and committee
+ * roster directly.
+ */
+export function EditionView({ edition }: Props) {
   const memberNames: Record<string, string> = {};
   for (const m of listMembers()) memberNames[m.member_id] = m.name.preferred ?? m.name.full;
 
@@ -50,31 +45,15 @@ export default async function BriefEditionPage({
   );
 
   return (
-    <div className="pt-8">
-      <Link href="/brief" className="label">
-        ← All editions
-      </Link>
-
-      <header className="mt-4">
-        <span className="label">UCOP · The Brief</span>
-        <h1 className="display mt-2">
-          Week {edition.edition_id}
-          {edition.status === "draft" ? (
-            <span
-              className="label ml-3"
-              style={{ color: "var(--color-text-subtle)" }}
-            >
-              Draft
-            </span>
-          ) : null}
-        </h1>
-        <p
-          className="mt-2 text-sm"
-          style={{ color: "var(--color-text-subtle)" }}
-        >
-          {edition.items.length} item{edition.items.length === 1 ? "" : "s"} · week ending {edition.week_ending}
-        </p>
-      </header>
+    <>
+      <p
+        className="mt-2 text-sm"
+        style={{ color: "var(--color-text-subtle)" }}
+      >
+        Week {edition.edition_id}
+        {edition.status === "draft" ? " · draft" : ""} · {edition.items.length} item
+        {edition.items.length === 1 ? "" : "s"} · week ending {edition.week_ending}
+      </p>
 
       {edition.items.length === 0 ? (
         <p
@@ -94,6 +73,6 @@ export default async function BriefEditionPage({
       ))}
 
       <AuditTrail edition={edition} />
-    </div>
+    </>
   );
 }

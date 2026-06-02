@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { EditionList } from "@/components/brief/EditionList";
-import { listEditions } from "@/lib/brief/storage";
+import { EditionView } from "@/components/brief/EditionView";
+import { readLatestEdition } from "@/lib/brief/storage";
 
 export const metadata = {
   title: "Brief — UCOP",
@@ -11,7 +11,7 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 export default function BriefIndexPage() {
-  const editions = listEditions(process.cwd());
+  const edition = readLatestEdition(process.cwd());
   return (
     <div className="pt-8">
       <header className="flex flex-wrap items-baseline justify-between gap-4">
@@ -29,7 +29,17 @@ export default function BriefIndexPage() {
         </Link>
       </header>
 
-      <EditionList editions={editions} />
+      {edition ? (
+        <EditionView edition={edition} />
+      ) : (
+        <p
+          className="mt-8 text-sm"
+          style={{ color: "var(--color-text-subtle)" }}
+        >
+          No Brief has been published yet. Once an edition is reviewed and
+          published it appears here.
+        </p>
+      )}
     </div>
   );
 }
