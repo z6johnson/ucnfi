@@ -223,7 +223,7 @@ export default function AboutPage() {
           <MethodStep
             n="04"
             title="Iterative enrichment"
-            body="The baseline is versioned. v0.1 was a skeleton, v0.5 completed a full PDF pass, and v0.6 added a web-archive enrichment pass covering ~80 additional pages. Each bump is logged in data/ENRICHMENT_LOG.md alongside the sources it relied on and the pages that could not be reached."
+            body="The baseline is versioned. v0.1 was a skeleton, v0.5 completed a full PDF pass, and v0.6 added a web-archive enrichment pass covering ~80 additional pages. v0.7 ran a targeted gap-fill across the thin dimensions, and from v0.8 a monthly automated enrichment run proposes changes for human review. Each bump is logged in data/ENRICHMENT_LOG.md alongside the sources it relied on and the pages that could not be reached."
           />
           <MethodStep
             n="05"
@@ -254,12 +254,11 @@ export default function AboutPage() {
           <li>
             <strong style={{ color: "var(--color-ink)" }}>UC Irvine</strong>
             {" "}— no single campus-level AI council; governance is
-            distributed across OVPTL, OIT, and the Office of Research.
+            distributed across OVPTL (which now convenes an AI Advisory
+            Committee), OIT, and the Office of Research.
           </li>
           <li>
-            <strong style={{ color: "var(--color-ink)" }}>
-              UC Merced · UC Riverside
-            </strong>
+            <strong style={{ color: "var(--color-ink)" }}>UC Merced</strong>
             {" "}— no standalone provost or chancellor AI memo at the time
             of enrichment.
           </li>
@@ -278,7 +277,7 @@ export default function AboutPage() {
           </li>
           <li>
             <strong style={{ color: "var(--color-ink)" }}>
-              UCI Health · UCR Health
+              UCI Health
             </strong>
             {" "}— active internal governance processes without a public,
             standalone policy document.
