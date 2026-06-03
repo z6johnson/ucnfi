@@ -1012,13 +1012,13 @@
           "value": true,
           "source_id": "ucsd-02",
           "source_url": "https://tritonai.ucsd.edu/tritongpt/terms.html",
-          "notes": "TritonGPT — hosted on SDSC-managed systems, Onyx middleware. 90-day retention, auto-delete. blink.ucsd.edu migrated to tritonai.ucsd.edu."
+          "notes": "TritonGPT — UCSD-built and -operated platform, not a vendor contract. Hosted on SDSC-managed systems using Meta Llama open-source models with Onyx/Danswer middleware. 90-day retention, auto-delete. blink.ucsd.edu migrated to tritonai.ucsd.edu. UCSD also licenses commercial tools (ChatGPT, Microsoft Copilot) alongside TritonGPT (see enterprise_platform_name)."
         },
         "enterprise_platform_name": {
-          "value": "TritonGPT",
-          "source_id": "ucsd-02",
-          "source_url": "https://tritonai.ucsd.edu/tritongpt/terms.html",
-          "notes": "SDSC-hosted, UC-controlled infrastructure. No data shared with third parties. Onyx middleware."
+          "value": "TritonGPT (UCSD-built) + ChatGPT + Microsoft Copilot",
+          "source_id": "ucsd-17",
+          "source_url": "https://tritonai.ucsd.edu/",
+          "notes": "TritonGPT is built and deployed in-house by UC San Diego (IT Services + San Diego Supercomputer Center), not contracted from a vendor — built on Meta Llama open-source models, SDSC-hosted on UC-controlled infrastructure, no data shared with third parties, ~40% cheaper than comparable cloud AI over three years. UCSD has licensed the TritonGPT platform to other institutions, which run it under their own branding: UC Berkeley (BearGPT), UC Agriculture & Natural Resources, and Fairleigh Dickinson University. Separately, UCSD also licenses commercial AI tools — OpenAI ChatGPT and Microsoft Copilot — under commercial agreements that protect university data (approved up to P3), and encourages employees to use TritonGPT as the default. Sources: edtechmagazine.com (2025-05), tritonai.ucsd.edu."
         },
         "has_ai_hub_portal": {
           "value": true,
