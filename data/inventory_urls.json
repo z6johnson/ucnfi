@@ -107,7 +107,8 @@
     {"id": "ucsd-13", "title": "Healthcare AI Principles (Our Principles)", "url": "https://healthinnovation.ucsd.edu/our-principles", "type": "web", "date": "2022", "issuer": "Joan and Irwin Jacobs Center for Health Innovation"},
     {"id": "ucsd-14", "title": "Chief Health AI Officer Appointment (Karandeep Singh, MD)", "url": "https://health.ucsd.edu/news/press-releases/2023-12-12-karandeep-singh-md-named-inaugural-chief-health-ai-officer-at-uc-san-diego-health/", "type": "web", "date": "2023-12-12", "issuer": "UC San Diego Health"},
     {"id": "ucsd-15", "title": "Chief Innovation Officer Appointment (Alexander Khalessi)", "url": "https://health.ucsd.edu/news/press-releases/2025-12-08-alexander-khalessi-md-mba-appointed-chief-innovation-officer/", "type": "web", "date": "2025-12-08", "issuer": "UC San Diego Health"},
-    {"id": "ucsd-16", "title": "Senate-Administration Partnership Page (AI Workgroup Summary)", "url": "https://evc.ucsd.edu/mission-initiatives/partnering-with-the-academic-senate.html", "type": "web", "date": "ongoing", "issuer": "UC San Diego EVC Office / Academic Affairs"}
+    {"id": "ucsd-16", "title": "Senate-Administration Partnership Page (AI Workgroup Summary)", "url": "https://evc.ucsd.edu/mission-initiatives/partnering-with-the-academic-senate.html", "type": "web", "date": "ongoing", "issuer": "UC San Diego EVC Office / Academic Affairs"},
+    {"id": "ucsd-17", "title": "UC San Diego Launches TritonGPT Generative AI Tool", "url": "https://edtechmagazine.com/higher/article/2025/05/uc-san-diego-launches-tritongpt-generative-ai-tool", "type": "web", "date": "2025-05", "issuer": "EdTech Magazine"}
   ],
   "uc-san-francisco": [
     {"id": "ucsf-01", "title": "AI@UCSF Governance, Guidance and Policy Portal", "url": "https://ai.ucsf.edu/governance-guidance-and-policy", "type": "web", "date": "ongoing", "issuer": "AI@UCSF"},
