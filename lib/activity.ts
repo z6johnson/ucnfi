@@ -34,15 +34,13 @@ export type ActivitySourceKind =
   | "social"
   | "manual";
 
-export type ActivityScope = "member" | "committee";
+export type ActivityScope = "member" | "committee" | "topic";
 
-/**
- * Synthetic member_id used for items that mention the steering committee
- * itself rather than a single named member. Lets the existing JSONL +
- * seen-ledger pipeline carry committee-scope items without a parallel
- * storage layer.
- */
-export const COMMITTEE_SCOPE_ID = "committee";
+// Synthetic scope ids live in a dependency-free module so client components
+// can import them without pulling node:fs into the browser bundle. Imported
+// here for internal use (scopeOf) and re-exported for existing callers.
+import { COMMITTEE_SCOPE_ID, TOPIC_SCOPE_ID } from "./scopes.ts";
+export { COMMITTEE_SCOPE_ID, TOPIC_SCOPE_ID };
 
 export type ActivityItem = {
   id: string;
@@ -65,7 +63,9 @@ export type ActivityItem = {
 
 export function scopeOf(item: ActivityItem): ActivityScope {
   if (item.scope) return item.scope;
-  return item.member_id === COMMITTEE_SCOPE_ID ? "committee" : "member";
+  if (item.member_id === COMMITTEE_SCOPE_ID) return "committee";
+  if (item.member_id === TOPIC_SCOPE_ID) return "topic";
+  return "member";
 }
 
 export type FeedConfig = {

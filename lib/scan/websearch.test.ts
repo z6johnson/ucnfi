@@ -29,6 +29,15 @@ test("social window keeps items the tighter press window drops", () => {
   assert.equal(isWithinPublishedWindow(twentyDaysAgo, 30, NOW), true);
 });
 
+test("topic 14-day window catches mid-week field news the 7-day press window misses", () => {
+  // The case that motivated the topic scope: a story published ~11 days
+  // before a scan slips past the 7-day member press window but is held by
+  // the wider 14-day topic window.
+  const elevenDaysAgo = "2026-05-21T00:00:00.000Z";
+  assert.equal(isWithinPublishedWindow(elevenDaysAgo, 7, NOW), false);
+  assert.equal(isWithinPublishedWindow(elevenDaysAgo, 14, NOW), true);
+});
+
 test("one day of grace at the window edge", () => {
   // Exactly 8 days back still passes a 7-day window thanks to the grace day.
   assert.equal(isWithinPublishedWindow("2026-05-24T00:00:00.000Z", 7, NOW), true);

@@ -29,6 +29,7 @@ import {
   type ActivityScope,
   type ActivitySourceKind,
   COMMITTEE_SCOPE_ID,
+  TOPIC_SCOPE_ID,
   itemId,
   isoNowUTC,
 } from "../activity.ts";
@@ -213,6 +214,65 @@ Search the public web — including social platforms — for items about this co
 }
 
 /* ------------------------------------------------------------------ */
+/* Topic / field-news prompts                                          */
+/* ------------------------------------------------------------------ */
+/* A scope for AI-in-higher-education / AI-policy news relevant to the
+ * committee's charge even when NO individual member and NOT the committee
+ * as a body is named — e.g. a UC study on student AI use, a peer-system
+ * AI policy, an academic-integrity report. Unlike the member/committee
+ * scopes, the "is this the right entity?" gate is replaced by a
+ * topical-relevance gate. */
+
+function buildTopicSystemPrompt(lookbackDays: number): string {
+  return `You scan public web sources for recent AI-in-higher-education news relevant to the UCOP AI Steering Committee's charge — even when no individual committee member and not the committee itself is named. You MUST use the internet search tool at least once before answering.
+
+${dateContextLine(lookbackDays)}
+
+A hit is an item that:
+  (a) concerns AI within the committee's mandate: AI in teaching, learning, or research; academic integrity and assessment; AI access/equity for students; AI governance, policy, or regulation at the University of California or peer research universities (R1s); or a major study, survey, or report on AI use in higher education, AND
+  (b) is published in a credible venue: UC newsroom or campus communications, UCOP press, peer-university communications, mainstream press, trade press (Inside Higher Ed, Chronicle of Higher Education, EdSurge), policy or research outlets, or official UC/peer system pages.
+
+This scope is deliberately broad. INCLUDE UC and peer-university studies, reports, surveys, op-eds, and policy news about AI in higher education even when authored or led by people who are NOT on the committee — that is exactly the field context the committee needs. Do not require that a committee member or the committee be named.
+
+Cover both mainstream press and credible web sources. Return the canonical article/report URL, not a search or aggregator URL.
+
+Skip:
+  - generic AI-industry/product news with no higher-education angle
+  - opinion spam, SEO content farms, and aggregator/listicle pages
+  - vendor marketing
+  - anything older than ${lookbackDays} days
+
+Source kinds (use exactly one of these strings): news_article, publication, op_ed, position_statement, blog_post, podcast, video, press_release, other. Use \`publication\` for studies/reports/papers and \`news_article\` for press coverage.
+
+Your final assistant message MUST be a single JSON object and nothing else, with this shape:
+
+{
+  "items": [
+    {
+      "title": "...",
+      "url": "https://...",
+      "published_at": "2026-05-21" or null,
+      "snippet": "first ~300 chars of context, plain text",
+      "source_kind": "news_article",
+      "match_reason": "one short sentence: why this AI-in-higher-ed item is relevant to the committee's charge"
+    }
+  ]
+}
+
+If your searches genuinely found nothing in the window, return {"items": []}. Do not include explanatory prose. Do not wrap the JSON in code fences.`;
+}
+
+function buildTopicUserPrompt(topics: string[], lookbackDays: number): string {
+  const topicLine = topics.length > 0
+    ? `Lead with these topic queries: ${topics.map((t) => `"${t}"`).join(", ")}.`
+    : "";
+  return `Subject: AI-in-higher-education news relevant to the University of California AI Steering Committee's charge.
+${topicLine}
+
+Search the public web for AI-in-higher-education / AI-policy items published in the last ${lookbackDays} day(s), including UC and peer-university studies and reports even when no committee member is named. Run at least one internet search before answering. Return strict JSON per the system instructions.`;
+}
+
+/* ------------------------------------------------------------------ */
 /* Social-only prompts                                                 */
 /* ------------------------------------------------------------------ */
 /* A dedicated pass scoped to social/owned media. The combined press+social
@@ -390,6 +450,10 @@ const DEFAULT_LOOKBACK_DAYS = 7;
 /** Social posts are sparse, so the dedicated social pass reaches back
  *  further than the tight press window. */
 const DEFAULT_SOCIAL_LOOKBACK_DAYS = 30;
+/** Field news runs less surgically than member press: a wider default
+ *  window shrinks the gap between scans so a relevant story published
+ *  mid-week isn't missed by a tight 7-day press window. */
+const DEFAULT_TOPIC_LOOKBACK_DAYS = 14;
 
 export async function collectTier2(
   member: CommitteeMember,
@@ -445,6 +509,39 @@ export async function collectTier2Committee(
   const items: ActivityItem[] = [];
   for (const r of parseSearchItems(res.text, logTag)) {
     const norm = normaliseItem(COMMITTEE_SCOPE_ID, r, "committee");
+    if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
+  }
+  return items;
+}
+
+/**
+ * Tier-2 collector for AI-in-higher-education "field news" relevant to the
+ * committee's charge. Mirrors `collectTier2Committee` but uses a
+ * topical-relevance prompt instead of an entity gate, and stamps items
+ * with `scope: "topic"` and `member_id: TOPIC_SCOPE_ID`. The default
+ * window is wider (14d) than the member press window.
+ */
+export async function collectTier2Topic(
+  opts: WebSearchOptions = {},
+): Promise<ActivityItem[]> {
+  const topics = opts.searchAliases ?? [];
+  const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
+  const lookbackDays = opts.lookbackDays ?? DEFAULT_TOPIC_LOOKBACK_DAYS;
+  const logTag = TOPIC_SCOPE_ID;
+
+  const res = await runAgenticSearch({
+    systemPrompt: buildTopicSystemPrompt(lookbackDays),
+    userPrompt: buildTopicUserPrompt(topics, lookbackDays),
+    maxToolCalls: maxUses,
+    logTag,
+    model: SCAN_MODEL,
+  });
+  if (!res) return [];
+  console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
+
+  const items: ActivityItem[] = [];
+  for (const r of parseSearchItems(res.text, logTag)) {
+    const norm = normaliseItem(TOPIC_SCOPE_ID, r, "topic");
     if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
   }
   return items;
