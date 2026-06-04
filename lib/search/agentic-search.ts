@@ -140,6 +140,13 @@ export type RunAgenticSearchArgs = {
   logTag: string;
   /** Model id to drive the loop (e.g. SCAN_MODEL or BRIEF_MODEL). */
   model: string;
+  /**
+   * Output token ceiling for each model response (the search turns and the
+   * final/reformat JSON answer). Default 2048 is plenty for a handful of
+   * items; the broad topic pass returns a longer list, so it raises this to
+   * avoid truncating the final JSON (which makes it unparseable → 0 items).
+   */
+  maxTokens?: number;
   /** Log prefix for the warn lines, e.g. "[scan]" or "[brief]". */
   logPrefix?: string;
 };
@@ -157,6 +164,7 @@ export async function runAgenticSearch(
   args: RunAgenticSearchArgs,
 ): Promise<SearchResult | null> {
   const logPrefix = args.logPrefix ?? "[scan]";
+  const maxTokens = args.maxTokens ?? 2048;
   let tools: McpTool[];
   try {
     tools = await listInternetTools();
@@ -190,7 +198,7 @@ export async function runAgenticSearch(
     try {
       resp = await client.messages.create({
         model: args.model,
-        max_tokens: 2048,
+        max_tokens: maxTokens,
         system: args.systemPrompt,
         messages,
         ...(offerTools
@@ -228,7 +236,7 @@ export async function runAgenticSearch(
         try {
           const salvage = await client.messages.create({
             model: args.model,
-            max_tokens: 2048,
+            max_tokens: maxTokens,
             system: args.systemPrompt,
             messages,
           });
