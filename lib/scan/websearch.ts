@@ -242,6 +242,8 @@ Skip:
   - vendor marketing
   - anything older than ${lookbackDays} days
 
+Return at most ${TOPIC_MAX_ITEMS} of the most relevant items, newest and most clearly on-mandate first. Keep each snippet to roughly 300 characters.
+
 Source kinds (use exactly one of these strings): news_article, publication, op_ed, position_statement, blog_post, podcast, video, press_release, other. Use \`publication\` for studies/reports/papers and \`news_article\` for press coverage.
 
 Your final assistant message MUST be a single JSON object and nothing else, with this shape:
@@ -454,6 +456,13 @@ const DEFAULT_SOCIAL_LOOKBACK_DAYS = 30;
  *  window shrinks the gap between scans so a relevant story published
  *  mid-week isn't missed by a tight 7-day press window. */
 const DEFAULT_TOPIC_LOOKBACK_DAYS = 14;
+/** The topic pass returns a longer list than the per-entity passes, so its
+ *  final JSON needs more output headroom than the shared 2048 default to
+ *  avoid mid-answer truncation. Paired with the item cap in the prompt. */
+const TOPIC_MAX_TOKENS = 4096;
+/** Hard cap on items the topic pass returns, so the JSON answer stays well
+ *  within TOPIC_MAX_TOKENS even on a busy news week. */
+const TOPIC_MAX_ITEMS = 10;
 
 export async function collectTier2(
   member: CommitteeMember,
@@ -535,6 +544,10 @@ export async function collectTier2Topic(
     maxToolCalls: maxUses,
     logTag,
     model: SCAN_MODEL,
+    // The topic pass is the broadest search and returns the longest list;
+    // give the final JSON answer extra headroom so it isn't truncated
+    // (truncation makes it unparseable and silently drops every item).
+    maxTokens: TOPIC_MAX_TOKENS,
   });
   if (!res) return [];
   console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
