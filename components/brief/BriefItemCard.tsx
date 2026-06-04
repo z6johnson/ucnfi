@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { EntityDrawer } from "@/components/EntityDrawer";
 import { MemberDrawer } from "@/components/MemberDrawer";
+import { COMMITTEE_SCOPE_ID, TOPIC_SCOPE_ID } from "@/lib/scopes";
 import type { BriefItem, FeedSource } from "@/lib/brief/types";
 import { BaselineAnchorChip } from "./BaselineAnchorChip";
 import { BriefInlineChat, type BriefChatScope } from "./BriefInlineChat";
@@ -56,6 +57,8 @@ function formatFeedSource(fs: FeedSource): string {
     case "vendor":
       return `${fs.subkind.replace(/^vendor_/, "vendor · ").replace(/_/g, " ")}`;
     case "committee_signal":
+      if (fs.member_id === TOPIC_SCOPE_ID) return "UC field news";
+      if (fs.member_id === COMMITTEE_SCOPE_ID) return "Steering Committee";
       return `committee · ${fs.member_id}`;
   }
 }

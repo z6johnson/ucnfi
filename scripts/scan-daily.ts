@@ -27,6 +27,7 @@
 import {
   type ActivityItem,
   COMMITTEE_SCOPE_ID,
+  TOPIC_SCOPE_ID,
   appendItems,
   isoDateUTC,
   isoNowUTC,
@@ -42,6 +43,7 @@ import {
   collectTier2Committee,
   collectTier2Social,
   collectTier2SocialCommittee,
+  collectTier2Topic,
 } from "../lib/scan/websearch.ts";
 
 const REPO_ROOT = process.cwd();
@@ -161,6 +163,33 @@ async function processCommittee(feedsConfig: ReturnType<typeof readFeedsConfig>)
   return result;
 }
 
+async function processTopic(feedsConfig: ReturnType<typeof readFeedsConfig>): Promise<MemberResult> {
+  const result: MemberResult = {
+    memberId: TOPIC_SCOPE_ID,
+    tier1: [],
+    tier2: [],
+    errors: [],
+  };
+  const cfg = feedsConfig[TOPIC_SCOPE_ID];
+
+  // Topic / field news has no structured feeds — it is a tier-2-only scope.
+  if (TIER === "2" || TIER === "both") {
+    if (!process.env.LITELLM_API_KEY) {
+      result.errors.push("tier2: LITELLM_API_KEY not set, skipped");
+    } else {
+      try {
+        result.tier2 = await collectTier2Topic({
+          searchAliases: cfg?.search_aliases ?? [],
+          lookbackDays: LOOKBACK_DAYS,
+        });
+      } catch (err) {
+        result.errors.push(`tier2: ${(err as Error).message}`);
+      }
+    }
+  }
+  return result;
+}
+
 async function runWithConcurrency<T, R>(
   items: T[],
   worker: (item: T) => Promise<R>,
@@ -185,12 +214,14 @@ async function runWithConcurrency<T, R>(
 async function main(): Promise<void> {
   const allMembers = listMembers();
   const memberFilterIsCommittee = MEMBER_FILTER === COMMITTEE_SCOPE_ID;
+  const memberFilterIsTopic = MEMBER_FILTER === TOPIC_SCOPE_ID;
   const members = MEMBER_FILTER
     ? allMembers.filter((m) => m.member_id === MEMBER_FILTER)
     : allMembers;
   const includeCommittee = !MEMBER_FILTER || memberFilterIsCommittee;
+  const includeTopic = !MEMBER_FILTER || memberFilterIsTopic;
 
-  if (members.length === 0 && !memberFilterIsCommittee) {
+  if (members.length === 0 && !memberFilterIsCommittee && !memberFilterIsTopic) {
     console.error(`No members matched filter=${MEMBER_FILTER ?? "*"}.`);
     process.exit(2);
   }
@@ -201,7 +232,7 @@ async function main(): Promise<void> {
   const now = isoNowUTC();
 
   console.info(
-    `[scan] start date=${today} members=${members.length} committee=${includeCommittee ? "yes" : "no"} tier=${TIER} concurrency=${CONCURRENCY} dry_run=${DRY_RUN}`,
+    `[scan] start date=${today} members=${members.length} committee=${includeCommittee ? "yes" : "no"} topic=${includeTopic ? "yes" : "no"} tier=${TIER} concurrency=${CONCURRENCY} dry_run=${DRY_RUN}`,
   );
 
   const memberResults = await runWithConcurrency(
@@ -210,7 +241,11 @@ async function main(): Promise<void> {
     CONCURRENCY,
   );
   const committeeResults = includeCommittee ? [await processCommittee(feedsConfig)] : [];
-  const results: MemberResult[] = [...memberResults, ...committeeResults];
+  const topicResults = includeTopic ? [await processTopic(feedsConfig)] : [];
+  // Precedence: members, then committee, then topic. The seen-ledger dedup
+  // below keeps the first occurrence, so a URL also surfaced by the broad
+  // topic search stays attributed to the stronger member/committee scope.
+  const results: MemberResult[] = [...memberResults, ...committeeResults, ...topicResults];
 
   // Dedupe: only keep items whose id is not in `seen`. Items new to this
   // run are appended to the ledger immediately so duplicates within the

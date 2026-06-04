@@ -79,6 +79,12 @@ priority maps to the feed bucket the item came from:
   3 = vendor & capability shifts
   4 = committee signal (from the activity scan)
 
+Committee signal carries three kinds, shown in each item's subkind:
+  - subkind "member" — output by a named committee member (member_id is that member)
+  - subkind "committee_body" — about the steering committee itself (member_id "committee")
+  - subkind "field_news" — broader UC / higher-education AI news NOT authored by a committee member (member_id "topic"); e.g. a UC study on student AI use, a peer-system AI policy, an academic-integrity report
+A field_news item is field context, not a member's own work. You MAY combine it with a member or committee_body item in a single brief item when they bear on the same theme, or surface it on its own when it is materially relevant. Because "topic" is not a real member, never list it in experts.
+
 Items from the WEB SEARCH section are cited as external feed_sources with subkind "web_search":
 { "kind": "external", "subkind": "web_search", "url": "...", "title": "...", "published_at": "..." }
 Quote the url exactly as it appears in the WEEKLY INPUTS line — do not reword or strip it.

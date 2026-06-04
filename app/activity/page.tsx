@@ -6,6 +6,7 @@ import {
   type ActivitySourceKind,
   type ActivityTier,
   COMMITTEE_SCOPE_ID,
+  TOPIC_SCOPE_ID,
   isoDateUTC,
   lastNDates,
   listDigestWeeks,
@@ -55,7 +56,10 @@ function readFilters(sp: Record<string, string | string[] | undefined>): Filters
   const tier = pick("tier");
   const source = pick("source");
   return {
-    scope: scope === "member" || scope === "committee" ? scope : "all",
+    scope:
+      scope === "member" || scope === "committee" || scope === "topic"
+        ? scope
+        : "all",
     days: days === "30" || days === "all" ? days : "7",
     tier: tier === "1" || tier === "2" ? tier : "all",
     source:
@@ -123,6 +127,7 @@ const SCOPE_TABS: Array<{ id: ScopeFilter; label: string }> = [
   { id: "all", label: "All" },
   { id: "member", label: "Members" },
   { id: "committee", label: "Committee" },
+  { id: "topic", label: "News" },
 ];
 
 const DAYS_TABS: Array<{ id: DaysFilter; label: string }> = [
@@ -283,6 +288,7 @@ export default async function ActivityPage({
   const memberNames = new Map<string, string>();
   for (const m of members) memberNames.set(m.member_id, m.name.full);
   memberNames.set(COMMITTEE_SCOPE_ID, "Steering Committee");
+  memberNames.set(TOPIC_SCOPE_ID, "AI in Higher Ed");
 
   // Header counts (across the loaded window, before scope filter so the
   // toggle shows "what's behind each tab").
@@ -299,6 +305,7 @@ export default async function ActivityPage({
   });
   const memberCount = allInWindow.filter((i) => scopeOf(i) === "member").length;
   const committeeCount = allInWindow.filter((i) => scopeOf(i) === "committee").length;
+  const topicCount = allInWindow.filter((i) => scopeOf(i) === "topic").length;
 
   const digests = listDigestWeeks(repoRoot);
   const latestDigest = digests.length > 0 ? digests[digests.length - 1] : null;
@@ -330,6 +337,8 @@ export default async function ActivityPage({
           {memberCount} member item{memberCount === 1 ? "" : "s"}
           {" · "}
           {committeeCount} committee item{committeeCount === 1 ? "" : "s"}
+          {" · "}
+          {topicCount} news item{topicCount === 1 ? "" : "s"}
           {" "}in window
         </span>
         {lastScanDate ? (

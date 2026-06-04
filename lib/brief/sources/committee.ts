@@ -8,6 +8,11 @@
  * something the chairs should know about before someone else tells
  * them.
  *
+ * All three activity scopes flow through here as committee_signal, with the
+ * subkind preserving which one: "member", "committee_body", or "field_news"
+ * (the topic scope — AI-in-higher-ed news not tied to a member, which the
+ * brief model may combine with member/committee items or surface alone).
+ *
  * Items with source_kind="rss" or "arxiv" are excluded here even
  * though they were collected by the activity scan — those flow into
  * the weekly digest (lib/scan/digest.ts) instead. The brief wants
@@ -73,7 +78,12 @@ export function collectCommitteeSignal(
     out.push({
       id: item.id,
       feed_kind: "committee_signal",
-      subkind: scopeOf(item) === "committee" ? "committee_body" : "member",
+      subkind:
+        scopeOf(item) === "committee"
+          ? "committee_body"
+          : scopeOf(item) === "topic"
+            ? "field_news"
+            : "member",
       title: item.title,
       url: canonicalUrl(item.url),
       published_at: item.published_at,
