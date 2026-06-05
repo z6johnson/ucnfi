@@ -1,0 +1,162 @@
+{
+  "edition_id": "2026-W23",
+  "rejected_at": "2026-06-05T16:18:00.645Z",
+  "items": [
+    {
+      "headline": "UC Berkeley Law's near-total AI ban — effective Summer 2026 — draws national press and exposes the absence of a UC systemwide academic-integrity standard.",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member",
+        "feed_source.member_id \"topic\" is not a known committee member",
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-2",
+        "priority": 1,
+        "headline": "UC Berkeley Law's near-total AI ban — effective Summer 2026 — draws national press and exposes the absence of a UC systemwide academic-integrity standard.",
+        "what_happened": "UC Berkeley School of Law adopted a sweeping policy effective Summer 2026 prohibiting students from using AI to conceptualize, outline, draft, revise, edit, or translate coursework, and banning AI in all exam situations. The policy received national coverage in The New York Times, Reuters, and Forbes. A UC Berkeley CSHE working paper published May 13, 2026, based on 500,000+ grades at a large R1 from 2018–2025, found that courses with AI-exposed tasks saw the share of A grades rise 13 percentage points — roughly 30% above the 2022 baseline — consistent with AI substituting for student effort.",
+        "why_it_matters": "The systemwide Academic Senate (UCEP) issued a GenAI academic-integrity reminder updated September 2025, and the Berkeley campus Academic Senate issued its own instructor guidance in Spring 2025 that called AI detection tools 'increasingly less accurate' and offered three permissive syllabus options. Berkeley Law's ban directly contradicts that campus guidance, creating an intra-campus policy conflict that is now visible nationally. The baseline records Berkeley's AI detection position as equivocal, and no UC campus or systemwide body has a binding, uniform standard on AI use in assessed work. The CSHE grade-inflation data gives the committee empirical grounding to explain why divergent campus-level policies produce divergent academic outcomes.",
+        "for_the_committee": "Does the committee recommend that the systemwide Academic Senate develop a minimum floor of AI academic-integrity standards that individual campuses and schools may exceed — or does UC's shared-governance model require leaving this entirely to campus senates, and if so, what coordinating mechanism prevents further fragmentation?",
+        "feed_sources": [
+          {
+            "kind": "external",
+            "subkind": "web_search",
+            "url": "https://taxprofblog.aals.org/2026/05/31/uc-berkeley-law-school-cracks-down-on-ai",
+            "title": "UC Berkeley Law School Cracks Down on AI – Near-Total Student AI Ban Effective Summer 2026",
+            "published_at": "2026-05-31"
+          },
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "ad86fbf5324590154387c4809d19b067",
+            "member_id": "topic",
+            "url": "https://www.forbes.com/sites/michaeltnietzel/2026/05/22/uc-berkeley-law-school-adopts-new-strict-ban-on-ai-use-by-students",
+            "title": "UC Berkeley Law School Adopts New, Strict Ban On AI Use By Students",
+            "published_at": "2026-05-22"
+          },
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "336d05ef0802f14cb1a1fefdf0fd0992",
+            "member_id": "topic",
+            "url": "https://www.reuters.com/legal/litigation/berkeley-laws-ai-crackdown-highlights-chatbot-concerns-2026-05-26",
+            "title": "Berkeley Law's AI crackdown highlights chatbot concerns",
+            "published_at": "2026-05-26"
+          },
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "2b9e2c2bab7f2e7fd4d6c4b07dbddc9b",
+            "member_id": "topic",
+            "url": "https://cshe.berkeley.edu/publications/artificial-intelligence-and-grade-inflation-cshe-higher-education-working-paper-series",
+            "title": "Artificial Intelligence and Grade Inflation. CSHE Higher Education Working Paper Series. Vol 26-3",
+            "published_at": "2026-05-13"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "academic_integrity",
+            "field": "has_genai_academic_integrity_guidance",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "uc_berkeley",
+            "dimension": "academic_integrity",
+            "field": "has_ai_detection_position",
+            "claim_kind": "uc_contradicts"
+          },
+          {
+            "entity_id": "uc_berkeley",
+            "dimension": "academic_integrity",
+            "field": "has_genai_academic_integrity_guidance",
+            "claim_kind": "uc_has_position"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "palazoglu-a",
+            "why": "Academic Senate chair; the systemwide UCEP guidance is under his governance purview"
+          },
+          {
+            "member_id": "raley-r",
+            "why": "Co-author of 'AI and the University as a Service'; UCSB Academic Senate; direct scholarly voice on AI and assessment"
+          },
+          {
+            "member_id": "moe-r",
+            "why": "Co-chaired Risk and Transparency subcommittee on prior AI Council; oversees UC Online where assessment integrity is operationally acute"
+          },
+          {
+            "member_id": "kirschner-a",
+            "why": "Active public voice this week on Gen Z AI use and the need to rethink assessment; direct relevance to policy framing"
+          }
+        ]
+      }
+    },
+    {
+      "headline": "2,100 UC IT workers form the largest tech-worker union in the US, explicitly citing AI deployment and job-security concerns as organizing drivers.",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member",
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-3",
+        "priority": 1,
+        "headline": "2,100 UC IT workers form the largest tech-worker union in the US, explicitly citing AI deployment and job-security concerns as organizing drivers.",
+        "what_happened": "On or around May 28, 2026, 2,100 UC information technology professionals voted overwhelmingly to join UPTE-CWA, forming the largest tech-worker union in the United States with 8,400 total members. Union organizers and reporting from Berkeleyside and CWA explicitly framed the drive as a mechanism for workers to shape UC's AI implementation decisions through collective bargaining.",
+        "why_it_matters": "UC has a systemwide AI governance structure — the AI Council, the new Steering Committee, and campus-level bodies — but none of these structures include a formal seat for represented technical staff who build, maintain, and operate the AI systems those bodies govern. The baseline records no systemwide enterprise AI platform and shows campus-by-campus deployment of tools like TritonGPT, ZotGPT, River, and AggieAI, all staffed by the workers who just unionized. Collective bargaining over AI deployment terms is now a live labor-relations question that sits outside the committee's current governance model.",
+        "for_the_committee": "Should the committee recommend that UCOP labor-relations and the Steering Committee establish a formal engagement channel with UPTE before AI deployment decisions that affect represented IT staff are finalized — and if so, what is the appropriate boundary between shared governance, labor negotiation, and committee authority?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "e671bf58f62ec89c488bb90dde0db32a",
+            "member_id": "topic",
+            "url": "https://www.berkeleyside.org/2026/05/21/university-and-professional-technical-employees-union-uc-berkeley-unionization",
+            "title": "UC tech workers vote to unionize with desire to shape AI policy",
+            "published_at": "2026-05-21"
+          },
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "0f37312377b911e863d2d6bcba2fc9bf",
+            "member_id": "topic",
+            "url": "https://cwa-union.org/news/it-workers-join-upte-cwa-form-largest-tech-union-country",
+            "title": "IT Workers Join UPTE-CWA, Form Largest Tech Union in the Country",
+            "published_at": "2026-05-28"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "governance",
+            "field": "has_ai_council",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "governance",
+            "field": "has_steering_committee",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "infrastructure",
+            "field": "has_enterprise_ai_platform",
+            "claim_kind": "uc_silent"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "williams-v",
+            "why": "UCOP CIO; the unionized workers report into IT organizations that he coordinates across the system"
+          },
+          {
+            "member_id": "martin-a",
+            "why": "Student researcher focused on institutional agency and economic structures affecting UC workers; represents a labor-adjacent perspective on the committee"
+          },
+          {
+            "member_id": "noble-s",
+            "why": "Sustained scholarly voice on algorithmic accountability and digital civil rights; directly relevant to worker rights in AI deployment"
+          }
+        ]
+      }
+    }
+  ]
+}
