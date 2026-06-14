@@ -1,0 +1,118 @@
+{
+  "edition_id": "2026-W24",
+  "rejected_at": "2026-06-14T16:20:26.200Z",
+  "items": [
+    {
+      "headline": "UC Berkeley CS failure rates spike to 35% as faculty attribute collapse to student overreliance on LLMs",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-1",
+        "priority": 4,
+        "headline": "UC Berkeley CS failure rates spike to 35% as faculty attribute collapse to student overreliance on LLMs",
+        "what_happened": "Spring 2026 data from UC Berkeley show 35.3% of CS 10 students and 10.6% of CS 61A students received failing grades — well above departmental guidelines. Faculty cite students' uncritical use of Claude, ChatGPT, and Gemini for homework as the primary driver of both academic dishonesty and a measurable collapse in foundational math skills.",
+        "why_it_matters": "UC Berkeley has GenAI academic integrity guidance for instructors but explicitly states that AI detection tools are 'increasingly less accurate' and stops short of endorsing any detection approach — leaving enforcement to individual instructors. The systemwide UCEP Annual Reminder on Academic Integrity was updated with GenAI provisions in September 2025, but no systemwide position governs how campuses should respond when AI overreliance produces grade-level failures at scale. This development is the first documented, quantified instance of that gap producing a campus-level outcome crisis.",
+        "for_the_committee": "Should the committee recommend that UCOP develop systemwide minimum-floor standards for GenAI use in graded assessments, or leave campus-level and instructor-level responses as the appropriate governance level?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "dc719375707a3ba26f1576afaad882e6",
+            "member_id": "topic",
+            "url": "https://www.dailycal.org/news/campus/academics/failing-grades-soar-as-professors-see-greater-ai-usage-dwindling-math-skills-in-uc-berkeley/article_16fad0bf-02cb-4b8c-8d88-888ffd9f8608.html",
+            "title": "Failing grades soar as professors see greater AI usage, dwindling math skills in UC Berkeley computer science classes",
+            "published_at": "2026-06-03"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "uc_berkeley",
+            "dimension": "academic_integrity",
+            "field": "has_ai_detection_position",
+            "claim_kind": "uc_contradicts"
+          },
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "academic_integrity",
+            "field": "has_genai_academic_integrity_guidance",
+            "claim_kind": "uc_has_position"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "noble-s",
+            "why": "Algorithmic accountability and equity dimensions of AI-driven grading failures"
+          },
+          {
+            "member_id": "moe-r",
+            "why": "Systemwide online and AI-in-teaching portfolio; co-chaired prior AI Council Risk and Transparency subcommittee"
+          },
+          {
+            "member_id": "raley-r",
+            "why": "Author of 'AI and the University as a Service'; UC Santa Barbara Senate governance experience on AI in academic contexts"
+          }
+        ]
+      }
+    },
+    {
+      "headline": "2026 EDUCAUSE survey finds AI is fundamentally reshaping assessment design across higher education — UC has no systemwide assessment-redesign framework",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-2",
+        "priority": 4,
+        "headline": "2026 EDUCAUSE survey finds AI is fundamentally reshaping assessment design across higher education — UC has no systemwide assessment-redesign framework",
+        "what_happened": "The 2026 EDUCAUSE Impact of AI on Learning Assessment Report, based on surveys of 438 faculty and staff across higher education institutions, documents that AI is systematically altering assessment design, academic integrity practices, and instructional approaches. The report was published June 2026 and represents the most current sector-wide empirical picture of AI's effect on assessment.",
+        "why_it_matters": "The UC systemwide UCEP Academic Integrity reminder (updated September 2025) addresses GenAI provisions but does not constitute an assessment-redesign framework. Individual campuses — Berkeley, UCSD, UCI — have instructor-level guidance, but no UC entity has a coordinated response to the assessment-design challenge the EDUCAUSE data describe. With the Berkeley grade-collapse data surfacing simultaneously, the sector evidence and the in-system evidence are now pointing in the same direction in the same week.",
+        "for_the_committee": "Does the committee have a mandate to commission or coordinate a UC-specific assessment-redesign initiative, or should it limit itself to transmitting the EDUCAUSE findings to campus academic senates and CTLs?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "865ae936b1f0e7a9196e04dfbe05ee65",
+            "member_id": "topic",
+            "url": "https://library.educause.edu/resources/2026/6/2026-educause-the-impact-of-ai-on-learning-assessment-report",
+            "title": "The Impact of AI on Learning Assessment",
+            "published_at": "2026-06-01"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "academic_integrity",
+            "field": "has_genai_academic_integrity_guidance",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "uc_berkeley",
+            "dimension": "academic_integrity",
+            "field": "has_genai_academic_integrity_guidance",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "uc_san_diego",
+            "dimension": "academic_integrity",
+            "field": "has_education_sawg_report",
+            "claim_kind": "uc_has_position"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "tassio-m",
+            "why": "Co-chairs UC systemwide CTL Working Group on AI; directly responsible for assessment-redesign implementation at campus level"
+          },
+          {
+            "member_id": "milburn-c",
+            "why": "Directs NEH-funded AI center with democratic governance focus; brings humanities-research perspective on assessment and intellectual agency"
+          },
+          {
+            "member_id": "palazoglu-a",
+            "why": "UC Academic Senate Chair; Academic Senate is the governance body that controls academic integrity standards"
+          }
+        ]
+      }
+    }
+  ]
+}
