@@ -11,6 +11,14 @@ name: Weekly UC President's Brief
 #
 # Required repo secrets:
 #   LITELLM_API_KEY  — TritonAI bearer token (LLM synthesis + MCP search)
+#   RESEND_API_KEY   — Resend API key for emailing the brief (optional; sending
+#                      is skipped when unset)
+#
+# Optional repo variables (for the brief email):
+#   BRIEF_FROM_EMAIL — verified Resend sender, e.g. "UCNFI Brief <brief@…>"
+#   BRIEF_TO_CHAIRS  — comma-separated committee-chair emails (To)
+#   BRIEF_TO_SUPPORT — comma-separated support-team emails (Cc)
+#   NFI_BASE_URL     — public app URL, for the /brief link in the email
 
 on:
   schedule:
@@ -65,6 +73,11 @@ jobs:
           BRIEF_MODEL: ${{ vars.BRIEF_MODEL }}
           END_DATE: ${{ inputs.end_date }}
           LOOKBACK_DAYS: ${{ inputs.lookback_days }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          BRIEF_FROM_EMAIL: ${{ vars.BRIEF_FROM_EMAIL }}
+          BRIEF_TO_CHAIRS: ${{ vars.BRIEF_TO_CHAIRS }}
+          BRIEF_TO_SUPPORT: ${{ vars.BRIEF_TO_SUPPORT }}
+          NFI_BASE_URL: ${{ vars.NFI_BASE_URL }}
         run: npm run brief:weekly
 
       - name: Commit and push if changes

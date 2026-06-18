@@ -38,6 +38,7 @@
 import { existsSync, readFileSync } from "node:fs";
 
 import { isoNowUTC } from "../lib/activity.ts";
+import { emailBrief } from "../lib/brief/email.ts";
 import { generateBrief } from "../lib/brief/generate.ts";
 import {
   readEdition,
@@ -207,6 +208,16 @@ async function main(): Promise<void> {
   console.info(
     `[brief] published data/brief/editions/${edition.edition_id}.md with status=${edition.status} (${edition.items.length} item(s)) — live on /brief.`,
   );
+
+  // Email the fresh edition to the committee chairs + support team. Reached
+  // only after a real write — never on a dry run or the empty/keep-existing
+  // early returns above. Best-effort: a Resend failure must not fail the run,
+  // since the edition is already written and live on /brief.
+  try {
+    await emailBrief(edition);
+  } catch (err) {
+    console.warn("[brief] email failed (non-fatal):", err);
+  }
 }
 
 main().catch((err) => {
