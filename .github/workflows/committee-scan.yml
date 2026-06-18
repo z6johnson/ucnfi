@@ -130,6 +130,9 @@ jobs:
           LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
           LITELLM_BASE_URL: ${{ vars.LITELLM_BASE_URL }}
           DIGEST_MODEL: ${{ vars.DIGEST_MODEL }}
+          # Comma-separated models tried, in order, if the primary returns
+          # sustained 5xx. Blank falls back to the in-code default (Sonnet).
+          DIGEST_FALLBACK_MODELS: ${{ vars.DIGEST_FALLBACK_MODELS }}
         run: npm run digest:weekly
 
       - name: Commit and push if changes
