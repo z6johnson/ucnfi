@@ -1,0 +1,67 @@
+{
+  "edition_id": "2026-W25",
+  "rejected_at": "2026-06-21T16:29:30.457Z",
+  "items": [
+    {
+      "headline": "OpenAI releases GPT-5.5 health intelligence upgrade and rare-disease diagnostic study, raising clinical AI expectations across UC Health",
+      "reasons": [
+        "baseline_anchor field \"has_health_ai_governance_forum\" not present on ucop_systemwide.health_ai"
+      ],
+      "raw": {
+        "item_id": "item-3",
+        "priority": 3,
+        "headline": "OpenAI releases GPT-5.5 health intelligence upgrade and rare-disease diagnostic study, raising clinical AI expectations across UC Health",
+        "what_happened": "On June 18, 2026, OpenAI announced improvements to ChatGPT's health and wellness responses via GPT-5.5 Instant, emphasizing stronger clinical reasoning and physician-informed evaluations. Simultaneously, OpenAI published a study in which a reasoning model identified 18 new diagnoses in previously unsolved rare pediatric disease cases. Sources: openai.com/index/improving-health-intelligence-in-chatgpt and openai.com/index/diagnose-rare-childhood-diseases.",
+        "why_it_matters": "UC operates six health systems with varying degrees of clinical AI governance maturity. UCSF Health has the most developed oversight infrastructure — including a Chief Health AI Officer, the IMPACC continuous monitoring platform, and a Trustworthy AI framework — but even UCSF's Trustworthy AI principles do not yet address model-version changes in deployed enterprise tools. UC Health has a systemwide Health AI Governance Forum (CDI2, chaired by Cora Han) that coordinates monthly, but the baseline records no systemwide policy governing how mid-contract model upgrades to approved enterprise tools are evaluated for clinical safety before they reach deployed workflows. The rare-disease diagnostic result, while a research demonstration, will accelerate clinician demand for expanded LLM use in diagnostic settings across UC campuses where clinical AI governance is less mature than UCSF.",
+        "for_the_committee": "Does the UC Health AI Governance Forum have — or need — a standing protocol for evaluating vendor model-version upgrades to clinically deployed tools before those upgrades go live, and which health systems currently lack that capability?",
+        "feed_sources": [
+          {
+            "kind": "vendor",
+            "subkind": "vendor_openai",
+            "url": "https://openai.com/index/improving-health-intelligence-in-chatgpt",
+            "title": "Improving health intelligence in ChatGPT",
+            "published_at": "2026-06-18"
+          },
+          {
+            "kind": "vendor",
+            "subkind": "vendor_openai",
+            "url": "https://openai.com/index/diagnose-rare-childhood-diseases",
+            "title": "Using AI to help physicians diagnose rare genetic diseases affecting children",
+            "published_at": "2026-06-18"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "health_ai",
+            "field": "has_health_ai_governance_forum",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "ucsf_health",
+            "dimension": "health_ai",
+            "field": "has_clinical_ai_monitoring",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "uci_health",
+            "dimension": "health_ai",
+            "field": "has_health_ai_governance",
+            "claim_kind": "uc_silent"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "han-c",
+            "why": "Chief Health Data Officer and chair of UC Health AI Governance Forum — directly responsible for cross-health-system coordination on clinical AI"
+          },
+          {
+            "member_id": "rauschuber-m",
+            "why": "UCSF Health CIO administering ChatGPT Enterprise in clinical context with P3/P4 data"
+          }
+        ]
+      }
+    }
+  ]
+}
