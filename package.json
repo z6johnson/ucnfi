@@ -11,6 +11,7 @@
     "validate:committee": "node --experimental-strip-types --no-warnings scripts/validate-committee.ts",
     "validate:baseline": "node --experimental-strip-types --no-warnings scripts/validate-baseline.ts",
     "scan:daily": "node --experimental-strip-types --no-warnings scripts/scan-daily.ts",
+    "probe:search": "node --experimental-strip-types --no-warnings scripts/probe-gemini-search.ts",
     "digest:weekly": "node --experimental-strip-types --no-warnings scripts/digest-weekly.ts",
     "brief:weekly": "node --experimental-strip-types --no-warnings scripts/brief-weekly.ts",
     "enrich:monthly": "node --experimental-strip-types --no-warnings scripts/enrich-monthly.ts",

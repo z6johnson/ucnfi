@@ -2,15 +2,15 @@ name: Weekly UC President's Brief
 
 # Generates the weekly Brief and pushes it straight to the branch — no PR,
 # no human review gate. It pulls the RSS feeds, runs a live web-search pass
-# over the TritonAI LiteLLM `internet_tool` MCP, drafts items with Claude,
-# validates every baseline anchor, and writes a published markdown edition
-# under data/brief/editions/.
+# via a Google-Search-grounded Gemini model over the TritonAI LiteLLM proxy,
+# drafts items with Claude, validates every baseline anchor, and writes a
+# published markdown edition under data/brief/editions/.
 #
 # Runs Sunday 15:00 UTC — after the committee weekly digest (14:00 Sunday in
 # committee-scan.yml) so the committee-signal activity JSONL is fresh.
 #
 # Required repo secrets:
-#   LITELLM_API_KEY  — TritonAI bearer token (LLM synthesis + MCP search)
+#   LITELLM_API_KEY  — TritonAI bearer token (LLM synthesis + grounded search)
 
 on:
   schedule:
@@ -61,8 +61,11 @@ jobs:
         env:
           LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
           LITELLM_BASE_URL: ${{ vars.LITELLM_BASE_URL }}
-          LITELLM_MCP_URL: ${{ vars.LITELLM_MCP_URL }}
+          # Override only if the proxy serves OpenAI chat at a non-default path.
+          LITELLM_OPENAI_URL: ${{ vars.LITELLM_OPENAI_URL }}
           BRIEF_MODEL: ${{ vars.BRIEF_MODEL }}
+          # Google-Search-grounded model for the live web-search feed.
+          SEARCH_MODEL: ${{ vars.SEARCH_MODEL }}
           END_DATE: ${{ inputs.end_date }}
           LOOKBACK_DAYS: ${{ inputs.lookback_days }}
         run: npm run brief:weekly

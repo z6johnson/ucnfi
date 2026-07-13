@@ -17,7 +17,8 @@
  *   LITELLM_API_KEY — for tier-2 web search via the TritonAI proxy
  *
  * Optional:
- *   SCAN_MODEL          — defaults to claude-sonnet-4-6
+ *   SEARCH_MODEL        — grounded tier-2 search model (default gemini-3.5-flash)
+ *   LITELLM_OPENAI_URL  — override the proxy's OpenAI chat endpoint path
  *   LOOKBACK_DAYS       — overrides defaults: 2 (RSS), 7 (arXiv), 7 (tier-2 press).
  *                         Set to 30 for a one-shot backfill seed.
  *   SOCIAL_LOOKBACK_DAYS — overrides the dedicated social pass window (default 30).
