@@ -5,9 +5,35 @@ import {
   type Citation,
   corroborateWithCitations,
   extractGroundingCitations,
+  groundingTools,
   parseSearchItems,
   tryParseJsonBlock,
 } from "./grounded-search.ts";
+
+/* ---- groundingTools: default + override ---- */
+
+test("groundingTools defaults to the native Gemini googleSearch tool", () => {
+  delete process.env.SEARCH_GROUNDING_TOOLS_JSON;
+  assert.deepEqual(groundingTools(), [{ googleSearch: {} }]);
+});
+
+test("groundingTools honors a valid JSON-array override", () => {
+  process.env.SEARCH_GROUNDING_TOOLS_JSON = '[{"web_search":{}}]';
+  assert.deepEqual(groundingTools(), [{ web_search: {} }]);
+  delete process.env.SEARCH_GROUNDING_TOOLS_JSON;
+});
+
+test("groundingTools can be emptied to send no tool", () => {
+  process.env.SEARCH_GROUNDING_TOOLS_JSON = "[]";
+  assert.deepEqual(groundingTools(), []);
+  delete process.env.SEARCH_GROUNDING_TOOLS_JSON;
+});
+
+test("groundingTools falls back to default on invalid JSON", () => {
+  process.env.SEARCH_GROUNDING_TOOLS_JSON = "not json";
+  assert.deepEqual(groundingTools(), [{ googleSearch: {} }]);
+  delete process.env.SEARCH_GROUNDING_TOOLS_JSON;
+});
 
 /* ---- extractGroundingCitations: multiple response shapes ---- */
 

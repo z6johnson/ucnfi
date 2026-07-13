@@ -5,12 +5,14 @@
  *
  * Replaces the retired `internet_tool` MCP path. The TritonAI gateway
  * stopped advertising that MCP server (tools/list returns an empty list),
- * so tier-2 went silent in mid-June. Gemini does the searching server-side
- * as part of a single grounded completion — no client-driven tool loop — so
- * we just send the same "return strict JSON" prompt, read the model's
- * answer, and take each item's backing from the response's grounding
- * citations. Corroborating item URLs against those citations keeps a
- * hallucinated URL from reaching the ledger.
+ * so tier-2 went silent in mid-June. We enable grounding explicitly by
+ * passing Gemini's `googleSearch` tool (a plain chat call answers from
+ * training data — no search, no citations); Gemini then does the searching
+ * server-side in a single completion — no client-driven tool loop. We send
+ * the same "return strict JSON" prompt, read the model's answer, and take
+ * each item's backing from the response's grounding citations. Corroborating
+ * item URLs against those citations keeps a hallucinated URL from reaching
+ * the ledger.
  *
  * Transport is hand-rolled `fetch` (no OpenAI SDK dependency): the scan runs
  * under `node --experimental-strip-types` with `npm ci`, and all we need is
@@ -48,6 +50,34 @@ function authToken(): string {
   const key = process.env.LITELLM_API_KEY;
   if (!key) throw new Error("LITELLM_API_KEY is not set.");
   return key;
+}
+
+/**
+ * Google Search grounding must be requested explicitly: without a search
+ * tool in the request, Gemini answers from training data — no live search,
+ * no citations (the failure we saw shipping the plain chat call). LiteLLM
+ * maps the native `{ googleSearch: {} }` tool to Gemini's grounding on the
+ * underlying generateContent request.
+ *
+ * The accepted tool shape varies across LiteLLM versions (some want
+ * `{ web_search: {} }` or a typed entry), so allow an override via
+ * `SEARCH_GROUNDING_TOOLS_JSON` (a raw JSON array). Set it to `[]` to send
+ * no tool. Do NOT combine with `response_format`: on Gemini-3 that combo
+ * makes LiteLLM emit raw tool-call tokens instead of the JSON answer, which
+ * is why we ask for JSON in the prompt rather than via a schema param.
+ */
+export function groundingTools(): unknown[] {
+  const raw = process.env.SEARCH_GROUNDING_TOOLS_JSON;
+  if (raw && raw.trim()) {
+    try {
+      const v = JSON.parse(raw);
+      if (Array.isArray(v)) return v;
+      console.warn("[search] SEARCH_GROUNDING_TOOLS_JSON is not a JSON array; using default");
+    } catch {
+      console.warn("[search] SEARCH_GROUNDING_TOOLS_JSON is not valid JSON; using default");
+    }
+  }
+  return [{ googleSearch: {} }];
 }
 
 /* ------------------------------------------------------------------ */
@@ -271,6 +301,7 @@ export async function runGroundedSearch(
   const logPrefix = args.logPrefix ?? "[scan]";
   const model = args.model || SEARCH_MODEL;
   const maxTokens = args.maxTokens ?? 2048;
+  const tools = groundingTools();
 
   let res: Response;
   try {
@@ -288,6 +319,8 @@ export async function runGroundedSearch(
           { role: "system", content: args.systemPrompt },
           { role: "user", content: args.userPrompt },
         ],
+        // Turn on live web search; without this Gemini answers from memory.
+        ...(tools.length > 0 ? { tools } : {}),
       }),
     });
   } catch (err) {

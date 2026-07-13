@@ -20,7 +20,7 @@
  */
 
 import { LITELLM_BASE_URL } from "../lib/litellm.ts";
-import { SEARCH_MODEL, extractGroundingCitations } from "../lib/search/grounded-search.ts";
+import { SEARCH_MODEL, extractGroundingCitations, groundingTools } from "../lib/search/grounded-search.ts";
 
 const endpoint =
   process.env.LITELLM_OPENAI_URL || `${LITELLM_BASE_URL.replace(/\/$/, "")}/v1/chat/completions`;
@@ -34,7 +34,9 @@ async function main(): Promise<void> {
     console.error("LITELLM_API_KEY is not set.");
     process.exit(2);
   }
+  const tools = groundingTools();
   console.info(`[probe] endpoint=${endpoint} model=${SEARCH_MODEL}`);
+  console.info(`[probe] grounding tools=${JSON.stringify(tools)}`);
   console.info(`[probe] query=${JSON.stringify(query)}`);
 
   const started = Date.now();
@@ -49,6 +51,7 @@ async function main(): Promise<void> {
         { role: "system", content: "Ground every answer in live web search results, not prior knowledge." },
         { role: "user", content: query },
       ],
+      ...(tools.length > 0 ? { tools } : {}),
     }),
   });
   console.info(`[probe] HTTP ${res.status} in ${Date.now() - started}ms`);
