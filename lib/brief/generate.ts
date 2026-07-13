@@ -99,7 +99,7 @@ export async function generateBrief(
     collectVendor({ config: opts.config, lookbackDays: feedLookback, endDate: opts.endDate }),
     opts.disableWeb
       ? Promise.resolve([])
-      : collectWeb({ lookbackDays: webLookback, endDate: opts.endDate, model: BRIEF_MODEL }),
+      : collectWeb({ lookbackDays: webLookback, endDate: opts.endDate }),
     Promise.resolve(
       collectCommitteeSignal({
         repoRoot: opts.repoRoot,

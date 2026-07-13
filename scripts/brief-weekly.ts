@@ -16,11 +16,12 @@
  *   DISABLE_WEB=1 npm run brief:weekly              # RSS-only run, no web search
  *
  * Env required:
- *   LITELLM_API_KEY      — TritonAI bearer token (LLM synthesis + MCP search)
+ *   LITELLM_API_KEY      — TritonAI bearer token (LLM synthesis + grounded search)
  *
  * Optional:
  *   LITELLM_BASE_URL     — defaults to https://tritonai-api.ucsd.edu
- *   LITELLM_MCP_URL      — defaults to ${LITELLM_BASE_URL}/internet_tool/mcp
+ *   LITELLM_OPENAI_URL   — defaults to ${LITELLM_BASE_URL}/v1/chat/completions
+ *   SEARCH_MODEL         — grounded web-search model (default gemini-3.5-flash)
  *   BRIEF_MODEL          — defaults to CLAUDE_MODEL
  *   END_DATE             — YYYY-MM-DD, defaults to today
  *   LOOKBACK_DAYS        — external/peer/vendor RSS lookback, default 7

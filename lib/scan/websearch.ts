@@ -1,27 +1,23 @@
 /**
- * Tier-2 collector: UCSD TritonAI LiteLLM proxy driving the LiteLLM
- * `internet_tool` MCP server for live web search. Catches op-eds,
- * podcasts, interviews, and press quotes that don't appear in any
- * structured feed.
+ * Tier-2 collector: live web search via a Google-Search-grounded Gemini
+ * model (default `gemini-3.5-flash`) over the UCSD TritonAI LiteLLM proxy.
+ * Catches op-eds, podcasts, interviews, and press quotes that don't appear
+ * in any structured feed.
  *
- * The TritonAI gateway does NOT execute Anthropic's server-side
- * `web_search` tool (the model emits a client-style tool_use and stops,
- * so tier-2 returned `searches=0 stop=tool_use` and zero items). So we
- * run the agentic loop ourselves: expose the MCP search tool(s) as normal
- * tools, force a first call (`tool_choice: { type: "any" }`) so the model
- * can't short-circuit to an empty answer, execute each tool call over MCP,
- * and feed results back until the model returns its final JSON. The
- * lookback window is parameterised via `WebSearchOptions.lookbackDays` so
- * the same code drives both the normal daily run and wider backfills.
+ * Replaces the retired `internet_tool` MCP path: the gateway stopped
+ * advertising that MCP server, so tier-2 went silent. Gemini grounding does
+ * the searching server-side in a single call — we send a "return strict
+ * JSON" prompt and read the model's answer. Each item's URL is corroborated
+ * against the response's grounding citations so a hallucinated URL can't
+ * enter the ledger. The lookback window is parameterised via
+ * `WebSearchOptions.lookbackDays` so the same code drives both the normal
+ * daily run and wider backfills.
  *
- * The model is asked for strict JSON in its final text block so we can
- * parse without paying tokens for prose.
- *
- * The agentic loop itself (runAgenticSearch), the date-pinning helper, and
- * the JSON-response parsing live in ../search/agentic-search.ts so the weekly
- * Brief can drive the same `internet_tool` loop. This file keeps the
- * committee-scan-specific prompts, item normalization, and the published
- * tier-2 collectors.
+ * The grounded call (runGroundedSearch), the date-pinning helper, the
+ * JSON-response parsing, and the citation corroboration live in
+ * ../search/grounded-search.ts so the weekly Brief can reuse them. This file
+ * keeps the committee-scan-specific prompts, item normalization, and the
+ * published tier-2 collectors.
  */
 
 import {
@@ -35,18 +31,13 @@ import {
 } from "../activity.ts";
 import { type CommitteeMember } from "../committee.ts";
 import {
+  type GroundedResult,
   type RawWebItem,
-  MAX_TOOL_USES,
+  corroborateWithCitations,
   dateContextLine,
   parseSearchItems,
-  runAgenticSearch,
-} from "../search/agentic-search.ts";
-
-/* ------------------------------------------------------------------ */
-/* Client                                                              */
-/* ------------------------------------------------------------------ */
-
-const SCAN_MODEL = process.env.SCAN_MODEL || "claude-sonnet-4-6";
+  runGroundedSearch,
+} from "../search/grounded-search.ts";
 
 /* ------------------------------------------------------------------ */
 /* Date enforcement                                                    */
@@ -86,7 +77,7 @@ export function isWithinPublishedWindow(
 /* ------------------------------------------------------------------ */
 
 function buildSystemPrompt(lookbackDays: number): string {
-  return `You scan public web sources for recent AI-related output by one named member of the UCOP AI Steering Committee. You MUST use the internet search tool at least once before answering.
+  return `You scan public web sources for recent AI-related output by one named member of the UCOP AI Steering Committee. Ground every answer in live web search results, not prior knowledge.
 
 ${dateContextLine(lookbackDays)}
 
@@ -156,11 +147,11 @@ Primary affiliation: ${member.primary_affiliation.title}, ${member.primary_affil
 ${aliasLine}
 ${handleLine}
 
-Search the public web — including social platforms — for AI-related output by this person published in the last ${lookbackDays} day(s). Run at least one internet search before answering. Return strict JSON per the system instructions.`;
+Search the public web — including social platforms — for AI-related output by this person published in the last ${lookbackDays} day(s). Base your answer on live web search results. Return strict JSON per the system instructions.`;
 }
 
 function buildCommitteeSystemPrompt(lookbackDays: number): string {
-  return `You scan public web sources for recent mentions of the UCOP AI Steering Committee — also called the UC AI Steering Committee — as a body. You MUST use the internet search tool at least once before answering.
+  return `You scan public web sources for recent mentions of the UCOP AI Steering Committee — also called the UC AI Steering Committee — as a body. Ground every answer in live web search results, not prior knowledge.
 
 ${dateContextLine(lookbackDays)}
 
@@ -210,7 +201,7 @@ function buildCommitteeUserPrompt(aliases: string[], lookbackDays: number): stri
   return `Subject: the UCOP AI Steering Committee (also known as the UC AI Steering Committee).
 ${aliasLine}
 
-Search the public web — including social platforms — for items about this committee as a body, published in the last ${lookbackDays} day(s). Run at least one internet search before answering. Return strict JSON per the system instructions.`;
+Search the public web — including social platforms — for items about this committee as a body, published in the last ${lookbackDays} day(s). Base your answer on live web search results. Return strict JSON per the system instructions.`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -224,7 +215,7 @@ Search the public web — including social platforms — for items about this co
  * topical-relevance gate. */
 
 function buildTopicSystemPrompt(lookbackDays: number): string {
-  return `You scan public web sources for recent AI-in-higher-education news relevant to the UCOP AI Steering Committee's charge — even when no individual committee member and not the committee itself is named. You MUST use the internet search tool at least once before answering.
+  return `You scan public web sources for recent AI-in-higher-education news relevant to the UCOP AI Steering Committee's charge — even when no individual committee member and not the committee itself is named. Ground every answer in live web search results, not prior knowledge.
 
 ${dateContextLine(lookbackDays)}
 
@@ -271,7 +262,7 @@ function buildTopicUserPrompt(topics: string[], lookbackDays: number): string {
   return `Subject: AI-in-higher-education news relevant to the University of California AI Steering Committee's charge.
 ${topicLine}
 
-Search the public web for AI-in-higher-education / AI-policy items published in the last ${lookbackDays} day(s), including UC and peer-university studies and reports even when no committee member is named. Run at least one internet search before answering. Return strict JSON per the system instructions.`;
+Search the public web for AI-in-higher-education / AI-policy items published in the last ${lookbackDays} day(s), including UC and peer-university studies and reports even when no committee member is named. Base your answer on live web search results. Return strict JSON per the system instructions.`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -283,7 +274,7 @@ Search the public web for AI-in-higher-education / AI-policy items published in 
  * window, so sparse social content gets found. */
 
 function buildSocialSystemPrompt(lookbackDays: number): string {
-  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent AI-related output by one named member of the UCOP AI Steering Committee. You MUST use the internet search tool at least once before answering.
+  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent AI-related output by one named member of the UCOP AI Steering Committee. Ground every answer in live web search results, not prior knowledge.
 
 ${dateContextLine(lookbackDays)}
 
@@ -334,11 +325,11 @@ Primary affiliation: ${member.primary_affiliation.title}, ${member.primary_affil
 ${aliasLine}
 ${handleLine}
 
-Search ONLY social/owned-media platforms for AI-related posts/videos by this person published in the last ${lookbackDays} day(s). Prefer the known accounts above when present. Run at least one internet search before answering. Return strict JSON per the system instructions.`;
+Search ONLY social/owned-media platforms for AI-related posts/videos by this person published in the last ${lookbackDays} day(s). Prefer the known accounts above when present. Base your answer on live web search results. Return strict JSON per the system instructions.`;
 }
 
 function buildSocialCommitteeSystemPrompt(lookbackDays: number): string {
-  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent posts/videos about the UCOP AI Steering Committee — also called the UC AI Steering Committee — as a body. You MUST use the internet search tool at least once before answering.
+  return `You scan PUBLIC SOCIAL and OWNED MEDIA for recent posts/videos about the UCOP AI Steering Committee — also called the UC AI Steering Committee — as a body. Ground every answer in live web search results, not prior knowledge.
 
 ${dateContextLine(lookbackDays)}
 
@@ -375,7 +366,7 @@ function buildSocialCommitteeUserPrompt(aliases: string[], lookbackDays: number)
   return `Subject: the UCOP AI Steering Committee (also known as the UC AI Steering Committee).
 ${aliasLine}
 
-Search ONLY social/owned-media platforms for posts/videos about this committee as a body, published in the last ${lookbackDays} day(s). Run at least one internet search before answering. Return strict JSON per the system instructions.`;
+Search ONLY social/owned-media platforms for posts/videos about this committee as a body, published in the last ${lookbackDays} day(s). Base your answer on live web search results. Return strict JSON per the system instructions.`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -434,6 +425,27 @@ function normaliseItem(
   };
 }
 
+/**
+ * Parse the grounded answer into scoped items, drop stale hits, and keep
+ * only URLs a grounding citation backs. Shared by every collector below.
+ */
+function finalizeItems(
+  res: GroundedResult,
+  memberId: string,
+  scope: ActivityScope,
+  lookbackDays: number,
+  logTag: string,
+): ActivityItem[] {
+  const items: ActivityItem[] = [];
+  for (const r of parseSearchItems(res.text, logTag)) {
+    const norm = normaliseItem(memberId, r, scope);
+    if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
+  }
+  return corroborateWithCitations(items, res.citations, (m) =>
+    console.warn(`[scan] tier-2 ${logTag} ${m}`),
+  );
+}
+
 /* ------------------------------------------------------------------ */
 /* Public API                                                          */
 /* ------------------------------------------------------------------ */
@@ -442,8 +454,6 @@ export type WebSearchOptions = {
   searchAliases?: string[];
   /** Known social/owned-media accounts to target directly, when configured. */
   handles?: MemberHandles;
-  /** Cap the number of tool calls Claude can make. Default 8. */
-  maxToolUses?: number;
   /** Lookback window passed into the system + user prompts. Default 7. */
   lookbackDays?: number;
 };
@@ -470,26 +480,17 @@ export async function collectTier2(
 ): Promise<ActivityItem[]> {
   const aliases = opts.searchAliases ?? [];
   const handles = opts.handles ?? {};
-  const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
   const lookbackDays = opts.lookbackDays ?? DEFAULT_LOOKBACK_DAYS;
   const logTag = member.member_id;
 
-  const res = await runAgenticSearch({
+  const res = await runGroundedSearch({
     systemPrompt: buildSystemPrompt(lookbackDays),
     userPrompt: buildUserPrompt(member, aliases, handles, lookbackDays),
-    maxToolCalls: maxUses,
     logTag,
-    model: SCAN_MODEL,
   });
   if (!res) return [];
-  console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
-
-  const items: ActivityItem[] = [];
-  for (const r of parseSearchItems(res.text, logTag)) {
-    const norm = normaliseItem(member.member_id, r, "member");
-    if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
-  }
-  return items;
+  console.info(`[scan] tier-2 ${logTag} stop=${res.stop} citations=${res.citations.length}`);
+  return finalizeItems(res, member.member_id, "member", lookbackDays, logTag);
 }
 
 /**
@@ -501,26 +502,17 @@ export async function collectTier2Committee(
   opts: WebSearchOptions = {},
 ): Promise<ActivityItem[]> {
   const aliases = opts.searchAliases ?? [];
-  const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
   const lookbackDays = opts.lookbackDays ?? DEFAULT_LOOKBACK_DAYS;
   const logTag = COMMITTEE_SCOPE_ID;
 
-  const res = await runAgenticSearch({
+  const res = await runGroundedSearch({
     systemPrompt: buildCommitteeSystemPrompt(lookbackDays),
     userPrompt: buildCommitteeUserPrompt(aliases, lookbackDays),
-    maxToolCalls: maxUses,
     logTag,
-    model: SCAN_MODEL,
   });
   if (!res) return [];
-  console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
-
-  const items: ActivityItem[] = [];
-  for (const r of parseSearchItems(res.text, logTag)) {
-    const norm = normaliseItem(COMMITTEE_SCOPE_ID, r, "committee");
-    if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
-  }
-  return items;
+  console.info(`[scan] tier-2 ${logTag} stop=${res.stop} citations=${res.citations.length}`);
+  return finalizeItems(res, COMMITTEE_SCOPE_ID, "committee", lookbackDays, logTag);
 }
 
 /**
@@ -534,37 +526,28 @@ export async function collectTier2Topic(
   opts: WebSearchOptions = {},
 ): Promise<ActivityItem[]> {
   const topics = opts.searchAliases ?? [];
-  const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
   const lookbackDays = opts.lookbackDays ?? DEFAULT_TOPIC_LOOKBACK_DAYS;
   const logTag = TOPIC_SCOPE_ID;
 
-  const res = await runAgenticSearch({
+  const res = await runGroundedSearch({
     systemPrompt: buildTopicSystemPrompt(lookbackDays),
     userPrompt: buildTopicUserPrompt(topics, lookbackDays),
-    maxToolCalls: maxUses,
     logTag,
-    model: SCAN_MODEL,
     // The topic pass is the broadest search and returns the longest list;
-    // give the final JSON answer extra headroom so it isn't truncated
-    // (truncation makes it unparseable and silently drops every item).
+    // give the JSON answer extra headroom so it isn't truncated (truncation
+    // makes it unparseable and silently drops every item).
     maxTokens: TOPIC_MAX_TOKENS,
   });
   if (!res) return [];
-  console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
-
-  const items: ActivityItem[] = [];
-  for (const r of parseSearchItems(res.text, logTag)) {
-    const norm = normaliseItem(TOPIC_SCOPE_ID, r, "topic");
-    if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
-  }
-  return items;
+  console.info(`[scan] tier-2 ${logTag} stop=${res.stop} citations=${res.citations.length}`);
+  return finalizeItems(res, TOPIC_SCOPE_ID, "topic", lookbackDays, logTag);
 }
 
 /**
  * Dedicated social/owned-media pass for a single member. Same plumbing as
- * `collectTier2` but with a social-only prompt, its own (wider) default
- * window, and the same per-pass tool budget so social isn't out-competed
- * by press in a shared search. Platform-native posts/video are tagged
+ * `collectTier2` but with a social-only prompt and its own (wider) default
+ * window, so sparse social content isn't out-competed by press in a shared
+ * search. Platform-native posts/video are tagged
  * `source_kind: "social"` by `normaliseItem` (the granular platform lives
  * in match_reason), so they surface under the Activity "Social" chip.
  */
@@ -574,26 +557,17 @@ export async function collectTier2Social(
 ): Promise<ActivityItem[]> {
   const aliases = opts.searchAliases ?? [];
   const handles = opts.handles ?? {};
-  const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
   const lookbackDays = opts.lookbackDays ?? DEFAULT_SOCIAL_LOOKBACK_DAYS;
   const logTag = `${member.member_id} (social)`;
 
-  const res = await runAgenticSearch({
+  const res = await runGroundedSearch({
     systemPrompt: buildSocialSystemPrompt(lookbackDays),
     userPrompt: buildSocialUserPrompt(member, aliases, handles, lookbackDays),
-    maxToolCalls: maxUses,
     logTag,
-    model: SCAN_MODEL,
   });
   if (!res) return [];
-  console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
-
-  const items: ActivityItem[] = [];
-  for (const r of parseSearchItems(res.text, logTag)) {
-    const norm = normaliseItem(member.member_id, r, "member");
-    if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
-  }
-  return items;
+  console.info(`[scan] tier-2 ${logTag} stop=${res.stop} citations=${res.citations.length}`);
+  return finalizeItems(res, member.member_id, "member", lookbackDays, logTag);
 }
 
 /**
@@ -604,24 +578,15 @@ export async function collectTier2SocialCommittee(
   opts: WebSearchOptions = {},
 ): Promise<ActivityItem[]> {
   const aliases = opts.searchAliases ?? [];
-  const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
   const lookbackDays = opts.lookbackDays ?? DEFAULT_SOCIAL_LOOKBACK_DAYS;
   const logTag = `${COMMITTEE_SCOPE_ID} (social)`;
 
-  const res = await runAgenticSearch({
+  const res = await runGroundedSearch({
     systemPrompt: buildSocialCommitteeSystemPrompt(lookbackDays),
     userPrompt: buildSocialCommitteeUserPrompt(aliases, lookbackDays),
-    maxToolCalls: maxUses,
     logTag,
-    model: SCAN_MODEL,
   });
   if (!res) return [];
-  console.info(`[scan] tier-2 ${logTag} tool_calls=${res.toolCalls} stop=${res.stop}`);
-
-  const items: ActivityItem[] = [];
-  for (const r of parseSearchItems(res.text, logTag)) {
-    const norm = normaliseItem(COMMITTEE_SCOPE_ID, r, "committee");
-    if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
-  }
-  return items;
+  console.info(`[scan] tier-2 ${logTag} stop=${res.stop} citations=${res.citations.length}`);
+  return finalizeItems(res, COMMITTEE_SCOPE_ID, "committee", lookbackDays, logTag);
 }

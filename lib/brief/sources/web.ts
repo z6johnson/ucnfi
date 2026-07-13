@@ -1,13 +1,14 @@
 /**
  * Feed #5 — live web search.
  *
- * Drives the UCSD TritonAI LiteLLM proxy's `internet_tool` MCP server
- * (the same agentic loop the committee activity scan uses) to find recent
- * AI developments forcing a University of California decision that the
- * curated RSS feeds miss: federal/state AI policy & regulation, court
- * rulings, peer-university AI moves, major vendor/capability shifts, and
- * AI-in-higher-ed news. Augments the RSS collectors; the discovered items
- * are handed to the same synthesis call as additional BriefRawItems.
+ * Uses a Google-Search-grounded Gemini model (default `gemini-3.5-flash`)
+ * over the UCSD TritonAI LiteLLM proxy — the same grounded search the
+ * committee activity scan uses — to find recent AI developments forcing a
+ * University of California decision that the curated RSS feeds miss:
+ * federal/state AI policy & regulation, court rulings, peer-university AI
+ * moves, major vendor/capability shifts, and AI-in-higher-ed news. Augments
+ * the RSS collectors; the discovered items are handed to the same synthesis
+ * call as additional BriefRawItems.
  *
  * Items are emitted as feed_kind="external" with subkind="web_search" so
  * they flow through the existing FeedSource union, validator, and renderer
@@ -19,12 +20,12 @@
 
 import { canonicalUrl, isoNowUTC, itemId } from "../../activity.ts";
 import {
-  type SearchResult,
-  MAX_TOOL_USES,
+  type GroundedResult,
+  corroborateWithCitations,
   dateContextLine,
   parseSearchItems,
-  runAgenticSearch,
-} from "../../search/agentic-search.ts";
+  runGroundedSearch,
+} from "../../search/grounded-search.ts";
 import { isFresh, windowBounds } from "../recency.ts";
 import type { BriefRawItem } from "../types.ts";
 
@@ -33,14 +34,10 @@ export type CollectWebOpts = {
   lookbackDays: number;
   /** Brief end date; the recency window is anchored here, never wall-clock now. */
   endDate: Date;
-  /** Model id to drive the agentic search loop. */
-  model: string;
-  /** Cap the number of tool calls. Default 8. */
-  maxToolUses?: number;
 };
 
 function buildSystemPrompt(lookbackDays: number): string {
-  return `You scan the public web for recent developments in artificial intelligence that force a University of California (UC) decision or response. You MUST use the internet search tool at least once before answering.
+  return `You scan the public web for recent developments in artificial intelligence that force a University of California (UC) decision or response. Ground every answer in live web search results, not prior knowledge.
 
 ${dateContextLine(lookbackDays)}
 
@@ -79,7 +76,7 @@ If your searches genuinely found nothing in the window, return {"items": []}. Do
 }
 
 function buildUserPrompt(lookbackDays: number): string {
-  return `Search the public web for AI developments forcing a UC decision, published in the last ${lookbackDays} day(s). Run at least one internet search before answering. Return strict JSON per the system instructions.`;
+  return `Search the public web for AI developments forcing a UC decision, published in the last ${lookbackDays} day(s). Base your answer on live web search results. Return strict JSON per the system instructions.`;
 }
 
 function stringOrEmpty(v: unknown, max: number): string {
@@ -94,25 +91,22 @@ function parseIsoOrNull(v: unknown): string | null {
 
 export async function collectWeb(opts: CollectWebOpts): Promise<BriefRawItem[]> {
   const lookbackDays = opts.lookbackDays;
-  const maxUses = opts.maxToolUses ?? MAX_TOOL_USES;
 
-  let res: SearchResult | null;
+  let res: GroundedResult | null;
   try {
-    res = await runAgenticSearch({
+    res = await runGroundedSearch({
       systemPrompt: buildSystemPrompt(lookbackDays),
       userPrompt: buildUserPrompt(lookbackDays),
-      maxToolCalls: maxUses,
       logTag: "web",
-      model: opts.model,
       logPrefix: "[brief]",
     });
   } catch (err) {
     console.warn(`[brief] web search failed err=${(err as Error).message}`);
     return [];
   }
-  // No MCP search tool reachable → skip rather than let the model invent URLs.
+  // Search unreachable → skip rather than let the model invent URLs.
   if (!res) return [];
-  console.info(`[brief] web search tool_calls=${res.toolCalls} stop=${res.stop}`);
+  console.info(`[brief] web search stop=${res.stop} citations=${res.citations.length}`);
 
   const { startMs, endMs } = windowBounds(opts.endDate, lookbackDays);
   const discoveredAt = isoNowUTC();
@@ -140,5 +134,7 @@ export async function collectWeb(opts: CollectWebOpts): Promise<BriefRawItem[]> 
     // matching the other brief collectors.
     if (isFresh(item, startMs, endMs)) out.push(item);
   }
-  return out;
+  // Keep only items a grounding citation backs, so a URL the model invented
+  // can't reach synthesis (fails open if the response carried no citations).
+  return corroborateWithCitations(out, res.citations, (m) => console.warn(`[brief] web ${m}`));
 }

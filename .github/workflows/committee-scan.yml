@@ -1,8 +1,9 @@
 name: Committee AI activity scan
 
 # Daily scan + weekly digest of UCOP AI Steering Committee public AI output.
-# - Daily scan polls per-member feeds and runs Claude `web_search` via
-#   the UCSD TritonAI LiteLLM proxy, then commits new items to
+# - Daily scan polls per-member feeds and runs a Google-Search-grounded
+#   Gemini model (default gemini-3.5-flash) via the UCSD TritonAI LiteLLM
+#   proxy for tier-2 web search, then commits new items to
 #   data/ucnfi-committee/activity/.
 # - Weekly digest reads the last 7 days of items, calls Claude through
 #   the same LiteLLM proxy, and commits the markdown digest.
@@ -72,8 +73,10 @@ jobs:
         env:
           LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
           LITELLM_BASE_URL: ${{ vars.LITELLM_BASE_URL }}
-          LITELLM_MCP_URL: ${{ vars.LITELLM_MCP_URL }}
-          SCAN_MODEL: ${{ vars.SCAN_MODEL }}
+          # Override only if the proxy serves OpenAI chat at a non-default path.
+          LITELLM_OPENAI_URL: ${{ vars.LITELLM_OPENAI_URL }}
+          # Google-Search-grounded model for tier-2 (default gemini-3.5-flash).
+          SEARCH_MODEL: ${{ vars.SEARCH_MODEL }}
           LOOKBACK_DAYS: ${{ inputs.lookback_days }}
         run: npm run scan:daily
 
