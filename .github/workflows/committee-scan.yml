@@ -81,6 +81,14 @@ jobs:
         run: |
           git config user.name "ucnfi-scan-bot"
           git config user.email "ucnfi-scan-bot@users.noreply.github.com"
+          # Register union merge drivers (see .gitattributes) so the
+          # rebase-and-retry loop below can auto-resolve conflicts with a
+          # concurrent scan push instead of aborting the rebase.
+          merge_driver="node --experimental-strip-types --no-warnings scripts/merge-activity.ts"
+          git config merge.ucnfi-seen.name "Union merge for the committee seen-ledger"
+          git config merge.ucnfi-seen.driver "$merge_driver seen %O %A %B"
+          git config merge.ucnfi-jsonl.name "Union merge for committee activity JSONL"
+          git config merge.ucnfi-jsonl.driver "$merge_driver jsonl %O %A %B"
           git add data/ucnfi-committee/activity/
           if git diff --cached --quiet; then
             echo "No activity changes to commit."
