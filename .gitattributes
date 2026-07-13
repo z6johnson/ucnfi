@@ -1,0 +1,7 @@
+# Committee-scan activity data files are grow-only and get appended to by
+# concurrent CI runs. These custom union merge drivers (implemented in
+# scripts/merge-activity.ts and registered by the committee-scan workflow)
+# let the scan's rebase-and-retry push loop auto-resolve races instead of
+# failing on an unresolvable conflict.
+data/ucnfi-committee/activity/seen.json     merge=ucnfi-seen
+data/ucnfi-committee/activity/items/*.jsonl merge=ucnfi-jsonl
