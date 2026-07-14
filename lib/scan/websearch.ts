@@ -33,7 +33,7 @@ import { type CommitteeMember } from "../committee.ts";
 import {
   type GroundedResult,
   type RawWebItem,
-  corroborateWithCitations,
+  anchorToCitations,
   dateContextLine,
   dropDeadUrls,
   parseSearchItems,
@@ -428,10 +428,10 @@ function normaliseItem(
 }
 
 /**
- * Parse the grounded answer into scoped items, drop stale hits, resolve the
- * grounding-redirect citations so corroboration filters on real source
- * hosts, keep only URLs a citation backs, then drop any link that's
- * definitively dead (404/410). Shared by every collector below.
+ * Parse the grounded answer into scoped items, drop stale hits, then replace
+ * each item's fabricated URL with the real grounding citation it belongs to
+ * (resolveCitations → anchorToCitations), and drop any link that's
+ * definitively dead (404/410) as a final net. Shared by every collector below.
  */
 async function finalizeItems(
   res: GroundedResult,
@@ -447,8 +447,11 @@ async function finalizeItems(
   }
   const warn = (m: string) => console.warn(`[scan] tier-2 ${logTag} ${m}`);
   const citations = await resolveCitations(res.citations);
-  const corroborated = corroborateWithCitations(items, citations, warn);
-  return dropDeadUrls(corroborated, warn);
+  const anchored = await anchorToCitations(items, citations, warn);
+  // anchorToCitations may rewrite the URL; the id derives from it, so
+  // recompute so dedup keys on the real (post-repair) URL.
+  const reidentified = anchored.map((it) => ({ ...it, id: itemId(it.url) }));
+  return dropDeadUrls(reidentified, warn);
 }
 
 /* ------------------------------------------------------------------ */

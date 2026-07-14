@@ -219,60 +219,22 @@ export function extractGroundingCitations(response: unknown): Citation[] {
   return out;
 }
 
-/**
- * Keep only items whose URL is backed by a grounding citation, so a URL the
- * model invented can't enter the ledger. Matches on canonical URL first,
- * then falls back to a same-host match (a citation and the model's canonical
- * link to the same article can differ in tracking params).
- *
- * Fails OPEN at the set level to avoid silently regressing to zero results
- * the way the dead MCP path did: if the response carried no citations, or
- * carried citations that matched none of the items (a sign the gateway
- * returns citation URLs in an unexpected form, e.g. redirect links), keep
- * the items unverified and warn loudly instead of dropping everything.
- */
-export function corroborateWithCitations<T extends { url: string }>(
-  items: T[],
-  citations: Citation[],
-  warn: (msg: string) => void,
-): T[] {
-  if (items.length === 0) return items;
-  if (citations.length === 0) {
-    warn(`no grounding citations in response — keeping ${items.length} item(s) unverified`);
-    return items;
-  }
-  const canon = new Set(citations.map((c) => canonicalUrl(c.url)));
-  const hosts = new Set(citations.map((c) => host(c.url)).filter(Boolean));
-  const kept = items.filter((it) => {
-    if (canon.has(canonicalUrl(it.url))) return true;
-    const h = host(it.url);
-    return h !== "" && hosts.has(h);
-  });
-  if (kept.length === 0) {
-    warn(
-      `${citations.length} citation(s) matched none of ${items.length} item URL(s) — keeping unverified (citation URL form may differ)`,
-    );
-    return items;
-  }
-  if (kept.length < items.length) {
-    warn(`dropped ${items.length - kept.length} item(s) not backed by a grounding citation`);
-  }
-  return kept;
-}
-
 /* ------------------------------------------------------------------ */
-/* Citation resolution + URL liveness                                  */
+/* Citation resolution, item↔citation anchoring, URL liveness          */
 /* ------------------------------------------------------------------ */
 /* The model reliably fabricates the `url` field — it knows an article's
- * content from live grounding but guesses the URL from the site's URL
- * pattern, so many links 404. corroborateWithCitations above is meant to
- * drop those, but Gemini's grounding citations arrive as redirect links on
- * `vertexaisearch.cloud.google.com` whose host never matches the real
- * article host, so the guard always fails open. These two helpers close the
- * gap: resolveCitations recovers the real source URLs (so corroboration can
- * filter wrong-host guesses), and dropDeadUrls fetches each surviving link
- * and drops the ones that are definitively gone (so a wrong-path guess on a
- * legitimate host can't slip through either). */
+ * content from live grounding but guesses the URL from the site's pattern,
+ * routinely on the WRONG host (a real today.ucsd.edu story stored as
+ * ucsd.edu/newsroom/…). So the guess can't be trusted whether it 404s or
+ * soft-200s. The real URLs, though, are in the grounding citations. These
+ * helpers use them as the source of truth:
+ *   - resolveCitations turns the `vertexaisearch.cloud.google.com` redirect
+ *     citations into real source URLs (+ the site's title);
+ *   - anchorToCitations replaces each item's guessed URL with the resolved
+ *     citation it belongs to (matched by registrable domain, then title),
+ *     dropping items no citation grounds;
+ *   - dropDeadUrls is a final safety net for a citation that resolved to a
+ *     dead page. */
 
 /** Google returns grounding citations as redirect links on this host; the
  *  real source URL is only revealed by following the redirect. */
@@ -325,8 +287,8 @@ async function probeUrl(
 
 /**
  * Replace `vertexaisearch.cloud.google.com` grounding-redirect citation URLs
- * with the real source URL they redirect to, so corroborateWithCitations can
- * match items on the true host. Non-redirect citations pass through
+ * with the real source URL they redirect to, so anchorToCitations can match
+ * items against the true source domain. Non-redirect citations pass through
  * unchanged; a citation whose redirect can't be resolved keeps its original
  * URL (fail-open, never throws). Resolved in parallel — citation counts are
  * small (≤ ~20).
@@ -348,15 +310,161 @@ export async function resolveCitations(
   );
 }
 
+/** Public suffixes with a second label (so the registrable domain is the
+ *  last THREE labels, not two). Small hand-list — enough for the outlets we
+ *  see; unknown suffixes fall back to the last two labels. */
+const MULTI_PART_TLDS = new Set([
+  "co.uk", "ac.uk", "gov.uk", "org.uk",
+  "co.nz", "ac.nz", "com.au", "edu.au", "gov.au", "org.au",
+  "co.jp", "or.jp", "ne.jp", "ac.jp",
+  "co.za", "co.in", "gov.in", "ac.in",
+]);
+
+/**
+ * The registrable domain (eTLD+1) of a host: `today.ucsd.edu` → `ucsd.edu`,
+ * `datax.ucla.edu` → `ucla.edu`, `www.latimes.com` → `latimes.com`. This is
+ * the signal that survives the model guessing the wrong subdomain — the
+ * guessed and real hosts differ but share the registrable domain.
+ */
+export function registrableDomain(hostname: string): string {
+  const parts = hostname.toLowerCase().split(".").filter(Boolean);
+  if (parts.length <= 2) return parts.join(".");
+  const lastTwo = parts.slice(-2).join(".");
+  return MULTI_PART_TLDS.has(lastTwo) ? parts.slice(-3).join(".") : lastTwo;
+}
+
+/** Stopwords stripped before comparing titles, so overlap reflects the
+ *  distinctive words rather than filler. */
+const TITLE_STOPWORDS = new Set([
+  "the", "a", "an", "and", "or", "of", "to", "in", "on", "at", "for", "with",
+  "is", "are", "as", "how", "new", "this", "that", "its", "by", "from",
+]);
+
+function titleTokens(s: string): Set<string> {
+  const out = new Set<string>();
+  for (const w of s.toLowerCase().replace(/[^a-z0-9]+/g, " ").split(" ")) {
+    if (w.length >= 2 && !TITLE_STOPWORDS.has(w)) out.add(w);
+  }
+  return out;
+}
+
+/**
+ * Containment similarity of two titles in [0,1]: shared distinctive tokens
+ * over the smaller token set, so a stored title that's a paraphrase or a
+ * truncation of the citation's headline still scores. Returns 0 unless at
+ * least two distinctive tokens overlap (guards against one-word coincidences).
+ */
+export function titleSimilarity(a: string, b: string): number {
+  const A = titleTokens(a);
+  const B = titleTokens(b);
+  if (A.size === 0 || B.size === 0) return 0;
+  let inter = 0;
+  for (const t of A) if (B.has(t)) inter++;
+  if (inter < 2) return 0;
+  return inter / Math.min(A.size, B.size);
+}
+
+/** Title similarity that alone (no domain corroboration) is strong enough to
+ *  adopt a citation from a different domain. */
+const STRONG_TITLE_SIM = 0.6;
+
+/**
+ * Replace each item's fabricated URL with the resolved grounding citation it
+ * actually belongs to. Citations must already be resolved (resolveCitations).
+ *
+ * Matching, per item:
+ *   1. Citations sharing the item's registrable domain are the candidates —
+ *      the guessed and real hosts differ (ucsd.edu vs today.ucsd.edu) but
+ *      share ucsd.edu. Among them, adopt the one with the best title overlap
+ *      (any overlap, or the single candidate). A real same-domain URL always
+ *      beats a fabricated one.
+ *   2. Otherwise, if some citation's title strongly matches (≥ STRONG_TITLE_SIM),
+ *      adopt it even across domains.
+ *   3. Otherwise the item is ungroundable: keep it only if its own URL is
+ *      live (fallback, to avoid dropping a real story on a thin citation set)
+ *      and drop it if that URL is definitively dead.
+ *
+ * Only rewrites `url`; callers recompute the id (which derives from the URL).
+ * With no citations at all it fails open (keeps items unchanged) rather than
+ * nuke the run.
+ */
+export async function anchorToCitations<T extends { url: string; title: string }>(
+  items: T[],
+  citations: Citation[],
+  warn: (msg: string) => void,
+  doFetch: FetchLike = defaultFetch,
+): Promise<T[]> {
+  if (items.length === 0) return items;
+  if (citations.length === 0) {
+    warn(`no grounding citations — keeping ${items.length} item(s) with unverified URLs`);
+    return items;
+  }
+  const cites = citations
+    .map((c) => ({ url: c.url, title: c.title ?? "", dom: registrableDomain(host(c.url)) }))
+    .filter((c) => c.dom !== "");
+  const citeDomains = new Set(cites.map((c) => c.dom));
+
+  const kept: T[] = [];
+  let repaired = 0;
+  let dropped = 0;
+  await Promise.all(
+    items.map(async (it) => {
+      const itemDom = registrableDomain(host(it.url));
+
+      // 1. Same registrable domain as a citation → adopt the best such one.
+      const sameDomain = itemDom ? cites.filter((c) => c.dom === itemDom) : [];
+      if (sameDomain.length > 0) {
+        const best = sameDomain.reduce((a, b) =>
+          titleSimilarity(it.title, b.title) > titleSimilarity(it.title, a.title) ? b : a,
+        );
+        if (canonicalUrl(best.url) !== canonicalUrl(it.url)) repaired++;
+        kept.push({ ...it, url: best.url });
+        return;
+      }
+
+      // 2. Strong cross-domain title match → adopt it.
+      let bestCite = cites[0];
+      let bestSim = 0;
+      for (const c of cites) {
+        const sim = titleSimilarity(it.title, c.title);
+        if (sim > bestSim) {
+          bestSim = sim;
+          bestCite = c;
+        }
+      }
+      if (bestSim >= STRONG_TITLE_SIM) {
+        if (canonicalUrl(bestCite.url) !== canonicalUrl(it.url)) repaired++;
+        kept.push({ ...it, url: bestCite.url });
+        return;
+      }
+
+      // 3. Ungroundable: keep only if the model's own URL is live.
+      const probed = await probeUrl(it.url, doFetch);
+      const alive = probed !== null && !DEAD_STATUSES.has(probed.status);
+      if (alive) {
+        kept.push(it);
+      } else {
+        dropped++;
+        warn(`dropped ungroundable item (no matching citation, URL not live) ${it.url}`);
+      }
+    }),
+  );
+  if (repaired > 0) warn(`repaired ${repaired} item URL(s) from grounding citations`);
+  if (dropped > 0) warn(`dropped ${dropped} ungroundable item(s)`);
+  return kept;
+}
+
 /**
  * Fetch each item's URL and drop the ones that are definitively dead
  * (HTTP 404/410). Everything else is kept — see DEAD_STATUSES. Runs the
  * checks in parallel and warns on each drop.
  *
- * Known limitation: soft-404s that answer 200 with a "not found" body
- * (e.g. YouTube "video unavailable") aren't caught by status alone; those
- * are handled upstream by resolveCitations + corroborateWithCitations
- * dropping the wrong-host guess.
+ * A final safety net after anchorToCitations: the adopted citation URLs
+ * should be live (Gemini just read them), but this guards a citation that
+ * resolved to a since-removed page. Known limitation: soft-404s that answer
+ * 200 with a "not found" body (e.g. YouTube "video unavailable") aren't
+ * caught by status; anchorToCitations having replaced the guessed URL with
+ * the real citation is what handles those.
  */
 export async function dropDeadUrls<T extends { url: string }>(
   items: T[],
