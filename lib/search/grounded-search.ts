@@ -370,7 +370,8 @@ const STRONG_TITLE_SIM = 0.6;
 
 /**
  * Replace each item's fabricated URL with the resolved grounding citation it
- * actually belongs to. Citations must already be resolved (resolveCitations).
+ * actually belongs to, and drop items no citation grounds. Citations must
+ * already be resolved (resolveCitations).
  *
  * Matching, per item:
  *   1. Citations sharing the item's registrable domain are the candidates —
@@ -380,20 +381,21 @@ const STRONG_TITLE_SIM = 0.6;
  *      beats a fabricated one.
  *   2. Otherwise, if some citation's title strongly matches (≥ STRONG_TITLE_SIM),
  *      adopt it even across domains.
- *   3. Otherwise the item is ungroundable: keep it only if its own URL is
- *      live (fallback, to avoid dropping a real story on a thin citation set)
- *      and drop it if that URL is definitively dead.
+ *   3. Otherwise the item is ungroundable and is DROPPED. "Live but not
+ *      citation-backed" is not enough: a fabricated URL that merely doesn't
+ *      404 (e.g. a wrong-source iheart.com link that answers 200/403) must
+ *      not enter the ledger. Every kept item's URL is a grounding citation.
  *
  * Only rewrites `url`; callers recompute the id (which derives from the URL).
- * With no citations at all it fails open (keeps items unchanged) rather than
- * nuke the run.
+ * Pure — no network. With no citations at all it fails open (keeps items
+ * unchanged) rather than nuke the run on a grounding-extraction failure;
+ * dropDeadUrls is the downstream net for those.
  */
-export async function anchorToCitations<T extends { url: string; title: string }>(
+export function anchorToCitations<T extends { url: string; title: string }>(
   items: T[],
   citations: Citation[],
   warn: (msg: string) => void,
-  doFetch: FetchLike = defaultFetch,
-): Promise<T[]> {
+): T[] {
   if (items.length === 0) return items;
   if (citations.length === 0) {
     warn(`no grounding citations — keeping ${items.length} item(s) with unverified URLs`);
@@ -402,53 +404,44 @@ export async function anchorToCitations<T extends { url: string; title: string }
   const cites = citations
     .map((c) => ({ url: c.url, title: c.title ?? "", dom: registrableDomain(host(c.url)) }))
     .filter((c) => c.dom !== "");
-  const citeDomains = new Set(cites.map((c) => c.dom));
 
   const kept: T[] = [];
   let repaired = 0;
   let dropped = 0;
-  await Promise.all(
-    items.map(async (it) => {
-      const itemDom = registrableDomain(host(it.url));
+  for (const it of items) {
+    const itemDom = registrableDomain(host(it.url));
 
-      // 1. Same registrable domain as a citation → adopt the best such one.
-      const sameDomain = itemDom ? cites.filter((c) => c.dom === itemDom) : [];
-      if (sameDomain.length > 0) {
-        const best = sameDomain.reduce((a, b) =>
-          titleSimilarity(it.title, b.title) > titleSimilarity(it.title, a.title) ? b : a,
-        );
-        if (canonicalUrl(best.url) !== canonicalUrl(it.url)) repaired++;
-        kept.push({ ...it, url: best.url });
-        return;
-      }
+    // 1. Same registrable domain as a citation → adopt the best such one.
+    const sameDomain = itemDom ? cites.filter((c) => c.dom === itemDom) : [];
+    if (sameDomain.length > 0) {
+      const best = sameDomain.reduce((a, b) =>
+        titleSimilarity(it.title, b.title) > titleSimilarity(it.title, a.title) ? b : a,
+      );
+      if (canonicalUrl(best.url) !== canonicalUrl(it.url)) repaired++;
+      kept.push({ ...it, url: best.url });
+      continue;
+    }
 
-      // 2. Strong cross-domain title match → adopt it.
-      let bestCite = cites[0];
-      let bestSim = 0;
-      for (const c of cites) {
-        const sim = titleSimilarity(it.title, c.title);
-        if (sim > bestSim) {
-          bestSim = sim;
-          bestCite = c;
-        }
+    // 2. Strong cross-domain title match → adopt it.
+    let bestCite = cites[0];
+    let bestSim = 0;
+    for (const c of cites) {
+      const sim = titleSimilarity(it.title, c.title);
+      if (sim > bestSim) {
+        bestSim = sim;
+        bestCite = c;
       }
-      if (bestSim >= STRONG_TITLE_SIM) {
-        if (canonicalUrl(bestCite.url) !== canonicalUrl(it.url)) repaired++;
-        kept.push({ ...it, url: bestCite.url });
-        return;
-      }
+    }
+    if (bestSim >= STRONG_TITLE_SIM) {
+      if (canonicalUrl(bestCite.url) !== canonicalUrl(it.url)) repaired++;
+      kept.push({ ...it, url: bestCite.url });
+      continue;
+    }
 
-      // 3. Ungroundable: keep only if the model's own URL is live.
-      const probed = await probeUrl(it.url, doFetch);
-      const alive = probed !== null && !DEAD_STATUSES.has(probed.status);
-      if (alive) {
-        kept.push(it);
-      } else {
-        dropped++;
-        warn(`dropped ungroundable item (no matching citation, URL not live) ${it.url}`);
-      }
-    }),
-  );
+    // 3. Ungroundable → drop.
+    dropped++;
+    warn(`dropped ungroundable item (no matching grounding citation) ${it.url}`);
+  }
   if (repaired > 0) warn(`repaired ${repaired} item URL(s) from grounding citations`);
   if (dropped > 0) warn(`dropped ${dropped} ungroundable item(s)`);
   return kept;

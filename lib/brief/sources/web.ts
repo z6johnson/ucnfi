@@ -141,7 +141,7 @@ export async function collectWeb(opts: CollectWebOpts): Promise<BriefRawItem[]> 
   // wrong host), then drop any link that's definitively dead (404/410).
   const warn = (m: string) => console.warn(`[brief] web ${m}`);
   const citations = await resolveCitations(res.citations);
-  const anchored = await anchorToCitations(out, citations, warn);
+  const anchored = anchorToCitations(out, citations, warn);
   // anchorToCitations may swap in a citation URL; re-canonicalize it and
   // recompute the id (the validator keys feed_sources by canonical URL).
   const reidentified = anchored.map((it) => {

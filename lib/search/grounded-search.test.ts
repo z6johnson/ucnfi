@@ -213,12 +213,7 @@ test("titleSimilarity scores distinctive-token containment, ignores filler", () 
 
 /* ---- anchorToCitations: repair URLs from resolved citations ---- */
 
-// The fetcher must never be called for items resolved by domain/title alone.
-const mustNotFetch: FetchLike = async () => {
-  throw new Error("anchorToCitations should not fetch a matched item");
-};
-
-test("repairs a wrong-host guess via the shared registrable domain (titles differ)", async () => {
+test("repairs a wrong-host guess via the shared registrable domain (titles differ)", () => {
   // The flagship case: the model stored ucsd.edu/newsroom/… with a paraphrased
   // title; the real article is on today.ucsd.edu. Titles barely overlap, but
   // the registrable domain (ucsd.edu) matches, so the citation URL is adopted.
@@ -228,12 +223,12 @@ test("repairs a wrong-host guess via the shared registrable domain (titles diffe
   const cites: Citation[] = [
     { url: "https://today.ucsd.edu/story/faculty-symposium-highlights-ais-strengths-in-higher-ed-teaching", title: "Faculty Symposium Highlights AI's Strengths in Higher Ed Teaching" },
   ];
-  const out = await anchorToCitations(items, cites, () => {}, mustNotFetch);
+  const out = anchorToCitations(items, cites, () => {});
   assert.equal(out.length, 1);
   assert.equal(out[0].url, "https://today.ucsd.edu/story/faculty-symposium-highlights-ais-strengths-in-higher-ed-teaching");
 });
 
-test("picks the best same-domain citation by title overlap", async () => {
+test("picks the best same-domain citation by title overlap", () => {
   const items = [
     { url: "https://newsroom.ucla.edu/bulletin-board/ucla-awarded-300000", title: "UCLA Awarded $300,000 State Grant to Launch Public Interest Technology" },
   ];
@@ -241,36 +236,40 @@ test("picks the best same-domain citation by title overlap", async () => {
     { url: "https://newsroom.ucla.edu/unrelated", title: "Some Unrelated UCLA Story About Campus Robotics" },
     { url: "https://datax.ucla.edu/news-events/news/ucla-awarded-300000-state-grant-launch-public-interest-technology-pathways", title: "UCLA Awarded $300,000 State Grant to Launch Public Interest Technology Pathways" },
   ];
-  const out = await anchorToCitations(items, cites, () => {}, mustNotFetch);
+  const out = anchorToCitations(items, cites, () => {});
   assert.equal(out[0].url, "https://datax.ucla.edu/news-events/news/ucla-awarded-300000-state-grant-launch-public-interest-technology-pathways");
 });
 
-test("adopts a strong cross-domain title match", async () => {
+test("adopts a strong cross-domain title match", () => {
   const items = [
     { url: "https://guessed-aggregator.example/x", title: "UK Study Finds Evidence of Conscientious Objectors and AI Refusers" },
   ];
   const cites: Citation[] = [
     { url: "https://www.timeshighereducation.com/news/third-students-shun-generative-ai", title: "UK Study Finds Evidence of Conscientious Objectors and AI Refusers Among Students" },
   ];
-  const out = await anchorToCitations(items, cites, () => {}, mustNotFetch);
+  const out = anchorToCitations(items, cites, () => {});
   assert.equal(out[0].url, "https://www.timeshighereducation.com/news/third-students-shun-generative-ai");
 });
 
-test("fails open (keeps items unchanged) when there are no citations", async () => {
+test("fails open (keeps items unchanged) when there are no citations", () => {
   const items = [{ url: "https://a.com/x", title: "T" }];
   let warned = "";
-  const out = await anchorToCitations(items, [], (m) => (warned = m), mustNotFetch);
+  const out = anchorToCitations(items, [], (m) => (warned = m));
   assert.deepEqual(out, items);
   assert.match(warned, /no grounding citations/);
 });
 
-test("drops an ungroundable item with a dead URL, keeps one that is live", async () => {
+test("drops an ungroundable item even when its own URL is live", () => {
+  // The iheart.com regression: a fabricated URL that isn't a hard 404 must
+  // still be dropped when no grounding citation backs it — being "live" is
+  // not grounding.
   const items = [
-    { url: "https://nomatch.test/404", title: "Totally Unrelated Alpha Bravo" },
-    { url: "https://nomatch.test/live", title: "Totally Unrelated Charlie Delta" },
+    { url: "https://www.iheart.com/content/brown-ai-cheating-scandal", title: "Brown University Professor Criticizes AI Cheating Response" },
+    { url: "https://today.ucsd.edu/story/real", title: "Faculty Symposium Highlights AI Strengths" },
   ];
-  const cites: Citation[] = [{ url: "https://other.com/z", title: "Different Subject Entirely Xyz" }];
-  const fakeFetch: FetchLike = async (url) => ({ status: url.endsWith("/404") ? 404 : 200, url });
-  const out = await anchorToCitations(items, cites, () => {}, fakeFetch);
-  assert.deepEqual(out.map((i) => i.url), ["https://nomatch.test/live"]);
+  const cites: Citation[] = [
+    { url: "https://today.ucsd.edu/story/real", title: "Faculty Symposium Highlights AI Strengths" },
+  ];
+  const out = anchorToCitations(items, cites, () => {});
+  assert.deepEqual(out.map((i) => i.url), ["https://today.ucsd.edu/story/real"]);
 });
