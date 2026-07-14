@@ -222,14 +222,18 @@ function buildTopicSystemPrompt(lookbackDays: number): string {
 ${dateContextLine(lookbackDays)}
 
 A hit is an item that:
-  (a) concerns AI within the committee's mandate: AI in teaching, learning, or research; academic integrity and assessment; AI access/equity for students; AI governance, policy, or regulation at the University of California or peer research universities (R1s); or a major study, survey, or report on AI use in higher education, AND
-  (b) is published in a credible venue: UC newsroom or campus communications, UCOP press, peer-university communications, mainstream press, trade press (Inside Higher Ed, Chronicle of Higher Education, EdSurge), policy or research outlets, or official UC/peer system pages.
+  (a) concerns AI within the committee's mandate — AI in teaching, learning, or research; academic integrity and assessment; AI access/equity for students; or AI governance, policy, or regulation in higher education, AND
+  (b) clears the RELEVANCE BAR: it must have EITHER
+        (i) a University of California / UC-system / California nexus (a UC campus, UCOP, the UC system, California state policy or legislation, or the California public-higher-ed systems CSU and the community colleges), OR
+        (ii) clear system-wide or sector-wide significance that informs UC-level decisions — federal or multi-state AI-in-higher-ed policy or regulation; accreditation or research-security standards; a major multi-institution study, survey, or report; or a precedent-setting governance move by a peer research university (R1) that other universities, including UC, would weigh, AND
+  (c) is published in a credible venue: UC newsroom or campus communications, UCOP press, peer-university communications, mainstream press, trade press (Inside Higher Ed, Chronicle of Higher Education, EdSurge), policy or research outlets, or official UC/peer/government pages.
 
-This scope is deliberately broad. INCLUDE UC and peer-university studies, reports, surveys, op-eds, and policy news about AI in higher education even when authored or led by people who are NOT on the committee — that is exactly the field context the committee needs. Do not require that a committee member or the committee be named.
+INCLUDE UC and peer studies, reports, surveys, op-eds, and policy news about AI in higher education even when authored or led by people who are NOT on the committee — that is the field context the committee needs — SO LONG AS the relevance bar in (b) is met. Do not require that a committee member or the committee be named.
 
 Cover both mainstream press and credible web sources. Return the canonical article/report URL, not a search or aggregator URL.
 
 Skip:
+  - isolated single-institution incidents with no UC or system-level implication — an individual cheating scandal, one professor's or student's complaint, a single campus's disciplinary case or local dispute. A one-off event at one non-UC campus is NOT field context; only include peer-university items that set policy or precedent others (including UC) would weigh.
   - generic AI-industry/product news with no higher-education angle
   - opinion spam, SEO content farms, and aggregator/listicle pages
   - vendor marketing
@@ -249,7 +253,7 @@ Your final assistant message MUST be a single JSON object and nothing else, with
       "published_at": "2026-05-21" or null,
       "snippet": "first ~300 chars of context, plain text",
       "source_kind": "news_article",
-      "match_reason": "one short sentence: why this AI-in-higher-ed item is relevant to the committee's charge"
+      "match_reason": "one short sentence naming the UC/California nexus OR the system-wide significance that clears the relevance bar"
     }
   ]
 }
@@ -447,7 +451,7 @@ async function finalizeItems(
   }
   const warn = (m: string) => console.warn(`[scan] tier-2 ${logTag} ${m}`);
   const citations = await resolveCitations(res.citations);
-  const anchored = await anchorToCitations(items, citations, warn);
+  const anchored = anchorToCitations(items, citations, warn);
   // anchorToCitations may rewrite the URL; the id derives from it, so
   // recompute so dedup keys on the real (post-repair) URL.
   const reidentified = anchored.map((it) => ({ ...it, id: itemId(it.url) }));
