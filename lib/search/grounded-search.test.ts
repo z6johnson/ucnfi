@@ -3,10 +3,13 @@ import assert from "node:assert/strict";
 
 import {
   type Citation,
+  type FetchLike,
   corroborateWithCitations,
+  dropDeadUrls,
   extractGroundingCitations,
   groundingTools,
   parseSearchItems,
+  resolveCitations,
   tryParseJsonBlock,
 } from "./grounded-search.ts";
 
@@ -148,4 +151,98 @@ test("parseSearchItems returns items array from a plain JSON answer", () => {
 
 test("parseSearchItems returns [] on unparseable text", () => {
   assert.deepEqual(parseSearchItems("not json at all", "tag"), []);
+});
+
+/* ---- corroboration against realistic grounding-redirect citations ---- */
+
+// The regression that motivated the fix: Gemini returns citations as redirect
+// links on vertexaisearch.cloud.google.com, whose host never matches the
+// model's guessed article host, so corroboration always failed open and kept
+// fabricated URLs. Older fixtures used same-host citation URLs and missed it.
+const REDIRECT = "https://vertexaisearch.cloud.google.com/grounding-api-redirect";
+
+test("raw redirect citations match no items and corroboration fails open", () => {
+  const items = [{ url: "https://ucsd.edu/newsroom/fabricated-slug" }];
+  const cites: Citation[] = [{ url: `${REDIRECT}/AbC123` }];
+  let warned = "";
+  const out = corroborateWithCitations(items, cites, (m) => (warned = m));
+  // Nothing is dropped — the guard can't tell the guess from a real link
+  // until the redirect is resolved to its true host.
+  assert.deepEqual(out, items);
+  assert.match(warned, /matched none/);
+});
+
+test("resolved redirect citations let corroboration drop wrong-host guesses", async () => {
+  const items = [
+    { url: "https://ucsd.edu/newsroom/fabricated-slug" }, // guessed host, no citation
+    { url: "https://today.ucsd.edu/story/real" }, // real host, backed by a citation
+  ];
+  const cites: Citation[] = [{ url: `${REDIRECT}/AbC123` }];
+  // The redirect resolves to today.ucsd.edu — a different host than the guess.
+  const fakeFetch: FetchLike = async (url) => ({
+    status: 200,
+    url: url.startsWith(REDIRECT) ? "https://today.ucsd.edu/story/real" : url,
+  });
+  const resolved = await resolveCitations(cites, fakeFetch);
+  assert.equal(resolved[0].url, "https://today.ucsd.edu/story/real");
+  const out = corroborateWithCitations(items, resolved, () => {});
+  assert.deepEqual(out, [{ url: "https://today.ucsd.edu/story/real" }]);
+});
+
+test("resolveCitations leaves non-redirect citations untouched", async () => {
+  const cites: Citation[] = [{ url: "https://example.com/a", title: "A" }];
+  const fakeFetch: FetchLike = async () => {
+    throw new Error("must not fetch a non-redirect citation");
+  };
+  assert.deepEqual(await resolveCitations(cites, fakeFetch), cites);
+});
+
+test("resolveCitations keeps original URL when the redirect can't resolve", async () => {
+  const cites: Citation[] = [{ url: `${REDIRECT}/AbC123` }];
+  const fakeFetch: FetchLike = async () => {
+    throw new Error("network down");
+  };
+  assert.deepEqual(await resolveCitations(cites, fakeFetch), cites);
+});
+
+/* ---- dropDeadUrls: status classification via injected fetcher ---- */
+
+test("dropDeadUrls drops only definitive 404/410, keeps everything else", async () => {
+  const items = [
+    { url: "https://s/200" },
+    { url: "https://s/301" },
+    { url: "https://s/403" },
+    { url: "https://s/404" },
+    { url: "https://s/410" },
+    { url: "https://s/429" },
+    { url: "https://s/500" },
+    { url: "https://s/throws" },
+  ];
+  const fakeFetch: FetchLike = async (url) => {
+    if (url.endsWith("/throws")) throw new Error("connection reset");
+    const status = Number(url.slice(url.lastIndexOf("/") + 1));
+    return { status, url };
+  };
+  const dropped: string[] = [];
+  const kept = await dropDeadUrls(items, (m) => dropped.push(m), fakeFetch);
+  assert.deepEqual(
+    kept.map((i) => i.url),
+    [
+      "https://s/200",
+      "https://s/301",
+      "https://s/403",
+      "https://s/429",
+      "https://s/500",
+      "https://s/throws",
+    ],
+  );
+  assert.equal(dropped.length, 2);
+  assert.match(dropped[0], /HTTP 404/);
+});
+
+test("dropDeadUrls returns the input untouched when empty", async () => {
+  const fakeFetch: FetchLike = async () => {
+    throw new Error("must not fetch");
+  };
+  assert.deepEqual(await dropDeadUrls([], () => {}, fakeFetch), []);
 });

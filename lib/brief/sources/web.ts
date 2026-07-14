@@ -23,7 +23,9 @@ import {
   type GroundedResult,
   corroborateWithCitations,
   dateContextLine,
+  dropDeadUrls,
   parseSearchItems,
+  resolveCitations,
   runGroundedSearch,
 } from "../../search/grounded-search.ts";
 import { isFresh, windowBounds } from "../recency.ts";
@@ -134,7 +136,12 @@ export async function collectWeb(opts: CollectWebOpts): Promise<BriefRawItem[]> 
     // matching the other brief collectors.
     if (isFresh(item, startMs, endMs)) out.push(item);
   }
-  // Keep only items a grounding citation backs, so a URL the model invented
-  // can't reach synthesis (fails open if the response carried no citations).
-  return corroborateWithCitations(out, res.citations, (m) => console.warn(`[brief] web ${m}`));
+  // Resolve the grounding-redirect citations to real source hosts, keep only
+  // items a citation backs (fails open if the response carried no citations),
+  // then drop any link that's definitively dead (404/410) — the model
+  // routinely guesses plausible-but-wrong URLs that 404.
+  const warn = (m: string) => console.warn(`[brief] web ${m}`);
+  const citations = await resolveCitations(res.citations);
+  const corroborated = corroborateWithCitations(out, citations, warn);
+  return dropDeadUrls(corroborated, warn);
 }

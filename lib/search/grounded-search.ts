@@ -261,6 +261,125 @@ export function corroborateWithCitations<T extends { url: string }>(
 }
 
 /* ------------------------------------------------------------------ */
+/* Citation resolution + URL liveness                                  */
+/* ------------------------------------------------------------------ */
+/* The model reliably fabricates the `url` field — it knows an article's
+ * content from live grounding but guesses the URL from the site's URL
+ * pattern, so many links 404. corroborateWithCitations above is meant to
+ * drop those, but Gemini's grounding citations arrive as redirect links on
+ * `vertexaisearch.cloud.google.com` whose host never matches the real
+ * article host, so the guard always fails open. These two helpers close the
+ * gap: resolveCitations recovers the real source URLs (so corroboration can
+ * filter wrong-host guesses), and dropDeadUrls fetches each surviving link
+ * and drops the ones that are definitively gone (so a wrong-path guess on a
+ * legitimate host can't slip through either). */
+
+/** Google returns grounding citations as redirect links on this host; the
+ *  real source URL is only revealed by following the redirect. */
+const GROUNDING_REDIRECT_HOST = "vertexaisearch.cloud.google.com";
+
+const LIVENESS_TIMEOUT_MS = 10_000;
+/** A browser-like UA: some outlets 403 an obviously-automated agent, and a
+ *  spurious 403 would otherwise read as "alive but blocked" noise. */
+const LIVENESS_USER_AGENT =
+  "Mozilla/5.0 (compatible; ucnfi-link-check/0.1; +https://github.com/z6johnson/ucnfi)";
+
+/** HTTP statuses we treat as a definitively dead link. Everything else —
+ *  2xx/3xx and the ambiguous 401/403/405/429/5xx plus network/timeout
+ *  errors — is kept, so bot-blocked or transient-error pages (valid links)
+ *  are never falsely dropped. */
+const DEAD_STATUSES = new Set([404, 410]);
+
+/** Minimal Response surface the probe needs. `fetch`'s Response satisfies it
+ *  structurally; tests inject a fake to exercise status handling offline. */
+type ProbeResponse = { status: number; url?: string };
+export type FetchLike = (url: string, init: RequestInit) => Promise<ProbeResponse>;
+
+const defaultFetch: FetchLike = (url, init) => fetch(url, init);
+
+/**
+ * GET a URL following redirects, with a bounded timeout and a browser-like
+ * UA. Returns the final status and resolved URL, or null on any transport
+ * error (timeout, DNS, connection reset). Never throws.
+ */
+async function probeUrl(
+  url: string,
+  doFetch: FetchLike,
+): Promise<{ status: number; finalUrl: string } | null> {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), LIVENESS_TIMEOUT_MS);
+  try {
+    const res = await doFetch(url, {
+      method: "GET",
+      redirect: "follow",
+      headers: { "User-Agent": LIVENESS_USER_AGENT, Accept: "*/*" },
+      signal: ctrl.signal,
+    });
+    return { status: res.status, finalUrl: typeof res.url === "string" && res.url ? res.url : url };
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(t);
+  }
+}
+
+/**
+ * Replace `vertexaisearch.cloud.google.com` grounding-redirect citation URLs
+ * with the real source URL they redirect to, so corroborateWithCitations can
+ * match items on the true host. Non-redirect citations pass through
+ * unchanged; a citation whose redirect can't be resolved keeps its original
+ * URL (fail-open, never throws). Resolved in parallel — citation counts are
+ * small (≤ ~20).
+ */
+export async function resolveCitations(
+  citations: Citation[],
+  doFetch: FetchLike = defaultFetch,
+): Promise<Citation[]> {
+  return Promise.all(
+    citations.map(async (c) => {
+      if (host(c.url) !== GROUNDING_REDIRECT_HOST) return c;
+      const probed = await probeUrl(c.url, doFetch);
+      const final = probed?.finalUrl;
+      if (final && /^https?:\/\//i.test(final) && host(final) !== GROUNDING_REDIRECT_HOST) {
+        return { ...c, url: final };
+      }
+      return c;
+    }),
+  );
+}
+
+/**
+ * Fetch each item's URL and drop the ones that are definitively dead
+ * (HTTP 404/410). Everything else is kept — see DEAD_STATUSES. Runs the
+ * checks in parallel and warns on each drop.
+ *
+ * Known limitation: soft-404s that answer 200 with a "not found" body
+ * (e.g. YouTube "video unavailable") aren't caught by status alone; those
+ * are handled upstream by resolveCitations + corroborateWithCitations
+ * dropping the wrong-host guess.
+ */
+export async function dropDeadUrls<T extends { url: string }>(
+  items: T[],
+  warn: (msg: string) => void,
+  doFetch: FetchLike = defaultFetch,
+): Promise<T[]> {
+  if (items.length === 0) return items;
+  const verdicts = await Promise.all(
+    items.map(async (it) => {
+      const probed = await probeUrl(it.url, doFetch);
+      const deadStatus = probed && DEAD_STATUSES.has(probed.status) ? probed.status : null;
+      return { it, deadStatus };
+    }),
+  );
+  const kept: T[] = [];
+  for (const { it, deadStatus } of verdicts) {
+    if (deadStatus !== null) warn(`dropped dead link (HTTP ${deadStatus}) ${it.url}`);
+    else kept.push(it);
+  }
+  return kept;
+}
+
+/* ------------------------------------------------------------------ */
 /* The grounded call                                                   */
 /* ------------------------------------------------------------------ */
 

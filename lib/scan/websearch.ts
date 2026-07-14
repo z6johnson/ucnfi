@@ -35,7 +35,9 @@ import {
   type RawWebItem,
   corroborateWithCitations,
   dateContextLine,
+  dropDeadUrls,
   parseSearchItems,
+  resolveCitations,
   runGroundedSearch,
 } from "../search/grounded-search.ts";
 
@@ -426,24 +428,27 @@ function normaliseItem(
 }
 
 /**
- * Parse the grounded answer into scoped items, drop stale hits, and keep
- * only URLs a grounding citation backs. Shared by every collector below.
+ * Parse the grounded answer into scoped items, drop stale hits, resolve the
+ * grounding-redirect citations so corroboration filters on real source
+ * hosts, keep only URLs a citation backs, then drop any link that's
+ * definitively dead (404/410). Shared by every collector below.
  */
-function finalizeItems(
+async function finalizeItems(
   res: GroundedResult,
   memberId: string,
   scope: ActivityScope,
   lookbackDays: number,
   logTag: string,
-): ActivityItem[] {
+): Promise<ActivityItem[]> {
   const items: ActivityItem[] = [];
   for (const r of parseSearchItems(res.text, logTag)) {
     const norm = normaliseItem(memberId, r, scope);
     if (norm && isWithinPublishedWindow(norm.published_at, lookbackDays)) items.push(norm);
   }
-  return corroborateWithCitations(items, res.citations, (m) =>
-    console.warn(`[scan] tier-2 ${logTag} ${m}`),
-  );
+  const warn = (m: string) => console.warn(`[scan] tier-2 ${logTag} ${m}`);
+  const citations = await resolveCitations(res.citations);
+  const corroborated = corroborateWithCitations(items, citations, warn);
+  return dropDeadUrls(corroborated, warn);
 }
 
 /* ------------------------------------------------------------------ */
