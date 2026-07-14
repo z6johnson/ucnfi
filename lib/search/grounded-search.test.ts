@@ -4,12 +4,14 @@ import assert from "node:assert/strict";
 import {
   type Citation,
   type FetchLike,
-  corroborateWithCitations,
+  anchorToCitations,
   dropDeadUrls,
   extractGroundingCitations,
   groundingTools,
   parseSearchItems,
+  registrableDomain,
   resolveCitations,
+  titleSimilarity,
   tryParseJsonBlock,
 } from "./grounded-search.ts";
 
@@ -95,48 +97,6 @@ test("returns no citations when none present", () => {
   assert.deepEqual(extractGroundingCitations({ choices: [{ message: { content: "{}" } }] }), []);
 });
 
-/* ---- corroborateWithCitations: filtering + fail-open ---- */
-
-const warnSink = () => {};
-
-test("keeps items whose URL exactly matches a citation", () => {
-  const items = [{ url: "https://a.com/x" }, { url: "https://z.com/bad" }];
-  const cites: Citation[] = [{ url: "https://a.com/x" }];
-  assert.deepEqual(corroborateWithCitations(items, cites, warnSink), [{ url: "https://a.com/x" }]);
-});
-
-test("keeps items matched by host when the exact URL differs", () => {
-  const items = [{ url: "https://a.com/article?ref=x" }];
-  const cites: Citation[] = [{ url: "https://a.com/some-other-path" }];
-  assert.deepEqual(corroborateWithCitations(items, cites, warnSink), items);
-});
-
-test("fails open when there are no citations", () => {
-  const items = [{ url: "https://a.com/x" }, { url: "https://b.com/y" }];
-  let warned = "";
-  const out = corroborateWithCitations(items, [], (m) => (warned = m));
-  assert.deepEqual(out, items);
-  assert.match(warned, /no grounding citations/);
-});
-
-test("fails open when citations match none of the items", () => {
-  const items = [{ url: "https://a.com/x" }];
-  const cites: Citation[] = [{ url: "https://redirect.example/xyz" }];
-  let warned = "";
-  const out = corroborateWithCitations(items, cites, (m) => (warned = m));
-  assert.deepEqual(out, items);
-  assert.match(warned, /matched none/);
-});
-
-test("drops only the uncorroborated items when some match", () => {
-  const items = [{ url: "https://a.com/x" }, { url: "https://hallucinated.test/q" }];
-  const cites: Citation[] = [{ url: "https://a.com/x" }];
-  let warned = "";
-  const out = corroborateWithCitations(items, cites, (m) => (warned = m));
-  assert.deepEqual(out, [{ url: "https://a.com/x" }]);
-  assert.match(warned, /dropped 1 item/);
-});
-
 /* ---- response parsing helpers ---- */
 
 test("tryParseJsonBlock strips code fences", () => {
@@ -153,40 +113,21 @@ test("parseSearchItems returns [] on unparseable text", () => {
   assert.deepEqual(parseSearchItems("not json at all", "tag"), []);
 });
 
-/* ---- corroboration against realistic grounding-redirect citations ---- */
+/* ---- resolveCitations: grounding-redirect resolution ---- */
 
-// The regression that motivated the fix: Gemini returns citations as redirect
-// links on vertexaisearch.cloud.google.com, whose host never matches the
-// model's guessed article host, so corroboration always failed open and kept
-// fabricated URLs. Older fixtures used same-host citation URLs and missed it.
+// Gemini returns citations as redirect links on vertexaisearch.cloud.google.com;
+// the real source URL is only revealed by following the redirect.
 const REDIRECT = "https://vertexaisearch.cloud.google.com/grounding-api-redirect";
 
-test("raw redirect citations match no items and corroboration fails open", () => {
-  const items = [{ url: "https://ucsd.edu/newsroom/fabricated-slug" }];
-  const cites: Citation[] = [{ url: `${REDIRECT}/AbC123` }];
-  let warned = "";
-  const out = corroborateWithCitations(items, cites, (m) => (warned = m));
-  // Nothing is dropped — the guard can't tell the guess from a real link
-  // until the redirect is resolved to its true host.
-  assert.deepEqual(out, items);
-  assert.match(warned, /matched none/);
-});
-
-test("resolved redirect citations let corroboration drop wrong-host guesses", async () => {
-  const items = [
-    { url: "https://ucsd.edu/newsroom/fabricated-slug" }, // guessed host, no citation
-    { url: "https://today.ucsd.edu/story/real" }, // real host, backed by a citation
-  ];
-  const cites: Citation[] = [{ url: `${REDIRECT}/AbC123` }];
-  // The redirect resolves to today.ucsd.edu — a different host than the guess.
+test("resolveCitations follows a grounding redirect to the real source URL", async () => {
+  const cites: Citation[] = [{ url: `${REDIRECT}/AbC123`, title: "T" }];
   const fakeFetch: FetchLike = async (url) => ({
     status: 200,
     url: url.startsWith(REDIRECT) ? "https://today.ucsd.edu/story/real" : url,
   });
   const resolved = await resolveCitations(cites, fakeFetch);
   assert.equal(resolved[0].url, "https://today.ucsd.edu/story/real");
-  const out = corroborateWithCitations(items, resolved, () => {});
-  assert.deepEqual(out, [{ url: "https://today.ucsd.edu/story/real" }]);
+  assert.equal(resolved[0].title, "T");
 });
 
 test("resolveCitations leaves non-redirect citations untouched", async () => {
@@ -245,4 +186,91 @@ test("dropDeadUrls returns the input untouched when empty", async () => {
     throw new Error("must not fetch");
   };
   assert.deepEqual(await dropDeadUrls([], () => {}, fakeFetch), []);
+});
+
+/* ---- registrableDomain ---- */
+
+test("registrableDomain reduces a host to its eTLD+1", () => {
+  assert.equal(registrableDomain("today.ucsd.edu"), "ucsd.edu");
+  assert.equal(registrableDomain("datax.ucla.edu"), "ucla.edu");
+  assert.equal(registrableDomain("newsroom.ucla.edu"), "ucla.edu");
+  assert.equal(registrableDomain("www.latimes.com"), "latimes.com");
+  assert.equal(registrableDomain("example.com"), "example.com");
+  assert.equal(registrableDomain("news.bbc.co.uk"), "bbc.co.uk");
+});
+
+/* ---- titleSimilarity ---- */
+
+test("titleSimilarity scores distinctive-token containment, ignores filler", () => {
+  assert.equal(
+    titleSimilarity("UK Study Finds AI Refusers", "UK Study Finds AI Refusers Among Students"),
+    1,
+  );
+  assert.equal(titleSimilarity("apple pie recipe", "banana bread loaf"), 0);
+  // A single shared distinctive token is not enough.
+  assert.equal(titleSimilarity("AI policy at UC", "AI"), 0);
+});
+
+/* ---- anchorToCitations: repair URLs from resolved citations ---- */
+
+// The fetcher must never be called for items resolved by domain/title alone.
+const mustNotFetch: FetchLike = async () => {
+  throw new Error("anchorToCitations should not fetch a matched item");
+};
+
+test("repairs a wrong-host guess via the shared registrable domain (titles differ)", async () => {
+  // The flagship case: the model stored ucsd.edu/newsroom/… with a paraphrased
+  // title; the real article is on today.ucsd.edu. Titles barely overlap, but
+  // the registrable domain (ucsd.edu) matches, so the citation URL is adopted.
+  const items = [
+    { url: "https://ucsd.edu/newsroom/press-release/how-uc-san-diego-is-leading-the-way-in-ai-education", title: "How UC San Diego is leading the way in AI education" },
+  ];
+  const cites: Citation[] = [
+    { url: "https://today.ucsd.edu/story/faculty-symposium-highlights-ais-strengths-in-higher-ed-teaching", title: "Faculty Symposium Highlights AI's Strengths in Higher Ed Teaching" },
+  ];
+  const out = await anchorToCitations(items, cites, () => {}, mustNotFetch);
+  assert.equal(out.length, 1);
+  assert.equal(out[0].url, "https://today.ucsd.edu/story/faculty-symposium-highlights-ais-strengths-in-higher-ed-teaching");
+});
+
+test("picks the best same-domain citation by title overlap", async () => {
+  const items = [
+    { url: "https://newsroom.ucla.edu/bulletin-board/ucla-awarded-300000", title: "UCLA Awarded $300,000 State Grant to Launch Public Interest Technology" },
+  ];
+  const cites: Citation[] = [
+    { url: "https://newsroom.ucla.edu/unrelated", title: "Some Unrelated UCLA Story About Campus Robotics" },
+    { url: "https://datax.ucla.edu/news-events/news/ucla-awarded-300000-state-grant-launch-public-interest-technology-pathways", title: "UCLA Awarded $300,000 State Grant to Launch Public Interest Technology Pathways" },
+  ];
+  const out = await anchorToCitations(items, cites, () => {}, mustNotFetch);
+  assert.equal(out[0].url, "https://datax.ucla.edu/news-events/news/ucla-awarded-300000-state-grant-launch-public-interest-technology-pathways");
+});
+
+test("adopts a strong cross-domain title match", async () => {
+  const items = [
+    { url: "https://guessed-aggregator.example/x", title: "UK Study Finds Evidence of Conscientious Objectors and AI Refusers" },
+  ];
+  const cites: Citation[] = [
+    { url: "https://www.timeshighereducation.com/news/third-students-shun-generative-ai", title: "UK Study Finds Evidence of Conscientious Objectors and AI Refusers Among Students" },
+  ];
+  const out = await anchorToCitations(items, cites, () => {}, mustNotFetch);
+  assert.equal(out[0].url, "https://www.timeshighereducation.com/news/third-students-shun-generative-ai");
+});
+
+test("fails open (keeps items unchanged) when there are no citations", async () => {
+  const items = [{ url: "https://a.com/x", title: "T" }];
+  let warned = "";
+  const out = await anchorToCitations(items, [], (m) => (warned = m), mustNotFetch);
+  assert.deepEqual(out, items);
+  assert.match(warned, /no grounding citations/);
+});
+
+test("drops an ungroundable item with a dead URL, keeps one that is live", async () => {
+  const items = [
+    { url: "https://nomatch.test/404", title: "Totally Unrelated Alpha Bravo" },
+    { url: "https://nomatch.test/live", title: "Totally Unrelated Charlie Delta" },
+  ];
+  const cites: Citation[] = [{ url: "https://other.com/z", title: "Different Subject Entirely Xyz" }];
+  const fakeFetch: FetchLike = async (url) => ({ status: url.endsWith("/404") ? 404 : 200, url });
+  const out = await anchorToCitations(items, cites, () => {}, fakeFetch);
+  assert.deepEqual(out.map((i) => i.url), ["https://nomatch.test/live"]);
 });
