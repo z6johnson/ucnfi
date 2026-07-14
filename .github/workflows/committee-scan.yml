@@ -33,6 +33,7 @@ on:
           - daily
           - weekly
           - both
+          - prune
       lookback_days:
         description: "Override lookback window in days (blank = defaults: 2 RSS, 7 arXiv, 7 tier-2). Use 30 for a one-shot backfill seed."
         required: false
@@ -98,6 +99,56 @@ jobs:
           else
             DATE=$(date -u +%Y-%m-%d)
             git commit -m "Daily committee AI scan — $DATE"
+            branch="${GITHUB_REF#refs/heads/}"
+            for attempt in 1 2 3 4 5; do
+              if git push origin "HEAD:${branch}"; then
+                echo "Pushed on attempt ${attempt}."
+                break
+              fi
+              if [ "$attempt" = "5" ]; then
+                echo "Giving up after 5 push attempts."
+                exit 1
+              fi
+              echo "Push rejected on attempt ${attempt}; rebasing onto origin/${branch}…"
+              git fetch origin "${branch}"
+              git rebase "origin/${branch}"
+              sleep "$((attempt * 2))"
+            done
+          fi
+
+  # One-shot cleanup of dead links already stored in the ledger. Runs only on
+  # manual dispatch (open egress on the runner lets the liveness check reach
+  # arbitrary news hosts, which the daily scan needs too). Future scans
+  # self-clean via dropDeadUrls, so this is for the backlog written before
+  # that guard existed.
+  prune:
+    if: github.event_name == 'workflow_dispatch' && inputs.job == 'prune'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prune dead links
+        run: npm run prune:dead-links
+
+      - name: Commit and push if changes
+        run: |
+          git config user.name "ucnfi-scan-bot"
+          git config user.email "ucnfi-scan-bot@users.noreply.github.com"
+          git add data/ucnfi-committee/activity/
+          if git diff --cached --quiet; then
+            echo "No dead links to prune."
+          else
+            git commit -m "Prune dead activity links"
             branch="${GITHUB_REF#refs/heads/}"
             for attempt in 1 2 3 4 5; do
               if git push origin "HEAD:${branch}"; then
