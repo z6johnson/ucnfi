@@ -329,8 +329,11 @@ export default async function ActivityPage({
           ) : null}
           <Link
             href="/activity/new"
-            className="label no-underline hover:text-[var(--color-accent)]"
-            style={{ color: "var(--color-accent)" }}
+            className="no-underline rounded px-3 py-1.5 text-sm font-medium hover:opacity-90"
+            style={{
+              backgroundColor: "var(--color-accent)",
+              color: "var(--color-bg)",
+            }}
           >
             + Add a source
           </Link>
@@ -392,13 +395,22 @@ export default async function ActivityPage({
 
       <section className="mt-8 flex flex-col">
         {items.length === 0 ? (
-          <p
-            className="py-8 text-sm"
-            style={{ color: "var(--color-text-subtle)" }}
-          >
-            No items match these filters. Try widening the window or changing
-            the scope.
-          </p>
+          <div className="py-8 flex flex-col items-start gap-3">
+            <p className="text-sm" style={{ color: "var(--color-text-subtle)" }}>
+              No items match these filters. Try widening the window or changing
+              the scope — or add a source by hand.
+            </p>
+            <Link
+              href="/activity/new"
+              className="no-underline rounded px-3 py-1.5 text-sm font-medium hover:opacity-90"
+              style={{
+                backgroundColor: "var(--color-accent)",
+                color: "var(--color-bg)",
+              }}
+            >
+              + Add a source
+            </Link>
+          </div>
         ) : (
           items.map((item) => (
             <ActivityRow
