@@ -28,9 +28,19 @@ and is used as the dedup key in `seen.json`.
 
 Don't hand-edit `items/*.jsonl` or `seen.json`. If you want to:
 
-- **Add a missing item by hand**: prefer adding the source URL to
+- **Add a source by hand (link, pasted text, or a file)**: use the
+  admin-gated **Add a source** flow at `/activity/new` (linked from the
+  top of `/activity`). It writes an `ActivityItem` with
+  `source_kind: "manual"`, appends it to today's `items/<date>.jsonl`,
+  records the `id` in `seen.json`, and — for pasted text or uploads —
+  commits the archived asset under `public/activity-uploads/`. All of
+  this lands in a single commit via the GitHub Data API
+  (`lib/github.ts` `commitFiles`), so the item shows up after the next
+  rebuild. Filter the feed by **Source → Added** to see manual items.
+  Gated by `ADMIN_PASSWORD`; reuses `GITHUB_TOKEN`/`GITHUB_REPO`/`GITHUB_BRANCH`.
+- **Add a recurring source**: prefer adding its URL to
   `data/ucnfi-committee/feeds.json` (RSS) and re-running the scan, so
-  the same source surfaces it on the next pass too.
+  the same source surfaces automatically on every pass.
 - **Delete a wrong item**: remove the line and also remove its `id`
   from `seen.json` so it can be re-evaluated; or leave the line and let
   the digest's grounding rules ignore it.
