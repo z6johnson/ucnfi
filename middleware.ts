@@ -4,7 +4,8 @@ import { ADMIN_COOKIE, verifySession } from "@/lib/adminSession";
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  const isApi = pathname.startsWith("/api/memos");
+  const isApi =
+    pathname.startsWith("/api/memos") || pathname.startsWith("/api/activity");
   // Only gate mutating API calls. GET/HEAD (e.g. revalidation probes) pass.
   if (isApi && req.method !== "POST") {
     return NextResponse.next();
@@ -27,5 +28,10 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/memos/new", "/api/memos/:path*"],
+  matcher: [
+    "/memos/new",
+    "/api/memos/:path*",
+    "/activity/new",
+    "/api/activity/:path*",
+  ],
 };

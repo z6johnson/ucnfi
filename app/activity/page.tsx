@@ -148,6 +148,7 @@ const SOURCE_TABS: Array<{ id: SourceFilter; label: string }> = [
   { id: "rss", label: "RSS" },
   { id: "websearch", label: "Web" },
   { id: "social", label: "Social" },
+  { id: "manual", label: "Added" },
 ];
 
 function FilterRow({
@@ -322,11 +323,18 @@ export default async function ActivityPage({
             What the committee — and its members — are saying about AI
           </h1>
         </div>
-        {latestDigest ? (
-          <span className="label">
-            Latest digest · {latestDigest}
-          </span>
-        ) : null}
+        <div className="flex items-center gap-4">
+          {latestDigest ? (
+            <span className="label">Latest digest · {latestDigest}</span>
+          ) : null}
+          <Link
+            href="/activity/new"
+            className="label no-underline hover:text-[var(--color-accent)]"
+            style={{ color: "var(--color-accent)" }}
+          >
+            + Add a source
+          </Link>
+        </div>
       </header>
 
       <div
