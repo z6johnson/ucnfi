@@ -1,0 +1,167 @@
+{
+  "edition_id": "2026-W29",
+  "rejected_at": "2026-07-17T15:36:24.922Z",
+  "items": [
+    {
+      "headline": "California SCR 82 adopted by Assembly Higher Education Committee, urging UC, CSU, and CCC to form a joint AI workgroup on academic integrity, instruction, and student privacy",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member",
+        "feed_source.member_id \"topic\" is not a known committee member",
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-2",
+        "priority": 1,
+        "headline": "California SCR 82 adopted by Assembly Higher Education Committee, urging UC, CSU, and CCC to form a joint AI workgroup on academic integrity, instruction, and student privacy",
+        "what_happened": "The California Assembly Higher Education Committee adopted Senate Concurrent Resolution 82 (Niello), which encourages UC, CSU, and California Community Colleges leadership to convene a joint workgroup establishing unified best practices for AI use in instruction, academic integrity, plagiarism mitigation, and student privacy. The CSU Board of Trustees flagged SCR 82 in its July 2026 legislative tracking report as an active item. The resolution is non-binding but carries intersegmental political weight.",
+        "why_it_matters": "UC has systemwide academic integrity guidance updated with GenAI provisions in September 2025, but campuses maintain materially different local postures: UCSB explicitly does not support AI detection software, UC Berkeley calls detection tools 'increasingly less accurate,' and UCSD operates a dedicated AI and Academic Integrity Hub. An intersegmental workgroup convened under SCR 82 would surface these inconsistencies publicly and potentially drive toward a common floor that UC has not yet established internally. The resolution names the UC President directly, making inaction a visible choice.",
+        "for_the_committee": "Given that SCR 82 is non-binding but politically salient, does the President wish to designate a UC lead to engage the intersegmental process, and if so, should that lead be empowered to commit UC to common standards or only to share practices?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "a0eed768524cd54718906e62b8734f90",
+            "member_id": "topic",
+            "url": "https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260SCR82",
+            "title": "Public higher education: artificial intelligence usage (SCR 82)",
+            "published_at": "2026-07-05"
+          },
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "8f25638fa28302ee7f8c1c8331465176",
+            "member_id": "topic",
+            "url": "https://citizenportal.ai/articles/assembly-committee-adopts-resolution-urging-intersegmental-dialogue-on-ai-in-higher-education",
+            "title": "Assembly Committee Adopts Resolution Urging Intersegmental Dialogue on AI in Higher Education",
+            "published_at": "2026-07-05"
+          },
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "d914d053b44e1ef3276e2e0b38bb4297",
+            "member_id": "topic",
+            "url": "https://www.calstate.edu/csu-system/board-of-trustees/past-meetings/2026/Documents/july-20-22-2026-gov-rel.pdf",
+            "title": "California State University Board of Trustees Tracks SCR 82 Progress in July 2026 Legislative Update",
+            "published_at": "2026-07-07"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "academic_integrity",
+            "field": "has_genai_academic_integrity_guidance",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "uc_santa_barbara",
+            "dimension": "academic_integrity",
+            "field": "has_no_plagiarism_detection_support",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "uc_berkeley",
+            "dimension": "academic_integrity",
+            "field": "has_ai_detection_position",
+            "claim_kind": "uc_contradicts"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "palazoglu-a",
+            "why": "Academic Senate Chair named in SCR 82's intersegmental framing; speaks for faculty governance"
+          },
+          {
+            "member_id": "moe-r",
+            "why": "UC Online lead with direct view of academic integrity in online and AI-assisted coursework"
+          },
+          {
+            "member_id": "tassio-m",
+            "why": "Co-chairs UC system Centers for Teaching and Learning AI Working Group; operational academic integrity perspective"
+          }
+        ]
+      }
+    },
+    {
+      "headline": "Brown University AI cheating scandal and UChicago Law device ban signal a national inflection point on AI academic integrity enforcement that UC must anticipate",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member",
+        "feed_source.member_id \"topic\" is not a known committee member",
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-3",
+        "priority": 1,
+        "headline": "Brown University AI cheating scandal and UChicago Law device ban signal a national inflection point on AI academic integrity enforcement that UC must anticipate",
+        "what_happened": "A Brown University economics professor voided a midterm and issued 19 failing grades after suspecting widespread AI cheating on a take-home exam; the university's GAITL Committee simultaneously released a final report recommending campus-wide baseline GenAI rules with departmental customization, centralized enterprise tools, and updated academic codes. Separately, the University of Chicago Law School announced a first-year classroom device ban effective autumn 2026 as a direct countermeasure to AI use, framed in a 'Rethinking Legal Education in the AI Era' strategy statement.",
+        "why_it_matters": "UC's systemwide academic integrity guidance was updated in September 2025 but does not establish a minimum enforcement floor, leaving campuses exposed to the same adjudication failures visible at Brown — particularly for take-home assessments. UC Berkeley's guidance explicitly discourages detection tools as unreliable; UCSB's policy formally rejects them; and no campus has a documented policy on what happens when suspected AI-cheating incidents exceed individual instructor capacity to adjudicate. The Brown GAITL report's recommendation for centralized enterprise GenAI access paired with updated academic codes is structurally similar to what UC has done at some campuses (UCLA, UCI, UCSD) but not systemwide.",
+        "for_the_committee": "Should the committee recommend that UCOP establish a minimum systemwide procedural floor for large-scale AI academic integrity incidents — including adjudication thresholds and detection tool policy — or leave this entirely to campus Academic Senates?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "dbbbb6b6a74f31fee7267bb4b49f7835",
+            "member_id": "topic",
+            "url": "https://www.insidehighered.com/news/faculty/learning-assessment/2026/07/08/brown-professor-suspects-most-his-class-used-ai-cheat",
+            "title": "Brown Professor Suspects Majority of His Class Used AI to Cheat",
+            "published_at": "2026-07-08"
+          },
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "bb1d9ef5604ac874ec158bd7bdb0d724",
+            "member_id": "topic",
+            "url": "https://www.brown.edu/about/administration/provost/sites/provost/files/gaitl_final_report_july_2026.pdf",
+            "title": "Brown University Generative AI in Teaching and Learning (GAITL) Committee Final Report and Recommendations",
+            "published_at": "2026-07-08"
+          },
+          {
+            "kind": "external",
+            "subkind": "web_search",
+            "url": "https://www.lawsociety.ie/gazette/top-stories/2026/july/chicago-u-law-school-bans-ai-use-in-classes",
+            "title": "University of Chicago Law School Implements Classroom Device Ban to Curb AI Use",
+            "published_at": "2026-07-13"
+          },
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "1fba925d268825affbea281210b34ba8",
+            "member_id": "topic",
+            "url": "https://www.iheart.com/content/2026-07-14-brown-university-professor-criticizes-schools-response-to-massive-ai-cheating-scandal",
+            "title": "Brown University Professor Criticizes School's Response to Massive AI Cheating Scandal",
+            "published_at": "2026-07-14"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "academic_integrity",
+            "field": "has_genai_academic_integrity_guidance",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "uc_santa_barbara",
+            "dimension": "academic_integrity",
+            "field": "has_no_plagiarism_detection_support",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "uc_berkeley",
+            "dimension": "academic_integrity",
+            "field": "has_ai_detection_position",
+            "claim_kind": "uc_contradicts"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "palazoglu-a",
+            "why": "Academic Senate Chair; Senate owns academic integrity policy at the faculty governance level"
+          },
+          {
+            "member_id": "noble-s",
+            "why": "Algorithmic accountability expertise directly relevant to detection tool reliability and equity implications"
+          },
+          {
+            "member_id": "raley-r",
+            "why": "Critical AI perspective on assessment redesign and the limits of AI detection frameworks"
+          }
+        ]
+      }
+    }
+  ]
+}
