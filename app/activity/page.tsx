@@ -7,6 +7,7 @@ import {
   type ActivityTier,
   COMMITTEE_SCOPE_ID,
   TOPIC_SCOPE_ID,
+  isDiscoveredFresh,
   isoDateUTC,
   lastNDates,
   listDigestWeeks,
@@ -15,7 +16,7 @@ import {
   scopeOf,
 } from "@/lib/activity";
 import { listMembers } from "@/lib/committee";
-import { isFresh, windowBounds } from "@/lib/brief/recency";
+import { windowBounds } from "@/lib/brief/recency";
 
 export const metadata = {
   title: "Activity — UCOP",
@@ -97,26 +98,23 @@ function loadItems(filters: Filters): ActivityItem[] {
       : lastNDates(Number(filters.days));
   const items = readItemsForDates(repoRoot, dates);
 
-  // Window by the item's own date, not just the scan-run date its file is
-  // keyed on. Otherwise a recent scan that surfaces an old (e.g. 2025) article
-  // shows up in the "30 days" view. Effective date = published_at, falling
-  // back to discovered_at for undated items (so fresh-but-undated posts stay).
+  // Window by when the scan discovered the item, not by the article's own
+  // publish date. Otherwise a recently-surfaced but older-dated article (the
+  // common case — press/social results lag the scan by days to weeks) never
+  // appears as "new activity" and the feed looks frozen. A staleness cap in
+  // isDiscoveredFresh still keeps genuinely ancient finds out of the window.
   const bounds =
     filters.days === "all" ? null : windowBounds(new Date(), Number(filters.days));
 
   return items
     .filter((i) => {
-      if (bounds && !isFresh(i, bounds.startMs, bounds.endMs)) return false;
+      if (bounds && !isDiscoveredFresh(i, bounds.startMs, bounds.endMs)) return false;
       if (filters.scope !== "all" && scopeOf(i) !== filters.scope) return false;
       if (filters.tier !== "all" && i.tier !== (Number(filters.tier) as ActivityTier)) return false;
       if (filters.source !== "all" && i.source_kind !== filters.source) return false;
       return true;
     })
-    .sort((a, b) => {
-      const at = a.published_at ? Date.parse(a.published_at) : Date.parse(a.discovered_at);
-      const bt = b.published_at ? Date.parse(b.published_at) : Date.parse(b.discovered_at);
-      return bt - at;
-    });
+    .sort((a, b) => Date.parse(b.discovered_at) - Date.parse(a.discovered_at));
 }
 
 /* ------------------------------------------------------------------ */
@@ -244,7 +242,14 @@ function ActivityRow({
           className="flex items-center gap-3 text-xs shrink-0"
           style={{ color: "var(--color-text-subtle)" }}
         >
-          <span>{formatDate(item.published_at)}</span>
+          <span>found {formatDate(item.discovered_at)}</span>
+          {item.published_at &&
+          formatDate(item.published_at) !== formatDate(item.discovered_at) ? (
+            <>
+              <span aria-hidden>·</span>
+              <span>pub {formatDate(item.published_at)}</span>
+            </>
+          ) : null}
           <span aria-hidden>·</span>
           <span>tier {item.tier}</span>
           <span aria-hidden>·</span>
@@ -299,7 +304,7 @@ export default async function ActivityPage({
   const countBounds =
     filters.days === "all" ? null : windowBounds(new Date(), Number(filters.days));
   const allInWindow = readItemsForDates(repoRoot, windowDates).filter((i) => {
-    if (countBounds && !isFresh(i, countBounds.startMs, countBounds.endMs)) return false;
+    if (countBounds && !isDiscoveredFresh(i, countBounds.startMs, countBounds.endMs)) return false;
     if (filters.tier !== "all" && i.tier !== (Number(filters.tier) as ActivityTier)) return false;
     if (filters.source !== "all" && i.source_kind !== filters.source) return false;
     return true;
