@@ -258,6 +258,39 @@ export function isoWeekLabel(d: Date = new Date()): string {
   return `${date.getUTCFullYear()}-W${String(week).padStart(2, "0")}`;
 }
 
+/* ------------------------------------------------------------------ */
+/* Discovery-based freshness (/activity feed)                          */
+/* ------------------------------------------------------------------ */
+
+/** Max days an article may predate its discovery and still count as "new activity". */
+export const ACTIVITY_STALENESS_CAP_DAYS = 30;
+
+/**
+ * Discovery-based freshness for the /activity feed: the item was discovered_at
+ * within [startMs, endMs], AND (if it has a publish date) wasn't published more
+ * than `maxStaleDays` before it was discovered — so a scan that surfaces a
+ * genuinely ancient article doesn't jump to the top of the feed.
+ *
+ * This is deliberately distinct from `isFresh` in lib/brief/recency.ts, which
+ * windows on the article's own publish date for the weekly Brief. The Activity
+ * feed instead answers "what did the scan turn up recently?".
+ */
+export function isDiscoveredFresh(
+  item: { published_at: string | null; discovered_at: string },
+  startMs: number,
+  endMs: number,
+  maxStaleDays: number = ACTIVITY_STALENESS_CAP_DAYS,
+): boolean {
+  const disc = Date.parse(item.discovered_at);
+  if (!Number.isFinite(disc)) return false;
+  if (disc < startMs || disc > endMs) return false;
+  if (item.published_at) {
+    const pub = Date.parse(item.published_at);
+    if (Number.isFinite(pub) && disc - pub > maxStaleDays * 86_400_000) return false;
+  }
+  return true;
+}
+
 /** Returns the ISO dates for the seven days ending on `endDate` inclusive. */
 export function lastNDates(n: number, endDate: Date = new Date()): string[] {
   const out: string[] = [];
