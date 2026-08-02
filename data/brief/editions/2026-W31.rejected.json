@@ -1,0 +1,185 @@
+{
+  "edition_id": "2026-W31",
+  "rejected_at": "2026-08-02T15:59:52.775Z",
+  "items": [
+    {
+      "headline": "EU AI Omnibus enters into force, extending compliance timelines and reshaping global governance baseline UC operates against",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-1",
+        "priority": 1,
+        "headline": "EU AI Omnibus enters into force, extending compliance timelines and reshaping global governance baseline UC operates against",
+        "what_happened": "The EU AI Omnibus officially entered into force on 2026-07-27, delivering targeted simplification of the EU AI Act rulebook while preserving core safeguards. The update extends compliance timelines, expands conformity-testing opportunities, and provides greater legal clarity for organizations deploying AI systems internationally.",
+        "why_it_matters": "UC's applicable-law mapping explicitly includes the EU AI Act as a governing international framework — one of more than twenty legal instruments mapped to UC AI governance. The Omnibus changes the compliance schedule and scope that UC's legal and procurement teams have been tracking; the systemwide legal guidance (OGC AI Alert) and applicable-law mapping have not been updated to reflect the revised EU AI Act timeline, creating a gap between the documented framework and current law. The UC Legal AI Task Force is the standing body positioned to assess whether UC's mapped obligations need revision.",
+        "for_the_committee": "Should the UC Legal AI Task Force be directed to issue a timely assessment of how the EU AI Omnibus changes — particularly extended timelines and revised high-risk classifications — affect UC's existing applicable-law mapping and any pending procurement or research data-transfer agreements?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "b904110e863b72240a0d426a3b5af447",
+            "member_id": "topic",
+            "url": "https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force",
+            "title": "EU AI Omnibus Enters into Force, Simplifying Compliance and Extending Timelines",
+            "published_at": "2026-07-27"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "policy",
+            "field": "has_applicable_law_mapping",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "policy",
+            "field": "has_legal_task_force_mapping",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "governance",
+            "field": "has_legal_ai_task_force",
+            "claim_kind": "uc_has_position"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "williams-v",
+            "why": "VP/CIO responsible for systemwide AI strategy and compliance posture"
+          },
+          {
+            "member_id": "crittenden-c",
+            "why": "AI ethics and policy expertise; tracks international AI governance frameworks"
+          }
+        ]
+      }
+    },
+    {
+      "headline": "HEPI analysis calls for suspension of AI detection tools in misconduct proceedings; UC's systemwide position remains equivocal",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-3",
+        "priority": 4,
+        "headline": "HEPI analysis calls for suspension of AI detection tools in misconduct proceedings; UC's systemwide position remains equivocal",
+        "what_happened": "The Higher Education Policy Institute published an analysis on 2026-07-20 arguing that unreliable AI detection tools are producing a due-process crisis, particularly for international students, and urging universities to suspend AI detection as primary evidence in misconduct proceedings in favor of assessment redesign.",
+        "why_it_matters": "UC Berkeley's GenAI instructor guidance explicitly states there are 'no validated GenAI detection tools' and advises instructors to weigh limitations — but stops short of a prohibition, leaving Berkeley's position equivocal on the baseline. No other UC campus in the baseline holds a clear systemwide prohibition; UCSB is the only campus documented as explicitly not supporting plagiarism detection software. The UCEP Annual Reminder on Academic Integrity (Sept 2025) addresses GenAI but does not resolve the detection-tool question systemwide. With HEPI now framing detection-tool reliance as a student equity and due-process issue, the committee faces a choice between waiting for campuses to diverge further or recommending a systemwide position.",
+        "for_the_committee": "Should the committee recommend that UCEP or the UC Legal AI Task Force issue a systemwide guidance clarifying the evidentiary standard for AI detection tool output in student misconduct proceedings, given documented unreliability and disparate impact on international students?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "5082cbff4a50d59a543b0103be31b42b",
+            "member_id": "topic",
+            "url": "https://www.hepi.ac.uk/2026/07/20/catching-the-wrong-students-ai-detection-international-students-and-the-fairness-crisis-in-uk-universities",
+            "title": "HEPI Analysis Warns AI Detection Tools Create Student Due-Process Crisis",
+            "published_at": "2026-07-20"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "academic_integrity",
+            "field": "has_genai_academic_integrity_guidance",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "uc_berkeley",
+            "dimension": "academic_integrity",
+            "field": "has_ai_detection_position",
+            "claim_kind": "uc_contradicts"
+          },
+          {
+            "entity_id": "uc_santa_barbara",
+            "dimension": "academic_integrity",
+            "field": "has_no_plagiarism_detection_support",
+            "claim_kind": "uc_has_position"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "noble-s",
+            "why": "AI equity and algorithmic accountability expertise; disparate-impact framing directly relevant"
+          },
+          {
+            "member_id": "moe-r",
+            "why": "Led Risk and Transparency subcommittee on prior AI Council; oversees UC Online where assessment integrity is operational"
+          },
+          {
+            "member_id": "palazoglu-a",
+            "why": "UC Academic Senate Chair; UCEP reports through the Senate"
+          }
+        ]
+      }
+    },
+    {
+      "headline": "Columbia/Princeton synthesis flags AI-assisted peer review as governance risk; UC has no research-integrity policy covering automated peer review",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-5",
+        "priority": 4,
+        "headline": "Columbia/Princeton synthesis flags AI-assisted peer review as governance risk; UC has no research-integrity policy covering automated peer review",
+        "what_happened": "Columbia University's aiX Weekly newsletter (2026-07-22) highlighted a human-subjects study showing that reviewers verifying AI output grew more confident in wrong answers, and covered Princeton's Arvind Narayanan's ICML keynote warning that automating peer review is 'a trap' that cedes control of research direction to AI systems.",
+        "why_it_matters": "UC's research AI governance is anchored in the 2021 Presidential Working Group report and UCSD's Senate-Admin Workgroup on GenAI in Research (Oct 2025), which identified reproducibility and intellectual agency as long-term concerns but did not address automated peer review specifically. No UC campus in the baseline has a documented policy on AI use in the peer review of research manuscripts or grant proposals. As UC researchers increasingly use tools like TritonGPT and ChatGPT for research tasks, the absence of any systemwide or campus-level norm on peer-review AI use creates a research-integrity gap that the UCSD research workgroup's own recommendations (a standing Senate-Admin Committee within 12–18 months) are designed to address — but have not yet produced.",
+        "for_the_committee": "Should the committee accelerate UCSD's recommended standing Senate-Admin Committee on AI in Research into a systemwide body, with automated peer review as a first-priority topic given the emerging evidence of verification bias?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "c5f7a3c15ddfbaee7f9f6d31fcb4dd4b",
+            "member_id": "topic",
+            "url": "https://sites.stat.columbia.edu/tzheng/post/2026-07-22-aix-weekly-newsletter",
+            "title": "Columbia University's aiX Weekly Highlights AI Peer Review and Human Verification Risks",
+            "published_at": "2026-07-22"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "research",
+            "field": "has_ai_research_strategy",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "uc_san_diego",
+            "dimension": "research",
+            "field": "has_ai_research_policy",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "uc_berkeley",
+            "dimension": "research",
+            "field": "has_ai_research_policy",
+            "claim_kind": "uc_silent"
+          },
+          {
+            "entity_id": "uc_davis",
+            "dimension": "research",
+            "field": "has_ai_research_policy",
+            "claim_kind": "uc_silent"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "milburn-c",
+            "why": "Directs UC Davis Center for AI and Experimental Futures; tracks democratic governance of AI in research"
+          },
+          {
+            "member_id": "goldberg-k",
+            "why": "Active researcher publishing in AI domains; direct stake in peer review integrity norms"
+          },
+          {
+            "member_id": "palazoglu-a",
+            "why": "UC Academic Senate Chair; systemwide research integrity standards flow through the Senate"
+          }
+        ]
+      }
+    }
+  ]
+}
