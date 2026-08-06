@@ -7,6 +7,8 @@
  * OA-1..OA-8.
  */
 
+import type Anthropic from "@anthropic-ai/sdk";
+
 import {
   type ActivityItem,
   COMMITTEE_SCOPE_ID,
@@ -20,6 +22,16 @@ import { committeeContextSummary, listMembers } from "../committee.ts";
 
 const DIGEST_MODEL = process.env.DIGEST_MODEL || "claude-sonnet-4-6";
 const DIGEST_MAX_TOKENS = 4096;
+
+// Models to fall back to, in order, when the primary returns a sustained 5xx —
+// i.e. the proxy is reachable but that specific model deployment is down (an
+// outage, not the brief blip withRetry already covers). Comma-separated,
+// overridable via the DIGEST_FALLBACK_MODELS env / workflow var. Entries equal
+// to the primary are dropped so we never re-hit the same deployment.
+const DIGEST_FALLBACK_MODELS = (process.env.DIGEST_FALLBACK_MODELS || "claude-sonnet-4-6")
+  .split(",")
+  .map((m) => m.trim())
+  .filter((m) => m.length > 0 && m !== DIGEST_MODEL);
 
 /* ------------------------------------------------------------------ */
 /* Transient-error retry                                               */
@@ -186,25 +198,45 @@ export async function buildWeeklyDigest(
 
   const userPrompt = itemsBlock(filtered, isoWeek, dates);
 
-  const message = await withRetry("messages.create", () =>
-    getLiteLLMClient().messages.create({
-      model: DIGEST_MODEL,
-      max_tokens: DIGEST_MAX_TOKENS,
-      system: [
-        {
-          type: "text",
-          text: FRAMING.replace("<ISO_WEEK_LABEL>", isoWeek),
-          cache_control: { type: "ephemeral" },
-        },
-        {
-          type: "text",
-          text: committeeBlock(),
-          cache_control: { type: "ephemeral" },
-        },
-      ],
-      messages: [{ role: "user", content: userPrompt }],
-    }),
-  );
+  // Try the primary model, then fall through DIGEST_FALLBACK_MODELS if it
+  // returns sustained 5xx (per-model retries are handled by withRetry). A
+  // non-retryable error — bad request, auth, unknown model — fails fast and is
+  // not worked around by switching models.
+  const models = [DIGEST_MODEL, ...DIGEST_FALLBACK_MODELS];
+  let message: Anthropic.Message | undefined;
+  let lastErr: unknown;
+  for (let i = 0; i < models.length; i++) {
+    const model = models[i];
+    try {
+      message = await withRetry(`messages.create model=${model}`, () =>
+        getLiteLLMClient().messages.create({
+          model,
+          max_tokens: DIGEST_MAX_TOKENS,
+          system: [
+            {
+              type: "text",
+              text: FRAMING.replace("<ISO_WEEK_LABEL>", isoWeek),
+              cache_control: { type: "ephemeral" },
+            },
+            {
+              type: "text",
+              text: committeeBlock(),
+              cache_control: { type: "ephemeral" },
+            },
+          ],
+          messages: [{ role: "user", content: userPrompt }],
+        }),
+      );
+      break;
+    } catch (err) {
+      lastErr = err;
+      if (!isRetryableError(err) || i === models.length - 1) throw err;
+      console.warn(
+        `[digest] model=${model} unavailable after retries; falling back to model=${models[i + 1]}`,
+      );
+    }
+  }
+  if (!message) throw lastErr;
 
   let markdown = "";
   for (const block of message.content) {
