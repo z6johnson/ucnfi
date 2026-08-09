@@ -1,0 +1,167 @@
+{
+  "edition_id": "2026-W32",
+  "rejected_at": "2026-08-09T15:28:23.831Z",
+  "items": [
+    {
+      "headline": "California–Nvidia statewide AI curriculum partnership targets UC system after community college launch",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-1",
+        "priority": 1,
+        "headline": "California–Nvidia statewide AI curriculum partnership targets UC system after community college launch",
+        "what_happened": "Governor Newsom announced a statewide partnership with Nvidia to deliver AI curriculum, resources, and tools to California public higher education, beginning with community colleges and with explicit plans to expand to the CSU and UC systems. The announcement was reported by CalMatters on 2026-08-04.",
+        "why_it_matters": "UC has a systemwide AI training program (UC AI Primer, AI Essentials webinar series) but no enterprise AI platform at the systemwide level and no existing Nvidia curriculum partnership on record. If the state-negotiated Nvidia agreement reaches UC, it will interact with — and potentially duplicate or displace — campus-level training infrastructure already in place at Berkeley, UCLA, UCSD, and others. The committee has no documented position on how externally brokered state curriculum partnerships would be governed or integrated across the ten campuses.",
+        "for_the_committee": "Should the committee establish a posture on the California–Nvidia partnership before the expansion reaches UC — and who within the system is authorized to accept, modify, or decline terms on the UC's behalf?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "03cc829ca50a88f3fc6d14da687a6f4d",
+            "member_id": "topic",
+            "url": "https://calmatters.org/",
+            "title": "California Partners with Nvidia to Bring AI Curriculum and Tools to Public Higher Education",
+            "published_at": "2026-08-04"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "training",
+            "field": "has_ai_training_program",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "infrastructure",
+            "field": "has_enterprise_ai_platform",
+            "claim_kind": "uc_silent"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "williams-v",
+            "why": "UCOP CIO responsible for systemwide IT strategy and vendor/state partnership negotiations"
+          },
+          {
+            "member_id": "crittenden-c",
+            "why": "CITRIS spans four campuses; positioned to assess curriculum equity and integration implications"
+          },
+          {
+            "member_id": "moe-r",
+            "why": "UC Online AVP; directly responsible for systemwide educational technology and training infrastructure"
+          }
+        ]
+      }
+    },
+    {
+      "headline": "Large-scale peer study finds no grade inflation or satisfaction drop from GenAI availability — challenging a core assumption behind UC academic integrity policy",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-2",
+        "priority": 4,
+        "headline": "Large-scale peer study finds no grade inflation or satisfaction drop from GenAI availability — challenging a core assumption behind UC academic integrity policy",
+        "what_happened": "A peer-reviewed study of 156,135 students across nearly 88,000 course offerings over a decade — posted to arXiv on 2026-07-23 — found no statistically significant differential effect of generative AI availability on final grades or student satisfaction, even in courses deemed highly susceptible to AI use. The authors describe this as a direct test of the 'GenAI substitution hypothesis.'",
+        "why_it_matters": "UC has systemwide GenAI academic integrity guidance (UCEP Annual Reminder, updated September 2025) and campus-level policies at Berkeley, UCLA, UCSD, UCI, and others, most of which frame AI availability as a risk to assessment integrity. The empirical finding that AI availability does not shift grades or satisfaction at scale is in tension with the threat model underlying those policies. UC has no documented process for updating academic integrity frameworks in response to emerging empirical evidence, and the baseline records no position on the evidentiary basis for current policy.",
+        "for_the_committee": "Does the committee want to commission a UC-specific review of the empirical assumptions embedded in existing campus academic integrity policies, or flag this study to the systemwide Academic Senate for consideration in the next UCEP cycle?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "d4d062c3b52da8c4ddc8d67c5b473fdb",
+            "member_id": "topic",
+            "url": "https://arxiv.org/abs/2607.21534",
+            "title": "Generative AI Availability, Grades, and Student Satisfaction at a Large University",
+            "published_at": "2026-07-23"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "academic_integrity",
+            "field": "has_genai_academic_integrity_guidance",
+            "claim_kind": "uc_has_position"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "palazoglu-a",
+            "why": "UC Academic Senate Chair; UCEP Annual Reminder originates from the Senate"
+          },
+          {
+            "member_id": "moe-r",
+            "why": "Co-chaired prior AI Council Risk and Transparency subcommittee; writes publicly on AI's effects on assessment"
+          },
+          {
+            "member_id": "noble-s",
+            "why": "Algorithmic accountability expertise relevant to evaluating study methodology and policy implications"
+          }
+        ]
+      }
+    },
+    {
+      "headline": "Ohio State mandates AI fluency for every undergraduate by Class of 2029 — a systemwide curriculum commitment UC has not made",
+      "reasons": [
+        "peer_anchor peer_id=\"undefined\" is not in the peer baseline",
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-3",
+        "priority": 4,
+        "headline": "Ohio State mandates AI fluency for every undergraduate by Class of 2029 — a systemwide curriculum commitment UC has not made",
+        "what_happened": "Ohio State University publicly advanced its AI Fluency initiative this week, requiring every undergraduate beginning with the Class of 2029 to graduate fluent in AI as applied to their field of study, embedded through required general education seminars and workshops across all colleges. The initiative was published on the OSU Office of Academic Affairs site on 2026-07-23.",
+        "why_it_matters": "UC has a systemwide AI training program (UC AI Primer, AI Essentials webinar series) and campus-level training resources at Berkeley, UCLA, UCSD, UCI, Davis, and Santa Cruz, but the baseline records no systemwide undergraduate AI fluency requirement or graduation standard. Ohio State's mandate is a binding curricular commitment enforceable at the degree level; UC's training resources are voluntary and unevenly distributed across campuses. The committee has no documented position on whether a UC-equivalent mandate is desirable or within its charge.",
+        "for_the_committee": "Should the committee recommend that the Academic Senate evaluate a systemwide undergraduate AI fluency standard, or does the ten-campus diversity of UC make a binding mandate the wrong instrument?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "c705d0186b908a2408f966d4f43f4330",
+            "member_id": "topic",
+            "url": "https://oaa.osu.edu/ai-fluency",
+            "title": "Ohio State's colleges advance AI Fluency roadmaps for undergraduates",
+            "published_at": "2026-07-23"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "training",
+            "field": "has_ai_training_program",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "training",
+            "field": "has_webinar_series",
+            "claim_kind": "uc_has_position"
+          }
+        ],
+        "peer_anchors": [
+          {
+            "entity_id": "ohio_state",
+            "dimension": "policy",
+            "field": "has_genai_policy",
+            "claim_kind": "baseline_missing"
+          }
+        ],
+        "experts": [
+          {
+            "member_id": "palazoglu-a",
+            "why": "UC Academic Senate Chair; any systemwide curriculum requirement must pass through the Senate"
+          },
+          {
+            "member_id": "tassio-m",
+            "why": "Co-chairs UC system-wide CTL Working Group on AI; direct operational view of campus training capacity"
+          },
+          {
+            "member_id": "martin-a",
+            "why": "Student representative; equity implications of mandated AI fluency for first-generation students"
+          }
+        ]
+      }
+    }
+  ]
+}
