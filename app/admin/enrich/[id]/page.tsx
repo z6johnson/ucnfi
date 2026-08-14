@@ -114,6 +114,14 @@ export default async function ReviewChangesetPage({
             entityNames={entityNames}
             dimensionLabels={DIMENSION_LABEL}
             readOnly={readOnly}
+            publish={
+              readOnly
+                ? undefined
+                : {
+                    targetLabel: TARGET_LABEL[changeset.target],
+                    baseVersion: changeset.base_version,
+                  }
+            }
           />
         </div>
       )}

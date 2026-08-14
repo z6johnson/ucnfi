@@ -13,6 +13,7 @@ import {
   type ReviewChange,
 } from "@/lib/enrich/review";
 import { ChangeCard } from "./ChangeCard";
+import { PublishPanel } from "./PublishPanel";
 
 type Status = "idle" | "saving" | "saved" | "conflict" | "error";
 
@@ -24,6 +25,8 @@ export type ReviewQueueProps = {
   entityNames: Record<string, string>;
   dimensionLabels: Record<string, string>;
   readOnly?: boolean;
+  /** Publish affordance — omitted for read-only lanes. */
+  publish?: { targetLabel: string; baseVersion: string };
 };
 
 const ALL: QueueFilter = {
@@ -43,6 +46,7 @@ export function ReviewQueue({
   entityNames,
   dimensionLabels,
   readOnly = false,
+  publish,
 }: ReviewQueueProps) {
   // `saved` is what is on the server; `overlay` is what the reviewer has done
   // since. Keeping them apart is what lets Save send just the diff, and what
@@ -375,6 +379,27 @@ export function ReviewQueue({
           );
         })}
       </ul>
+
+      {!readOnly && publish ? (
+        <>
+          {dirty > 0 ? (
+            <p className="mt-8 text-sm" style={{ color: "var(--color-warn-strong)" }}>
+              {dirty} decision{dirty === 1 ? "" : "s"} not yet saved — publishing will
+              include {dirty === 1 ? "it" : "them"}.
+            </p>
+          ) : null}
+          <PublishPanel
+            changesetId={changesetId}
+            acceptedCount={counts.accept}
+            totalCount={counts.total}
+            undecidedCount={counts.review}
+            sha={sha}
+            pendingDecisions={overlay}
+            targetLabel={publish.targetLabel}
+            baseVersion={publish.baseVersion}
+          />
+        </>
+      ) : null}
     </div>
   );
 }

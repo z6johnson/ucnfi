@@ -178,7 +178,7 @@ No required config changes. Optional:
 | `DATABASE_URL` | Step 3 | Neon Postgres connection string |
 | `ADMIN_PASSWORD` | Step 3 | Admin cookie gate for editing routes |
 | `NFI_BASE_URL` | Step 3 | Absolute URL used when generating share links |
-| `GITHUB_TOKEN` | Step 4 | Fine-grained PAT used by `/api/memos` to commit new memos |
+| `GITHUB_TOKEN` | Step 4 | Fine-grained PAT — `Contents: Read and write` to commit memos and enrichment decisions, `Actions: Read and write` to start the enrichment publish run |
 | `GITHUB_REPO` | Step 4 | `owner/repo` target for memo commits |
 | `GITHUB_BRANCH` | Step 4 | Optional, defaults to `main` |
 

@@ -29,6 +29,13 @@ import { readChangeset } from "./storage.ts";
 
 const CHANGESETS_DIR = "data/enrich/changesets";
 
+/**
+ * The workflow the app dispatches to publish a reviewed changeset. Lives here
+ * rather than in a route file so both the publish and status routes can share
+ * it — Next.js route modules should only export request handlers and config.
+ */
+export const APPLY_WORKFLOW = "enrich-apply.yml";
+
 export type LoadedChangeset = {
   parsed: ParsedChangeset;
   /**
