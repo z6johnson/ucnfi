@@ -1,0 +1,61 @@
+{
+  "edition_id": "2026-W33",
+  "rejected_at": "2026-08-14T15:23:52.806Z",
+  "items": [
+    {
+      "headline": "Governor Newsom announces California–Nvidia partnership to bring AI curriculum and tools to public higher education, with UC expansion planned",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-5",
+        "priority": 4,
+        "headline": "Governor Newsom announces California–Nvidia partnership to bring AI curriculum and tools to public higher education, with UC expansion planned",
+        "what_happened": "On approximately August 4, 2026, Governor Newsom announced a statewide partnership with Nvidia to deliver AI curriculum, resources, and tools to California's public higher education institutions, beginning with community colleges and with explicit plans to expand to the CSU and UC systems.",
+        "why_it_matters": "UC has a systemwide AI training program (the UC AI Primer) and a webinar series, but no enterprise AI platform and no systemwide curriculum standard for AI literacy beyond the existing Primer module. A state-brokered Nvidia curriculum arriving at UC without a coordinating framework risks creating a third track of AI training materials alongside campus-specific programs (e.g., ZotGPT Academy at UCI, TritonAI resources at UCSD) and the existing UCOP Primer — with no systemwide body currently chartered to evaluate, integrate, or set standards for externally sourced AI curricula. The UC AI Council's 2025 priorities explicitly include deepening cross-UC collaboration and amplifying state AI workforce initiatives; this partnership is precisely that kind of initiative.",
+        "for_the_committee": "Before the Nvidia partnership reaches UC, does the committee want to designate a working group to evaluate how state-provided AI curriculum should be integrated with — or distinguished from — existing campus and systemwide training assets?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "03cc829ca50a88f3fc6d14da687a6f4d",
+            "member_id": "topic",
+            "url": "https://calmatters.org/",
+            "title": "California Partners with Nvidia to Bring AI Curriculum and Tools to Public Higher Education",
+            "published_at": "2026-08-04"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "training",
+            "field": "has_ai_training_program",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "training",
+            "field": "has_webinar_series",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "infrastructure",
+            "field": "has_enterprise_ai_platform",
+            "claim_kind": "uc_silent"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "moe-r",
+            "why": "Associate VP for UC Online; oversees systemwide online learning infrastructure and co-chaired the prior AI Council's Risk and Transparency subcommittee"
+          },
+          {
+            "member_id": "crittenden-c",
+            "why": "Executive Director of CITRIS spanning four UC campuses; track record on state-level technology policy and equity in AI access"
+          }
+        ]
+      }
+    }
+  ]
+}
