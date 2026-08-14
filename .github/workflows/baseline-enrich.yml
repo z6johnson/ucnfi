@@ -116,9 +116,21 @@ jobs:
           git checkout -b "$BRANCH"
           git commit -m "Monthly shared-picture enrichment proposals — $MONTH"
 
+          # `--force-with-lease` with no explicit expectation compares the remote
+          # against the local remote-tracking ref, and actions/checkout only
+          # fetches the ref that triggered the run — so `origin/$BRANCH` does not
+          # exist here and git aborts with "stale info" before it ever contacts
+          # the remote. That is invisible on the first run of a month (creating a
+          # new branch needs no lease) and fails every re-run afterwards. Fetch
+          # the branch to establish the baseline; an empty lease is the explicit
+          # "this branch must not exist yet" expectation.
+          git fetch --no-tags origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH" \
+            || echo "No existing origin/$BRANCH — this run will create it."
+          LEASE="$(git rev-parse --verify --quiet "refs/remotes/origin/$BRANCH" || true)"
+
           # A re-run in the same month updates the existing proposal branch.
           for attempt in 1 2 3 4 5; do
-            if git push --force-with-lease origin "$BRANCH"; then
+            if git push --force-with-lease="$BRANCH:$LEASE" origin "HEAD:refs/heads/$BRANCH"; then
               echo "Pushed on attempt ${attempt}."
               break
             fi
@@ -126,6 +138,18 @@ jobs:
               echo "Giving up after 5 push attempts."
               exit 1
             fi
+            # Re-read the remote tip. If it moved, a reviewer or another run
+            # advanced the branch and the lease did its job — stop, because
+            # retrying would force-push their commits away. If it is unchanged
+            # the rejection was transient, so back off and try again.
+            git fetch --no-tags origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH" || true
+            CURRENT="$(git rev-parse --verify --quiet "refs/remotes/origin/$BRANCH" || true)"
+            if [ "$CURRENT" != "$LEASE" ]; then
+              echo "origin/$BRANCH moved from ${LEASE:-(absent)} to ${CURRENT:-(absent)}."
+              echo "Refusing to force-push over commits this run did not make."
+              exit 1
+            fi
+            echo "Push rejected on attempt ${attempt}; retrying…"
             sleep "$((attempt * 2))"
           done
 
@@ -152,10 +176,37 @@ jobs:
             echo "\`/data-status\` in the app."
           } > "$BODY_FILE"
 
-          if gh pr view "$BRANCH" >/dev/null 2>&1; then
-            echo "PR already open for $BRANCH; branch updated."
+          # Scope the lookup to OPEN PRs on this head. `gh pr view "$BRANCH"` also
+          # matches a closed PR, which would report "already open" and silently
+          # skip creating the replacement.
+          EXISTING="$(gh pr list --head "$BRANCH" --state open --json number \
+            --jq '.[0].number // empty' 2>/dev/null || true)"
+
+          if [ -n "$EXISTING" ]; then
+            echo "PR #$EXISTING already open for $BRANCH; branch updated."
+          elif PR_ERR="$(gh pr create --draft --base "$BASE" --head "$BRANCH" \
+                 --title "Monthly shared-picture enrichment — $MONTH" \
+                 --body-file "$BODY_FILE" 2>&1)"; then
+            echo "$PR_ERR"
           else
-            gh pr create --draft --base "$BASE" --head "$BRANCH" \
-              --title "Monthly shared-picture enrichment — $MONTH" \
-              --body-file "$BODY_FILE"
+            # The proposals are already pushed, so say plainly what is missing and
+            # how to unblock it rather than leaving a bare GraphQL error in the log.
+            COMPARE="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/compare/$BASE...$BRANCH?expand=1"
+            {
+              echo "### Proposals pushed, but the draft PR could not be opened"
+              echo
+              echo "Branch \`$BRANCH\` is up to date on the remote — no work was lost."
+              echo
+              echo '```'
+              echo "$PR_ERR"
+              echo '```'
+              echo
+              echo "If that says Actions is not permitted to create pull requests, turn on"
+              echo "**Settings → Actions → General → Workflow permissions → Allow GitHub"
+              echo "Actions to create and approve pull requests**, or give this step a PAT"
+              echo "with \`repo\` scope as \`GH_TOKEN\`."
+              echo
+              echo "Open it by hand in the meantime: $COMPARE"
+            } | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 1
           fi
