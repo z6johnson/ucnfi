@@ -146,6 +146,21 @@ export type ChangesetMeta = {
   target: EnrichTarget;
   run_date: string; // ISO date (YYYY-MM-DD), UTC
   status: ChangesetStatus;
+  /**
+   * Who is accountable for applying this changeset.
+   *
+   * `human` — a person reviewed it and `reviewed_by` names them. This is the
+   * only mode that may carry a value mutation.
+   *
+   * `policy` — every change in it was auto-eligible under `policy_id`, and it
+   * applied unattended. Kept as a distinct mode rather than writing a fake
+   * name into `reviewed_by`, so the audit trail never claims a review that
+   * did not happen. apply.ts re-derives eligibility at apply time instead of
+   * trusting this field.
+   */
+  approval_mode: "human" | "policy";
+  /** The policy version that authorised a `policy` changeset; "" when human. */
+  policy_id: string;
   reviewed_by: string; // empty in draft (the human-accountable gate)
   reviewed_at: string; // empty in draft
   applied_at: string; // empty until apply

@@ -213,6 +213,8 @@ export async function runCommitteeEnrichment(opts: CommitteeRunOptions): Promise
     target: "committee",
     run_date: runDateIso,
     status: "draft",
+    approval_mode: "human",
+    policy_id: "",
     reviewed_by: "",
     reviewed_at: "",
     applied_at: "",

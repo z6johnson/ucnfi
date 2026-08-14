@@ -322,6 +322,8 @@ export async function runFieldEnrichment(opts: RunOptions): Promise<RunResult> {
     target,
     run_date: runDateIso,
     status: "draft",
+    approval_mode: "human",
+    policy_id: "",
     reviewed_by: "",
     reviewed_at: "",
     applied_at: "",
