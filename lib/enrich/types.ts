@@ -121,10 +121,23 @@ export type EnrichInputsManifest = {
   sources_refreshed: number;
   sources_unchanged: number;
   sources_changed: number;
+  /** Sources that 404/410'd past DEAD_THRESHOLD — the only kind that may imply absence. */
   sources_dead: number;
+  /**
+   * Sources persistently refused by a bot wall (401/403/429). Reported so a
+   * long-blocked source is visible and can be checked by hand; never treated
+   * as evidence the document is gone. Optional for back-compat with
+   * changesets written before the distinction existed.
+   */
+  sources_blocked?: number;
   sources_discovered: number;
   entities_swept: number;
   dimensions_swept: number;
+  /**
+   * Proposals withheld because an identical one was already declined — see
+   * lib/enrich/decisions.ts. Optional for back-compat.
+   */
+  suppressed?: number;
 };
 
 export type ChangesetMeta = {

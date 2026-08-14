@@ -20,8 +20,15 @@ import { spawnSync } from "node:child_process";
 import { appendFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
+import { isoNowUTC } from "../lib/activity.ts";
 import { applyChangeset, ApplyGateError, type ApplySummary } from "../lib/enrich/apply.ts";
-import { readChangeset } from "../lib/enrich/storage.ts";
+import {
+  pruneDecisions,
+  readDecisionsLedger,
+  recordDecisions,
+  writeDecisionsLedger,
+} from "../lib/enrich/decisions.ts";
+import { readChangeset, type ParsedChangeset } from "../lib/enrich/storage.ts";
 
 const REPO_ROOT = process.cwd();
 
@@ -51,6 +58,36 @@ function appendEnrichmentLog(summary: ApplySummary, runDate: string): void {
     `Reviewed changeset and rejection sidecar retained under data/enrich/changesets/.\n`;
   appendFileSync(logPath, section, "utf-8");
   console.info(`[enrich-apply] appended v${summary.newVersion} section to ENRICHMENT_LOG.md`);
+}
+
+/**
+ * Persists what the reviewer decided so the next monthly run doesn't re-ask.
+ *
+ * Runs on every apply, including one where nothing was accepted — a changeset
+ * of 41 rejections is exactly the case worth remembering, and it was the
+ * absence of this step that had August re-proposing all of June's declines.
+ */
+function recordReviewerDecisions(parsed: ParsedChangeset, changesetId: string): void {
+  const { changeset, decisions } = parsed;
+  const ledger = readDecisionsLedger(REPO_ROOT);
+  const nowIso = isoNowUTC();
+  recordDecisions(ledger, {
+    changes: changeset.changes,
+    decisions,
+    decidedBy: changeset.reviewed_by || "unknown",
+    changesetId,
+    nowIso,
+  });
+  pruneDecisions(ledger, nowIso);
+  writeDecisionsLedger(REPO_ROOT, ledger);
+  const decided = changeset.changes.filter((c) => {
+    const d = decisions[`${c.entity_id}.${c.dimension}.${c.field}`];
+    return d === "accept" || d === "reject";
+  }).length;
+  console.info(
+    `[enrich-apply] recorded ${decided} decision(s) to data/enrich/decisions_ledger.json — ` +
+      `declined proposals will not be re-proposed while the rejection stands.`,
+  );
 }
 
 function recomputeDerived(target: string): void {
@@ -92,6 +129,8 @@ function main(): void {
       `(v${summary.baseVersion} → v${summary.newVersion}); ${summary.skipped} not approved.`,
   );
 
+  recordReviewerDecisions(parsed, changesetId);
+
   if (summary.applied > 0) {
     appendEnrichmentLog(summary, parsed.changeset.run_date);
     recomputeDerived(summary.target);
@@ -99,7 +138,7 @@ function main(): void {
 
   console.info(
     `[enrich-apply] done. Commit the canonical file, the updated changeset (status=applied), ` +
-      `ENRICHMENT_LOG.md, and any regenerated derived JSON together.`,
+      `ENRICHMENT_LOG.md, the decisions ledger, and any regenerated derived JSON together.`,
   );
 }
 

@@ -22,6 +22,11 @@
 
 import { isoNowUTC } from "../lib/activity.ts";
 import { CLAUDE_MODEL } from "../lib/litellm.ts";
+import {
+  readDecisionsLedger,
+  toSuppressedRecord,
+  writeSuppressed,
+} from "../lib/enrich/decisions.ts";
 import { runFieldEnrichment } from "../lib/enrich/run.ts";
 import { runCommitteeEnrichment } from "../lib/enrich/committee_verify.ts";
 import {
@@ -82,15 +87,22 @@ async function main(): Promise<void> {
   );
 
   for (const target of targets) {
-    const { changeset, rejected } = await runTarget(target, runDate);
+    const { changeset, rejected, suppressed } = await runTarget(target, runDate);
     const m = changeset.inputs_manifest;
     console.info(
       `[enrich] ${target} changeset=${changeset.changeset_id} changes=${changeset.changes.length} ` +
-        `rejected=${rejected.length} (refreshed=${m.sources_refreshed} changed=${m.sources_changed} ` +
-        `dead=${m.sources_dead} discovered=${m.sources_discovered})`,
+        `rejected=${rejected.length} suppressed=${suppressed.length} ` +
+        `(refreshed=${m.sources_refreshed} changed=${m.sources_changed} ` +
+        `dead=${m.sources_dead} blocked=${m.sources_blocked ?? 0} discovered=${m.sources_discovered})`,
     );
     const needsHuman = changeset.changes.filter((c) => c.status === "needs_human").length;
     console.info(`[enrich] ${target} auto-accepted=${changeset.changes.length - needsHuman} needs_human=${needsHuman}`);
+    if (suppressed.length > 0) {
+      console.info(
+        `[enrich] ${target} withheld ${suppressed.length} proposal(s) already declined in identical ` +
+          `form — see ${changeset.changeset_id}.suppressed.json`,
+      );
+    }
 
     if (DRY_RUN) {
       console.info(`[enrich] dry run — ${target} changeset follows:\n---`);
@@ -112,13 +124,27 @@ async function main(): Promise<void> {
       });
       console.info(`[enrich] wrote rejection sidecar ${rp} (${rejected.length})`);
     }
+    if (suppressed.length > 0) {
+      // Withholding must be auditable: the sidecar names every held-back
+      // proposal and the decision holding it back.
+      const sp = writeSuppressed(
+        REPO_ROOT,
+        changeset.changeset_id,
+        toSuppressedRecord(
+          changeset.changeset_id,
+          suppressed,
+          readDecisionsLedger(REPO_ROOT),
+          isoNowUTC(),
+        ),
+      );
+      console.info(`[enrich] wrote suppression sidecar ${sp} (${suppressed.length})`);
+    }
   }
 
   if (!DRY_RUN) {
     console.info(
-      `[enrich] draft changesets are at data/enrich/changesets/. Review the DECISION: lines, ` +
-        `set reviewed_by + reviewed_at in the frontmatter, commit, then run ` +
-        `npm run enrich:apply -- --changeset <id>.`,
+      `[enrich] draft changesets are at data/enrich/changesets/. ` +
+        `Review them at /admin/enrich.`,
     );
   }
 }
