@@ -1,27 +1,27 @@
 {
   "edition_id": "2026-W33",
-  "rejected_at": "2026-08-14T15:23:52.806Z",
+  "rejected_at": "2026-08-16T15:19:17.698Z",
   "items": [
     {
-      "headline": "Governor Newsom announces California–Nvidia partnership to bring AI curriculum and tools to public higher education, with UC expansion planned",
+      "headline": "UCOP launches AI Buddy Program for staff; UCLA faculty raise data privacy and labor concerns",
       "reasons": [
         "feed_source.member_id \"topic\" is not a known committee member"
       ],
       "raw": {
-        "item_id": "item-5",
+        "item_id": "item-1",
         "priority": 4,
-        "headline": "Governor Newsom announces California–Nvidia partnership to bring AI curriculum and tools to public higher education, with UC expansion planned",
-        "what_happened": "On approximately August 4, 2026, Governor Newsom announced a statewide partnership with Nvidia to deliver AI curriculum, resources, and tools to California's public higher education institutions, beginning with community colleges and with explicit plans to expand to the CSU and UC systems.",
-        "why_it_matters": "UC has a systemwide AI training program (the UC AI Primer) and a webinar series, but no enterprise AI platform and no systemwide curriculum standard for AI literacy beyond the existing Primer module. A state-brokered Nvidia curriculum arriving at UC without a coordinating framework risks creating a third track of AI training materials alongside campus-specific programs (e.g., ZotGPT Academy at UCI, TritonAI resources at UCSD) and the existing UCOP Primer — with no systemwide body currently chartered to evaluate, integrate, or set standards for externally sourced AI curricula. The UC AI Council's 2025 priorities explicitly include deepening cross-UC collaboration and amplifying state AI workforce initiatives; this partnership is precisely that kind of initiative.",
-        "for_the_committee": "Before the Nvidia partnership reaches UC, does the committee want to designate a working group to evaluate how state-provided AI curriculum should be integrated with — or distinguished from — existing campus and systemwide training assets?",
+        "headline": "UCOP launches AI Buddy Program for staff; UCLA faculty raise data privacy and labor concerns",
+        "what_happened": "The UC Office of the President launched the AI Buddy Program this week, pairing staff members of differing AI expertise to meet weekly and build AI fluency across the system. UCLA faculty have responded with concerns about data security, privacy, and the potential for AI to displace human workers, as reported by the Daily Bruin on August 14. ([3482a35a76abeeccaa7872fc0d0d39a1])",
+        "why_it_matters": "UC has an established systemwide AI training program and a webinar series, both anchored to the UC AI Council, but no enterprise AI platform exists at the systemwide level — meaning staff AI literacy programs operate without a uniform tool environment against which to train. The OGC AI Alert (March 2024) prohibits sharing personal information with AI tools without a fully executed data agreement, and the faculty concerns about data privacy are live precisely because that prohibition is in place but the new peer-learning program may surface ambiguity about what data employees discuss or demonstrate during buddy sessions. There is no baseline field indicating a systemwide labor-impact policy or displacement framework for AI adoption.",
+        "for_the_committee": "Should the AI Buddy Program include explicit guidance — cleared by OGC — on what data staff may demonstrate or share during paired sessions, and does the program need a companion communication addressing the faculty concerns about labor displacement before it scales?",
         "feed_sources": [
           {
             "kind": "committee_signal",
-            "activity_item_id": "03cc829ca50a88f3fc6d14da687a6f4d",
+            "activity_item_id": "3482a35a76abeeccaa7872fc0d0d39a1",
             "member_id": "topic",
-            "url": "https://calmatters.org/",
-            "title": "California Partners with Nvidia to Bring AI Curriculum and Tools to Public Higher Education",
-            "published_at": "2026-08-04"
+            "url": "https://dailybruin.com/2026/08/14/uc-introduces-ai-buddy-program-for-staff-amid-learning-privacy-concerns",
+            "title": "UC introduces AI Buddy Program for staff amid learning, privacy concerns",
+            "published_at": "2026-08-14"
           }
         ],
         "baseline_anchors": [
@@ -33,26 +33,142 @@
           },
           {
             "entity_id": "ucop_systemwide",
-            "dimension": "training",
-            "field": "has_webinar_series",
-            "claim_kind": "uc_has_position"
-          },
-          {
-            "entity_id": "ucop_systemwide",
             "dimension": "infrastructure",
             "field": "has_enterprise_ai_platform",
             "claim_kind": "uc_silent"
+          },
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "security",
+            "field": "prohibits_pii_in_ai_tools",
+            "claim_kind": "uc_has_position"
           }
         ],
         "peer_anchors": [],
         "experts": [
           {
             "member_id": "moe-r",
-            "why": "Associate VP for UC Online; oversees systemwide online learning infrastructure and co-chaired the prior AI Council's Risk and Transparency subcommittee"
+            "why": "Oversees UC Online and staff-facing AI learning infrastructure; previously co-chaired the Risk and Transparency subcommittee"
           },
           {
-            "member_id": "crittenden-c",
-            "why": "Executive Director of CITRIS spanning four UC campuses; track record on state-level technology policy and equity in AI access"
+            "member_id": "williams-v",
+            "why": "Systemwide CIO responsible for the AI training program and tool environment within which the Buddy Program operates"
+          },
+          {
+            "member_id": "noble-s",
+            "why": "Expertise in algorithmic accountability and AI's labor displacement effects on institutional communities"
+          }
+        ]
+      }
+    },
+    {
+      "headline": "Cornell mandates AI critical literacy for all incoming students, faculty, and staff this fall — UC has no equivalent systemwide requirement",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-2",
+        "priority": 4,
+        "headline": "Cornell mandates AI critical literacy for all incoming students, faculty, and staff this fall — UC has no equivalent systemwide requirement",
+        "what_happened": "Cornell University announced this week that it is expanding its AI Critical Literacy Program to all incoming students, faculty, and staff for fall 2026, delivered through Canvas with modules on generative AI, ethics, learning, and personal AI policies. The program is explicitly framed as mandatory for the incoming cohort. ([1d5976979b85de6e9fe6efef8eb17bd5])",
+        "why_it_matters": "UC has a systemwide AI training program — the UC AI Primer built on UCSD's AI Fundamentals module — and a four-part webinar series, but both are voluntary and staff-facing with no student-facing mandate. The UCEP Annual Reminder on Academic Integrity was updated with GenAI provisions in September 2025, but it is a faculty-addressed reminder, not a student literacy requirement. Cornell's move establishes a concrete precedent among peer R1 institutions for mandatory incoming-student AI literacy at scale; UC currently has no equivalent baseline field indicating a systemwide student AI literacy requirement.",
+        "for_the_committee": "Should the committee recommend that the UC AI Council develop a systemwide minimum AI literacy standard for incoming students — potentially leveraging the existing UC AI Primer infrastructure — or leave student-facing AI literacy to campus discretion?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "1d5976979b85de6e9fe6efef8eb17bd5",
+            "member_id": "topic",
+            "url": "https://news.cornell.edu/stories/2026/08/cornell-expands-ai-critical-literacy-program-incoming-students",
+            "title": "Cornell expands AI Critical Literacy Program for incoming students",
+            "published_at": "2026-08-12"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "training",
+            "field": "has_ai_training_program",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "academic_integrity",
+            "field": "has_genai_academic_integrity_guidance",
+            "claim_kind": "uc_has_position"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "moe-r",
+            "why": "Oversees UC Online infrastructure that could deliver a systemwide Canvas-based literacy program"
+          },
+          {
+            "member_id": "tassio-m",
+            "why": "Co-chairs UCSC AI Council and the system-wide CTL Working Group on AI; direct operational experience with AI literacy at campus and system levels"
+          },
+          {
+            "member_id": "palazoglu-a",
+            "why": "As Academic Senate Chair, any systemwide student-facing requirement would require Senate engagement"
+          }
+        ]
+      }
+    },
+    {
+      "headline": "New peer-reviewed study finds AI detection tools fundamentally unreliable for student assessment — UC campuses are split on detection posture",
+      "reasons": [
+        "feed_source.member_id \"topic\" is not a known committee member"
+      ],
+      "raw": {
+        "item_id": "item-3",
+        "priority": 4,
+        "headline": "New peer-reviewed study finds AI detection tools fundamentally unreliable for student assessment — UC campuses are split on detection posture",
+        "what_happened": "A study published by a James Cook University researcher and released August 13 concludes that AI detection software is fundamentally unreliable for student assessment and risks undermining rather than protecting academic integrity. The finding adds external empirical weight to concerns already circulating in the sector about false positives and due-process risk. ([465a01c66da2d51e2dccfea12f3a99f8])",
+        "why_it_matters": "UC campuses are not aligned on AI detection. UC Berkeley's Spring 2025 GenAI Guidance tells instructors that detection tools are 'increasingly less accurate' and that 'there are no validated GenAI detection tools,' while the baseline records Berkeley's detection position as explicitly equivocal — instructors are advised to weigh limitations but not prohibited from using tools. UC Santa Barbara's May 2023 EVC memo goes further, stating that UCSB does not support plagiarism detection software. UC Santa Cruz conditions use of detection tools on FERPA compliance and prior student approval. The systemwide UCEP Academic Integrity reminder updated in September 2025 does not resolve this divergence. A peer-reviewed study now provides the evidentiary foundation for a systemwide position where none currently exists.",
+        "for_the_committee": "Given this new external evidence, should the committee recommend that UCOP's AI Council issue a systemwide guidance statement on AI detection tools — either discouraging their use or establishing minimum due-process safeguards — rather than leaving ten campuses to manage detection risk independently?",
+        "feed_sources": [
+          {
+            "kind": "committee_signal",
+            "activity_item_id": "465a01c66da2d51e2dccfea12f3a99f8",
+            "member_id": "topic",
+            "url": "https://www.jcu.edu.au/news/releases/2026/august/ai-detection-tools-miss-the-mark-for-student-assessment",
+            "title": "AI detection tools miss the mark for student assessment",
+            "published_at": "2026-08-13"
+          }
+        ],
+        "baseline_anchors": [
+          {
+            "entity_id": "ucop_systemwide",
+            "dimension": "academic_integrity",
+            "field": "has_genai_academic_integrity_guidance",
+            "claim_kind": "uc_has_position"
+          },
+          {
+            "entity_id": "uc_berkeley",
+            "dimension": "academic_integrity",
+            "field": "has_ai_detection_position",
+            "claim_kind": "uc_contradicts"
+          },
+          {
+            "entity_id": "uc_santa_barbara",
+            "dimension": "academic_integrity",
+            "field": "has_no_plagiarism_detection_support",
+            "claim_kind": "uc_has_position"
+          }
+        ],
+        "peer_anchors": [],
+        "experts": [
+          {
+            "member_id": "palazoglu-a",
+            "why": "As Academic Senate Chair, any systemwide academic integrity guidance change requires Senate engagement"
+          },
+          {
+            "member_id": "raley-r",
+            "why": "Expertise in critical AI and academic integrity; UCSB Senate governance experience directly relevant to detection policy"
+          },
+          {
+            "member_id": "tassio-m",
+            "why": "Operational experience with campus AI governance and assessment design across teaching and learning contexts"
           }
         ]
       }
